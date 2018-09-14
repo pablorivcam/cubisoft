@@ -127,10 +127,6 @@
          <!-- H2 database profile -->
          <!-- Prepares the project to make use of an H2 in-memory database -->
          <id>h2</id>
-         <activation>
-            <!-- Active by default so it can be installed by CI -->
-            <activeByDefault>true</activeByDefault>
-         </activation>
          <properties>
             <!-- Access data -->
             <!-- Default values for testing and development -->
@@ -140,6 +136,7 @@
             <database.password></database.password>
             <!-- Spring context -->
             <database.tag>h2</database.tag>
+            
          </properties>
          <dependencies>
             <dependency>
@@ -149,18 +146,24 @@
                <version>${h2.version}</version>
             </dependency>
          </dependencies>
+         
       </profile>
       <profile>
          <!-- MySQL database profile -->
          <!-- Prepares the project to make use of a MySQL database -->
          <id>mysql</id>
+         <activation>
+            <!-- Active by default so it can be installed by CI -->
+            <activeByDefault>true</activeByDefault>
+         </activation>
          <properties>
             <!-- Access data -->
             <!-- Default values for testing and development -->
             <!-- Override them for production -->
-            <database.url>jdbc:mysql://localhost:3306/multimedia</database.url>
+            <database.url>jdbc:mysql://localhost:3306/multimedia?useSSL=false</database.url>
             <database.username>root</database.username>
             <database.password></database.password>
+            <database.dataDir>${project.basedir}/src/sql</database.dataDir>
             <!-- Spring context -->
             <database.tag>mysql</database.tag>
          </properties>
@@ -172,7 +175,9 @@
                <version>${mysql.version}</version>
             </dependency>
          </dependencies>
+         
       </profile>
+      
       <profile>
          <!-- Postgres database profile -->
          <!-- Prepares the project to make use of a Postgres database -->

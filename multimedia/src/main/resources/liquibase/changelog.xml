@@ -4,7 +4,66 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-   <changeSet author="Bernardo" id="initial_tables">
+
+	<!-- DROP TABLES -->
+	<changeSet author="liquibase-docs" id="dropTable-example" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="multimedia" tableName="example_entities"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="example_entities"/>
+	</changeSet>
+
+	<changeSet author="PabloRivas" id="dropUserProfile" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="multimedia" tableName="UserProfile"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="UserProfile"/>
+	</changeSet>
+
+	<changeSet author="PabloRivas" id="dropImage" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="multimedia" tableName="Picture"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="Picture"/>
+	</changeSet>
+
+	<!-- Creación de tablas -->
+
+	<changeSet author="PabloRivas" id="multimedia_tables" runAlways="true">
+		<createTable tableName="UserProfile">
+		     <column autoIncrement="true" name="user_id" type="BIGINT">
+		        <constraints primaryKey="true" />
+		     </column>
+		     <column name="login" type="VARCHAR(30)">
+		        <constraints nullable="false" unique="true" />
+		     </column>
+		     <column name="firstName" type="VARCHAR(30)">
+		        <constraints nullable="false" />
+		     </column>
+		     <column name="lastName" type="VARCHAR(30)">
+		        <constraints nullable="false" />
+		     </column>
+		     <column name="password" type="VARCHAR(30)">
+		        <constraints nullable="false" />
+		     </column>
+		</createTable>  
+
+		<createTable tableName="Picture">
+		     <column autoIncrement="true" name="picture_id" type="BIGINT">
+		        <constraints primaryKey="true" />
+		     </column>
+		     <column name="description" type="VARCHAR(30)"/>      
+		     <column name="image_path" type="VARCHAR(80)">
+		        <constraints nullable="false" />
+		     </column>
+		     <column name="date" type="DATETIME">
+		        <constraints nullable="false" />
+		     </column>
+
+		</createTable>
+
+	</changeSet>
+
+	<!-- Contenido por defecto -->
+
+   <changeSet author="Bernardo" id="initial_tables" runAlways="true">
       <createTable tableName="example_entities">
          <column autoIncrement="true" name="id" type="BIGINT">
             <constraints primaryKey="true" />
@@ -15,7 +74,7 @@
       </createTable>
    </changeSet>
 
-   <changeSet author="Bernardo" id="initial_data">
+   <changeSet author="Bernardo" id="initial_data" runAlways="true">
       <sqlFile encoding="utf8" path="populate/initial.sql"
          relativeToChangelogFile="true" stripComments="true" />
    </changeSet>
