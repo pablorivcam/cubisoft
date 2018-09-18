@@ -12,16 +12,16 @@
 		        tableName="example_entities"/>
 	</changeSet>
 
-	<changeSet author="PabloRivas" id="dropUserProfile" runAlways="true">
-		<preConditions onFail="MARK_RAN"><tableExists schemaName="multimedia" tableName="UserProfile"/></preConditions>
-		<dropTable cascadeConstraints="true"
-		        tableName="UserProfile"/>
-	</changeSet>
-
 	<changeSet author="PabloRivas" id="dropImage" runAlways="true">
 		<preConditions onFail="MARK_RAN"><tableExists schemaName="multimedia" tableName="Picture"/></preConditions>
 		<dropTable cascadeConstraints="true"
 		        tableName="Picture"/>
+	</changeSet>
+	
+	<changeSet author="PabloRivas" id="dropUserProfile" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="multimedia" tableName="UserProfile"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="UserProfile"/>
 	</changeSet>
 
 	<!-- Creación de tablas -->
@@ -43,6 +43,9 @@
 		     <column name="password" type="VARCHAR(30)">
 		        <constraints nullable="false" />
 		     </column>
+		     <column name="email" type="VARCHAR(30)">
+		        <constraints nullable="false" unique="true" />
+		     </column>
 		</createTable>  
 
 		<createTable tableName="Picture">
@@ -55,6 +58,12 @@
 		     </column>
 		     <column name="date" type="DATETIME">
 		        <constraints nullable="false" />
+		     </column>
+		     <column name="user_id" type="BIGINT">
+		         <constraints nullable="false" 
+		         	foreignKeyName="fk_user_id" 
+                	references="UserProfile(user_id)"
+       	            />
 		     </column>
 
 		</createTable>
