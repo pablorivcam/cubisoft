@@ -1,4 +1,4 @@
-# Cubisoft Multimedia App
+# Cubisoft App
 
 This is a [Spring MVC](https://spring.io) project using [Thymeleaf](http://www.thymeleaf.org/) templates for the views, created with the use of the [Spring MVC with Thymeleaf Maven Archetype](https://github.com/Bernardo-MG/spring-mvc-thymeleaf-maven-archetype). It will ease the development of new Spring MVC projects, setting it up for CI through the use of three free services: [Github](https://github.com/), [Travis](https://travis-ci.org) and [Bintray](https://bintray.com/).
 
@@ -12,8 +12,8 @@ Before beginning with the new project there are a few things which should be edi
 
 Note that the Maven site is using the [Docs Maven Skin](https://github.com/Bernardo-MG/docs-maven-skin), which will have a few configuration requirements of its own.
 
-[![Maven Central](https://img.shields.io/maven-central/v/es.udc.fi.dc.fd/multimedia.svg)][maven-repo]
-[![Bintray](https://api.bintray.com/packages/pablo.rivas.camino/maven/multimedia/images/download.svg)][bintray-repo]
+[![Maven Central](https://img.shields.io/maven-central/v/es.udc.fi.dc.fd/cubisoft.svg)][maven-repo]
+[![Bintray](https://api.bintray.com/packages/pablo.rivas.camino/maven/cubisoft/images/download.svg)][bintray-repo]
 
 [![Release docs](https://img.shields.io/badge/docs-release-blue.svg)][site-release]
 [![Development docs](https://img.shields.io/badge/docs-develop-blue.svg)][site-develop]
@@ -141,12 +141,12 @@ If you wish to fork or modify the code, visit the [GitHub project page][scm], wh
 
 The project has been released under the [MIT License][license].
 
-[bintray-repo]: https://bintray.com/pablo.rivas.camino/maven/multimedia/view
-[maven-repo]: http://mvnrepository.com/artifact/es.udc.fi.dc.fd/multimedia
-[issues]: https://github.com/pablo.rivas.camino/multimedia/issues
-[javadoc-develop]: http://deploy.fic.udc.es/multimedia/multimedia/apidocs
-[javadoc-release]: https:///multimedia/apidocs
+[bintray-repo]: https://bintray.com/pablo.rivas.camino/maven/cubisoft/view
+[maven-repo]: http://mvnrepository.com/artifact/es.udc.fi.dc.fd/cubisoft
+[issues]: https://github.com/pablo.rivas.camino/cubisoft/issues
+[javadoc-develop]: http://deploy.fic.udc.es/cubisoft/cubisoft/apidocs
+[javadoc-release]: https:///cubisoft/apidocs
 [license]: http://www.opensource.org/licenses/mit-license.php
-[scm]: https://github.com/pablo.rivas.camino/multimedia
-[site-develop]: http://deploy.fic.udc.es/multimedia/multimedia
-[site-release]: https:///multimedia
+[scm]: https://github.com/pablo.rivas.camino/cubisoft
+[site-develop]: http://deploy.fic.udc.es/cubisoft/cubisoft
+[site-release]: https:///cubisoft

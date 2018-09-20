@@ -9,9 +9,9 @@ set -o nounset
 set -e
 
 # MySQL tables
-mysql -e "create database IF NOT EXISTS multimedia;" -uroot
+mysql -e "create database IF NOT EXISTS cubisoft;" -uroot
 
 # PostgreSQL tables
-psql -c 'create database multimedia;' -U postgres
+psql -c 'create database cubisoft;' -U postgres
 
 exit 0
