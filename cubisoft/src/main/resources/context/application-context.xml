@@ -10,7 +10,7 @@
 
    <!-- Properties -->
    <context:property-placeholder
-      location="classpath:config/persistence-@database.tag@.properties, 
+      location="classpath:config/persistence-${database.tag}.properties, 
                    classpath:config/persistence-access.properties,
                    classpath:config/persistence.properties" />
 

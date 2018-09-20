@@ -131,6 +131,7 @@
             <!-- Access data -->
             <!-- Default values for testing and development -->
             <!-- Override them for production -->
+            <!-- NOTA: necesario añadir estas properties a las run configurations a la hora de debuguear con Tomcat -->
             <database.url>jdbc:h2:mem:cubisoft</database.url>
             <database.username>sa</database.username>
             <database.password></database.password>
@@ -939,10 +940,10 @@
                <!-- This avoids collisions with Spring variables. -->
                <!-- So instead of replacing ${project.name} Maven will replace 
                   @project.name@. -->
-               <useDefaultDelimiters>false</useDefaultDelimiters>
+               <!--  <useDefaultDelimiters>false</useDefaultDelimiters>
                <delimiters>
                   <delimiter>@</delimiter>
-               </delimiters>
+               </delimiters>-->
             </configuration>
          </plugin>
          <plugin>
@@ -955,10 +956,10 @@
                <!-- This avoids collisions with Spring variables. -->
                <!-- So instead of replacing ${project.name} Maven will replace 
                   @project.name@. -->
-               <useDefaultDelimiters>false</useDefaultDelimiters>
+               <!--<useDefaultDelimiters>false</useDefaultDelimiters>
                <delimiters>
                   <delimiter>@</delimiter>
-               </delimiters>
+               </delimiters-->
             </configuration>
          </plugin>
          <plugin>
