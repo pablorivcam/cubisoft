@@ -127,6 +127,10 @@
          <!-- H2 database profile -->
          <!-- Prepares the project to make use of an H2 in-memory database -->
          <id>h2</id>
+         <activation>
+            <!-- Active by default so it can be installed by CI -->
+            <activeByDefault>true</activeByDefault>
+         </activation>
          <properties>
             <!-- Access data -->
             <!-- Default values for testing and development -->
@@ -136,7 +140,6 @@
             <database.password></database.password>
             <!-- Spring context -->
             <database.tag>h2</database.tag>
-            
          </properties>
          <dependencies>
             <dependency>
@@ -146,24 +149,18 @@
                <version>${h2.version}</version>
             </dependency>
          </dependencies>
-         
       </profile>
       <profile>
          <!-- MySQL database profile -->
          <!-- Prepares the project to make use of a MySQL database -->
          <id>mysql</id>
-         <activation>
-            <!-- Active by default so it can be installed by CI -->
-            <activeByDefault>true</activeByDefault>
-         </activation>
          <properties>
             <!-- Access data -->
             <!-- Default values for testing and development -->
             <!-- Override them for production -->
-            <database.url>jdbc:mysql://localhost:3306/multimedia?useSSL=false</database.url>
+            <database.url>jdbc:mysql://localhost:3306/multimedia</database.url>
             <database.username>root</database.username>
             <database.password></database.password>
-            <database.dataDir>${project.basedir}/src/sql</database.dataDir>
             <!-- Spring context -->
             <database.tag>mysql</database.tag>
          </properties>
@@ -175,9 +172,7 @@
                <version>${mysql.version}</version>
             </dependency>
          </dependencies>
-         
       </profile>
-      
       <profile>
          <!-- Postgres database profile -->
          <!-- Prepares the project to make use of a Postgres database -->
@@ -397,7 +392,9 @@
       <slf4j.version>1.8.0-alpha2</slf4j.version>
       <spring.data.version>2.0.7.RELEASE</spring.data.version>
       <spring.version>5.0.6.RELEASE</spring.version>
+      <spring.security.version>5.0.5.RELEASE</spring.security.version>
       <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+      <thymeleaf.extras.version>3.0.2.RELEASE</thymeleaf.extras.version>
       <webjars.bootstrap.version>3.3.7-1</webjars.bootstrap.version>
       <webjars.bootswatch.version>3.3.7</webjars.bootswatch.version>
       <webjars.fontAwesome.version>4.7.0</webjars.fontAwesome.version>
@@ -499,7 +496,18 @@
          <!-- Spring ORM -->
          <groupId>org.springframework</groupId>
          <artifactId>spring-orm</artifactId>
-      </dependency>
+      </dependency>	
+	<!-- Security -->
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-config</artifactId>
+		<version>${spring.security.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-web</artifactId>
+		<version>${spring.security.version}</version>
+	</dependency>       
       <!-- ============================================== -->
       <!-- ============== JPA DEPENDENCIES ============== -->
       <!-- ============================================== -->
@@ -560,6 +568,12 @@
          <artifactId>thymeleaf-spring5</artifactId>
          <version>${thymeleaf.version}</version>
       </dependency>
+      <!-- https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity4 -->
+	<dependency>
+	    <groupId>org.thymeleaf.extras</groupId>
+	    <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+	    <version>${thymeleaf.extras.version}</version>
+	</dependency>
       <!-- ============================================== -->
       <!-- ============== JASPERREPORTS ================= -->
       <!-- ============================================== -->
