@@ -19,13 +19,13 @@
    <!-- ********************************************** -->
 
    <groupId>es.udc.fi.dc.fd</groupId>
-   <artifactId>multimedia</artifactId>
+   <artifactId>cubisoft</artifactId>
    <version>0.1-SNAPSHOT</version>
    <packaging>war</packaging>
 
-   <name>Cubisoft Multimedia App</name>
+   <name>Cubisoft</name>
    <description>Test project for FD 2018</description>
-   <url>https://github.com/pablo.rivas.camino/multimedia</url>
+   <url>https://github.com/pablo.rivas.camino/cubisoft</url>
    <inceptionYear>2018</inceptionYear>
 
    <licenses>
@@ -41,20 +41,20 @@
    <!-- ********************************************** -->
 
    <scm>
-      <connection>scm:git:https://github.com/pablo.rivas.camino/multimedia.git</connection>
-      <developerConnection>scm:git:https://github.com/pablo.rivas.camino/multimedia.git</developerConnection>
+      <connection>scm:git:https://github.com/pablo.rivas.camino/cubisoft.git</connection>
+      <developerConnection>scm:git:https://github.com/pablo.rivas.camino/cubisoft.git</developerConnection>
       <tag>head</tag>
-      <url>https://www.github.com/pablo.rivas.camino/multimedia</url>
+      <url>https://www.github.com/pablo.rivas.camino/cubisoft</url>
    </scm>
 
    <issueManagement>
       <system>GitHub</system>
-      <url>https://www.github.com/pablo.rivas.camino/multimedia/issues</url>
+      <url>https://www.github.com/pablo.rivas.camino/cubisoft/issues</url>
    </issueManagement>
 
    <ciManagement>
       <system>Travis CI</system>
-      <url>https://travis-ci.org/pablo.rivas.camino/multimedia</url>
+      <url>https://travis-ci.org/pablo.rivas.camino/cubisoft</url>
       <notifiers />
    </ciManagement>
 
@@ -63,7 +63,7 @@
          <uniqueVersion>false</uniqueVersion>
          <id>releases</id>
          <name>Releases Repository</name>
-         <url>https://api.bintray.com/maven/pablo.rivas.camino/maven/multimedia</url>
+         <url>https://api.bintray.com/maven/pablo.rivas.camino/maven/cubisoft</url>
       </repository>
       <snapshotRepository>
          <uniqueVersion>false</uniqueVersion>
@@ -135,7 +135,7 @@
             <!-- Access data -->
             <!-- Default values for testing and development -->
             <!-- Override them for production -->
-            <database.url>jdbc:h2:mem:multimedia</database.url>
+            <database.url>jdbc:h2:mem:cubisoft</database.url>
             <database.username>sa</database.username>
             <database.password></database.password>
             <!-- Spring context -->
@@ -158,7 +158,7 @@
             <!-- Access data -->
             <!-- Default values for testing and development -->
             <!-- Override them for production -->
-            <database.url>jdbc:mysql://localhost:3306/multimedia</database.url>
+            <database.url>jdbc:mysql://localhost:3306/cubisoft</database.url>
             <database.username>root</database.username>
             <database.password></database.password>
             <!-- Spring context -->
@@ -181,7 +181,7 @@
             <!-- Access data -->
             <!-- Default values for testing and development -->
             <!-- Override them for production -->
-            <database.url>jdbc:postgresql://localhost:5432/multimedia</database.url>
+            <database.url>jdbc:postgresql://localhost:5432/cubisoft</database.url>
             <database.username>postgres</database.username>
             <database.password></database.password>
             <!-- Spring context -->
@@ -333,7 +333,7 @@
 
    <organization>
       <name>Pablo Rivas Camino</name>
-      <url>http://gitlab.fic.udc.es/root/multimedia</url>
+      <url>http://gitlab.fic.udc.es/root/cubisoft</url>
    </organization>
 
    <developers>
@@ -341,9 +341,9 @@
          <id>pablo.rivas.camino</id>
          <name>Pablo Rivas Camino</name>
          <email>pablo.rivas.camino@udc.es</email>
-         <url>http://gitlab.fic.udc.es/root/multimedia</url>
+         <url>http://gitlab.fic.udc.es/root/cubisoft</url>
          <organization>Pablo Rivas Camino</organization>
-         <organizationUrl>http://gitlab.fic.udc.es/root/multimedia</organizationUrl>
+         <organizationUrl>http://gitlab.fic.udc.es/root/cubisoft</organizationUrl>
          <roles>
             <role>Developer</role>
          </roles>

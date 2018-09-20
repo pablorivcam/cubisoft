@@ -7,26 +7,26 @@
 
 	<!-- DROP TABLES -->
 	<changeSet author="liquibase-docs" id="dropTable-example" runAlways="true">
-		<preConditions onFail="MARK_RAN"><tableExists schemaName="multimedia" tableName="example_entities"/></preConditions>
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="example_entities"/></preConditions>
 		<dropTable cascadeConstraints="true"
 		        tableName="example_entities"/>
 	</changeSet>
 
 	<changeSet author="PabloRivas" id="dropImage" runAlways="true">
-		<preConditions onFail="MARK_RAN"><tableExists schemaName="multimedia" tableName="Picture"/></preConditions>
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Picture"/></preConditions>
 		<dropTable cascadeConstraints="true"
 		        tableName="Picture"/>
 	</changeSet>
 	
 	<changeSet author="PabloRivas" id="dropUserProfile" runAlways="true">
-		<preConditions onFail="MARK_RAN"><tableExists schemaName="multimedia" tableName="UserProfile"/></preConditions>
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="UserProfile"/></preConditions>
 		<dropTable cascadeConstraints="true"
 		        tableName="UserProfile"/>
 	</changeSet>
 
 	<!-- Creación de tablas -->
 
-	<changeSet author="PabloRivas" id="multimedia_tables" runAlways="true">
+	<changeSet author="PabloRivas" id="cubisoft_tables" runAlways="true">
 		<createTable tableName="UserProfile">
 		     <column autoIncrement="true" name="user_id" type="BIGINT">
 		        <constraints primaryKey="true" />
