@@ -21,5 +21,6 @@
 
    <!-- Auto scan -->
    <context:component-scan base-package="es.udc.fi.dc.fd.**.service" />
-
+   <context:component-scan base-package="es.udc.fi.dc.fd.config" />
+   
 </beans>

@@ -1,4 +1,4 @@
-package es.udc.fi.dc.fd.model.userprofile;
+package es.udc.fi.dc.fd.service;
 
 import java.util.Collections;
 
@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.dc.fd.config.SecurityConfig;
+import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
 @Service
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)

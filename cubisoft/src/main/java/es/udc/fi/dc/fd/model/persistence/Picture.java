@@ -1,4 +1,4 @@
-package es.udc.fi.dc.fd.model.picture;
+package es.udc.fi.dc.fd.model.persistence;
 
 import java.util.Calendar;
 
@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import es.udc.fi.dc.fd.model.userprofile.UserProfile;
 
 /**
  * The Class Picture. Represents a picture uploaded by the user on the

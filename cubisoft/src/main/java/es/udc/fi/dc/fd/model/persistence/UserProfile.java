@@ -1,4 +1,4 @@
-package es.udc.fi.dc.fd.model.userprofile;
+package es.udc.fi.dc.fd.model.persistence;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -170,6 +170,16 @@ public class UserProfile {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	/**
+	 * Sets the user id.
+	 *
+	 * @param user_id
+	 *            the new user id
+	 */
+	public void setUser_id(long user_id) {
+		this.user_id = user_id;
 	}
 
 }
