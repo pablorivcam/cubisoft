@@ -150,3 +150,31 @@ The project has been released under the [MIT License][license].
 [scm]: https://github.com/pablo.rivas.camino/cubisoft
 [site-develop]: http://deploy.fic.udc.es/cubisoft/cubisoft
 [site-release]: https:///cubisoft
+
+## Tomcat context configuration
+
+```
+<Context allowCasualMultipartParsing="true" path="/">
+
+	<ResourceLink global="jdbc/pojo-examples-ds" name="jdbc/pojo-examples-ds" type="javax.sql.DataSource"/>
+
+    <ResourceLink global="jdbc/ws-javaexamples-ds" name="jdbc/ws-javaexamples-ds" type="javax.sql.DataSource"/>
+    <!-- Default set of monitored resources. If one of these changes, the    -->
+    <!-- web application will be reloaded.                                   -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+
+     <Resources
+        cachingAllowed="true"
+        cacheMaxSize="100000"
+    />
+
+    <Resources cachingAllowed="true" cacheMaxSize="100000" />
+
+
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="" />
+    -->
+</Context>
+```

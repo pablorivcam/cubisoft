@@ -36,22 +36,22 @@ import org.springframework.web.bind.annotation.InitBinder;
 @ControllerAdvice
 public final class GlobalBindingInitializer {
 
-    /**
-     * Default constructor.
-     */
-    public GlobalBindingInitializer() {
-        super();
-    }
+	/**
+	 * Default constructor.
+	 */
+	public GlobalBindingInitializer() {
+		super();
+	}
 
-    /**
-     * Sets the fields which can't be bound.
-     * 
-     * @param dataBinder
-     *            data binder
-     */
-    @InitBinder
-    public final void setDisallowedFields(final WebDataBinder dataBinder) {
-        dataBinder.setDisallowedFields("id");
-    }
+	/**
+	 * Sets the fields which can't be bound.
+	 * 
+	 * @param dataBinder
+	 *            data binder
+	 */
+	@InitBinder
+	public final void setDisallowedFields(final WebDataBinder dataBinder) {
+		dataBinder.setDisallowedFields("id");
+	}
 
 }

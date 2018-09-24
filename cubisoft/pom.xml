@@ -25,7 +25,7 @@
 
    <name>Cubisoft</name>
    <description>Test project for FD 2018</description>
-   <url>https://github.com/pablo.rivas.camino/cubisoft</url>
+   <url>http://gitlab.fic.udc.es/root/cubisoft.git</url>
    <inceptionYear>2018</inceptionYear>
 
    <licenses>
@@ -41,15 +41,15 @@
    <!-- ********************************************** -->
 
    <scm>
-      <connection>scm:git:https://github.com/pablo.rivas.camino/cubisoft.git</connection>
-      <developerConnection>scm:git:https://github.com/pablo.rivas.camino/cubisoft.git</developerConnection>
+      <connection>scm:git:https://gitlab.fic.udc.es/root/cubisoft.git</connection>
+      <developerConnection>scm:git:http://gitlab.fic.udc.es/root/cubisoft.git</developerConnection>
       <tag>head</tag>
-      <url>https://www.github.com/pablo.rivas.camino/cubisoft</url>
+      <url>http://gitlab.fic.udc.es/root/cubisoft.git</url>
    </scm>
 
    <issueManagement>
       <system>GitHub</system>
-      <url>https://www.github.com/pablo.rivas.camino/cubisoft/issues</url>
+      <url>http://gitlab.fic.udc.es/root/cubisoft.git/issues</url>
    </issueManagement>
 
    <ciManagement>
@@ -508,7 +508,8 @@
 		<groupId>org.springframework.security</groupId>
 		<artifactId>spring-security-web</artifactId>
 		<version>${spring.security.version}</version>
-	</dependency>       
+	</dependency>   
+	    
       <!-- ============================================== -->
       <!-- ============== JPA DEPENDENCIES ============== -->
       <!-- ============================================== -->
@@ -706,6 +707,21 @@
          <version>${glassfish.el}</version>
          <scope>provided</scope>
       </dependency>
+      
+	<!-- Apache Commons FileUpload --> 
+	<dependency>
+		<groupId>commons-fileupload</groupId>
+		<artifactId>commons-fileupload</artifactId>
+		<version>1.3.1</version>
+	</dependency>
+	
+	<!-- Apache Commons IO --> 
+	<dependency>
+		<groupId>commons-io</groupId>
+		<artifactId>commons-io</artifactId>
+		<version>2.4</version>
+	</dependency>
+      
       <!-- ============================================== -->
       <!-- =========== VERSION ENFORCEMENT ============== -->
       <!-- ============================================== -->
