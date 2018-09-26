@@ -44,12 +44,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.eraseCredentials(true).userDetailsService(userProfileService).passwordEncoder(passwordEncoder());
 	}
 
+	/**
+	 * Here we configure what resources and pages can be used by everyone or by
+	 * authenticated users. FIXME: Change .permitAll() in second line to
+	 * .authenticated(), and change the path to the css
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/favicon.ico", "/resources/**", "/signup", "/about").permitAll()
-				.anyRequest().authenticated().and().formLogin().loginPage("/signin").permitAll()
-				.failureUrl("/signin?error=1").loginProcessingUrl("/authenticate").and().logout().logoutUrl("/logout")
-				.permitAll().logoutSuccessUrl("/signin?logout").and().rememberMe()
+		http.authorizeRequests()
+				.antMatchers("/", "/favicon.ico", "/resources/**", "/signup", "/about", "/src/main/webapp/resources/**")
+				.permitAll().anyRequest().permitAll().and().formLogin().loginPage("/signup").permitAll()
+				.failureUrl("/signup?error=1").loginProcessingUrl("/authenticate").and().logout().logoutUrl("/logout")
+				.permitAll().logoutSuccessUrl("/signup?logout").and().rememberMe()
 				.rememberMeServices(rememberMeServices()).key("remember-me-key");
 
 	}
