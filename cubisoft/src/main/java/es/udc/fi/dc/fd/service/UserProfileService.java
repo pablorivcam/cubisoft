@@ -46,6 +46,12 @@ public class UserProfileService implements UserDetailsService {
 		}
 		return createUser(account);
 	}
+	
+	public UserProfile validateUser(String email,String password) {
+		UserProfile account = userProfileRepository.findUser(email,password);
+		return account;
+	}
+	
 
 	private User createUser(UserProfile account) {
 		return new User(account.getEmail(), account.getPassword(), Collections.singleton(createAuthority(account)));

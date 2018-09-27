@@ -10,9 +10,10 @@ import es.udc.fi.dc.fd.model.persistence.UserProfile;
 @Repository("userProfileRepository")
 public interface UserProfileRepository extends JpaRepository<UserProfile, Long> {
 
-	UserProfile findByEmail(String email);
-
 	@Query("select count(a) > 0 from UserProfile a where a.email = :email")
-	boolean exists(@Param("email") String email);
+	UserProfile findByEmail(@Param("email") String email);
 
+	@Query("select a from UserProfile a where a.email = :email and a.password = :password")
+	UserProfile findUser(@Param("email") String email, @Param("password") String password);
+	
 }
