@@ -40,7 +40,7 @@
 		     <column name="lastName" type="VARCHAR(30)">
 		        <constraints nullable="false" />
 		     </column>
-		     <column name="password" type="VARCHAR(30)">
+		     <column name="password" type="VARCHAR(60)">
 		        <constraints nullable="false" />
 		     </column>
 		     <column name="email" type="VARCHAR(30)">

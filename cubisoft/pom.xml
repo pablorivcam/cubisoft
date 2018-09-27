@@ -327,7 +327,7 @@
 	<!-- ********************************************** -->
 
 	<organization>
-		<name>Pablo Rivas Camino</name>
+		<name>Cubisoft</name>
 		<url>http://gitlab.fic.udc.es/root/cubisoft</url>
 	</organization>
 
@@ -337,7 +337,21 @@
 			<name>Pablo Rivas Camino</name>
 			<email>pablo.rivas.camino@udc.es</email>
 			<url>http://gitlab.fic.udc.es/root/cubisoft</url>
-			<organization>Pablo Rivas Camino</organization>
+			<organization>Cubisoft</organization>
+			<organizationUrl>http://gitlab.fic.udc.es/root/cubisoft</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+			<properties />
+		</developer>
+	
+		<developer>
+			<id>bran.lopezp</id>
+			<name>Bran Lopez Pintor</name>
+			<email>bran.lopezp@udc.es</email>
+			<url>http://gitlab.fic.udc.es/root/cubisoft</url>
+			<organization>Cubisoft</organization>
 			<organizationUrl>http://gitlab.fic.udc.es/root/cubisoft</organizationUrl>
 			<roles>
 				<role>Developer</role>

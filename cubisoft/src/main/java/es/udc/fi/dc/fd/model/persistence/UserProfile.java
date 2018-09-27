@@ -15,7 +15,7 @@ import javax.persistence.Id;
 public class UserProfile {
 
 	/** The user id. */
-	private long user_id = -1;
+	private long user_id /* = -1 */;
 
 	/** The login. */
 	private String login;
@@ -41,16 +41,11 @@ public class UserProfile {
 	/**
 	 * Instantiates a new user profile.
 	 *
-	 * @param login
-	 *            the login
-	 * @param firstName
-	 *            the first name
-	 * @param lastName
-	 *            the last name
-	 * @param password
-	 *            the password
-	 * @param email
-	 *            the email
+	 * @param login     the login
+	 * @param firstName the first name
+	 * @param lastName  the last name
+	 * @param password  the password
+	 * @param email     the email
 	 */
 	public UserProfile(String login, String firstName, String lastName, String password, String email) {
 		this.login = login;
@@ -115,8 +110,7 @@ public class UserProfile {
 	/**
 	 * Sets the login.
 	 *
-	 * @param login
-	 *            the new login
+	 * @param login the new login
 	 */
 	public void setLogin(String login) {
 		this.login = login;
@@ -125,8 +119,7 @@ public class UserProfile {
 	/**
 	 * Sets the first name.
 	 *
-	 * @param firstName
-	 *            the new first name
+	 * @param firstName the new first name
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -135,8 +128,7 @@ public class UserProfile {
 	/**
 	 * Sets the last name.
 	 *
-	 * @param lastName
-	 *            the new last name
+	 * @param lastName the new last name
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -145,8 +137,7 @@ public class UserProfile {
 	/**
 	 * Sets the password.
 	 *
-	 * @param password
-	 *            the new password
+	 * @param password the new password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -165,8 +156,7 @@ public class UserProfile {
 	/**
 	 * Sets the email.
 	 *
-	 * @param email
-	 *            the new email
+	 * @param email the new email
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -175,8 +165,7 @@ public class UserProfile {
 	/**
 	 * Sets the user id.
 	 *
-	 * @param user_id
-	 *            the new user id
+	 * @param user_id the new user id
 	 */
 	public void setUser_id(long user_id) {
 		this.user_id = user_id;
