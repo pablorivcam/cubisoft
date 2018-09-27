@@ -161,14 +161,6 @@
 				<!-- Spring context -->
 				<database.tag>mysql</database.tag>
 			</properties>
-			<dependencies>
-				<dependency>
-					<!-- MySQL connector -->
-					<groupId>mysql</groupId>
-					<artifactId>mysql-connector-java</artifactId>
-					<version>${mysql.version}</version>
-				</dependency>
-			</dependencies>
 		</profile>
 		<profile>
 			<!-- Postgres database profile -->
@@ -554,11 +546,18 @@
 			<artifactId>HikariCP</artifactId>
 			<version>${hikari.version}</version>
 		</dependency>
+		<!-- Dependencias de los perfiles extraidas para poder tenerlas fuera de los perfiles -->
 		<dependency>
 			<!-- H2 database -->
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${h2.version}</version>
+		</dependency>
+		<dependency>
+			<!-- MySQL connector -->
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
 		</dependency>
 		<!-- ============================================== -->
 		<!-- ================ LIQUIBASE =================== -->

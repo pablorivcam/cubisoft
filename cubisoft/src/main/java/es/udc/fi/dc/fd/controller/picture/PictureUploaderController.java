@@ -7,9 +7,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Calendar;
 
 import javax.servlet.annotation.MultipartConfig;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -21,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.udc.fi.dc.fd.model.form.UploadPictureForm;
+import es.udc.fi.dc.fd.model.persistence.Picture;
+import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.service.PictureService;
 
 /**
  * The Class PictureUploaderController. Encargada de controlar la página de
@@ -32,6 +37,10 @@ import es.udc.fi.dc.fd.model.form.UploadPictureForm;
 public class PictureUploaderController {
 
 	private static final String UPLOADS_FOLDER_NAME = "../Pictures";
+
+	/** The picture service. */
+	@Autowired
+	private PictureService pictureService;
 
 	public PictureUploaderController() {
 	}
@@ -117,6 +126,15 @@ public class PictureUploaderController {
 				}
 
 				System.out.println("Archivo guardado en: " + newFile.getAbsolutePath());
+
+				// Guardamos todo en la base de datos
+
+				UserProfile up = new UserProfile("Test", "Test", "Test", "Test", "Test@test.com");
+				up.setUser_id(288L);
+
+				Picture p = new Picture("No me estás pasando aún la descripción. Posiblemente tampoco el autor.",
+						Calendar.getInstance(), newFile.getAbsolutePath(), up);
+				pictureService.save(p);
 
 			} catch (IOException e) {
 				e.printStackTrace();

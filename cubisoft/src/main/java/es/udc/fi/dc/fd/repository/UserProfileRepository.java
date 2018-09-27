@@ -7,13 +7,32 @@ import org.springframework.stereotype.Repository;
 
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 
+/**
+ * The Interface UserProfileRepository.
+ */
 @Repository("userProfileRepository")
 public interface UserProfileRepository extends JpaRepository<UserProfile, Long> {
 
+	/**
+	 * Find by email.
+	 *
+	 * @param email
+	 *            the email
+	 * @return the user profile
+	 */
 	@Query("select count(a) > 0 from UserProfile a where a.email = :email")
 	UserProfile findByEmail(@Param("email") String email);
 
+	/**
+	 * Find user.
+	 *
+	 * @param email
+	 *            the email
+	 * @param password
+	 *            the password
+	 * @return the user profile
+	 */
 	@Query("select a from UserProfile a where a.email = :email and a.password = :password")
 	UserProfile findUser(@Param("email") String email, @Param("password") String password);
-	
+
 }

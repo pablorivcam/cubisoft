@@ -24,8 +24,10 @@ import es.udc.fi.dc.fd.service.UserProfileService;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	/** The Constant DEFAULT_ROLE. */
 	public static final String DEFAULT_ROLE = "USER";
 
+	/** The user profile service. */
 	@Autowired
 	private UserProfileService userProfileService;
 
@@ -51,12 +53,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/favicon.ico", "/resources/**", "/account/signup", "/about")
-				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/signin").permitAll()
+		http.authorizeRequests().antMatchers("/", "/favicon.ico", "/resources/**", "/signup", "/about").permitAll()
+				.anyRequest().authenticated().and().formLogin().loginPage("/account/signin").permitAll()
 				.failureUrl("/signin?error=1").loginProcessingUrl("/authenticate").and().logout().logoutUrl("/logout")
 				.permitAll().logoutSuccessUrl("/signin?logout").and().rememberMe()
 				.rememberMeServices(rememberMeServices()).key("remember-me-key");
-
 	}
 
 	@Bean(name = "authenticationManager")

@@ -52,8 +52,8 @@
 		     <column autoIncrement="true" name="picture_id" type="BIGINT">
 		        <constraints primaryKey="true" />
 		     </column>
-		     <column name="description" type="VARCHAR(30)"/>      
-		     <column name="image_path" type="VARCHAR(80)">
+		     <column name="description" type="VARCHAR(240)"/>      
+		     <column name="image_path" type="VARCHAR(200)">
 		        <constraints nullable="false" />
 		     </column>
 		     <column name="date" type="DATETIME">

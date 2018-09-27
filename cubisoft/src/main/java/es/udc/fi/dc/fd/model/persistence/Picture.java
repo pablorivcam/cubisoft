@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 public class Picture {
 
 	/** The picture id. */
-	private long picture_id;
+	private Long picture_id = -1L;
 
 	/** The description. */
 	private String description;
