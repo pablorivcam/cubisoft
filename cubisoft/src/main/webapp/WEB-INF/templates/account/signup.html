@@ -9,7 +9,7 @@
       	<p>This view allows to sign up through an HTML form.</p>
       
 		<section id="form" class="form-well">
-			<form class="form-narrow form-horizontal" method="post" th:action="@{/account/signupUser}" th:object="${signUpForm}" th:fragment="singnUpForm">
+			<form class="form-narrow form-horizontal" method="post" th:action="@{/signup}" th:object="${signUpForm}" th:fragment="singnUpForm">
 			
 			<div class="col-md-12">
                <div class="panel panel-default">
@@ -33,7 +33,7 @@
 				        <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
 				            <label for="password" class="col-lg-2 control-label" th:text="#{label.password}">E-Mail</label>
 				            <div class="col-lg-10">
-				                <input type="text" class="form-control" id="password" placeholder="Password" th:field="*{password}" />
+				                <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}" />
 				                <span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{email}">Invalid Password</span>
 				            </div>
 				        </div>
@@ -72,6 +72,11 @@
 	               <button type="submit" th:text="#{button.submit}">Submit</button>
 	            </div>
 	         </div>
+	        <div class="form-group">
+	            <div class="col-lg-offset-2 col-lg-10">
+	                <p>Already have an account? <a href="signin" th:href="@{/signin}">Sign In</a></p>
+	            </div>
+	        </div>
 			</form>
 		</section>
 	   
