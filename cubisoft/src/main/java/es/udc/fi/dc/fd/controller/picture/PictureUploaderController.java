@@ -139,9 +139,10 @@ public class PictureUploaderController {
 				UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 
 				// Guardamos todo en la base de datos
-
+				// newFile.getAbsolutePath() como posible alternativa a fileName
+				// FIXME probablemente haya que cambiar el fileName para evitar movidas
 				Picture p = new Picture(uploadPictureForm.getDescription(), Calendar.getInstance(),
-						newFile.getAbsolutePath(), author);
+						fileName, author);
 				pictureService.save(p);
 
 			} catch (IOException e) {
