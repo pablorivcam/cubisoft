@@ -393,7 +393,7 @@
 		<slf4j.version>1.8.0-alpha2</slf4j.version>
 		<spring.data.version>2.0.7.RELEASE</spring.data.version>
 		<spring.version>5.0.6.RELEASE</spring.version>
-		<spring.security.version>5.0.5.RELEASE</spring.security.version>
+		<spring.security.version>5.0.4.RELEASE</spring.security.version>
 		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
 		<thymeleaf.extras.version>3.0.2.RELEASE</thymeleaf.extras.version>
 		<webjars.bootstrap.version>3.3.7-1</webjars.bootstrap.version>
@@ -498,6 +498,10 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 		</dependency>
+		      <!-- ============================================== -->
+      <!-- ============== SPRING SECURITY =============== -->
+      <!-- ============================================== -->
+
 		<!-- Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>

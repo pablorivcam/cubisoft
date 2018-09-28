@@ -18,10 +18,16 @@
    <bean id="templateEngine" class="${template.engine.class}">
       <property name="templateResolvers">
          <set>
-            <ref bean="templateResolver" />
+            <ref bean="templateResolver" />            
+         </set>
+      </property>    
+           
+      <property name="additionalDialects">
+         <set>
+            <bean class="${template.dialect.security.class}" />
          </set>
       </property>
-      <property name="enableSpringELCompiler" value="true" />
+      <property name="enableSpringELCompiler" value="true" />      
    </bean>
 
    <bean id="thymeleafViewResolver" class="${template.viewResolver.class}">
