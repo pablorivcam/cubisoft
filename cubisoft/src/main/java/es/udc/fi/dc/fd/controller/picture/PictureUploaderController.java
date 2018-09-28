@@ -5,22 +5,25 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.nio.file.Files;
 import java.security.Principal;
 import java.util.Calendar;
 
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.udc.fi.dc.fd.model.form.UploadPictureForm;
@@ -38,7 +41,7 @@ import es.udc.fi.dc.fd.service.PictureService;
 @MultipartConfig
 public class PictureUploaderController {
 
-	private static final String UPLOADS_FOLDER_NAME = "../Pictures";
+	private static final String UPLOADS_FOLDER_NAME = "Pictures";
 
 	/** The picture service. */
 	@Autowired
@@ -78,7 +81,7 @@ public class PictureUploaderController {
 	 * @return the string
 	 */
 	@PostMapping("/uploadPicture")
-	public String submit(@ModelAttribute UploadPictureForm uploadPictureForm, ModelMap modelMap,
+	public String submit(HttpSession session, @ModelAttribute UploadPictureForm uploadPictureForm, ModelMap modelMap,
 			Principal userAuthenticated) {
 
 		MultipartFile file = uploadPictureForm.getPictureFile();
@@ -91,14 +94,7 @@ public class PictureUploaderController {
 		modelMap.addAttribute("uploadPictureForm", uploadPictureForm);
 
 		// Obtenemos la dirección de la carpeta a guardar la imagen
-		try {
-			String path = this.getClass().getClassLoader().getResource("").getPath();
-			String fullPath = URLDecoder.decode(path, "UTF-8");
-			folderPath = fullPath + UPLOADS_FOLDER_NAME;
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		folderPath = session.getServletContext().getRealPath("/") + UPLOADS_FOLDER_NAME;
 
 		// Comprobamos que el fichero a subir no esté vacío
 		if (!file.isEmpty()) {
@@ -111,18 +107,24 @@ public class PictureUploaderController {
 				}
 
 				// Creamos el nuevo fichero para guardar la imagen
-				String fileName = file.getOriginalFilename();
+				String originalFileName = file.getOriginalFilename();
+				String fileName = FilenameUtils.removeExtension(originalFileName);
+				String extension = FilenameUtils.getExtension(originalFileName);
+				String finalFileName = fileName + "." + extension;
+
 				inputStream = file.getInputStream();
-				File newFile = new File(folderPath + "/" + fileName);
+				File newFile = new File(folderPath + "/" + finalFileName);
 
 				// Si el archivo ya existe le asignamos una versión
 				int version = 1;
 				while (newFile.exists()) {
-					newFile = new File(folderPath + "/" + fileName + version);
+					finalFileName = fileName + version + "." + extension;
+					newFile = new File(folderPath + "/" + finalFileName);
 					version++;
 				}
 
 				newFile.createNewFile();
+				System.out.println("" + finalFileName);
 
 				// Guardamos la imagen en el nuevo fichero
 				outputStream = new FileOutputStream(newFile);
@@ -141,8 +143,8 @@ public class PictureUploaderController {
 				// Guardamos todo en la base de datos
 				// newFile.getAbsolutePath() como posible alternativa a fileName
 				// FIXME probablemente haya que cambiar el fileName para evitar movidas
-				Picture p = new Picture(uploadPictureForm.getDescription(), Calendar.getInstance(),
-						fileName, author);
+				Picture p = new Picture(uploadPictureForm.getDescription(), Calendar.getInstance(), finalFileName,
+						author);
 				pictureService.save(p);
 
 			} catch (IOException e) {
@@ -151,6 +153,15 @@ public class PictureUploaderController {
 		}
 
 		return PictureViewConstants.VIEW_PICTURE_FORM;
+	}
+
+	@RequestMapping(value = "image/{imageName}")
+	@ResponseBody
+	public byte[] getImage(@PathVariable(value = "imageName") String imageName) throws IOException {
+
+		File serverFile = new File("" + imageName + ".jpg");
+
+		return Files.readAllBytes(serverFile.toPath());
 	}
 
 }
