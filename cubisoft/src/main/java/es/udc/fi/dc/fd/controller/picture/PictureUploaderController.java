@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.security.Principal;
 import java.util.Calendar;
 
 import javax.servlet.annotation.MultipartConfig;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import es.udc.fi.dc.fd.model.form.UploadPictureForm;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.PictureService;
 
 /**
@@ -41,6 +43,9 @@ public class PictureUploaderController {
 	/** The picture service. */
 	@Autowired
 	private PictureService pictureService;
+
+	@Autowired
+	private UserProfileRepository userProfileRepository;
 
 	public PictureUploaderController() {
 	}
@@ -68,10 +73,13 @@ public class PictureUploaderController {
 	 *            the upload picture form
 	 * @param modelMap
 	 *            the model map
+	 * @param userAuthenticated
+	 *            the user authenticated
 	 * @return the string
 	 */
 	@PostMapping("/uploadPicture")
-	public String submit(@ModelAttribute UploadPictureForm uploadPictureForm, ModelMap modelMap) {
+	public String submit(@ModelAttribute UploadPictureForm uploadPictureForm, ModelMap modelMap,
+			Principal userAuthenticated) {
 
 		MultipartFile file = uploadPictureForm.getPictureFile();
 
@@ -127,13 +135,13 @@ public class PictureUploaderController {
 
 				System.out.println("Archivo guardado en: " + newFile.getAbsolutePath());
 
+				// Obtenemos el autor asociado
+				UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+
 				// Guardamos todo en la base de datos
 
-				UserProfile up = new UserProfile("Test", "Test", "Test", "Test", "Test@test.com");
-				up.setUser_id(288L);
-
-				Picture p = new Picture("No me estás pasando aún la descripción. Posiblemente tampoco el autor.",
-						Calendar.getInstance(), newFile.getAbsolutePath(), up);
+				Picture p = new Picture(uploadPictureForm.getDescription(), Calendar.getInstance(),
+						newFile.getAbsolutePath(), author);
 				pictureService.save(p);
 
 			} catch (IOException e) {

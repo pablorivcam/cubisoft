@@ -55,6 +55,8 @@ public class Picture {
 		this.date = date;
 		this.image_path = image_path;
 		this.author = author;
+
+		date.set(Calendar.MILLISECOND, 0);
 	}
 
 	/**

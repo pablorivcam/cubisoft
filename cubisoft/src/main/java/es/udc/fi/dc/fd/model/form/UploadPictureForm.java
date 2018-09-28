@@ -5,8 +5,6 @@ import java.io.Serializable;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.common.base.MoreObjects;
-
 /**
  * The Class UploadPictureForm. Class that encapsules the upload picture form.
  */
@@ -20,6 +18,9 @@ public class UploadPictureForm implements Serializable {
 	/** The picture file. */
 	@NotEmpty
 	private MultipartFile pictureFile;
+
+	/** The description. */
+	private String description;
 
 	public UploadPictureForm() {
 	}
@@ -43,10 +44,30 @@ public class UploadPictureForm implements Serializable {
 		this.pictureFile = pictureFile;
 	}
 
+	/**
+	 * Gets the description.
+	 *
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * Sets the description.
+	 *
+	 * @param description
+	 *            the new description
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((pictureFile == null) ? 0 : pictureFile.hashCode());
 		return result;
 	}
@@ -60,17 +81,17 @@ public class UploadPictureForm implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		UploadPictureForm other = (UploadPictureForm) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
 		if (pictureFile == null) {
 			if (other.pictureFile != null)
 				return false;
 		} else if (!pictureFile.equals(other.pictureFile))
 			return false;
 		return true;
-	}
-
-	@Override
-	public final String toString() {
-		return MoreObjects.toStringHelper(this).add("pictureFile", pictureFile).toString();
 	}
 
 }

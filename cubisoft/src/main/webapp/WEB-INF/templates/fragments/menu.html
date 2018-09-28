@@ -46,7 +46,9 @@
 	                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
 	                    </a>
 	                </li>
-                	<li th:if="${#authorization.expression('isAuthenticated()')}">	                   
+                	<li th:if="${#authorization.expression('isAuthenticated()')}">	  
+                		<span th:text ="${#authentication.getPrincipal().getUsername()}"></span>
+                	                 
                 		<a href="/logout" th:href="@{#}" onclick="$('#form').submit();">
 	                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
 	                    </a>

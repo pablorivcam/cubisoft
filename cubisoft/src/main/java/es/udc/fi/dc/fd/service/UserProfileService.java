@@ -2,6 +2,8 @@ package es.udc.fi.dc.fd.service;
 
 import java.util.Collections;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -22,16 +24,43 @@ import es.udc.fi.dc.fd.config.SecurityConfig;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
+/**
+ * The Class UserProfileService.
+ */
 @Service
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserProfileService implements UserDetailsService {
 
+	/** The user profile repository. */
 	@Autowired
 	private UserProfileRepository userProfileRepository;
 
+	/** The password encoder. */
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	/**
+	 * Initialize method to add the data the first time to the DB.
+	 */
+	@PostConstruct
+	protected void initialize() {
+
+		if (userProfileRepository.findOneByEmail("admin@admin.com") == null) {
+			save(new UserProfile("admin", "Admin", "Admin", "admin", "admin@admin.com"));
+		}
+		if (userProfileRepository.findOneByEmail("user@user.com") == null) {
+			save(new UserProfile("user", "User", "User", "user", "user@user.com"));
+		}
+
+	}
+
+	/**
+	 * Save.
+	 *
+	 * @param userProfile
+	 *            the user profile
+	 * @return the user profile
+	 */
 	@Transactional
 	public UserProfile save(UserProfile userProfile) {
 		userProfile.setPassword(passwordEncoder.encode(userProfile.getPassword()));
@@ -41,7 +70,7 @@ public class UserProfileService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserProfile account = userProfileRepository.findByEmail(username);
+		UserProfile account = userProfileRepository.findOneByEmail(username);
 		if (account == null) {
 			throw new UsernameNotFoundException("user not found");
 		}
@@ -49,7 +78,7 @@ public class UserProfileService implements UserDetailsService {
 	}
 
 	public UserProfile validateUser(String email, String password) {
-		UserProfile account = userProfileRepository.findUser(email, password);
+		UserProfile account = userProfileRepository.findOneByEmail(email);
 		return account;
 	}
 
