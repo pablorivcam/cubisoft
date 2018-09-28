@@ -103,7 +103,9 @@ public class PictureUploaderController {
 				// Creamos la carpeta de recursos en caso de que no se haya creado antes
 				File folder = new File(folderPath);
 				if (!folder.exists()) {
-					folder.mkdirs();
+					if (!folder.mkdirs()) {
+						System.out.println("Failed to create new directory");
+					}
 				}
 
 				// Creamos el nuevo fichero para guardar la imagen
@@ -123,7 +125,9 @@ public class PictureUploaderController {
 					version++;
 				}
 
-				newFile.createNewFile();
+				if (!newFile.createNewFile()) {
+			          System.out.println("Failed to create new file");
+			    }
 				System.out.println("" + finalFileName);
 
 				// Guardamos la imagen en el nuevo fichero
