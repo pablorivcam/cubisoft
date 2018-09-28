@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: header" />
+<body>
+   <header class="header" th:include="fragments/menu :: menu" />
+
+   <section id="main-section" class="container-fluid">
+      <h1 th:text="#{title.yourpictures}">Your pictures</h1>
+      <p>This view shows your pictures.</p>
+      <table class="table table-striped display dataTable">
+         <tr th:each="picture : ${pictures}">
+            <td><img th:src="'/cubisoft/Pictures/' + ${picture?.image_path}"/></td>
+            <td>
+				<span th:text="${picture?.description}">Description placeholder</span>
+			</td> 
+         </tr> 
+      </table>
+   </section>
+
+   <footer>
+      <div th:include="fragments/scripts :: general" />
+   </footer>
+</body>
+
+</html>

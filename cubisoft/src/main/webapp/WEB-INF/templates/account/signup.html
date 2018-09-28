@@ -1,0 +1,88 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: header" />
+<body>
+   <header class="header" th:include="fragments/menu :: menu" />
+
+   <section id="main-section" class="container-fluid">
+   		<h1 th:text="#{title.signup.form}">Sign Up form</h1>
+      	<p>This view allows to sign up through an HTML form.</p>
+      
+		<section id="form" class="form-well">
+			<form class="form-narrow form-horizontal" method="post" th:action="@{/signup}" th:object="${signUpForm}" th:fragment="singnUpForm">
+			
+			<div class="col-md-12">
+               <div class="panel panel-default">
+                  <div class="panel-heading" th:text="#{title.signup.form.data}">Data</div>
+                  
+                  <div class="panel-body">
+						
+						<th:block th:if="${#fields.hasErrors('${signUpForm.*}')}">
+					        <div th:replace="fragments/components :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div>
+					    </th:block>
+		
+				        
+				        <div class="form-group" th:classappend="${#fields.hasErrors('login')}? 'has-error'">
+				            <label for="login" class="col-lg-2 control-label" th:text="#{label.login}">Login</label>
+				            <div class="col-lg-10">
+				                <input type="text" class="form-control" id="login" placeholder="Login" th:field="*{login}" />
+				                <span class="help-block" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Invalid Login</span>
+				            </div>
+				        </div>
+				        
+				        <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
+				            <label for="password" class="col-lg-2 control-label" th:text="#{label.password}">E-Mail</label>
+				            <div class="col-lg-10">
+				                <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}" />
+				                <span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{email}">Invalid Password</span>
+				            </div>
+				        </div>
+				        
+				        <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+				            <label for="name" class="col-lg-2 control-label" th:text="#{label.name}">Name</label>
+				            <div class="col-lg-10">
+				                <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}" />
+				                <span class="help-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Invalid Name</span>
+				            </div>
+				        </div>
+				        
+				        <div class="form-group" th:classappend="${#fields.hasErrors('surname')}? 'has-error'">
+				            <label for="surname" class="col-lg-2 control-label" th:text="#{label.surname}">Surname</label>
+				            <div class="col-lg-10">
+				                <input type="text" class="form-control" id="surname" placeholder="Surname" th:field="*{surname}" />
+				                <span class="help-block" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Invalid Surname</span>
+				            </div>
+				        </div>
+				        
+				        <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
+				            <label for="email" class="col-lg-2 control-label" th:text="#{label.email}">E-Mail</label>
+				            <div class="col-lg-10">
+				                <input type="text" class="form-control" id="email" placeholder="Email" th:field="*{email}" />
+				                <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Invalid Email</span>
+				            </div>
+				        </div>
+				        
+			      </div>
+                  
+               </div>
+            </div>
+			
+			<div id="submit" class="row">
+	            <div class="col-md-12">
+	               <button type="submit" th:text="#{button.submit}">Submit</button>
+	            </div>
+	         </div>
+	        <div class="form-group">
+	            <div class="col-lg-offset-2 col-lg-10">
+	                <p>Already have an account? <a href="signin" th:href="@{/signin}">Sign In</a></p>
+	            </div>
+	        </div>
+			</form>
+		</section>
+	   
+   </section>
+   <footer>
+      <div th:include="fragments/scripts :: general" />
+   </footer>
+</body>
+</html>
