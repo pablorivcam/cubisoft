@@ -43,6 +43,12 @@
 							th:text="#{title.data}">Data</span> <span aria-hidden="true"></span>
 					</a>
 						<ul class="dropdown-menu" role="menu">
+						<!-- Picture menu -->
+						<li th:if="${#authorization.expression('isAuthenticated()')}" >
+	              		<ul><li><a th:href="@{/picture/upload}" th:text="#{label.upload}">Upload Picture</a></li></ul>
+                     	<ul><li><a th:href="@{/picture/list}" th:text="#{label.mypictures}">My Pictures</a></li></ul>
+                     	</li>
+						<!-- Old menu -->
 							<li><a th:href="@{/entity/list}" th:text="#{label.list}">List</a></li>
                      <li><a th:href="@{/entity/list/ajax}" th:text="#{label.list.ajax}">List</a></li>
 							<li><a th:href="@{/entity/edit}" th:text="#{label.add}">Addition</a></li>
@@ -59,7 +65,7 @@
 	                    </a>
 	                </li>
                 	<li th:if="${#authorization.expression('isAuthenticated()')}">	  
-                	                 
+                	         	                          	                 
                 		<a href="/logout" th:href="@{#}" onclick="$('#form').submit();">
 	                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
 	                    </a>
@@ -72,6 +78,7 @@
 	              		<span>Hi, </span> 
 	              		<span class="nav navbar-nav navbar-right" 
 	              		th:text ="${#authentication.getPrincipal().getUsername()}"></span>
+						
 					</li>
 				</ul>
 	            
