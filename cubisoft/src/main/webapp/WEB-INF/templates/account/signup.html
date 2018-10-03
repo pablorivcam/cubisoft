@@ -69,12 +69,10 @@
 			
 			<div id="submit" class="row">
 	            <div class="col-md-12">
-	               <button type="submit" th:text="#{button.submit}">Submit</button>
+	               <button type="submit" th:text="#{button.submit}" class="btn btn-info" role="button">Submit</button>
 	            </div>
-	         </div>
-	        <div class="form-group">
 	            <div class="col-lg-offset-2 col-lg-10">
-	                <p>Already have an account? <a href="signin" th:href="@{/signin}">Sign In</a></p>
+	                <p>Already have an account? <a href="signin" th:href="@{/signin}" class="btn btn-success" role="button">Sign In</a></p>
 	            </div>
 	        </div>
 			</form>

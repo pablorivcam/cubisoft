@@ -1,16 +1,31 @@
 <!DOCTYPE html>
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 
 <head th:include="fragments/header :: header" />
-<body>
-   <header class="header" th:include="fragments/menu :: menu" />
+<body style="height: 100%">
+	<header class="header" th:include="fragments/menu :: menu" />
 
-   <section id="main-section" class="container-fluid">
-      <header class="page-header">
-         <h1 th:text="#{application.title}">Webapp Title</h1>
-      </header>
-      <p>This is the welcome page.</p>
+	<section id="main-section" class="container-fluid" style="background-image: url('/cubisoft/resources/images/background.jpg'); background-repeat: no-repeat; background-size: cover">
+
+		<div style="text-align:center; margin:10%">
+			
+			<h1 th:text="#{welcome.message}" style="color:#ffffff; background-color:#00000055; margin:0px; padding:10px">Welcome message</h1>
+
+			<div th:if="${#authorization.expression('!isAuthenticated()')}">
+				<h4 th:text="#{welcome.message2}" style="color:#ffffff; background-color:#00000055; margin:0">
+				Already have an account?</h4>
+				<div style="background-color:#00000055">
+					<a href="#" th:text="#{title.signin}" th:href="@{/signin}"class="btn btn-info" role="button" style="margin:10px">Sign In Button</a>      			
+				</div>
+			</div>
+			<div th:if="${#authorization.expression('isAuthenticated()')}">
+				<div style="background-color:#00000055">
+					<a href="#" th:text="#{title.yourpictures}" th:href="@{/picture/list}" class="btn btn-info" role="button" style="margin:10px">Go to feed</a>      			
+				</div>
+			</div>
+		</div>
+     
    </section>
 
    <footer>

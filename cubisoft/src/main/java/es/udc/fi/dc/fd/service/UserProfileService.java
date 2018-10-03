@@ -46,10 +46,10 @@ public class UserProfileService implements UserDetailsService {
 	protected void initialize() {
 
 		if (userProfileRepository.findOneByEmail("admin@admin.com") == null) {
-			save(new UserProfile("admin", "Admin", "Admin", "admin", "admin@admin.com"));
+			save(new UserProfile("admin", "Admin", "Admin", "admin", "admin@admin.com", null, null));
 		}
 		if (userProfileRepository.findOneByEmail("user@user.com") == null) {
-			save(new UserProfile("user", "User", "User", "user", "user@user.com"));
+			save(new UserProfile("user", "User", "User", "user", "user@user.com", null, null));
 		}
 
 	}

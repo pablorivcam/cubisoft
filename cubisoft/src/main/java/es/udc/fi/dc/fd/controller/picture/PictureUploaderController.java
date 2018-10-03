@@ -126,8 +126,8 @@ public class PictureUploaderController {
 				}
 
 				if (!newFile.createNewFile()) {
-			          System.out.println("Failed to create new file");
-			    }
+					System.out.println("Failed to create new file");
+				}
 				System.out.println("" + finalFileName);
 
 				// Guardamos la imagen en el nuevo fichero
@@ -156,7 +156,7 @@ public class PictureUploaderController {
 			}
 		}
 
-		return PictureViewConstants.VIEW_PICTURE_FORM;
+		return "redirect:../" + PictureViewConstants.VIEW_PICTURE_LIST;
 	}
 
 	@RequestMapping(value = "image/{imageName}")

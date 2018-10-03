@@ -42,7 +42,7 @@ public class SignUpController {
 			return AccountViewConstants.VIEW_SIGNUP;
 		}
 		UserProfile account = userProfileService.save(new UserProfile(signupForm.getLogin(), signupForm.getName(),
-				signupForm.getSurname(), signupForm.getPassword(), signupForm.getEmail()));
+				signupForm.getSurname(), signupForm.getPassword(), signupForm.getEmail(), null, null));
 		userProfileService.signin(account);
 		// see /WEB-INF/i18n/messages.properties and /WEB-INF/views/homeSignedIn.html
 		return "redirect:/";

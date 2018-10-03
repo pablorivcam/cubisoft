@@ -19,7 +19,7 @@ public final class PictureViewConstants {
 	 * Name for the picture form.
 	 */
 	public static final String VIEW_PICTURE_FORM = "picture/form";
-	
+
 	/**
 	 * Name for the picture list.
 	 */

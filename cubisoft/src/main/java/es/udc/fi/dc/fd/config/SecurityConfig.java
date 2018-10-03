@@ -57,8 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/favicon.ico", "/resources/**", "/signup", "/about").permitAll()
-				.anyRequest().authenticated().and().formLogin().loginPage("/signin").permitAll()
+		http.authorizeRequests().antMatchers("/", "/favicon.ico", "/resources/**", "/signup", "/static/**", "/about")
+				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/signin").permitAll()
 				.failureUrl("/signin?error=1").loginProcessingUrl("/authenticate").and().logout().logoutUrl("/logout")
 				.permitAll().logoutSuccessUrl("/signin?logout").and().rememberMe()
 				.rememberMeServices(rememberMeServices()).key("remember-me-key");
