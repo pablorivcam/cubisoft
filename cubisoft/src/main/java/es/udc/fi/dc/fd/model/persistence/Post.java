@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -26,6 +27,9 @@ public class Post {
 	/** The picture. */
 	private Picture picture;
 
+	/** The user. */
+	private UserProfile user;
+
 	/**
 	 * Instantiates a new post.
 	 */
@@ -40,10 +44,10 @@ public class Post {
 	 * @param picture
 	 *            the picture
 	 */
-	public Post(Calendar date, Picture picture) {
+	public Post(Calendar date, Picture picture, UserProfile user) {
 		this.date = date;
 		this.picture = picture;
-
+		this.user = user;
 		date.set(Calendar.MILLISECOND, 0);
 
 	}
@@ -109,6 +113,26 @@ public class Post {
 	 */
 	public void setPicture(Picture picture) {
 		this.picture = picture;
+	}
+
+	/**
+	 * Gets the user.
+	 *
+	 * @return the user
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	public UserProfile getUser() {
+		return user;
+	}
+
+	/**
+	 * Sets the user.
+	 *
+	 * @param user
+	 *            the new user
+	 */
+	public void setUser(UserProfile user) {
+		this.user = user;
 	}
 
 }
