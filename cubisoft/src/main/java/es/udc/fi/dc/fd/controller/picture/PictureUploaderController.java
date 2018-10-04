@@ -11,12 +11,14 @@ import java.util.Calendar;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.udc.fi.dc.fd.model.form.MultipartFileValidator;
 import es.udc.fi.dc.fd.model.form.UploadPictureForm;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
@@ -49,6 +52,8 @@ public class PictureUploaderController {
 
 	@Autowired
 	private UserProfileRepository userProfileRepository;
+
+	private MultipartFileValidator multipartFileValidator;
 
 	public PictureUploaderController() {
 	}
@@ -81,10 +86,18 @@ public class PictureUploaderController {
 	 * @return the string
 	 */
 	@PostMapping("/uploadPicture")
-	public String submit(HttpSession session, @ModelAttribute UploadPictureForm uploadPictureForm, ModelMap modelMap,
-			Principal userAuthenticated) {
+	public String submit(HttpSession session, @Valid @ModelAttribute UploadPictureForm uploadPictureForm,
+			ModelMap modelMap, Principal userAuthenticated, BindingResult errors) {
+
+		multipartFileValidator = new MultipartFileValidator();
 
 		MultipartFile file = uploadPictureForm.getPictureFile();
+
+		multipartFileValidator.validate(file, errors);
+
+		if (errors.hasErrors()) {
+			return PictureViewConstants.VIEW_PICTURE_FORM;
+		}
 
 		InputStream inputStream = null;
 		OutputStream outputStream = null;
@@ -126,8 +139,8 @@ public class PictureUploaderController {
 				}
 
 				if (!newFile.createNewFile()) {
-			          System.out.println("Failed to create new file");
-			    }
+					System.out.println("Failed to create new file");
+				}
 				System.out.println("" + finalFileName);
 
 				// Guardamos la imagen en el nuevo fichero
@@ -156,7 +169,7 @@ public class PictureUploaderController {
 			}
 		}
 
-		return PictureViewConstants.VIEW_PICTURE_FORM;
+		return "redirect:../" + PictureViewConstants.VIEW_PICTURE_LIST;
 	}
 
 	@RequestMapping(value = "image/{imageName}")

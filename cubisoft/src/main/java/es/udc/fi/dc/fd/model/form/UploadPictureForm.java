@@ -2,7 +2,6 @@ package es.udc.fi.dc.fd.model.form;
 
 import java.io.Serializable;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -16,7 +15,6 @@ public class UploadPictureForm implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** The picture file. */
-	@NotEmpty
 	private MultipartFile pictureFile;
 
 	/** The description. */

@@ -1,10 +1,15 @@
 package es.udc.fi.dc.fd.model.persistence;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 /**
  * The Class UserProfile.
@@ -32,6 +37,12 @@ public class UserProfile {
 	/** The email. */
 	private String email;
 
+	/** The follows. */
+	private List<Follow> follows;
+
+	/** The posts. */
+	private List<Post> posts;
+
 	/**
 	 * Instantiates a new user profile.
 	 */
@@ -51,13 +62,20 @@ public class UserProfile {
 	 *            the password
 	 * @param email
 	 *            the email
+	 * @param follows
+	 *            the follows
+	 * @param posts
+	 *            the posts
 	 */
-	public UserProfile(String login, String firstName, String lastName, String password, String email) {
+	public UserProfile(String login, String firstName, String lastName, String password, String email,
+			List<Follow> follows, List<Post> posts) {
 		this.login = login;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
+		this.follows = follows;
+		this.posts = posts;
 	}
 
 	/**
@@ -180,6 +198,47 @@ public class UserProfile {
 	 */
 	public void setUser_id(long user_id) {
 		this.user_id = user_id;
+	}
+
+	/**
+	 * Gets the follows.
+	 *
+	 * @return the follows
+	 */
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public List<Follow> getFollows() {
+		return follows;
+	}
+
+	/**
+	 * Sets the follows.
+	 *
+	 * @param follows
+	 *            the new follows
+	 */
+	public void setFollows(List<Follow> follows) {
+		this.follows = follows;
+	}
+
+	/**
+	 * Gets the posts.
+	 *
+	 * @return the posts
+	 */
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "post_id")
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	/**
+	 * Sets the posts.
+	 *
+	 * @param posts
+	 *            the new posts
+	 */
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 }

@@ -22,10 +22,6 @@
                   <div class="panel-heading" th:text="#{title.picture.form.data}">Data</div>
 			
                   <div class="panel-body">
-						
-						<th:block th:if="${#fields.hasErrors('${uploadPictureForm.*}')}">
-					        <div th:replace="fragments/components :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div>
-					    </th:block>
 		
 				        <div class="form-group" th:classappend="${#fields.hasErrors('pictureFile')}? 'has-error'">
 				            <label for="pictureFile" class="col-lg-2 control-label" th:text="#{label.pictureFile}">PictureFile</label>
@@ -48,7 +44,7 @@
 		        
             <div id="submit" class="row">
                <div class="col-md-12">
-                  <button type="submit" th:text="#{button.submit}">Submit</button>
+                  <button type="submit" th:text="#{button.submit}" class="btn btn-info" role="button">Submit</button>
                </div>
             </div>
 		        

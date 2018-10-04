@@ -35,7 +35,7 @@
 
 			<div id="navbar-main-body"
 				class="navbar-body navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-right">
+				<ul class="nav navbar-nav navbar-right" th:if="${#authorization.expression('isAuthenticated()')}">
 
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -44,18 +44,17 @@
 					</a>
 						<ul class="dropdown-menu" role="menu">
 						<!-- Picture menu -->
-						<li th:if="${#authorization.expression('isAuthenticated()')}" >
-	              		<ul><li><a th:href="@{/picture/upload}" th:text="#{label.upload}">Upload Picture</a></li></ul>
-                     	<ul><li><a th:href="@{/picture/list}" th:text="#{label.mypictures}">My Pictures</a></li></ul>
-                     	</li>
-						<!-- Old menu -->
+			              	<li><a th:href="@{/picture/upload}" th:text="#{label.upload}">Upload Picture</a></li>
+		                    <li><a th:href="@{/picture/list}" th:text="#{label.mypictures}">My Pictures</a></li>
+						<!-- Old menu 
 							<li><a th:href="@{/entity/list}" th:text="#{label.list}">List</a></li>
                      <li><a th:href="@{/entity/list/ajax}" th:text="#{label.list.ajax}">List</a></li>
 							<li><a th:href="@{/entity/edit}" th:text="#{label.add}">Addition</a></li>
 							<li><a th:href="@{/entity/pdf}" th:text="#{label.pdf}">PDF</a></li>
 							<li><a th:href="@{/exception/runtime}"
 								th:text="#{label.exception}">Exception</a></li>
-						</ul></li>
+						</ul></li>-->
+						</ul>
 				</ul>
 				
 				<ul class="nav navbar-nav navbar-right">
@@ -81,8 +80,7 @@
 						
 					</li>
 				</ul>
-	            
-	            
+	                       
 			</div>
 		</div>
 	</nav>

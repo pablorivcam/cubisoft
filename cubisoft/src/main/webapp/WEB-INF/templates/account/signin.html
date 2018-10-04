@@ -44,12 +44,10 @@
 	        </div>
 			 <div id="submit" class="row">
 	            <div class="col-md-12">
-	               <button type="submit" th:text="#{button.submit}">Submit</button>
+	               <button class="btn btn-info" role="button" type="submit" th:text="#{button.submit}">Submit</button>
 	            </div>
-	         </div>
-	        <div class="form-group">
 	            <div class="col-lg-offset-2 col-lg-10">
-	                <p>New here? <a href="signup" th:href="@{/signup}">Sign Up</a></p>
+	                <p>New here? <a href="signup" th:href="@{/signup}" class="btn btn-success" role="button">Sign Up</a></p>
 	            </div>
 	        </div>
 		</form>
