@@ -117,12 +117,12 @@ public class PostServiceUnitTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void findNullUserFollowersTest() throws InstanceNotFoundException, NullPointerException {
+	public void findNullUserFollowersTest() throws InstanceNotFoundException {
 		assertThat(postService.findUserFollowersPosts(null), is(equalTo(null)));
 	}
 
 	@Test(expected = InstanceNotFoundException.class)
-	public void findUnexistentUserFollowersTest() throws InstanceNotFoundException, NullPointerException {
+	public void findUnexistentUserFollowersTest() throws InstanceNotFoundException {
 		assertThat(postService.findUserFollowersPosts(new UserProfile()), is(equalTo(null)));
 	}
 

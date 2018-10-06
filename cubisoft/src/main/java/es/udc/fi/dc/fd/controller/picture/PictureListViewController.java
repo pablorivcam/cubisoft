@@ -4,6 +4,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.security.Principal;
 
+import javax.management.InstanceNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -92,7 +94,13 @@ public class PictureListViewController {
 	private final void loadViewModel(final ModelMap model, Principal userAuthenticated) {
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 
-		model.put(PictureViewConstants.PARAM_PICTURES, getPictureService().getPicturesByAuthor(author));
+		try {
+			model.put(PictureViewConstants.PARAM_PICTURES, getPictureService().getPicturesByAuthor(author));
+		} catch (InstanceNotFoundException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

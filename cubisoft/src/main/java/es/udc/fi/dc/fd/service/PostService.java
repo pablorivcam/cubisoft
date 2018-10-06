@@ -43,18 +43,16 @@ public class PostService {
 	}
 
 	/**
-	 * Find user's followers posts.
+	 * Find user followers posts.
 	 *
 	 * @param user
 	 *            the user
 	 * @return the list
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
-	 * @throws NullPointerException
-	 *             the null pointer exception
 	 */
 	@Transactional
-	public List<Post> findUserFollowersPosts(UserProfile user) throws InstanceNotFoundException, NullPointerException {
+	public List<Post> findUserFollowersPosts(UserProfile user) throws InstanceNotFoundException {
 
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
