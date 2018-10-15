@@ -19,8 +19,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	/**
 	 * Find user followers posts.
 	 *
-	 * @param user
-	 *            the user
+	 * @param user the user
 	 * @return the list
 	 */
 
@@ -28,4 +27,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 			+ "IN (SELECT f.followed_user FROM Follow f WHERE f.user=:user) ORDER BY p.date DESC")
 	List<Post> findUserFollowersPosts(@Param("user") UserProfile user);
 
+	@Query("SELECT p FROM Post p WHERE p.user=: user")
+	List<Post> findUserPosts(@Param("user") UserProfile user);
 }

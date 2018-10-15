@@ -32,8 +32,7 @@ public class PostService {
 	/**
 	 * Save.
 	 *
-	 * @param post
-	 *            the post
+	 * @param post the post
 	 * @return the picture
 	 */
 	@Transactional
@@ -45,11 +44,9 @@ public class PostService {
 	/**
 	 * Find user followers posts.
 	 *
-	 * @param user
-	 *            the user
+	 * @param user the user
 	 * @return the list
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
+	 * @throws InstanceNotFoundException the instance not found exception
 	 */
 	@Transactional
 	public List<Post> findUserFollowersPosts(UserProfile user) throws InstanceNotFoundException {
@@ -64,4 +61,21 @@ public class PostService {
 		return postRepository.findUserFollowersPosts(user);
 	}
 
+	/**
+	 * Find user posts.
+	 * 
+	 * @param user the user
+	 * @return the list of posts belonging to the user
+	 * @throws InstanceNotFoundException If the user does not exists
+	 */
+	@Transactional
+	public List<Post> findUserPosts(UserProfile user) throws InstanceNotFoundException {
+		if (user == null) {
+			throw new NullPointerException("The user param cannot be null.");
+		}
+		if (!userProfileRepository.exists(user.getEmail())) {
+			throw new InstanceNotFoundException("The user with the mail" + user.getEmail() + " doesnt exists.");
+		}
+		return postRepository.findUserPosts(user);
+	}
 }
