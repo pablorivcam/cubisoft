@@ -126,4 +126,24 @@ public class PostServiceUnitTest {
 		assertThat(postService.findUserFollowersPosts(new UserProfile()), is(equalTo(null)));
 	}
 
+	// TODO revisar si esto está bien hecho
+	@Test
+	public void finfUserPostsTest() { // Datos esperados por el test
+		ArrayList<Post> postsB = new ArrayList<>();
+		postsB.add(postB1);
+		postsB.add(postB2);
+
+		// Mockito.when(postRepository.findUserPosts(userA)).thenReturn(postsB);
+
+		try {
+			assertThat(postService.findUserPosts(userB), is(equalTo(postsB)));
+		} catch (
+
+		InstanceNotFoundException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
