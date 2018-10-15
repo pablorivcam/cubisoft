@@ -3,6 +3,7 @@ package es.udc.fi.dc.fd.test.unit.persistence;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,7 +19,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import es.udc.fi.dc.fd.model.persistence.Follow;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
@@ -49,9 +49,6 @@ public class PostServiceUnitTest {
 
 	private UserProfile userA, userB, userC;
 
-	@SuppressWarnings("unused")
-	private Follow followAB, followAC, followCA;
-
 	private Post postA1, postB1, postB2, postC1;
 
 	private Picture picture;
@@ -77,10 +74,6 @@ public class PostServiceUnitTest {
 		postB2 = new Post(Calendar.getInstance(), picture, userB);
 		postC1 = new Post(Calendar.getInstance(), picture, userC);
 
-		followAB = new Follow(userA, userB);
-		followAC = new Follow(userA, userC);
-		followCA = new Follow(userC, userA);
-
 	}
 
 	@Test
@@ -95,7 +88,8 @@ public class PostServiceUnitTest {
 		ArrayList<Post> postsC = new ArrayList<>();
 		postsC.add(postA1);
 
-		// Inicializamos lo que tienen que devolver las clases Repository en los métodos
+		// Inicializamos lo que tienen que devolver las clases Repository en los
+		// métodos
 		// utilizados por el servicio en los diferentes test
 		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
 		Mockito.when(postRepository.findUserFollowersPosts(userA)).thenReturn(postsA);
@@ -146,4 +140,55 @@ public class PostServiceUnitTest {
 		}
 	}
 
+	@Test
+	public void newPostTest() throws InstanceNotFoundException {
+		// Datos esperados por el test
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+		Mockito.when(userProfileRepository.exists("2" + TEST_EMAIL)).thenReturn(true);
+		Mockito.when(userProfileRepository.exists("3" + TEST_EMAIL)).thenReturn(true);
+		Post post = postService.newPost(picture, userA);
+		Post post2 = postService.newPost(picture, userB);
+		Post post3 = postService.newPost(picture, userC);
+
+		// Inicializamos lo que tienen que devolver las clases Repository en los
+		// métodos utilizados por el servicio en los diferentes test
+		Mockito.when(postRepository.findOneByPostId(post.getPost_id())).thenReturn(post);
+		Mockito.when(postRepository.findOneByPostId(post2.getPost_id())).thenReturn(post2);
+		Mockito.when(postRepository.findOneByPostId(post3.getPost_id())).thenReturn(post3);
+
+		// Realizamos comprobaciones
+		assertEquals(postRepository.findOneByPostId(post.getPost_id()).getPost_id(), post.getPost_id());
+		assertEquals(postRepository.findOneByPostId(post2.getPost_id()).getPost_id(), post2.getPost_id());
+		assertEquals(postRepository.findOneByPostId(post3.getPost_id()).getPost_id(), post3.getPost_id());
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void newNullUserPostTest() throws InstanceNotFoundException {
+		assertThat(postService.newPost(picture, null), is(equalTo(null)));
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void newNullPicturePostTest() throws InstanceNotFoundException {
+		assertThat(postService.newPost(null, null), is(equalTo(null)));
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void newUnexistentUserPostTest() throws InstanceNotFoundException {
+		assertThat(postService.newPost(picture, new UserProfile()), is(equalTo(null)));
+	}
+
+	@Test
+	public void deletePostTest() throws InstanceNotFoundException {
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+		Post post = postService.newPost(picture, userA);
+
+		Mockito.when(postRepository.findOneByPostId(post.getPost_id())).thenReturn(post);
+
+		postService.deletePost(post);
+
+		Mockito.when(postRepository.findOneByPostId(post.getPost_id())).thenReturn(null);
+
+		assertEquals(postRepository.findOneByPostId(post.getPost_id()), null);
+
+	}
 }
