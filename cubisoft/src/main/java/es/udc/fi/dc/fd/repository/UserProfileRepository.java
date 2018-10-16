@@ -15,6 +15,13 @@ public interface UserProfileRepository extends JpaRepository<UserProfile, Long> 
 
 	UserProfile findOneByEmail(String email);
 
+	/**
+	 * Exists.
+	 *
+	 * @param email
+	 *            the email
+	 * @return true, if successful
+	 */
 	@Query("select count(u) > 0 from UserProfile u where u.email = :email")
 	boolean exists(@Param("email") String email);
 

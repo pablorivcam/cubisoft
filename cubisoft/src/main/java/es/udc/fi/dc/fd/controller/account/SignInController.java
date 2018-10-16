@@ -10,6 +10,12 @@ public class SignInController {
 
 	/**
 	 * Shows the page when the "get" petition is done.
+	 *
+	 * @param model
+	 *            the model
+	 * @param error
+	 *            the error
+	 * @return the string
 	 */
 	@GetMapping("signin")
 	public final String showSignInView(final Model model,

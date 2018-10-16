@@ -6,7 +6,8 @@
 <body style="height: 100%">
 	<header class="header" th:include="fragments/menu :: menu" />
 
-	<section id="main-section" class="container-fluid" style="background-image: url('/cubisoft/resources/images/background.jpg'); background-repeat: no-repeat; background-size: cover">
+	<section id="main-section" class="container-fluid" 
+	 th:style="'background: url(\''+@{/resources/images/background.jpg}+ '\');background-repeat: no-repeat; background-size: cover'">
 
 		<div style="text-align:center; margin:10%">
 			

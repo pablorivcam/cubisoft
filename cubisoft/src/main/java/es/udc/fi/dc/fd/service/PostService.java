@@ -118,7 +118,7 @@ public class PostService {
 	 */
 	@Transactional
 	public void deletePost(Post post) {
-		post = postRepository.findOneByPostId(post.getPost_id());
+		post = postRepository.findPostByPostId(post.getPost_id());
 		postRepository.delete(post);
 	}
 

@@ -33,10 +33,13 @@ public class FollowedListViewController {
 	}
 
 	/**
-	 * Returns the page containing all the followed user profiles of a user
-	 * 
-	 * @param model             model map
-	 * @param userAuthenticated The authenticated user
+	 * Returns the page containing all the followed user profiles of a user.
+	 *
+	 * @param model
+	 *            model map
+	 * @param userAuthenticated
+	 *            The authenticated user
+	 * @return the string
 	 */
 	@GetMapping(path = "/list")
 	public final String showFollowedList(final ModelMap model, Principal userAuthenticated) {
@@ -47,10 +50,12 @@ public class FollowedListViewController {
 	}
 
 	/**
-	 * Loads the data required for showing all the followed profiles of a user
-	 * 
-	 * @param model             model map
-	 * @param userAuthenticated the authenticated user
+	 * Loads the data required for showing all the followed profiles of a user.
+	 *
+	 * @param model
+	 *            model map
+	 * @param userAuthenticated
+	 *            the authenticated user
 	 */
 	private final void loadViewModel(final ModelMap model, Principal userAuthenticated) {
 		UserProfile user = userProfileRepository.findOneByEmail(userAuthenticated.getName());

@@ -77,12 +77,16 @@ public class PictureUploaderController {
 	 * Submit. Process the uploadPicture POST request to upload an image into the
 	 * server.
 	 *
+	 * @param session
+	 *            the session
 	 * @param uploadPictureForm
 	 *            the upload picture form
 	 * @param modelMap
 	 *            the model map
 	 * @param userAuthenticated
 	 *            the user authenticated
+	 * @param errors
+	 *            the errors
 	 * @return the string
 	 */
 	@PostMapping("/uploadPicture")
@@ -172,6 +176,15 @@ public class PictureUploaderController {
 		return "redirect:../" + PictureViewConstants.VIEW_PICTURE_LIST;
 	}
 
+	/**
+	 * Gets the image.
+	 *
+	 * @param imageName
+	 *            the image name
+	 * @return the image
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	@RequestMapping(value = "image/{imageName}")
 	@ResponseBody
 	public byte[] getImage(@PathVariable(value = "imageName") String imageName) throws IOException {

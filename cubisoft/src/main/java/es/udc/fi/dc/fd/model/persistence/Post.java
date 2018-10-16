@@ -43,6 +43,8 @@ public class Post {
 	 *            the date
 	 * @param picture
 	 *            the picture
+	 * @param user
+	 *            the user
 	 */
 	public Post(Calendar date, Picture picture, UserProfile user) {
 		this.date = date;

@@ -8,12 +8,17 @@
 
    <section id="main-section" class="container-fluid">
       <h1 th:text="#{title.yourpictures}">Your pictures</h1>
-      <p>This view shows your pictures.</p>
       <table class="table table-striped display dataTable">
-         <tr th:each="picture : ${pictures}" style="text-align: center">
+         <tr th:each="picture : ${pictures}">
             <td>
-            	<img th:src="'/cubisoft/Pictures/' + ${picture?.image_path}" width="400px"/></br>
-      			<span th:text="${picture?.description}">Description placeholder</span>
+            	<div  style="text-align: center; width:400px; margin-left:25%">
+            	<div>
+            		<img th:src="'/cubisoft/Pictures/' + ${picture?.image_path}" width="400px"/></br>
+            	</div>
+            	<div style="width:80%; margin-left:5%">
+      				<span style="padding-left: 20px" th:text="${picture?.description}">Description placeholder</span>
+           		</div>
+           		</div>
             </td> 
          </tr> 
       </table>

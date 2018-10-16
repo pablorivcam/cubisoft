@@ -23,12 +23,22 @@ public class SignUpController {
 	@Autowired
 	private UserProfileService userProfileService;
 
+	/**
+	 * Instantiates a new sign up controller.
+	 *
+	 * @param service
+	 *            the service
+	 */
 	public SignUpController(final UserProfileService service) {
 		userProfileService = checkNotNull(service, "Received a null pointer as service");
 	}
 
 	/**
 	 * Shows the page when the "get" petition is done.
+	 *
+	 * @param model
+	 *            the model
+	 * @return the string
 	 */
 	@GetMapping("signup")
 	public final String showSingnUpView(final ModelMap model) {

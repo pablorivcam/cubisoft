@@ -1,16 +1,17 @@
 <header th:fragment="menu" xmlns:th="http://www.thymeleaf.org">
 
-	<style>
-	
+	<style th:inline="text">
+		
 		.logo_link a {
 			width: 200px;
 			padding:20px; 
-			background-image: url('/cubisoft/resources/images/headeroff.png');
+			background: url([[@{/resources/images/headeroff.png}]]);	
 			background-repeat: no-repeat; background-size: cover;
 		}
 		
 		.logo_link a:hover {
-			background-image: url('/cubisoft/resources/images/headeron.png');
+			background: url([[@{/resources/images/headeron.png}]]);
+			background-repeat: no-repeat; background-size: cover;
 		}
 	
 	</style>
@@ -30,7 +31,6 @@
 					</a>
 				</div>
 					
-
 			</div>
 
 			<div id="navbar-main-body"

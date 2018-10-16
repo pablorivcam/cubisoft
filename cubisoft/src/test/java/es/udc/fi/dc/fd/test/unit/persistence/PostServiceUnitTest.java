@@ -120,14 +120,14 @@ public class PostServiceUnitTest {
 		assertThat(postService.findUserFollowersPosts(new UserProfile()), is(equalTo(null)));
 	}
 
-	// TODO revisar si esto está bien hecho
 	@Test
-	public void finfUserPostsTest() { // Datos esperados por el test
+	public void findUserPostsTest() { // Datos esperados por el test
 		ArrayList<Post> postsB = new ArrayList<>();
 		postsB.add(postB1);
 		postsB.add(postB2);
 
-		// Mockito.when(postRepository.findUserPosts(userA)).thenReturn(postsB);
+		Mockito.when(userProfileRepository.exists("2" + TEST_EMAIL)).thenReturn(true);
+		Mockito.when(postRepository.findUserPosts(userB)).thenReturn(postsB);
 
 		try {
 			assertThat(postService.findUserPosts(userB), is(equalTo(postsB)));
@@ -152,14 +152,14 @@ public class PostServiceUnitTest {
 
 		// Inicializamos lo que tienen que devolver las clases Repository en los
 		// métodos utilizados por el servicio en los diferentes test
-		Mockito.when(postRepository.findOneByPostId(post.getPost_id())).thenReturn(post);
-		Mockito.when(postRepository.findOneByPostId(post2.getPost_id())).thenReturn(post2);
-		Mockito.when(postRepository.findOneByPostId(post3.getPost_id())).thenReturn(post3);
+		Mockito.when(postRepository.findPostByPostId(post.getPost_id())).thenReturn(post);
+		Mockito.when(postRepository.findPostByPostId(post2.getPost_id())).thenReturn(post2);
+		Mockito.when(postRepository.findPostByPostId(post3.getPost_id())).thenReturn(post3);
 
 		// Realizamos comprobaciones
-		assertEquals(postRepository.findOneByPostId(post.getPost_id()).getPost_id(), post.getPost_id());
-		assertEquals(postRepository.findOneByPostId(post2.getPost_id()).getPost_id(), post2.getPost_id());
-		assertEquals(postRepository.findOneByPostId(post3.getPost_id()).getPost_id(), post3.getPost_id());
+		assertEquals(postRepository.findPostByPostId(post.getPost_id()).getPost_id(), post.getPost_id());
+		assertEquals(postRepository.findPostByPostId(post2.getPost_id()).getPost_id(), post2.getPost_id());
+		assertEquals(postRepository.findPostByPostId(post3.getPost_id()).getPost_id(), post3.getPost_id());
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -182,13 +182,13 @@ public class PostServiceUnitTest {
 		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
 		Post post = postService.newPost(picture, userA);
 
-		Mockito.when(postRepository.findOneByPostId(post.getPost_id())).thenReturn(post);
+		Mockito.when(postRepository.findPostByPostId(post.getPost_id())).thenReturn(post);
 
 		postService.deletePost(post);
 
-		Mockito.when(postRepository.findOneByPostId(post.getPost_id())).thenReturn(null);
+		Mockito.when(postRepository.findPostByPostId(post.getPost_id())).thenReturn(null);
 
-		assertEquals(postRepository.findOneByPostId(post.getPost_id()), null);
+		assertEquals(postRepository.findPostByPostId(post.getPost_id()), null);
 
 	}
 }

@@ -60,9 +60,11 @@ public class PictureListViewController {
 	 * <p>
 	 * Before returning the name the model should be loaded with all the data
 	 * required by the view.
-	 * 
+	 *
 	 * @param model
 	 *            model map
+	 * @param userAuthenticated
+	 *            the user authenticated
 	 * @return the name for the pictures listing view
 	 */
 	@GetMapping(path = "/list")
@@ -87,9 +89,11 @@ public class PictureListViewController {
 	 * <p>
 	 * As the view will list all the pictures, it requires these pictures as one of
 	 * the parameters.
-	 * 
+	 *
 	 * @param model
 	 *            model map
+	 * @param userAuthenticated
+	 *            the user authenticated
 	 */
 	private final void loadViewModel(final ModelMap model, Principal userAuthenticated) {
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
