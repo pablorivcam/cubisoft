@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 /**
@@ -225,8 +224,7 @@ public class UserProfile {
 	 *
 	 * @return the posts
 	 */
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "post_id")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post_id")
 	public List<Post> getPosts() {
 		return posts;
 	}

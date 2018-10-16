@@ -123,6 +123,7 @@ public class Post {
 	 * @return the user
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
 	public UserProfile getUser() {
 		return user;
 	}

@@ -64,8 +64,8 @@ public class UserProfileService implements UserDetailsService {
 	@Transactional
 	public UserProfile save(UserProfile userProfile) {
 		userProfile.setPassword(passwordEncoder.encode(userProfile.getPassword()));
-		userProfileRepository.save(userProfile);
-		return userProfile;
+		UserProfile p = userProfileRepository.save(userProfile);
+		return p;
 	}
 
 	@Override

@@ -25,22 +25,26 @@ public class FollowService {
 	/**
 	 * Follow.
 	 *
-	 * @param user          the user
-	 * @param followed_user the followed_user
+	 * @param user
+	 *            the user
+	 * @param followed_user
+	 *            the followed_user
 	 * @return the follow
 	 */
 	@Transactional
 	public Follow follow(UserProfile user, UserProfile followed_user) {
 		Follow follow = new Follow(user, followed_user);
-		followRepository.save(follow);
+		follow = followRepository.save(follow);
 		return follow;
 	}
 
 	/**
 	 * UnFollow.
 	 *
-	 * @param user          the user
-	 * @param followed_user the followed_user
+	 * @param user
+	 *            the user
+	 * @param followed_user
+	 *            the followed_user
 	 */
 	@Transactional
 	public void unfollow(UserProfile user, UserProfile followed_user) {

@@ -31,9 +31,11 @@ import org.springframework.web.multipart.MultipartFile;
 import es.udc.fi.dc.fd.model.form.MultipartFileValidator;
 import es.udc.fi.dc.fd.model.form.UploadPictureForm;
 import es.udc.fi.dc.fd.model.persistence.Picture;
+import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.PictureService;
+import es.udc.fi.dc.fd.service.PostService;
 
 /**
  * The Class PictureUploaderController. Encargada de controlar la página de
@@ -49,6 +51,9 @@ public class PictureUploaderController {
 	/** The picture service. */
 	@Autowired
 	private PictureService pictureService;
+
+	@Autowired
+	private PostService postService;
 
 	@Autowired
 	private UserProfileRepository userProfileRepository;
@@ -75,7 +80,7 @@ public class PictureUploaderController {
 
 	/**
 	 * Submit. Process the uploadPicture POST request to upload an image into the
-	 * server.
+	 * server. In adition, a single post is created with the image.
 	 *
 	 * @param session
 	 *            the session
@@ -162,11 +167,14 @@ public class PictureUploaderController {
 				UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 
 				// Guardamos todo en la base de datos
-				// newFile.getAbsolutePath() como posible alternativa a fileName
-				// FIXME probablemente haya que cambiar el fileName para evitar movidas
 				Picture p = new Picture(uploadPictureForm.getDescription(), Calendar.getInstance(), finalFileName,
 						author);
-				pictureService.save(p);
+
+				p = pictureService.save(p);
+
+				Post post = new Post(Calendar.getInstance(), p, author);
+
+				postService.save(post);
 
 			} catch (IOException e) {
 				e.printStackTrace();

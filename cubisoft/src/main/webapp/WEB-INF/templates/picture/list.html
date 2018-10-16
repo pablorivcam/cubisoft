@@ -11,13 +11,21 @@
       <table class="table table-striped display dataTable">
          <tr th:each="picture : ${pictures}">
             <td>
-            	<div  style="text-align: center; width:400px; margin-left:25%">
-            	<div>
-            		<img th:src="'/cubisoft/Pictures/' + ${picture?.image_path}" width="400px"/></br>
-            	</div>
-            	<div style="width:80%; margin-left:5%">
-      				<span style="padding-left: 20px" th:text="${picture?.description}">Description placeholder</span>
-           		</div>
+            	<div  style="width:400px; margin-left:25%">
+	            	<div>
+	            		<img th:src="'/cubisoft/Pictures/' + ${picture?.image_path}" width="400px"/>
+	            		<br/><hr style="margin:5px"/>
+	            	</div>
+	            	<div style="width:80%">
+						<div>
+							<a href="#" th:text="#{button.delete}" th:href="@{/picture/delete(picture_id=${picture?.picture_id})}" class="btn btn-danger" role="button" style="margin:10px">Delete</a>      			           			
+						</div> 
+
+	            		<div style="margin-left:5%">
+		      				<span th:text="${picture?.description}">Description placeholder</span>
+	            		</div>
+           	
+	           		</div>
            		</div>
             </td> 
          </tr> 
