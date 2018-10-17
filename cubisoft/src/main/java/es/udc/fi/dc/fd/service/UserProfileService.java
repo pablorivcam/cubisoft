@@ -1,5 +1,6 @@
 package es.udc.fi.dc.fd.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.annotation.PostConstruct;
@@ -99,4 +100,12 @@ public class UserProfileService implements UserDetailsService {
 		return new SimpleGrantedAuthority(SecurityConfig.DEFAULT_ROLE);
 	}
 
+
+	public ArrayList<UserProfile> FindUserProfileByKeywords(String keywords) {
+		ArrayList<UserProfile> lista = new ArrayList<UserProfile>(
+				userProfileRepository.FindUserProfileByKeywords(keywords));
+		return lista;
+	}
+
 }
+

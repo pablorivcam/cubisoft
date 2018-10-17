@@ -1,5 +1,7 @@
 package es.udc.fi.dc.fd.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +27,7 @@ public interface UserProfileRepository extends JpaRepository<UserProfile, Long> 
 	@Query("select count(u) > 0 from UserProfile u where u.email = :email")
 	boolean exists(@Param("email") String email);
 
+
+	@Query("SELECT u FROM UserProfile u WHERE u.firstName LIKE CONCAT('%',:keywords,'%')")
+	List<UserProfile> FindUserProfileByKeywords(@Param("keywords") String keywords);
 }
