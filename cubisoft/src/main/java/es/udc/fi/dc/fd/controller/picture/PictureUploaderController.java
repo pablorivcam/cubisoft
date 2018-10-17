@@ -46,7 +46,7 @@ import es.udc.fi.dc.fd.service.PostService;
 @MultipartConfig
 public class PictureUploaderController {
 
-	private static final String UPLOADS_FOLDER_NAME = "Pictures";
+	public static final String UPLOADS_FOLDER_NAME = "Pictures";
 
 	/** The picture service. */
 	@Autowired

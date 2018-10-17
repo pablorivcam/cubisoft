@@ -65,4 +65,15 @@ public class PictureService {
 
 	}
 
+	/**
+	 * Delete a picture.
+	 *
+	 * @param picture
+	 *            the picture
+	 */
+	@Transactional
+	public void delete(Picture picture) {
+		pictureRepository.delete(picture);
+	}
+
 }
