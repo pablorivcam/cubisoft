@@ -11,7 +11,13 @@
 		<dropTable cascadeConstraints="true"
 		        tableName="example_entities"/>
 	</changeSet>
-		
+	
+	<changeSet author="BranLopez"  id="dropLikes" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Likes"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="Likes"/>
+	</changeSet>
+	
 	<changeSet author="PabloRivas" id="dropFollow" runAlways="true">
 		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Follow"/></preConditions>
 		<dropTable cascadeConstraints="true"
@@ -116,6 +122,25 @@
        	            />
 		     </column>
 		</createTable>
+		
+		<createTable tableName="Likes">
+		<column autoIncrement="true" name="likes_id" type="BIGINT">
+		        <constraints primaryKey="true" />
+		     </column>
+		     <column name="user" type="BIGINT">
+		         <constraints nullable="false" 
+		         	foreignKeyName="like_user_fk" 
+                	references="UserProfile(user_id)"
+       	            />
+		     </column>
+		     <column name="post" type="BIGINT">
+		         <constraints nullable="false" 
+		         	foreignKeyName="like_post_id_fk" 
+                	references="Post(post_id)"
+       	            />
+		     </column>
+		</createTable>
+		
 	</changeSet>
 	<changeSet author="PabloRivas" id="foreign_keys" runAlways="true">
 		    <addForeignKeyConstraint baseColumnNames="picture_id"
@@ -125,6 +150,13 @@
 	            onUpdate="RESTRICT"
 	            referencedColumnNames="picture_id"
 	            referencedTableName="Picture"/>	
+	</changeSet>
+	
+	<changeSet author="BranLopez" id="likes_unique_contraint" runAlways="true">
+		<addUniqueConstraint catalogName = "cat"
+			columnNames="user, post"
+			constraintName="like_unique_constraint"
+			tableName="Likes"/>
 	</changeSet>
 
 	<!-- Contenido por defecto -->
