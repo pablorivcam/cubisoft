@@ -151,14 +151,14 @@
 	            referencedColumnNames="picture_id"
 	            referencedTableName="Picture"/>	
 	</changeSet>
-	
+	<!--
 	<changeSet author="BranLopez" id="likes_unique_contraint" runAlways="true">
 		<addUniqueConstraint catalogName = "cat"
 			columnNames="user, post"
 			constraintName="like_unique_constraint"
 			tableName="Likes"/>
 	</changeSet>
-
+	-->
 	<!-- Contenido por defecto -->
 
    <changeSet author="Bernardo" id="initial_tables" runAlways="true">

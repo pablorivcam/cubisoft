@@ -41,7 +41,7 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
 	 * @param likes_id the likes id
 	 * @return the "likes" (only 1)
 	 */
-	@Query("SELECT l FROM Likes l where l.likest_id=:likes_id")
+	@Query("SELECT l FROM Likes l where l.likes_id=:likes_id")
 	Likes findLikesById(@Param("likes_id") Long likes_id);
 
 }

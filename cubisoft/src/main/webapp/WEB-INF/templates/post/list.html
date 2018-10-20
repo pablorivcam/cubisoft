@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: header" />
+<body>
+	<header class="header" th:include="fragments/menu :: menu" /></header>
+   
+	<section id="main-section" class="container-fluid">
+	
+		<div th:if="${error_message != null}">
+			<p class="alert alert-danger" role="alert" th:if="${!sucess}" th:text="${error_message}">Error message</p>
+			<p class="alert alert-success" role="alert" th:if="${sucess}" th:text="${error_message}">Error message</p>
+      	</div>
+		
+	 <h1 th:text="#{title.yourposts}">Your posts</h1>
+	 <table class="table table-striped display dataTable">
+	 	<tr th:each="post : ${posts}">
+		<td>
+            	<!-- Parte de la visualización de la imagen -->
+            	<div  style="width:400px; margin-left:25%">
+	  				<div>
+	            		            	
+	            		<img th:src="@{'/Pictures/' + ${post?.picture.image_path}}" width="400px"/>
+	            		<br/><hr style="margin:5px"/>
+	            	</div>
+	            	<div style="width:80%">
+	            		<div>
+							<a href="#deletePostModal" 
+							th:attr="data-postid=''+${post?.post_id}+''"							
+							th:text="#{button.delete}" data-toggle="modal" class="deletePostModalButton btn btn-danger" role="button" style="margin:10px">Delete</a>
+						</div> 
+	            		<div style="margin-left:5%">
+		      				<span th:text="${post?.picture.description}">Description placeholder</span>
+	            		</div>
+           	
+	           		</div>
+           		</div>
+         		
+            </td> 
+         </tr> 
+      </table>
+   </section>
+   <div class="modal fade" id="deletePostModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deletePostModalLabel" th:text="#{title.post.delete}">Delete Post</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+						<p th:text="#{label.post.confirmation}">Confirmation</p>
+						<span id="modal-postid"></span> 
+				</div>
+				<div class="modal-footer">
+					<form id="deletePostForm" action="#" th:action="@{/post/deletePost}" class="form-narrow form-horizontal" method="post">
+						<input type="hidden" id="postId" name="postId" value="-1">				
+						<button th:text="#{button.cancel}" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>	
+						<button th:text="#{button.delete}" type="submit" class="btn btn-danger">Delete</button>
+					</form>							
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+      <div th:include="fragments/scripts :: general" />
+   </footer>
+
+	<!-- Script para configurar el modal para todos los posibles botones de delete -->
+	<script type="text/javascript">
+			
+		$(document).ready(function() {
+			
+			// Cada vez que se haga click en algún botón de eliminar
+			$(document).on("click", ".deletePostModalButton", function () {
+				
+				// Se recoje su valor de data-pictureId
+	    		var postId = $(this).data('postid');
+
+				// Y se usa en el campo oculto del formulario del modal
+	        	$("#postId").val( postId );
+
+			});
+		});
+	
+	</script>  
+</body>
+</html>
