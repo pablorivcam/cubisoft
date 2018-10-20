@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.udc.fi.dc.fd.controller.picture.PictureUploaderController;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.repository.PostRepository;
+import es.udc.fi.dc.fd.service.PictureService;
 import es.udc.fi.dc.fd.service.PostService;
 
 @Controller
@@ -37,6 +39,9 @@ public class UserPostListViewController {
 
 	@Autowired
 	private final PostService postService;
+	
+	@Autowired
+	private final PictureService pictureService;
 
 	@Autowired
 	private UserProfileRepository userProfileRepository;
@@ -45,10 +50,11 @@ public class UserPostListViewController {
 	private PostRepository postRepository;
 
 	@Autowired
-	public UserPostListViewController(final PostService service) {
+	public UserPostListViewController(final PostService service, final PictureService servicePicture) {
 		super();
 
 		postService = checkNotNull(service, "Received a null pointer as service");
+		pictureService = checkNotNull(servicePicture, "Received a null pointer as service");
 	}
 
 	@GetMapping(path = "/list")
@@ -61,6 +67,10 @@ public class UserPostListViewController {
 
 	private final PostService getPostService() {
 		return postService;
+	}
+	
+	private final PictureService getPictureService() {
+		return pictureService;
 	}
 
 	private final void loadViewModel(final ModelMap model, Principal userAuthenticated) {
@@ -104,6 +114,22 @@ public class UserPostListViewController {
 		} else {
 			// Eliminamos la imagen de la BD
 			postService.deletePost(post);
+			
+			if (post.getPicture().getAuthor().getUser_id()== author.getUser_id()) {
+				    
+				pictureService.delete(post.getPicture());
+				    
+				String folderPath = session.getServletContext().getRealPath("/")
+				+ PictureUploaderController.UPLOADS_FOLDER_NAME;
+
+				String imagePath = folderPath + "/" + post.getPicture().getImage_path();
+				File pictureFile = new File(imagePath);
+				    
+				if (pictureFile.exists()) {
+					pictureFile.delete();
+				}
+				    
+			}
 
 			error_message = SUCESS_DELETED_POST;
 			sucess = true;
