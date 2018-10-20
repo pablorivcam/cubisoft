@@ -76,4 +76,10 @@ public class LikesService {
 		}
 		return likesRepository.findLikesByPost(post);
 	}
+
+	@Transactional
+	public void delete(Likes like) {
+		likesRepository.delete(like);
+
+	}
 }

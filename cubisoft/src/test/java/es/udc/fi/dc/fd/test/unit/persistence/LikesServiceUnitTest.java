@@ -3,6 +3,7 @@ package es.udc.fi.dc.fd.test.unit.persistence;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,7 +26,6 @@ import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.LikesService;
 
-//TODO acabar todo el test y hacer commit
 public class LikesServiceUnitTest {
 	public static final String TEST_LOGIN = "test";
 	public static final String TEST_FIRSTNAME = "Test";
@@ -46,7 +46,7 @@ public class LikesServiceUnitTest {
 	private LikesService likesService;
 
 	private UserProfile userA, userB, userC;
-	private Post postA1, postB1, postB2, postC1;
+	private Post postA1;
 	private Picture picture;
 	private Likes like1, like2, like3;
 
@@ -67,9 +67,6 @@ public class LikesServiceUnitTest {
 		picture = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA);
 
 		postA1 = new Post(Calendar.getInstance(), picture, userA);
-		postB1 = new Post(Calendar.getInstance(), picture, userB);
-		postB2 = new Post(Calendar.getInstance(), picture, userB);
-		postC1 = new Post(Calendar.getInstance(), picture, userC);
 
 		like1 = new Likes(userA, postA1);
 		like2 = new Likes(userB, postA1);
@@ -149,8 +146,10 @@ public class LikesServiceUnitTest {
 		ArrayList<Likes> likesA = new ArrayList<>();
 
 		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
-		Mockito.when(userProfileRepository.exists("2" + TEST_EMAIL)).thenReturn(true);
-		Mockito.when(userProfileRepository.exists("3" + TEST_EMAIL)).thenReturn(true);
+		// Mockito.when(userProfileRepository.exists("2" +
+		// TEST_EMAIL)).thenReturn(true);
+		// Mockito.when(userProfileRepository.exists("3" +
+		// TEST_EMAIL)).thenReturn(true);
 
 		Mockito.when(postRepository.existsById(postA1.getPost_id())).thenReturn(true);
 
@@ -177,10 +176,32 @@ public class LikesServiceUnitTest {
 		assertThat(likesService.newLikes(null, postA1), is(equalTo(null)));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test(expected = InstanceNotFoundException.class)
 	public void newNullPostLikesTest() throws InstanceNotFoundException {
 		assertThat(likesService.newLikes(userA, null), is(equalTo(null)));
 	}
-	// TODO revisar si hay que hacer más tests aquí
+	// TODO revisar si hay que hacer más tests aquí: que el like desaparezca cuando
+	// se borra una imagen, un post o un usuario
+
+	@Test
+	public void deleteLikesTest() throws InstanceNotFoundException {
+
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+
+		Mockito.when(postRepository.existsById(postA1.getPost_id())).thenReturn(true);
+
+		Mockito.when(likesRepository.save(like1)).thenReturn(like1);
+
+		Likes likeT1 = likesService.newLikes(userA, postA1);
+
+		Mockito.when(likesRepository.findLikesById(likeT1.getLikes_id())).thenReturn(likeT1);
+
+		likesService.delete(likeT1);
+
+		Mockito.when(likesRepository.findLikesById(likeT1.getLikes_id())).thenReturn(null);
+
+		assertEquals(likesRepository.findLikesById(likeT1.getLikes_id()), null);
+
+	}
 
 }
