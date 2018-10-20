@@ -58,3 +58,6 @@ INSERT INTO example_entities (name) VALUES
    ('entity_28'),
    ('entity_29'),
    ('entity_30');
+   
+   INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email) 
+   	VALUES (1,'admin','Admin','Admin','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','admin@admin.com');

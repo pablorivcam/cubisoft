@@ -3,8 +3,6 @@ package es.udc.fi.dc.fd.service;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -39,21 +37,6 @@ public class UserProfileService implements UserDetailsService {
 	/** The password encoder. */
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	/**
-	 * Initialize method to add the data the first time to the DB.
-	 */
-	@PostConstruct
-	protected void initialize() {
-
-		if (userProfileRepository.findOneByEmail("admin@admin.com") == null) {
-			save(new UserProfile("admin", "Admin", "Admin", "admin", "admin@admin.com", null, null));
-		}
-		if (userProfileRepository.findOneByEmail("user@user.com") == null) {
-			save(new UserProfile("user", "User", "User", "user", "user@user.com", null, null));
-		}
-
-	}
 
 	/**
 	 * Save.
@@ -100,7 +83,6 @@ public class UserProfileService implements UserDetailsService {
 		return new SimpleGrantedAuthority(SecurityConfig.DEFAULT_ROLE);
 	}
 
-
 	public ArrayList<UserProfile> FindUserProfileByKeywords(String keywords) {
 		ArrayList<UserProfile> lista = new ArrayList<UserProfile>(
 				userProfileRepository.FindUserProfileByKeywords(keywords));
@@ -108,4 +90,3 @@ public class UserProfileService implements UserDetailsService {
 	}
 
 }
-
