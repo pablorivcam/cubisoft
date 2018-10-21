@@ -103,6 +103,10 @@
 		     <column name="picture_id" type="BIGINT">
 		     	<constraints nullable="false" />
 		     </column>
+		     
+		      <column name="views" type="BIGINT">
+		     	<constraints nullable="false" />
+		     </column>
 		</createTable>
 		
 		<createTable tableName="Follow">

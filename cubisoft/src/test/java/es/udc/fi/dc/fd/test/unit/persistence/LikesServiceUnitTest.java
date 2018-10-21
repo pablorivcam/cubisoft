@@ -66,7 +66,7 @@ public class LikesServiceUnitTest {
 
 		picture = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA);
 
-		postA1 = new Post(Calendar.getInstance(), picture, userA);
+		postA1 = new Post(Calendar.getInstance(), picture, userA,(long) 0);
 
 		like1 = new Likes(userA, postA1);
 		like2 = new Likes(userB, postA1);

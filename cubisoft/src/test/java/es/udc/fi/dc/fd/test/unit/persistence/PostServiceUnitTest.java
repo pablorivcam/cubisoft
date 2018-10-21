@@ -69,10 +69,10 @@ public class PostServiceUnitTest {
 
 		picture = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA);
 
-		postA1 = new Post(Calendar.getInstance(), picture, userA);
-		postB1 = new Post(Calendar.getInstance(), picture, userB);
-		postB2 = new Post(Calendar.getInstance(), picture, userB);
-		postC1 = new Post(Calendar.getInstance(), picture, userC);
+		postA1 = new Post(Calendar.getInstance(), picture, userA,(long) 0);
+		postB1 = new Post(Calendar.getInstance(), picture, userB,(long) 0);
+		postB2 = new Post(Calendar.getInstance(), picture, userB,(long) 0);
+		postC1 = new Post(Calendar.getInstance(), picture, userC,(long) 0);
 
 	}
 

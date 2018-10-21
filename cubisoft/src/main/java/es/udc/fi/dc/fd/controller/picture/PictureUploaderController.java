@@ -172,7 +172,7 @@ public class PictureUploaderController {
 
 				p = pictureService.save(p);
 
-				Post post = new Post(Calendar.getInstance(), p, author);
+				Post post = new Post(Calendar.getInstance(), p, author,(long) 0);
 
 				postService.save(post);
 

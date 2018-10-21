@@ -68,10 +68,6 @@ public class UserPostListViewController {
 	private final PostService getPostService() {
 		return postService;
 	}
-	
-	private final PictureService getPictureService() {
-		return pictureService;
-	}
 
 	private final void loadViewModel(final ModelMap model, Principal userAuthenticated) {
 		UserProfile user = userProfileRepository.findOneByEmail(userAuthenticated.getName());

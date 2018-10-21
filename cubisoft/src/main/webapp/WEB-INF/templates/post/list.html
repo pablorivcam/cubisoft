@@ -26,9 +26,12 @@
 	            	</div>
 	            	<div style="width:80%">
 	            		<div>
+	            			<span>Views: </span> 
+	              			<span th:text="${post?.views}">Views placeholder</span>
 							<a href="#deletePostModal" 
 							th:attr="data-postid=''+${post?.post_id}+''"							
-							th:text="#{button.delete}" data-toggle="modal" class="deletePostModalButton btn btn-danger" role="button" style="margin:10px">Delete</a>
+							th:text="#{button.delete}" data-toggle="modal" class="deletePostModalButton btn btn-danger" role="button" style="margin:20px">Delete</a>
+
 						</div> 
 	            		<div style="margin-left:5%">
 		      				<span th:text="${post?.picture.description}">Description placeholder</span>

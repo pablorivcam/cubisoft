@@ -105,7 +105,7 @@ public class PostService {
 		if (!userProfileRepository.exists(user.getEmail())) {
 			throw new InstanceNotFoundException("The user with email" + user.getEmail() + " doesnt exist.");
 		}
-		Post post = new Post(Calendar.getInstance(), picture, user);
+		Post post = new Post(Calendar.getInstance(), picture, user,(long) 0);
 		postRepository.save(post);
 		return post;
 	}

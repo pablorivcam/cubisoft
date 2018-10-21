@@ -29,6 +29,10 @@ public class Post {
 
 	/** The user. */
 	private UserProfile user;
+	
+	/** The views. */
+	private Long views;
+	
 
 	/**
 	 * Instantiates a new post.
@@ -46,10 +50,11 @@ public class Post {
 	 * @param user
 	 *            the user
 	 */
-	public Post(Calendar date, Picture picture, UserProfile user) {
+	public Post(Calendar date, Picture picture, UserProfile user, Long views) {
 		this.date = date;
 		this.picture = picture;
 		this.user = user;
+		this.views = views;
 		date.set(Calendar.MILLISECOND, 0);
 
 	}
@@ -137,5 +142,21 @@ public class Post {
 	public void setUser(UserProfile user) {
 		this.user = user;
 	}
+
+	/**
+	 * @return the views
+	 */
+	public Long getViews() {
+		return views;
+	}
+
+	/**
+	 * @param views the views to set
+	 */
+	public void setViews(Long views) {
+		this.views = views;
+	}
+	
+	
 
 }
