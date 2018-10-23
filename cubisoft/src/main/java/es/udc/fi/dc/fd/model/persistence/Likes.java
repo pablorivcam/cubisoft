@@ -42,7 +42,7 @@ public class Likes {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user")
 	public UserProfile getUser() {
 		return user;
 	}
@@ -52,7 +52,7 @@ public class Likes {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "post_id")
+	@JoinColumn(name = "post")
 	public Post getPost() {
 		return post;
 	}

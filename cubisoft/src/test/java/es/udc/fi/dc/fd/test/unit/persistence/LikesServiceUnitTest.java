@@ -24,7 +24,9 @@ import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.repository.LikesRepository;
 import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
+import es.udc.fi.dc.fd.service.AlreadyLikedException;
 import es.udc.fi.dc.fd.service.LikesService;
+import es.udc.fi.dc.fd.service.NotLikedYetException;
 
 public class LikesServiceUnitTest {
 	public static final String TEST_LOGIN = "test";
@@ -73,9 +75,9 @@ public class LikesServiceUnitTest {
 		like3 = new Likes(userC, postA1);
 
 	}
-
+	//TODO hacer el test para AlreadyLikedException
 	@Test
-	public void newLikesTest() throws InstanceNotFoundException {
+	public void newLikesTest() throws InstanceNotFoundException, AlreadyLikedException {
 		// Datos esperados por el test
 		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
 		Mockito.when(userProfileRepository.exists("2" + TEST_EMAIL)).thenReturn(true);
@@ -114,7 +116,7 @@ public class LikesServiceUnitTest {
 	}
 
 	@Test
-	public void findUserLikesTest() throws InstanceNotFoundException { // Datos esperados por el test
+	public void findUserLikesTest() throws InstanceNotFoundException, AlreadyLikedException { // Datos esperados por el test
 		ArrayList<Likes> likesA = new ArrayList<>();
 
 		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
@@ -142,7 +144,7 @@ public class LikesServiceUnitTest {
 	}
 
 	@Test
-	public void findPostLikesTest() throws InstanceNotFoundException {
+	public void findPostLikesTest() throws InstanceNotFoundException, AlreadyLikedException {
 		ArrayList<Likes> likesA = new ArrayList<>();
 
 		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
@@ -172,19 +174,55 @@ public class LikesServiceUnitTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void newNullUserLikesTest() throws InstanceNotFoundException {
+	public void newNullUserLikesTest() throws InstanceNotFoundException, AlreadyLikedException {
 		assertThat(likesService.newLikes(null, postA1), is(equalTo(null)));
 	}
 
 	@Test(expected = InstanceNotFoundException.class)
-	public void newNullPostLikesTest() throws InstanceNotFoundException {
+	public void newNullPostLikesTest() throws InstanceNotFoundException, AlreadyLikedException {
 		assertThat(likesService.newLikes(userA, null), is(equalTo(null)));
 	}
 	// TODO revisar si hay que hacer más tests aquí: que el like desaparezca cuando
 	// se borra una imagen, un post o un usuario
 
 	@Test
-	public void deleteLikesTest() throws InstanceNotFoundException {
+	public void existLikesTest() throws InstanceNotFoundException, AlreadyLikedException {
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+
+		Mockito.when(postRepository.existsById(postA1.getPost_id())).thenReturn(true);
+		
+		assertThat(likesService.existLikes(userA, postA1), is(equalTo(false)));
+		
+		Mockito.when(likesRepository.save(like1)).thenReturn(like1);
+		
+		Mockito.when(likesRepository.findLikesByUserAndPost(userA, postA1)).thenReturn(like1);
+		
+		assertThat(likesService.existLikes(userA, postA1), is(equalTo(true)));
+		}
+	
+	@Test
+	public void deleteUserPostLikesTest() throws InstanceNotFoundException, NotLikedYetException, AlreadyLikedException {
+
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+
+		Mockito.when(postRepository.existsById(postA1.getPost_id())).thenReturn(true);
+
+		Mockito.when(likesRepository.save(like1)).thenReturn(like1);
+
+		Likes likeT1 = likesService.newLikes(userA, postA1);
+
+		Mockito.when(likesRepository.findLikesById(likeT1.getLikes_id())).thenReturn(likeT1);
+
+		likesService.deleteUserPostLikes(userA, postA1);
+
+		Mockito.when(likesRepository.findLikesById(likeT1.getLikes_id())).thenReturn(null);
+
+		assertEquals(likesRepository.findLikesById(likeT1.getLikes_id()), null);
+
+	}
+	
+	@Test
+	public void deleteLikesTest() throws InstanceNotFoundException, AlreadyLikedException {
 
 		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
 
