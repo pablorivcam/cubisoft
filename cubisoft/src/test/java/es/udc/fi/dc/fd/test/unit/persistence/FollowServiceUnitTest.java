@@ -94,16 +94,16 @@ public class FollowServiceUnitTest {
 
 	@Test
 	public void getUserFollowedProfilesTest() {
-		followService.follow(userA, userB);
-		followService.follow(userA, userC);
+		Follow follow = followService.follow(userA, userB);
+		Follow follow2 =followService.follow(userA, userC);
 
-		ArrayList<UserProfile> followList = new ArrayList<>();
-		followList.add(userB);
-		followList.add(userC);
+		ArrayList<Follow> followList = new ArrayList<>();
+		followList.add(follow);
+		followList.add(follow2);
 
-		Mockito.when(followRepository.findFollowedProfilesByUser(userA)).thenReturn(followList);
+		Mockito.when(followRepository.findFollowsByUser(userA)).thenReturn(followList);
 
-		assertEquals(followRepository.findFollowedProfilesByUser(userA), followList);
+		assertEquals(followRepository.findFollowsByUser(userA), followList);
 
 	}
 

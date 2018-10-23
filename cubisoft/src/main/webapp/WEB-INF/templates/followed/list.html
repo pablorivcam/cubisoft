@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: header" />
+<body>
+	<header class="header" th:include="fragments/menu :: menu" /></header>
+   
+	<section id="main-section" class="container-fluid">
+	 <h1 th:text="#{title.yourfollows}">Your follows</h1>
+	 <table class="table table-striped display dataTable">
+	 	<tr th:each="follow : ${follows}">
+		<td>
+            	<!-- Parte de la visualización de la imagen -->
+            	<div  style="width:400px; margin-left:25%">
+	            	<div>
+	            		<span>User: </span> 
+	              		<span th:text="${follow?.followed_user.login}">Followed placeholder</span>
+					<!--  	<form id="unfollowForm" action="#" th:action="@{/followed/unfollow}" class="form-narrow form-horizontal" method="post">
+							<input type="hidden" id="followed_user" name="followed_user" th:value="${follow?.followed_user}">				
+							<button th:text="#{button.unfollow}" type="submit" class="btn btn-danger">Unfollow</button>	
+						</form>	-->	
+					</div> 
+           		</div>
+         		
+            </td> 
+         </tr> 
+      </table>
+	</section>
+	<footer>
+      <div th:include="fragments/scripts :: general" />
+	</footer>
+</body>
+</html>

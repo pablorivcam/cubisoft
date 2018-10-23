@@ -53,8 +53,8 @@ public class FollowService {
 	}
 
 	@Transactional
-	public List<UserProfile> getUserFollowedProfiles(UserProfile user) throws InstanceNotFoundException {
-		return followRepository.findFollowedProfilesByUser(user);
+	public List<Follow> getUserFollows(UserProfile user) throws InstanceNotFoundException {
+		return followRepository.findFollowsByUser(user);
 	}
 
 }

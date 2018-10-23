@@ -72,7 +72,7 @@ public class Follow {
 	 * @return the user
 	 */
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user")
 	public UserProfile getUser() {
 		return user;
 	}
@@ -93,7 +93,7 @@ public class Follow {
 	 * @return the followed user
 	 */
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_followed")
+	@JoinColumn(name = "followed_user")
 	public UserProfile getFollowed_user() {
 		return followed_user;
 	}

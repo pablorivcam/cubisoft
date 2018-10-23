@@ -28,6 +28,6 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
 	Follow findFollowByUsers(@Param("user") UserProfile user, @Param("followed_user") UserProfile followed_user);
 
 	@Query("SELECT f FROM Follow f WHERE f.user=:user")
-	List<UserProfile> findFollowedProfilesByUser(@Param("user") UserProfile user);
+	List<Follow> findFollowsByUser(@Param("user") UserProfile user);
 
 }

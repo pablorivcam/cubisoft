@@ -5,12 +5,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.security.Principal;
 
 import javax.management.InstanceNotFoundException;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
@@ -61,11 +64,27 @@ public class FollowedListViewController {
 		UserProfile user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 
 		try {
-			model.put(FollowViewConstants.VIEW_FOLLOWED_LIST, followService.getUserFollowedProfiles(user));
+			model.put(FollowViewConstants.PARAM_FOLLOW, followService.getUserFollows(user));
 		} catch (InstanceNotFoundException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
 	}
+	/*
+	@PostMapping("unfollow")
+	public final String unfollow(@RequestParam Long followed_user,final ModelMap model, 
+			Principal userAuthenticated, HttpSession session) {
+
+		UserProfile user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+		UserProfile userFollowed = userProfileRepository.findById(followed_user).get();
+		
+		followService.unfollow(user, userFollowed);
+		
+		loadViewModel(model, userAuthenticated);
+		
+		return FollowViewConstants.VIEW_FOLLOWED_LIST;
+		
+	}*/
+	
 }
