@@ -1,6 +1,8 @@
 package es.udc.fi.dc.fd.test.unit.persistence;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -95,7 +97,7 @@ public class FollowServiceUnitTest {
 	@Test
 	public void getUserFollowedProfilesTest() {
 		Follow follow = followService.follow(userA, userB);
-		Follow follow2 =followService.follow(userA, userC);
+		Follow follow2 = followService.follow(userA, userC);
 
 		ArrayList<Follow> followList = new ArrayList<>();
 		followList.add(follow);
@@ -105,6 +107,27 @@ public class FollowServiceUnitTest {
 
 		assertEquals(followRepository.findFollowsByUser(userA), followList);
 
+	}
+
+	@Test
+	public void isUserAFollowingUserBTest() {
+		Follow follow = new Follow(userA, userB);
+
+		Mockito.when(followRepository.findFollowByUsers(userA, userB)).thenReturn(follow);
+
+		assertTrue(followService.isUserAFollowingUserB(userA, userB));
+		assertFalse(followService.isUserAFollowingUserB(userB, userA));
+
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void isUserAFollowingUnexistentUserTest() {
+		assertTrue(followService.isUserAFollowingUserB(userA, null));
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void isUnexistentUserFollowingUserBTest() {
+		assertTrue(followService.isUserAFollowingUserB(null, userA));
 	}
 
 }

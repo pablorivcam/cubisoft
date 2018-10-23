@@ -52,9 +52,39 @@ public class FollowService {
 		followRepository.delete(follow);
 	}
 
+	/**
+	 * Gets the user follows.
+	 *
+	 * @param user
+	 *            the user
+	 * @return the user follows
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
 	@Transactional
 	public List<Follow> getUserFollows(UserProfile user) throws InstanceNotFoundException {
 		return followRepository.findFollowsByUser(user);
+	}
+
+	/**
+	 * Find follow by users.
+	 *
+	 * @param userA
+	 *            the user A
+	 * @param userB
+	 *            the user B
+	 * @return true, if successful
+	 */
+	public boolean isUserAFollowingUserB(UserProfile userA, UserProfile userB) {
+
+		if (userA == null)
+			throw new NullPointerException("The userA param cannot be null");
+		if (userB == null)
+			throw new NullPointerException("The userB param cannot be null.");
+
+		Follow f = followRepository.findFollowByUsers(userA, userB);
+		return f != null;
+
 	}
 
 }
