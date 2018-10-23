@@ -43,10 +43,11 @@
 							th:text="#{title.data}">Data</span> <span aria-hidden="true"></span>
 					</a>
 						<ul class="dropdown-menu" role="menu">
-						<!-- Picture menu -->
+						<!-- Picture menu -->						
 			              	<li><a th:href="@{/picture/upload}" th:text="#{label.upload}">Upload Picture</a></li>
 		                    <li><a th:href="@{/picture/list}" th:text="#{label.mypictures}">My Pictures</a></li>
-		                    <li><a th:href="@{/post/list}" th:text="#{label.myposts}">My Posts</a></li>
+		                    <li><a th:href="@{/post/list}" th:text="#{label.myposts}">My Posts</a></li>     
+		                    <li><a th:href="@{/account/list}" th:text="#{label.find_users}">Find Users</a></li>
 		                    <li><a th:href="@{/followed/list}" th:text="#{label.myfollows}">My Follows</a></li>
 						<!-- Old menu 
 							<li><a th:href="@{/entity/list}" th:text="#{label.list}">List</a></li>

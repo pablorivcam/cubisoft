@@ -27,7 +27,6 @@ public interface UserProfileRepository extends JpaRepository<UserProfile, Long> 
 	@Query("select count(u) > 0 from UserProfile u where u.email = :email")
 	boolean exists(@Param("email") String email);
 
-
-	@Query("SELECT u FROM UserProfile u WHERE u.firstName LIKE CONCAT('%',:keywords,'%')")
-	List<UserProfile> FindUserProfileByKeywords(@Param("keywords") String keywords);
+	@Query("SELECT u FROM UserProfile u WHERE u.login LIKE CONCAT('%',:keywords,'%') ORDER BY u.login")
+	List<UserProfile> findUserProfileByKeywords(@Param("keywords") String keywords);
 }

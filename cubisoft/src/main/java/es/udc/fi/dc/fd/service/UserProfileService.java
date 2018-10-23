@@ -83,9 +83,9 @@ public class UserProfileService implements UserDetailsService {
 		return new SimpleGrantedAuthority(SecurityConfig.DEFAULT_ROLE);
 	}
 
-	public ArrayList<UserProfile> FindUserProfileByKeywords(String keywords) {
+	public ArrayList<UserProfile> findUserProfileByKeywords(String keywords) {
 		ArrayList<UserProfile> lista = new ArrayList<UserProfile>(
-				userProfileRepository.FindUserProfileByKeywords(keywords));
+				userProfileRepository.findUserProfileByKeywords(keywords));
 		return lista;
 	}
 

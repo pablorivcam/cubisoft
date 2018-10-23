@@ -63,11 +63,11 @@ public class FindProfileByKeywordsTest {
 		usersList.add(userA);
 		usersList.add(userC);
 
-		Mockito.when(userProfileRepository.FindUserProfileByKeywords(KEYWORD)).thenReturn(usersList);
+		Mockito.when(userProfileRepository.findUserProfileByKeywords(KEYWORD)).thenReturn(usersList);
 		
 
 		try {
-			assertThat(userProfileRepository.FindUserProfileByKeywords(KEYWORD), is(equalTo(usersList)));
+			assertThat(userProfileRepository.findUserProfileByKeywords(KEYWORD), is(equalTo(usersList)));
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -85,10 +85,10 @@ public class FindProfileByKeywordsTest {
 		ArrayList<UserProfile> usersList1 = new ArrayList<UserProfile>();
 		usersList.add(userC);
 
-		Mockito.when(userProfileRepository.FindUserProfileByKeywords("11")).thenReturn(usersList1);
+		Mockito.when(userProfileRepository.findUserProfileByKeywords("11")).thenReturn(usersList1);
 
 		try {
-			assertThat(userProfileRepository.FindUserProfileByKeywords("11"), is(equalTo(usersList1)));
+			assertThat(userProfileRepository.findUserProfileByKeywords("11"), is(equalTo(usersList1)));
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -103,10 +103,10 @@ public class FindProfileByKeywordsTest {
 		usersList.add(userA);
 		usersList.add(userC);
 		ArrayList<UserProfile> usersList1 = new ArrayList<UserProfile>();
-		Mockito.when(userProfileRepository.FindUserProfileByKeywords("ola")).thenReturn(usersList1);
+		Mockito.when(userProfileRepository.findUserProfileByKeywords("ola")).thenReturn(usersList1);
 
 		try {
-			assertThat(userProfileRepository.FindUserProfileByKeywords("ola"), is(equalTo(usersList1)));
+			assertThat(userProfileRepository.findUserProfileByKeywords("ola"), is(equalTo(usersList1)));
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -119,10 +119,10 @@ public class FindProfileByKeywordsTest {
 		ArrayList<UserProfile> usersList = new ArrayList<UserProfile>();
 		usersList.add(userB);
 		usersList.add(userC);
-		Mockito.when(userProfileRepository.FindUserProfileByKeywords("ola")).thenReturn(usersList);
+		Mockito.when(userProfileRepository.findUserProfileByKeywords("ola")).thenReturn(usersList);
 
 		try {
-			assertThat(userProfileRepository.FindUserProfileByKeywords("ola"), is(equalTo(usersList)));
+			assertThat(userProfileRepository.findUserProfileByKeywords("ola"), is(equalTo(usersList)));
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();
