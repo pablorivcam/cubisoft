@@ -51,7 +51,7 @@ public class FindUsersController {
 	}
 
 	@PostMapping(path = "/followUser")
-	public final String showPictureList(@RequestParam String keywords, @RequestParam Long user_id, final ModelMap model,
+	public final String followUser(@RequestParam String keywords, @RequestParam Long user_id, final ModelMap model,
 			Principal userAuthenticated) {
 
 		UserProfile followed_user = userProfileRepository.findById(user_id).get();
@@ -69,4 +69,22 @@ public class FindUsersController {
 		return AccountViewConstants.LIST_VIEW;
 	}
 
+	@PostMapping(path = "/unfollowUser")
+	public final String unfollowUser(@RequestParam String keywords, @RequestParam Long user_id, final ModelMap model,
+			Principal userAuthenticated) {
+
+		UserProfile followed_user = userProfileRepository.findById(user_id).get();
+		UserProfile currentUser = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+
+		model.put(USERS_PARAM, userProfileService.findUserProfileByKeywords(keywords));
+		model.put("currentUser", currentUser);
+		model.put("followService", followService);
+		model.put("keywords", keywords);
+
+		if (followService.isUserAFollowingUserB(currentUser, followed_user)) {
+			followService.unfollow(currentUser, followed_user);
+		}
+
+		return AccountViewConstants.LIST_VIEW;
+	}
 }
