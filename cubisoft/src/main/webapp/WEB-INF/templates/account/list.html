@@ -9,7 +9,7 @@
       
 		<section id="form">  	
 		
-			<form id="deletePictureForm" action="#" th:action="@{/account/list}" class="form-narrow form-horizontal" method="post">
+			<form id="findUsersForm" action="#" th:action="@{/account/list}" class="form-narrow form-horizontal" method="post">
 				<label style="text-align:none; width:auto" for="keywords" class="col-lg-2 control-label">Keywords</label>		
 				<input style="display:inline; width:auto" type="text" class="form-control" id="keywords" placeholder="Keywords" name="keywords" />
 				<button th:text="#{label.find}" type="submit" class="btn btn-info">Find</button>	
@@ -30,7 +30,17 @@
             		<td><span th:remove="tag" th:text="${user?.login}">Login</span></td>
             		<td><span th:remove="tag" th:text="${user?.firstName}">Name</span></td>
             		<td><span th:remove="tag" th:text="${user?.lastName}">Lastname</span></td>    
-               		<td><span th:remove="tag" th:if="${user?.email}==${#authentication.getPrincipal().getUsername()}" th:text="#{label.its_you}">Its you!</span></td>            		         		        		
+               		<td>
+               			<span th:remove="tag" th:if="${user?.email}==${#authentication.getPrincipal().getUsername()}" th:text="#{label.its_you}">Its you!</span>
+               			<div th:if="${user?.email}!=${#authentication.getPrincipal().getUsername()} and !${followService.isUserAFollowingUserB(currentUser,user)}">
+               				<form id="followUserForm" action="#" th:action="@{/account/followUser}" class="form-narrow form-horizontal" method="post">
+               					<input type="hidden" id="user_id" name="user_id" th:value="${user?.user_id}">
+               					<input type="hidden" id="keywords" name="keywords" th:value="${keywords}">               					
+               					<button th:text="#{button.follow}" type="submit" class="btn btn-info">Follow</button>	
+               				</form>
+               			</div>
+
+               		</td>            		         		        		
             	</tr>
 
 	    </table>
