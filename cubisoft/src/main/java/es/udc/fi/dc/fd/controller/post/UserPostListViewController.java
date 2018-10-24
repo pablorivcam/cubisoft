@@ -78,6 +78,9 @@ public class UserPostListViewController {
 	@GetMapping(path = "/list")
 	public final String showPostList(final ModelMap model, Principal userAuthenticated) {
 		// Loads required data into the model
+		UserProfile user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+		model.put("currentUser", user);
+		model.put("likesService", likesService);
 		loadViewModel(model, userAuthenticated);
 
 		return PostViewConstants.VIEW_POST_LIST;
@@ -150,6 +153,8 @@ public class UserPostListViewController {
 		}
 
 		// Devolvemos el mensaje
+		model.put("currentUser", author);
+		model.put("likesService", likesService);
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
 
@@ -203,6 +208,8 @@ public class UserPostListViewController {
 			error_message = SUCESS_LIKED_POST;
 			sucess = true;
 		}
+		model.put("currentUser", author);
+		model.put("likesService", likesService);
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
 		loadViewModel(model, userAuthenticated);
@@ -252,6 +259,8 @@ public class UserPostListViewController {
 			error_message = SUCESS_UNLIKED_POST;
 			sucess = true;
 		}
+		model.put("currentUser", author);
+		model.put("likesService", likesService);
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
 		loadViewModel(model, userAuthenticated);
