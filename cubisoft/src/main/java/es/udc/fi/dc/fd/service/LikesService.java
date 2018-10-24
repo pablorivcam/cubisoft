@@ -58,7 +58,7 @@ public class LikesService {
 		}
 		Likes like = new Likes(user, post);
 		try {
-			likesRepository.save(like);	
+			likesRepository.save(like);
 		}catch(Exception e) {
 			throw new AlreadyLikedException("The post has been already liked");
 		}

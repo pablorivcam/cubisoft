@@ -191,6 +191,8 @@ public class UserPostListViewController {
 		}else{
 			try {
 				likesService.newLikes(author, post);
+				post.setNumber_of_likes(post.getNumber_of_likes()+1);
+				postService.save(post);
 			} catch (InstanceNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -238,6 +240,8 @@ public class UserPostListViewController {
 		}else{
 			try {
 				likesService.deleteUserPostLikes(author, post);
+				post.setNumber_of_likes(post.getNumber_of_likes()-1);
+				postService.save(post);
 			} catch (InstanceNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

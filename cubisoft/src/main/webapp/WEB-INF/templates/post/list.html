@@ -33,19 +33,31 @@
 							th:text="#{button.delete}" data-toggle="modal" class="deletePostModalButton btn btn-danger" role="button" style="margin:20px">Delete</a>	
 						</div>
 						<div>
-						<!-- Boton de Like -->
-							<form id="likePostForm" action="#" th:action="@{/post/likePost}" class="form-narrow form-horizontal" method="post">
-								<input type="hidden" id="like-postId" name="postId" th:value="${post?.post_id}">
-								<button th:text="#{button.like}" type="submit" class="btn btn-danger">Like</button>
-							</form>
-							<!-- Boton de Unlike -->
-							<form id="unlikePostForm" action="#" th:action="@{/post/unlikePost}" class="form-narrow form-horizontal" method="post">
-								<input type="hidden" id="unlike-postId" name="postId" th:value="${post?.post_id}">
-								<button th:text="#{button.unlike}" type="submit" class="btn btn-danger">Unlike</button>
-							</form>
+							<div style ="display:inline-block;">
+								<span>Likes: </span> 
+		              			<span th:text="${post?.number_of_likes}">Likes placeholder</span>
+	              			</div>
+								<!-- Boton de Like -->
+								<div style ="display:inline-block; padding: 5px;">
+								<form id="likePostForm" action="#" th:action="@{/post/likePost}" class="form-narrow form-horizontal" method="post">
+									<input type="hidden" id="like-postId" name="postId" th:value="${post?.post_id}">
+									<button th:text="#{button.like}" type="submit" class="btn btn-danger">Like</button>
+								</form>
+								</div>
+								<div style ="display:inline-block; padding: 5px;">
+								<!-- Boton de Unlike -->
+								<form id="unlikePostForm" action="#" th:action="@{/post/unlikePost}" class="form-narrow form-horizontal" method="post" >
+									<input type="hidden" id="unlike-postId" name="postId" th:value="${post?.post_id}">
+									<button th:text="#{button.unlike}" type="submit" class="btn btn-danger">Unlike</button>
+								</form>
+								</div>
+							
 						</div>
-	            		<div style="margin-left:5%">
+	            		<div>
+	            			<p>
+	            			<span>Description: </span>
 		      				<span th:text="${post?.picture.description}">Description placeholder</span>
+		      				</p>
 	            		</div>
            	
 	           		</div>
