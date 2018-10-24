@@ -54,7 +54,7 @@ public class PostService {
 	 *             the instance not found exception
 	 */
 	@Transactional
-	public List<Post> findUserFollowersPosts(UserProfile user) throws InstanceNotFoundException {
+	public List<Post> findUserFollowsPosts(UserProfile user) throws InstanceNotFoundException {
 
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
@@ -63,7 +63,7 @@ public class PostService {
 			throw new InstanceNotFoundException("The user with the mail" + user.getEmail() + " doesnt exists.");
 		}
 
-		return postRepository.findUserFollowersPosts(user);
+		return postRepository.findUserFollowsPosts(user);
 	}
 
 	/**
