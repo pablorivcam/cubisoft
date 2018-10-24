@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: header" />
+<body>
+	<header class="header" th:include="fragments/menu :: menu" /></header>
+   
+	<section id="main-section" class="container-fluid">
+	
+		<div th:if="${error_message != null}">
+			<p class="alert alert-danger" role="alert" th:if="${!sucess}" th:text="${error_message}">Error message</p>
+			<p class="alert alert-success" role="alert" th:if="${sucess}" th:text="${error_message}">Error message</p>
+      	</div>
+		
+	 <h1 th:text="#{title.yourfollowsposts}">Your follows posts</h1>
+	 <table class="table table-striped display dataTable">
+	 	<tr th:each="post : ${followsPosts}">
+		<td>
+            	<!-- Parte de la visualización de la imagen -->
+            	<div  style="width:400px; margin-left:25%">
+	  				<div>
+	            		            	
+	            		<img th:src="@{'/Pictures/' + ${post?.picture.image_path}}" width="400px"/>
+	            		<br/><hr style="margin:5px"/>
+	            	</div>
+	            	<div style="width:80%">
+	            		<div>
+	            			<span>Views: </span> 
+	              			<span th:text="${post?.views}">Views placeholder</span>
+						</div>
+						<div>
+							<div style ="display:inline-block;">
+								<span>Likes: </span> 
+		              			<span th:text="${post?.number_of_likes}">Likes placeholder</span>
+	              			</div>
+	              				<div th:if="!${likesService.existLikes(currentUser,post)}" style ="display:inline-block; padding: 5px" >
+									<!-- Boton de Like -->
+									<form id="likePostForm" action="#" th:action="@{/followsPost/likePost}" class="form-narrow form-horizontal" method="post">
+										<input type="hidden" id="like-postId" name="postId" th:value="${post?.post_id}">
+										<button th:text="#{button.like}" type="submit" class="btn btn-danger">Like</button>
+									</form>
+								</div >
+								<div th:if="${likesService.existLikes(currentUser,post)}" style ="display:inline-block; padding: 5px;">
+									<!-- Boton de Unlike -->
+									<form id="unlikePostForm" action="#" th:action="@{/followsPost/unlikePost}" class="form-narrow form-horizontal" method="post" >
+										<input type="hidden" id="unlike-postId" name="postId" th:value="${post?.post_id}">
+										<button th:text="#{button.unlike}" type="submit" class="btn btn-danger">Unlike</button>
+									</form>
+								</div>
+						</div>
+	            		<div>
+	            			<p>
+	            			<span>Description: </span>
+		      				<span th:text="${post?.picture.description}">Description placeholder</span>
+		      				</p>
+	            		</div>
+           	
+	           		</div>
+           		</div>
+         		
+            </td> 
+         </tr> 
+      </table>
+   </section>
+	<footer>
+      <div th:include="fragments/scripts :: general" />
+   </footer>
+</body>
+</html>
