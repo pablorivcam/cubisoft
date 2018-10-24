@@ -42,6 +42,12 @@ public class PictureListViewController {
 	/** The Constant SUCESS_DELETED_PICTURE. */
 	public static final String SUCESS_DELETED_PICTURE = "The picture has been deleted sucessfully.";
 
+	/** The Constant NO_PERMISSION_TO_DELETE. */
+	public static final String NO_PERMISSION_TO_EDIT = "You dont have permission to modify this picture";
+
+	/** The Constant SUCESS_DELETED_PICTURE. */
+	public static final String SUCESS_EDITED_PICTURE = "The picture has been modified sucessfully.";
+
 	/**
 	 * Picture service.
 	 */
@@ -74,8 +80,8 @@ public class PictureListViewController {
 	/**
 	 * Shows the pictures listing view.
 	 * <p>
-	 * Actually it just returns the name of the view. Spring will take care of the
-	 * rest.
+	 * Actually it just returns the name of the view. Spring will take care of
+	 * the rest.
 	 * <p>
 	 * Before returning the name the model should be loaded with all the data
 	 * required by the view.
@@ -106,8 +112,8 @@ public class PictureListViewController {
 	/**
 	 * Loads the model data required for the pictures listing view.
 	 * <p>
-	 * As the view will list all the pictures, it requires these pictures as one of
-	 * the parameters.
+	 * As the view will list all the pictures, it requires these pictures as one
+	 * of the parameters.
 	 *
 	 * @param model
 	 *            model map
@@ -168,6 +174,46 @@ public class PictureListViewController {
 			error_message = SUCESS_DELETED_PICTURE;
 			sucess = true;
 		}
+
+		// Devolvemos el mensaje
+		model.put("error_message", error_message);
+		model.put("sucess", sucess);
+
+		loadViewModel(model, userAuthenticated);
+
+		return PictureViewConstants.VIEW_PICTURE_LIST;
+
+	}
+
+	/**
+	 * Delete picture post mapping.
+	 *
+	 * @param modifyId
+	 *            the picture id
+	 * @param modifyPath
+	 *            the picture path
+	 * @param pictureDescription
+	 *            the picture description
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @return the string
+	 */
+	@PostMapping("modifyPicture")
+	public String modifyPicture(@RequestParam Long modifyId, @RequestParam String description, final ModelMap model,
+			Principal userAuthenticated, HttpSession session) {
+
+		String error_message = "";
+		Boolean sucess = false;
+		Picture p = pictureRepository.findById(modifyId).get();
+
+		// Modificamos la descripcion de la imagen en la BD
+		// pictureService.modifyPicture(p, pictureDescription);
+		p.setDescription(description);
+		pictureService.save(p);
+		error_message = SUCESS_EDITED_PICTURE;
+		sucess = true;
 
 		// Devolvemos el mensaje
 		model.put("error_message", error_message);

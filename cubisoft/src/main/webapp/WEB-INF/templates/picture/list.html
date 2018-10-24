@@ -30,7 +30,10 @@
 							<a href="#deletePictureModal" 
 							th:attr="data-pictureid=''+${picture?.picture_id}+'', data-picturepath=''+${picture?.image_path}+''"							
 							th:text="#{button.delete}" data-toggle="modal" class="deletePictureModalButton btn btn-danger" role="button" style="margin:10px">Delete</a>
-						</div> 
+							<a href="#modifyPictureModal" 
+							th:attr="data-modifyid=''+${picture?.picture_id}+''"						
+							th:text="#{button.modify}" data-toggle="modal" class="modifyPictureModalButton btn btn-danger" role="button" style="margin:10px">Modify</a>
+						</div>
 
 	            		<div style="margin-left:5%">
 		      				<span th:text="${picture?.description}">Description placeholder</span>
@@ -68,7 +71,32 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	
+		<!-- Parte del diálogo de modificar la imagen -->   
+	<div class="modal fade" id="modifyPictureModal" tabindex="-2" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modifyPictureModalLabel" th:text="#{title.picture.modify}">Modify description</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p th:text="#{label.newdescription}">New description</p>
+					<form id="modifyPictureForm" action="#" th:action="@{/picture/modifyPicture}" class="form-narrow form-horizontal" method="post">
+						<input type="hidden" id="modifyId" name="modifyId" value="-1">				
+						<input type="text" class="form-control" id="description" name="description" placeholder="Picture Description" />
+						<button th:text="#{button.cancel}" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>	
+						<button th:text="#{button.submit}" type="submit" class="btn btn-danger">Submit</button>	
+					</form>						        
+			            
+				</div>
+			</div>
+		</div>
 	</div>  
+	  
 	<!-- Si la petición es rechazada volvemos a esta página con el código de error en la url el cual se traduce en que tiene que lanzarse un mensaje si o si (por pantalla o diálogo)-->
    <footer>
       <div th:include="fragments/scripts :: general" />
@@ -89,6 +117,17 @@
 				// Y se usa en el campo oculto del formulario del modal
 	        	$("#pictureId").val( pictureId );
 	        	$("#picturePath").val( picturePath );
+
+			});
+			
+			// Cada vez que se haga click en algún botón de modificar
+			$(document).on("click", ".modifyPictureModalButton", function () {
+				
+				// Se recoje su valor de data-pictureId
+	    		var modifyId = $(this).data('modifyid');
+
+				// Y se usa en el campo oculto del formulario del modal
+	        	$("#modifyId").val( modifyId );
 
 			});
 		});
