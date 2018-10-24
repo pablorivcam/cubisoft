@@ -92,15 +92,15 @@ public class PostServiceUnitTest {
 		// métodos
 		// utilizados por el servicio en los diferentes test
 		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
-		Mockito.when(postRepository.findUserFollowersPosts(userA)).thenReturn(postsA);
+		Mockito.when(postRepository.findUserFollowsPosts(userA)).thenReturn(postsA);
 
 		Mockito.when(userProfileRepository.exists("3" + TEST_EMAIL)).thenReturn(true);
-		Mockito.when(postRepository.findUserFollowersPosts(userC)).thenReturn(postsC);
+		Mockito.when(postRepository.findUserFollowsPosts(userC)).thenReturn(postsC);
 
 		// Ejecutamos los test
 		try {
-			assertThat(postService.findUserFollowersPosts(userA), is(equalTo(postsA)));
-			assertThat(postService.findUserFollowersPosts(userC), is(equalTo(postsC)));
+			assertThat(postService.findUserFollowsPosts(userA), is(equalTo(postsA)));
+			assertThat(postService.findUserFollowsPosts(userC), is(equalTo(postsC)));
 
 		} catch (InstanceNotFoundException e) {
 			e.printStackTrace();
@@ -112,12 +112,12 @@ public class PostServiceUnitTest {
 
 	@Test(expected = NullPointerException.class)
 	public void findNullUserFollowersTest() throws InstanceNotFoundException {
-		assertThat(postService.findUserFollowersPosts(null), is(equalTo(null)));
+		assertThat(postService.findUserFollowsPosts(null), is(equalTo(null)));
 	}
 
 	@Test(expected = InstanceNotFoundException.class)
 	public void findUnexistentUserFollowersTest() throws InstanceNotFoundException {
-		assertThat(postService.findUserFollowersPosts(new UserProfile()), is(equalTo(null)));
+		assertThat(postService.findUserFollowsPosts(new UserProfile()), is(equalTo(null)));
 	}
 
 	@Test

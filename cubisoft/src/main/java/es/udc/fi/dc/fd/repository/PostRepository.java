@@ -17,7 +17,7 @@ import es.udc.fi.dc.fd.model.persistence.UserProfile;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
 	/**
-	 * Find user followers posts.
+	 * Find user follows posts.
 	 *
 	 * @param user
 	 *            the user
@@ -26,7 +26,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
 	@Query("SELECT p FROM Post p WHERE p.user "
 			+ "IN (SELECT f.followed_user FROM Follow f WHERE f.user=:user) ORDER BY p.date DESC")
-	List<Post> findUserFollowersPosts(@Param("user") UserProfile user);
+	List<Post> findUserFollowsPosts(@Param("user") UserProfile user);
 
 	/**
 	 * Find user posts.
