@@ -30,11 +30,34 @@
 	              			<span th:text="${post?.views}">Views placeholder</span>
 							<a href="#deletePostModal" 
 							th:attr="data-postid=''+${post?.post_id}+''"							
-							th:text="#{button.delete}" data-toggle="modal" class="deletePostModalButton btn btn-danger" role="button" style="margin:20px">Delete</a>
-
-						</div> 
-	            		<div style="margin-left:5%">
+							th:text="#{button.delete}" data-toggle="modal" class="deletePostModalButton btn btn-danger" role="button" style="margin:20px">Delete</a>	
+						</div>
+						<div>
+							<div style ="display:inline-block;">
+								<span>Likes: </span> 
+		              			<span th:text="${post?.number_of_likes}">Likes placeholder</span>
+	              			</div>
+	              				<div th:if="!${likesService.existLikes(currentUser,post)}" style ="display:inline-block; padding: 5px" >
+									<!-- Boton de Like -->
+									<form id="likePostForm" action="#" th:action="@{/post/likePost}" class="form-narrow form-horizontal" method="post">
+										<input type="hidden" id="like-postId" name="postId" th:value="${post?.post_id}">
+										<button th:text="#{button.like}" type="submit" class="btn btn-danger">Like</button>
+									</form>
+								</div >
+								<div th:if="${likesService.existLikes(currentUser,post)}" style ="display:inline-block; padding: 5px;">
+									<!-- Boton de Unlike -->
+									<form id="unlikePostForm" action="#" th:action="@{/post/unlikePost}" class="form-narrow form-horizontal" method="post" >
+										<input type="hidden" id="unlike-postId" name="postId" th:value="${post?.post_id}">
+										<button th:text="#{button.unlike}" type="submit" class="btn btn-danger">Unlike</button>
+									</form>
+								</div>
+							
+						</div>
+	            		<div>
+	            			<p>
+	            			<span>Description: </span>
 		      				<span th:text="${post?.picture.description}">Description placeholder</span>
+		      				</p>
 	            		</div>
            	
 	           		</div>

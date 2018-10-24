@@ -12,7 +12,7 @@ import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 
 /**
- * The Interface PictureRepository.
+ * The Interface LikesRepository.
  */
 @Repository("likesRepository")
 public interface LikesRepository extends JpaRepository<Likes, Long> {
@@ -43,5 +43,14 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
 	 */
 	@Query("SELECT l FROM Likes l where l.likes_id=:likes_id")
 	Likes findLikesById(@Param("likes_id") Long likes_id);
+	
+	/**
+	 * Find one by likes id.
+	 *
+	 * @param likes_id the likes id
+	 * @return the "likes" (only 1)
+	 */
+	@Query("SELECT l FROM Likes l where l.user=:user and l.post=:post")
+	Likes findLikesByUserAndPost(@Param("user") UserProfile user,@Param("post") Post post);
 
 }

@@ -33,6 +33,9 @@ public class Post {
 	/** The views. */
 	private Long views;
 	
+	/** The number of likes. */
+	private Long number_of_likes;
+	
 
 	/**
 	 * Instantiates a new post.
@@ -50,11 +53,12 @@ public class Post {
 	 * @param user
 	 *            the user
 	 */
-	public Post(Calendar date, Picture picture, UserProfile user, Long views) {
+	public Post(Calendar date, Picture picture, UserProfile user, Long views, Long number_of_likes) {
 		this.date = date;
 		this.picture = picture;
 		this.user = user;
 		this.views = views;
+		this.number_of_likes = number_of_likes;
 		date.set(Calendar.MILLISECOND, 0);
 
 	}
@@ -155,6 +159,22 @@ public class Post {
 	 */
 	public void setViews(Long views) {
 		this.views = views;
+	}
+	/**
+	 * 
+	 * @return the number of likes
+	 */
+	@Column(nullable = true)
+	public Long getNumber_of_likes() {
+		return number_of_likes;
+	}
+	
+	/**
+	 * @param views the number of likes to set
+	 */
+	@JoinColumn(name = "number_of_likes")
+	public void setNumber_of_likes(Long number_of_likes) {
+		this.number_of_likes = number_of_likes;
 	}
 	
 	

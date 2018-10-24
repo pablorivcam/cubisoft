@@ -107,6 +107,10 @@
 		      <column name="views" type="BIGINT">
 		     	<constraints nullable="false" />
 		     </column>
+		     
+		     <column name="number_of_likes" type="BIGINT">
+		     	<constraints nullable="false" />
+		     </column>
 		</createTable>
 		
 		<createTable tableName="Follow">
@@ -139,8 +143,6 @@
 		     </column>
 		     <column name="post" type="BIGINT">
 		         <constraints nullable="false" 
-		         	foreignKeyName="like_post_id_fk" 
-                	references="Post(post_id)"
        	            />
 		     </column>
 		</createTable>
@@ -153,16 +155,23 @@
 	            onDelete="CASCADE"
 	            onUpdate="RESTRICT"
 	            referencedColumnNames="picture_id"
-	            referencedTableName="Picture"/>	
+	            referencedTableName="Picture"/>
+	            <addForeignKeyConstraint baseColumnNames="post"
+	            baseTableName="Likes"
+	            constraintName="like_post_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="post_id"
+	            referencedTableName="Post"/>	
 	</changeSet>
-	<!--
+	
 	<changeSet author="BranLopez" id="likes_unique_contraint" runAlways="true">
-		<addUniqueConstraint catalogName = "cat"
+		<addUniqueConstraint
 			columnNames="user, post"
 			constraintName="like_unique_constraint"
 			tableName="Likes"/>
 	</changeSet>
-	-->
+	
 	<!-- Contenido por defecto -->
 
    <changeSet author="Bernardo" id="initial_tables" runAlways="true">
