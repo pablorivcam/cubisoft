@@ -79,8 +79,8 @@ public class PictureUploaderController {
 	}
 
 	/**
-	 * Submit. Process the uploadPicture POST request to upload an image into the
-	 * server. In adition, a single post is created with the image.
+	 * Submit. Process the uploadPicture POST request to upload an image into
+	 * the server. In adition, a single post is created with the image.
 	 *
 	 * @param session
 	 *            the session
@@ -122,7 +122,8 @@ public class PictureUploaderController {
 		if (!file.isEmpty()) {
 			try {
 
-				// Creamos la carpeta de recursos en caso de que no se haya creado antes
+				// Creamos la carpeta de recursos en caso de que no se haya
+				// creado antes
 				File folder = new File(folderPath);
 				if (!folder.exists()) {
 					if (!folder.mkdirs()) {
@@ -172,7 +173,7 @@ public class PictureUploaderController {
 
 				p = pictureService.save(p);
 
-				Post post = new Post(Calendar.getInstance(), p, author,(long) 0,(long) 0);
+				Post post = new Post(Calendar.getInstance(), p, author, (long) 0, (long) 0, false);
 
 				postService.save(post);
 

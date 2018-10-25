@@ -69,10 +69,10 @@ public class PostServiceUnitTest {
 
 		picture = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA);
 
-		postA1 = new Post(Calendar.getInstance(), picture, userA,(long) 0,(long) 0);
-		postB1 = new Post(Calendar.getInstance(), picture, userB,(long) 0,(long) 0);
-		postB2 = new Post(Calendar.getInstance(), picture, userB,(long) 0,(long) 0);
-		postC1 = new Post(Calendar.getInstance(), picture, userC,(long) 0,(long) 0);
+		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0, false);
+		postB1 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0, false);
+		postB2 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0, false);
+		postC1 = new Post(Calendar.getInstance(), picture, userC, (long) 0, (long) 0, false);
 
 	}
 
@@ -177,6 +177,7 @@ public class PostServiceUnitTest {
 		assertThat(postService.newPost(picture, new UserProfile()), is(equalTo(null)));
 	}
 
+	// TODO Revisar para un reshare.
 	@Test
 	public void deletePostTest() throws InstanceNotFoundException {
 		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
@@ -190,5 +191,22 @@ public class PostServiceUnitTest {
 
 		assertEquals(postRepository.findPostByPostId(post.getPost_id()), null);
 
+	}
+
+	@Test
+	public void newReshareTest() throws InstanceNotFoundException {
+		// Datos esperados por el test
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+		Mockito.when(userProfileRepository.exists("2" + TEST_EMAIL)).thenReturn(true);
+		Post post = postService.newPost(picture, userA);
+
+		Post resharepost = postService.newReshare(post, userB);
+
+		// Inicializamos lo que tienen que devolver las clases Repository en los
+		// métodos utilizados por el servicio en los diferentes test
+		Mockito.when(postRepository.findPostByPostId(resharepost.getPost_id())).thenReturn(resharepost);
+
+		// Realizamos comprobaciones
+		assertEquals(postRepository.findPostByPostId(resharepost.getPost_id()).getPost_id(), resharepost.getPost_id());
 	}
 }

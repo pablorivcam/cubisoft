@@ -85,7 +85,7 @@ public class PostService {
 		}
 		return postRepository.findUserPosts(user);
 	}
-	
+
 	@Transactional
 	public List<Post> findFollowsAndUserPosts(UserProfile user) throws InstanceNotFoundException {
 		if (user == null) {
@@ -116,7 +116,7 @@ public class PostService {
 		if (!userProfileRepository.exists(user.getEmail())) {
 			throw new InstanceNotFoundException("The user with email" + user.getEmail() + " doesnt exist.");
 		}
-		Post post = new Post(Calendar.getInstance(), picture, user,(long) 0,(long) 0);
+		Post post = new Post(Calendar.getInstance(), picture, user, (long) 0, (long) 0, false);
 		postRepository.save(post);
 		return post;
 	}
@@ -130,6 +130,31 @@ public class PostService {
 	@Transactional
 	public void deletePost(Post post) {
 		postRepository.delete(post);
+	}
+
+	/**
+	 * NewReshare.
+	 *
+	 * @param post
+	 *            the original post
+	 * @param user
+	 *            the user
+	 * @return post reshared
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	@Transactional
+	public Post newReshare(Post post, UserProfile user) throws InstanceNotFoundException {
+		if (user == null) {
+			throw new NullPointerException("The user param cannot be null");
+		}
+		if (!userProfileRepository.exists(user.getEmail())) {
+			throw new InstanceNotFoundException("The user with email" + user.getEmail() + " doesn't exist.");
+		}
+
+		Post postReshare = new Post(Calendar.getInstance(), post.getPicture(), user, (long) 0, (long) 0, true);
+		postRepository.save(postReshare);
+		return postReshare;
 	}
 
 }

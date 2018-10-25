@@ -29,13 +29,15 @@ public class Post {
 
 	/** The user. */
 	private UserProfile user;
-	
+
 	/** The views. */
 	private Long views;
-	
+
 	/** The number of likes. */
 	private Long number_of_likes;
-	
+
+	/** The reshare status. */
+	private Boolean reshare;
 
 	/**
 	 * Instantiates a new post.
@@ -53,12 +55,13 @@ public class Post {
 	 * @param user
 	 *            the user
 	 */
-	public Post(Calendar date, Picture picture, UserProfile user, Long views, Long number_of_likes) {
+	public Post(Calendar date, Picture picture, UserProfile user, Long views, Long number_of_likes, Boolean reshare) {
 		this.date = date;
 		this.picture = picture;
 		this.user = user;
 		this.views = views;
 		this.number_of_likes = number_of_likes;
+		this.reshare = reshare;
 		date.set(Calendar.MILLISECOND, 0);
 
 	}
@@ -155,11 +158,13 @@ public class Post {
 	}
 
 	/**
-	 * @param views the views to set
+	 * @param views
+	 *            the views to set
 	 */
 	public void setViews(Long views) {
 		this.views = views;
 	}
+
 	/**
 	 * 
 	 * @return the number of likes
@@ -168,15 +173,29 @@ public class Post {
 	public Long getNumber_of_likes() {
 		return number_of_likes;
 	}
-	
+
 	/**
-	 * @param views the number of likes to set
+	 * @param views
+	 *            the number of likes to set
 	 */
 	@JoinColumn(name = "number_of_likes")
 	public void setNumber_of_likes(Long number_of_likes) {
 		this.number_of_likes = number_of_likes;
 	}
-	
-	
+
+	/**
+	 * @return reshare
+	 */
+	public Boolean getReshare() {
+		return reshare;
+	}
+
+	/**
+	 * @param reshare
+	 *            the reshare status
+	 */
+	public void setViews(Boolean reshare) {
+		this.reshare = reshare;
+	}
 
 }
