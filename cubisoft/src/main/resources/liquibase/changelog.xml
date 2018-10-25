@@ -111,6 +111,10 @@
 		     <column name="number_of_likes" type="BIGINT">
 		     	<constraints nullable="false" />
 		     </column>
+		   
+		     <column name="reshare" type="BOOLEAN">
+		     	<constraints nullable="false" />
+		     </column>
 		</createTable>
 		
 		<createTable tableName="Follow">
