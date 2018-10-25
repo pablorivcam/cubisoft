@@ -85,6 +85,17 @@ public class PostService {
 		}
 		return postRepository.findUserPosts(user);
 	}
+	
+	@Transactional
+	public List<Post> findFollowsAndUserPosts(UserProfile user) throws InstanceNotFoundException {
+		if (user == null) {
+			throw new NullPointerException("The user param cannot be null.");
+		}
+		if (!userProfileRepository.exists(user.getEmail())) {
+			throw new InstanceNotFoundException("The user with the mail" + user.getEmail() + " doesnt exists.");
+		}
+		return postRepository.findFollowsAndUserPosts(user);
+	}
 
 	/**
 	 * NewPost.

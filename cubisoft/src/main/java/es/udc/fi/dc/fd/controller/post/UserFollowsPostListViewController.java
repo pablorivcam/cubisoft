@@ -87,7 +87,7 @@ public class UserFollowsPostListViewController {
 		UserProfile user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 
 		try {
-			model.put(PostViewConstants.PARAM_FOLLOWS_POSTS, getPostService().findUserFollowsPosts(user));
+			model.put(PostViewConstants.PARAM_FOLLOWS_POSTS, getPostService().findFollowsAndUserPosts(user));
 		} catch (InstanceNotFoundException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
