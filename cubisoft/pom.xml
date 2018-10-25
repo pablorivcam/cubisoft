@@ -351,6 +351,20 @@
 			<timezone>+1</timezone>
 			<properties />
 		</developer>
+		
+		<developer>
+			<id>yanko.ferreiro</id>
+			<name>Yanko Nion Ferreiro</name>
+			<email>yanko.ferreiro@udc.es</email>
+			<url>http://gitlab.fic.udc.es/root/cubisoft</url>
+			<organization>Cubisoft</organization>
+			<organizationUrl>http://gitlab.fic.udc.es/root/cubisoft</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+			<properties />
+		</developer>
 	</developers>
 
 	<!-- ********************************************** -->

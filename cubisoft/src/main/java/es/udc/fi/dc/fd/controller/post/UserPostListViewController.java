@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.File;
 import java.security.Principal;
+import java.util.List;
 
 import javax.management.InstanceNotFoundException;
 import javax.servlet.http.HttpSession;
@@ -18,19 +19,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import es.udc.fi.dc.fd.controller.picture.PictureUploaderController;
 import es.udc.fi.dc.fd.model.persistence.Post;
+import es.udc.fi.dc.fd.model.persistence.PostView;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
-import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.repository.PostRepository;
+import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.AlreadyLikedException;
 import es.udc.fi.dc.fd.service.LikesService;
 import es.udc.fi.dc.fd.service.NotLikedYetException;
 import es.udc.fi.dc.fd.service.PictureService;
 import es.udc.fi.dc.fd.service.PostService;
+import es.udc.fi.dc.fd.service.PostViewService;
 
 @Controller
 @RequestMapping("/post")
 public class UserPostListViewController {
-	
+
 	/** The Constant IMAGE_NOT_FOUND_ERROR. */
 	public static final String POST_NOT_FOUND_ERROR = "That post doesn't exist.";
 
@@ -39,40 +42,45 @@ public class UserPostListViewController {
 
 	/** The Constant SUCESS_DELETED_PICTURE. */
 	public static final String SUCESS_DELETED_POST = "The post has been deleted sucessfully.";
-	
-	public static final String SUCESS_LIKED_POST = "The post has been liked sucessfully.";
-	
-	public static final String SUCESS_UNLIKED_POST = "The post has been unliked sucessfully.";
-	
-	public static final String USER_NOT_FOUND_ERROR = "That user doesn't exist.";
-	
-	public static final String ALREADY_LIKED_POST_ERROR= "That post was already liked.";
-	
-	public static final String POST_NOT_LIKED_YET_ERROR = "That post isn't liked yet.";
 
+	public static final String SUCESS_LIKED_POST = "The post has been liked sucessfully.";
+
+	public static final String SUCESS_UNLIKED_POST = "The post has been unliked sucessfully.";
+
+	public static final String USER_NOT_FOUND_ERROR = "That user doesn't exist.";
+
+	public static final String ALREADY_LIKED_POST_ERROR = "That post was already liked.";
+
+	public static final String POST_NOT_LIKED_YET_ERROR = "That post isn't liked yet.";
 
 	@Autowired
 	private final PostService postService;
-	
+
+	@Autowired
+	private final PostViewService postViewService;
+
 	@Autowired
 	private final LikesService likesService;
-	
+
 	@Autowired
 	private final PictureService pictureService;
 
 	@Autowired
 	private UserProfileRepository userProfileRepository;
-	
+
 	@Autowired
 	private PostRepository postRepository;
 
 	@Autowired
-	public UserPostListViewController(final PostService service, final PictureService servicePicture, final LikesService serviceLikes) {
+	public UserPostListViewController(final PostService service, final PictureService servicePicture,
+			final LikesService serviceLikes, final PostViewService servicePostView) {
+
 		super();
 
 		postService = checkNotNull(service, "Received a null pointer as service");
 		pictureService = checkNotNull(servicePicture, "Received a null pointer as service");
 		likesService = checkNotNull(serviceLikes, "Received a null pointer as service");
+		postViewService = checkNotNull(servicePostView, "Received a null pointer as service");
 	}
 
 	@GetMapping(path = "/list")
@@ -90,18 +98,30 @@ public class UserPostListViewController {
 		return postService;
 	}
 
+	private final PostViewService getPostViewService() {
+		return postViewService;
+	}
+
 	private final void loadViewModel(final ModelMap model, Principal userAuthenticated) {
 		UserProfile user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
-
 		try {
-			model.put(PostViewConstants.PARAM_POSTS, getPostService().findUserPosts(user));
+			List<Post> posts = getPostService().findUserPosts(user);
+
+			for (Post post : posts) {
+				if (getPostViewService().findPostViewByPostUser(post, user) == null) {
+					getPostViewService().save(new PostView(user, post));
+				}
+			}
+
+			model.put(PostViewConstants.PARAM_POSTS, posts);
+			model.put(PostViewConstants.PARAM_POSTVIEWS, getPostViewService().findPostsViews(posts));
 		} catch (InstanceNotFoundException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Delete post post mapping.
 	 *
@@ -114,14 +134,13 @@ public class UserPostListViewController {
 	 * @return the string
 	 */
 	@PostMapping("deletePost")
-	public final String deletePost(@RequestParam Long postId, final ModelMap model, 
-			Principal userAuthenticated, HttpSession session) {
-		
+	public final String deletePost(@RequestParam Long postId, final ModelMap model, Principal userAuthenticated,
+			HttpSession session) {
+
 		String error_message = "";
 		Boolean sucess = false;
 		Post post = postRepository.findById(postId).get();
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
-
 
 		// Eliminamos la imagen
 		if (post == null) {
@@ -131,21 +150,21 @@ public class UserPostListViewController {
 		} else {
 			// Eliminamos la imagen de la BD
 			postService.deletePost(post);
-			
-			if (post.getPicture().getAuthor().getUser_id()== author.getUser_id()) {
-				    
+
+			if (post.getPicture().getAuthor().getUser_id() == author.getUser_id()) {
+
 				pictureService.delete(post.getPicture());
-				    
+
 				String folderPath = session.getServletContext().getRealPath("/")
-				+ PictureUploaderController.UPLOADS_FOLDER_NAME;
+						+ PictureUploaderController.UPLOADS_FOLDER_NAME;
 
 				String imagePath = folderPath + "/" + post.getPicture().getImage_path();
 				File pictureFile = new File(imagePath);
-				    
+
 				if (pictureFile.exists()) {
 					pictureFile.delete();
 				}
-				    
+
 			}
 
 			error_message = SUCESS_DELETED_POST;
@@ -163,40 +182,41 @@ public class UserPostListViewController {
 		return PostViewConstants.VIEW_POST_LIST;
 
 	}
-	
+
 	/**
 	 * Like post postmapping
+	 * 
 	 * @param postId
-	 * 			the post id
+	 *            the post id
 	 * @param model
-	 * 			the model
+	 *            the model
 	 * @param userAuthenticated
-	 * 			the user authenticated
-	 * @param session 
-	 * 			the http session
+	 *            the user authenticated
+	 * @param session
+	 *            the http session
 	 * @return string
-	 * @throws InstanceNotFoundException 
-	 * @throws AlreadyLikedException 
+	 * @throws InstanceNotFoundException
+	 * @throws AlreadyLikedException
 	 */
 	@PostMapping("likePost")
-	public final String likePost(@RequestParam Long postId, final ModelMap model, 
-			Principal userAuthenticated, HttpSession session){
-		
+	public final String likePost(@RequestParam Long postId, final ModelMap model, Principal userAuthenticated,
+			HttpSession session) {
+
 		Post post = postRepository.findById(postId).get();
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 		String error_message = "";
 		Boolean sucess = false;
-		
+
 		if (post == null) {
 			error_message = POST_NOT_FOUND_ERROR;
-		}else if(author == null){
+		} else if (author == null) {
 			error_message = USER_NOT_FOUND_ERROR;
-		}else if (likesService.existLikes(author, post)){
+		} else if (likesService.existLikes(author, post)) {
 			error_message = ALREADY_LIKED_POST_ERROR;
-		}else{
+		} else {
 			try {
 				likesService.newLikes(author, post);
-				post.setNumber_of_likes(post.getNumber_of_likes()+1);
+				post.setNumber_of_likes(post.getNumber_of_likes() + 1);
 				postService.save(post);
 			} catch (InstanceNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -216,38 +236,39 @@ public class UserPostListViewController {
 
 		return PostViewConstants.VIEW_POST_LIST;
 	}
-	
+
 	/**
 	 * Unlike post postmapping
+	 * 
 	 * @param postId
-	 * 			the post id
+	 *            the post id
 	 * @param model
-	 * 			the model
+	 *            the model
 	 * @param userAuthenticated
-	 * 			the user authenticated
-	 * @param session 
-	 * 			the http session
+	 *            the user authenticated
+	 * @param session
+	 *            the http session
 	 * @return string
 	 */
 	@PostMapping("unlikePost")
-	public final String unlikePost(@RequestParam Long postId, final ModelMap model, 
-			Principal userAuthenticated, HttpSession session) {
-		
+	public final String unlikePost(@RequestParam Long postId, final ModelMap model, Principal userAuthenticated,
+			HttpSession session) {
+
 		Post post = postRepository.findById(postId).get();
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 		String error_message = "";
 		Boolean sucess = false;
-		
+
 		if (post == null) {
 			error_message = POST_NOT_FOUND_ERROR;
-		}else if(author == null){
+		} else if (author == null) {
 			error_message = USER_NOT_FOUND_ERROR;
-		}else if (!likesService.existLikes(author, post)){
+		} else if (!likesService.existLikes(author, post)) {
 			error_message = POST_NOT_LIKED_YET_ERROR;
-		}else{
+		} else {
 			try {
 				likesService.deleteUserPostLikes(author, post);
-				post.setNumber_of_likes(post.getNumber_of_likes()-1);
+				post.setNumber_of_likes(post.getNumber_of_likes() - 1);
 				postService.save(post);
 			} catch (InstanceNotFoundException e) {
 				// TODO Auto-generated catch block
