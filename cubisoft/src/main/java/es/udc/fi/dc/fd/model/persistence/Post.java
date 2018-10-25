@@ -194,7 +194,7 @@ public class Post {
 	 * @param reshare
 	 *            the reshare status
 	 */
-	public void setViews(Boolean reshare) {
+	public void setReshare(Boolean reshare) {
 		this.reshare = reshare;
 	}
 

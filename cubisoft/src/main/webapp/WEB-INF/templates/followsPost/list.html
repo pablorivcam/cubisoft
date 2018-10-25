@@ -28,11 +28,14 @@
 	            		<div>
 	            			<span>Views: </span> 
 	              			<span th:text="${post?.views}">Views placeholder</span>
+							<div th:if="${post?.reshare}" style ="display:inline-block; padding: 5px" >
+								<span>Reshared</span>
+							</div>  	              			
 						</div>
 						<div>
 							<div style ="display:inline-block;">
 								<span>Likes: </span> 
-		              			<span th:text="${post?.number_of_likes}">Likes placeholder</span>
+		              			<span th:text="${post?.number_of_likes}">Likes placeholder</span>	          	
 	              			</div>
 	              				<div th:if="!${likesService.existLikes(currentUser,post)}" style ="display:inline-block; padding: 5px" >
 									<!-- Boton de Like -->
@@ -48,6 +51,9 @@
 										<button th:text="#{button.unlike}" type="submit" class="btn btn-danger">Unlike</button>
 									</form>
 								</div>
+								<a href="#resharePictureModal" 
+									th:attr="data-postid=''+${post?.post_id}+''"						
+									th:text="#{button.reshare}" data-toggle="modal" class="resharePictureModalButton btn btn-danger" role="button" style="margin:10px">Reshare</a>								
 						</div>
 	            		<div>
 	            			<p>
@@ -63,8 +69,54 @@
          </tr> 
       </table>
    </section>
+   
+   <!-- Parte del diálogo para reshares -->   
+	<div class="modal fade" id="resharePictureModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="resharePictureModalLabel" th:text="#{title.post.reshare}">Reshare post</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+						<p th:text="#{label.reshareconfirmation}">Confirmation</p>
+						<span id="modal-pictureid"></span> 
+				</div>
+				<div class="modal-footer">
+					<form id="resharePictureForm" action="#" th:action="@{/followsPost/resharePost}" class="form-narrow form-horizontal" method="post">
+						<input type="hidden" id="postId" name="postId" value="-1">
+						<button th:text="#{button.cancel}" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>	
+						<button th:text="#{button.submit}" type="submit" class="btn btn-danger">Submit</button>
+					</form>							
+				</div>
+			</div>
+		</div>
+	</div>
+   
+   
 	<footer>
       <div th:include="fragments/scripts :: general" />
    </footer>
+   
+   	<!-- Script para configurar el modal para todos los posibles botones de reshare -->
+	<script type="text/javascript">
+			
+		$(document).ready(function() {
+			
+			// Cada vez que se haga click en algún botón de reshare
+			$(document).on("click", ".resharePictureModalButton", function () {
+				
+				// Se recoje su valor de data-postId
+	    		var postId = $(this).data('postid');
+
+				// Y se usa en el campo oculto del formulario del modal
+	        	$("#postId").val( postId );
+
+			});
+		});
+	
+	</script>   
 </body>
 </html>
