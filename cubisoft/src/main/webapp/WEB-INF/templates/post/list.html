@@ -26,14 +26,27 @@
 	            	</div>
 	            	<div style="width:80%">
 	            		<div>
-	            			<span>Views: </span> 
-	              			<span th:text="${post?.views}">Views placeholder</span>
+	            		<table class="table table-striped display dataTable">
+						<th:block th:each="postview : ${postviews}">     
+	 						<tr th:each="view : ${postview}"> 
+								<td>
+	            				<div style="margin-left:5%">
+	            				 <span th:if="${post?.post_id == view?.post.post_id}" th:text="${view?.user.login}">User placeholder</span>
+	            				</div>
+           						</td>
+           					</tr> 
+           				</th:block>  
+      				</table>
+	            			<a href="#showViewModal" 
+	            			th:attr="data-viewpostid=''+${post?.post_id}+''"						
+							th:text="#{button.views}" data-toggle="modal" class="showViewModalButton btn btn-secondary" role="button">Views</a>
 							<a href="#deletePostModal" 
 							th:attr="data-postid=''+${post?.post_id}+''"							
-							th:text="#{button.delete}" data-toggle="modal" class="deletePostModalButton btn btn-danger" role="button" style="margin:20px">Delete</a>
+							th:text="#{button.delete}" data-toggle="modal" class="deletePostModalButton btn btn-danger" role="button" style="margin:10px">Delete</a>
 
 						</div> 
 	            		<div style="margin-left:5%">
+	            			
 		      				<span th:text="${post?.picture.description}">Description placeholder</span>
 	            		</div>
            	
@@ -44,6 +57,34 @@
          </tr> 
       </table>
    </section>
+   <div class="modal fade" id="showViewModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="ShowViewModalLabel" th:text="#{title.post.views}">Post Views</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table class="table table-striped display dataTable">
+						<th:block th:each="postview : ${postviews}">     
+	 						<tr th:each="view : ${postview}"> 
+								<td>
+	            				<div style="margin-left:5%">
+	            				 <span th:text="${view?.user.login}">User placeholder</span>
+	            				</div>
+           						</td>
+           					</tr> 
+           				</th:block>  
+      				</table>
+				</div>
+				<div class="modal-footer">		
+						<button th:text="#{button.cancel}" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>							
+				</div>
+			</div>
+		</div>
+	</div>
    <div class="modal fade" id="deletePostModal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -79,13 +120,25 @@
 			// Cada vez que se haga click en algún botón de eliminar
 			$(document).on("click", ".deletePostModalButton", function () {
 				
-				// Se recoje su valor de data-pictureId
+				// Se recoje su valor de data-postId
 	    		var postId = $(this).data('postid');
 
 				// Y se usa en el campo oculto del formulario del modal
 	        	$("#postId").val( postId );
 
 			});
+			
+			// Cada vez que se haga click en algún botón de view
+			$(document).on("click", ".showViewModalButton", function () {
+				
+				// Se recoje su valor de data-viewpostId
+	    		var viewpostId = $(this).data('viewpostid');
+
+				// Y se usa en el campo oculto del formulario del modal
+	        	$("#viewpostId").val( viewpostId );
+
+			});
+			
 		});
 	
 	</script>  

@@ -12,6 +12,12 @@
 		        tableName="example_entities"/>
 	</changeSet>
 	
+	<changeSet author="YankoNion"  id="dropPostView" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="PostView"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="PostView"/>
+	</changeSet>
+	
 	<changeSet author="BranLopez"  id="dropLikes" runAlways="true">
 		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Likes"/></preConditions>
 		<dropTable cascadeConstraints="true"
@@ -144,8 +150,25 @@
        	            />
 		     </column>
 		</createTable>
+
+		<createTable tableName="PostView">
+		<column autoIncrement="true" name="view_id" type="BIGINT">
+			<constraints primaryKey="true" />
+			</column>
+		    <column name="user" type="BIGINT">
+		    	<constraints nullable="false" 
+		         	foreignKeyName="view_user_fk" 
+                	references="UserProfile(user_id)"
+       	            />
+		     </column>
+		     <column name="post" type="BIGINT">
+		         <constraints nullable="false" 
+       	            />
+		     </column>
+		</createTable>
 		
 	</changeSet>
+	
 	<changeSet author="PabloRivas" id="foreign_keys" runAlways="true">
 		    <addForeignKeyConstraint baseColumnNames="picture_id"
 	            baseTableName="Post"
@@ -154,6 +177,21 @@
 	            onUpdate="RESTRICT"
 	            referencedColumnNames="picture_id"
 	            referencedTableName="Picture"/>	
+	</changeSet>
+	<changeSet author="YankoNion" id="foreign_keys" runAlways="true">
+		    <addForeignKeyConstraint baseColumnNames="post"
+	            baseTableName="PostView"
+	            constraintName="postview_post_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="post_id"
+	            referencedTableName="Post"/>	
+	</changeSet>
+	<changeSet author="YankoNion" id="postview_unique_contraint" runAlways="true">
+		<addUniqueConstraint
+			columnNames="user, post"
+			constraintName="postview_unique_constraint"
+			tableName="PostView"/>
 	</changeSet>
 	<!--
 	<changeSet author="BranLopez" id="likes_unique_contraint" runAlways="true">
