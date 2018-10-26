@@ -138,13 +138,13 @@ public class LikesService {
 		if (!postRepository.existsById(post.getPost_id())) {
 			throw new InstanceNotFoundException("The post with the id" + post.getPost_id() + " doesnt exists.");
 		}
-		Likes like = new Likes();
 		try {
-			like = likesRepository.findLikesByUserAndPost(user, post);
+			Likes like = likesRepository.findLikesByUserAndPost(user, post);
+			likesRepository.delete(like);
+
 		} catch (Error e) {
 			throw new NotLikedYetException("The post is not liked yet");
 		}
-		likesRepository.delete(like);
 	}
 
 	/**

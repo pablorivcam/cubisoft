@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
-
-
 @RunWith(MockitoJUnitRunner.class)
 public class FindProfileByKeywordsTest {
 
@@ -35,8 +33,8 @@ public class FindProfileByKeywordsTest {
 	@Autowired
 	private UserProfileRepository userProfileRepository;
 
-//	@InjectMocks
-//	private PictureService pictureService;
+	// @InjectMocks
+	// private PictureService pictureService;
 
 	private UserProfile userA, userB, userC;
 
@@ -64,7 +62,6 @@ public class FindProfileByKeywordsTest {
 		usersList.add(userC);
 
 		Mockito.when(userProfileRepository.findUserProfileByKeywords(KEYWORD)).thenReturn(usersList);
-		
 
 		try {
 			assertThat(userProfileRepository.findUserProfileByKeywords(KEYWORD), is(equalTo(usersList)));
@@ -78,12 +75,8 @@ public class FindProfileByKeywordsTest {
 	@Test
 	public void ProfileByKeywordsTest1() {
 
-		ArrayList<UserProfile> usersList = new ArrayList<UserProfile>();
-		usersList.add(userA);
-		usersList.add(userC);
-
 		ArrayList<UserProfile> usersList1 = new ArrayList<UserProfile>();
-		usersList.add(userC);
+		usersList1.add(userC);
 
 		Mockito.when(userProfileRepository.findUserProfileByKeywords("11")).thenReturn(usersList1);
 
@@ -99,9 +92,6 @@ public class FindProfileByKeywordsTest {
 	@Test
 	public void ProfileByKeywordsTest2() {
 
-		ArrayList<UserProfile> usersList = new ArrayList<UserProfile>();
-		usersList.add(userA);
-		usersList.add(userC);
 		ArrayList<UserProfile> usersList1 = new ArrayList<UserProfile>();
 		Mockito.when(userProfileRepository.findUserProfileByKeywords("ola")).thenReturn(usersList1);
 

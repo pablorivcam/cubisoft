@@ -163,6 +163,7 @@ public class PictureUploaderController {
 					outputStream.write(bytes, 0, read);
 				}
 
+				outputStream.close();
 				System.out.println("Archivo guardado en: " + newFile.getAbsolutePath());
 
 				// Obtenemos el autor asociado
