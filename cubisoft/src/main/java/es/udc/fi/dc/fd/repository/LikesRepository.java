@@ -20,7 +20,8 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
 	/**
 	 * Find likes by post.
 	 *
-	 * @param post the post
+	 * @param post
+	 *            the post
 	 * @return the list of likes
 	 */
 	@Query("select l from Likes l where l.post=:post")
@@ -29,7 +30,8 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
 	/**
 	 * Find likes by user.
 	 *
-	 * @param user the user profile
+	 * @param user
+	 *            the user profile
 	 * @return the list of likes
 	 */
 	@Query("select l from Likes l where l.user=:user")
@@ -38,19 +40,23 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
 	/**
 	 * Find one by likes id.
 	 *
-	 * @param likes_id the likes id
+	 * @param likes_id
+	 *            the likes id
 	 * @return the "likes" (only 1)
 	 */
 	@Query("SELECT l FROM Likes l where l.likes_id=:likes_id")
 	Likes findLikesById(@Param("likes_id") Long likes_id);
-	
+
 	/**
 	 * Find one by likes id.
 	 *
-	 * @param likes_id the likes id
+	 * @param user
+	 *            the user
+	 * @param post
+	 *            the post
 	 * @return the "likes" (only 1)
 	 */
 	@Query("SELECT l FROM Likes l where l.user=:user and l.post=:post")
-	Likes findLikesByUserAndPost(@Param("user") UserProfile user,@Param("post") Post post);
+	Likes findLikesByUserAndPost(@Param("user") UserProfile user, @Param("post") Post post);
 
 }

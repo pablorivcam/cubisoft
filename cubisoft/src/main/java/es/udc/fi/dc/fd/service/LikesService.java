@@ -35,12 +35,17 @@ public class LikesService {
 	}
 
 	/**
-	 * Sets a like from the user to the post and returns it
-	 * @param user the author of the like
-	 * @param post the post to give a like
+	 * Method that allows an user to like some existing post.
+	 *
+	 * @param user
+	 *            the author of the like
+	 * @param post
+	 *            the post to give a like
 	 * @return the like
 	 * @throws InstanceNotFoundException
-	 * @throws AlreadyLikedException 
+	 *             the instance not found exception
+	 * @throws AlreadyLikedException
+	 *             the already liked exception
 	 */
 	@Transactional
 	public Likes newLikes(UserProfile user, Post post) throws InstanceNotFoundException, AlreadyLikedException {
@@ -59,18 +64,21 @@ public class LikesService {
 		Likes like = new Likes(user, post);
 		try {
 			likesRepository.save(like);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			throw new AlreadyLikedException("The post has been already liked");
 		}
-		
+
 		return like;
 	}
 
 	/**
-	 * Returns the user likes
-	 * @param user the owner of the likes
+	 * Method that returns all the likes made by a specific user.
+	 *
+	 * @param user
+	 *            the owner of the likes
 	 * @return the list of likes
 	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
 	 */
 	@Transactional
 	public List<Likes> findUserLikes(UserProfile user) throws InstanceNotFoundException {
@@ -84,10 +92,13 @@ public class LikesService {
 	}
 
 	/**
-	 * Returns the post likes
-	 * @param post the post to find likes for
+	 * Method that returns all the likes corresponding to some post.
+	 *
+	 * @param post
+	 *            the post to find likes for
 	 * @return the list of likes
 	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
 	 */
 	@Transactional
 	public List<Likes> findPostLikes(Post post) throws InstanceNotFoundException {
@@ -101,14 +112,20 @@ public class LikesService {
 	}
 
 	/**
-	 * Unlikes the post for the designed user
-	 * @param user the author of the like
-	 * @param post the liked post
+	 * Unlikes the post for the designed user.
+	 *
+	 * @param user
+	 *            the author of the like
+	 * @param post
+	 *            the liked post
 	 * @throws InstanceNotFoundException
-	 * @throws AlreadyLikedException 
+	 *             the instance not found exception
+	 * @throws NotLikedYetException
+	 *             the not liked yet exception
 	 */
 	@Transactional
-	public void deleteUserPostLikes(UserProfile user, Post post) throws InstanceNotFoundException, NotLikedYetException {
+	public void deleteUserPostLikes(UserProfile user, Post post)
+			throws InstanceNotFoundException, NotLikedYetException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
 		}
@@ -124,14 +141,23 @@ public class LikesService {
 		Likes like = new Likes();
 		try {
 			like = likesRepository.findLikesByUserAndPost(user, post);
-		}catch(Error e) {
+		} catch (Error e) {
 			throw new NotLikedYetException("The post is not liked yet");
 		}
 		likesRepository.delete(like);
 	}
-	
+
+	/**
+	 * Method that returns true if the user made some like to an existing post.
+	 *
+	 * @param user
+	 *            the user
+	 * @param post
+	 *            the post
+	 * @return true, if successful
+	 */
 	@Transactional
-	public boolean existLikes(UserProfile user, Post post){
+	public boolean existLikes(UserProfile user, Post post) {
 		boolean result = false;
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
@@ -148,13 +174,12 @@ public class LikesService {
 
 		Likes like = likesRepository.findLikesByUserAndPost(user, post);
 		if (like != null) {
-			result = true; 
-		}	
-			
-	
+			result = true;
+		}
+
 		return result;
 	}
-	
+
 	@Transactional
 	public void delete(Likes like) {
 		likesRepository.delete(like);

@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.udc.fi.dc.fd.controller.picture.PictureUploaderController;
+import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.PostView;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.repository.PictureRepository;
 import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.AlreadyLikedException;
@@ -32,7 +34,7 @@ import es.udc.fi.dc.fd.service.PostViewService;
 
 @Controller
 @RequestMapping("/post")
-public class UserPostListViewController {
+public class FeedViewController {
 
 	/** The Constant IMAGE_NOT_FOUND_ERROR. */
 	public static final String POST_NOT_FOUND_ERROR = "That post doesn't exist.";
@@ -53,6 +55,12 @@ public class UserPostListViewController {
 
 	public static final String POST_NOT_LIKED_YET_ERROR = "That post isn't liked yet.";
 
+	/** The Constant SUCESS_DELETED_PICTURE. */
+	public static final String SUCESS_EDITED_PICTURE = "The picture has been modified sucessfully.";
+
+	/** The Constant SUCESS_RESHARE_POST. */
+	public static final String SUCESS_RESHARE_POST = "The post has been reshared sucessfully.";
+
 	@Autowired
 	private final PostService postService;
 
@@ -69,13 +77,14 @@ public class UserPostListViewController {
 	private UserProfileRepository userProfileRepository;
 
 	@Autowired
+	private PictureRepository pictureRepository;
+
+	@Autowired
 	private PostRepository postRepository;
 
 	@Autowired
-	public UserPostListViewController(final PostService service, final PictureService servicePicture,
+	public FeedViewController(final PostService service, final PictureService servicePicture,
 			final LikesService serviceLikes, final PostViewService servicePostView) {
-
-		super();
 
 		postService = checkNotNull(service, "Received a null pointer as service");
 		pictureService = checkNotNull(servicePicture, "Received a null pointer as service");
@@ -83,15 +92,40 @@ public class UserPostListViewController {
 		postViewService = checkNotNull(servicePostView, "Received a null pointer as service");
 	}
 
-	@GetMapping(path = "/list")
-	public final String showPostList(final ModelMap model, Principal userAuthenticated) {
+	/**
+	 * Show my feed.
+	 *
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @return the string
+	 */
+	@GetMapping(path = "/myFeed")
+	public final String showMyFeed(final ModelMap model, Principal userAuthenticated) {
 		// Loads required data into the model
-		UserProfile user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
-		model.put("currentUser", user);
-		model.put("likesService", likesService);
-		loadViewModel(model, userAuthenticated);
+
+		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_POST_LIST);
 
 		return PostViewConstants.VIEW_POST_LIST;
+	}
+
+	/**
+	 * Show global feed.
+	 *
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @return the string
+	 */
+	@GetMapping(path = "/globalFeed")
+	public final String showGlobalFeed(final ModelMap model, Principal userAuthenticated) {
+		// Loads required data into the model
+
+		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_GLOBAL_FEED);
+
+		return PostViewConstants.VIEW_GLOBAL_FEED;
 	}
 
 	private final PostService getPostService() {
@@ -102,10 +136,17 @@ public class UserPostListViewController {
 		return postViewService;
 	}
 
-	private final void loadViewModel(final ModelMap model, Principal userAuthenticated) {
+	private final void loadViewModel(final ModelMap model, Principal userAuthenticated, String view) {
 		UserProfile user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 		try {
-			List<Post> posts = getPostService().findUserPosts(user);
+
+			List<Post> posts = null;
+
+			if (view.equals(PostViewConstants.VIEW_GLOBAL_FEED)) {
+				posts = getPostService().findFollowsAndUserPosts(user);
+			} else {
+				posts = getPostService().findUserPosts(user);
+			}
 
 			for (Post post : posts) {
 				if (getPostViewService().findPostViewByPostUser(post, user) == null) {
@@ -113,7 +154,10 @@ public class UserPostListViewController {
 				}
 			}
 
+			model.put("currentUser", user);
+			model.put("likesService", likesService);
 			model.put(PostViewConstants.PARAM_POSTS, posts);
+			model.put("postService", getPostService());
 			model.put(PostViewConstants.PARAM_POSTVIEWS, getPostViewService().findPostsViews(posts));
 		} catch (InstanceNotFoundException e) {
 			e.printStackTrace();
@@ -123,19 +167,63 @@ public class UserPostListViewController {
 	}
 
 	/**
+	 * Modify image description.
+	 *
+	 * @param modifyId
+	 *            the modify id
+	 * @param view
+	 *            the view
+	 * @param description
+	 *            the description
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param session
+	 *            the session
+	 * @return the string
+	 */
+	@PostMapping("modifyPicture")
+	public final String modifyImageDescription(@RequestParam Long modifyId, @RequestParam String view,
+			@RequestParam String description, final ModelMap model, Principal userAuthenticated, HttpSession session) {
+
+		String error_message = "";
+		Boolean sucess = false;
+		Picture p = pictureRepository.findById(modifyId).get();
+
+		// Modificamos la descripcion de la imagen en la BD
+		// pictureService.modifyPicture(p, pictureDescription);
+		p.setDescription(description);
+		pictureService.save(p);
+		error_message = SUCESS_EDITED_PICTURE;
+		sucess = true;
+
+		// Devolvemos el mensaje
+		model.put("error_message", error_message);
+		model.put("sucess", sucess);
+		loadViewModel(model, userAuthenticated, view);
+
+		return view;
+	}
+
+	/**
 	 * Delete post post mapping.
 	 *
+	 * @param view
+	 *            the view
 	 * @param postId
 	 *            the post id
 	 * @param model
 	 *            the model
 	 * @param userAuthenticated
 	 *            the user authenticated
+	 * @param session
+	 *            the session
 	 * @return the string
 	 */
 	@PostMapping("deletePost")
-	public final String deletePost(@RequestParam Long postId, final ModelMap model, Principal userAuthenticated,
-			HttpSession session) {
+	public final String deletePost(@RequestParam String view, @RequestParam Long postId, final ModelMap model,
+			Principal userAuthenticated, HttpSession session) {
 
 		String error_message = "";
 		Boolean sucess = false;
@@ -172,20 +260,20 @@ public class UserPostListViewController {
 		}
 
 		// Devolvemos el mensaje
-		model.put("currentUser", author);
-		model.put("likesService", likesService);
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
 
-		loadViewModel(model, userAuthenticated);
+		loadViewModel(model, userAuthenticated, view);
 
-		return PostViewConstants.VIEW_POST_LIST;
+		return view;
 
 	}
 
 	/**
-	 * Like post postmapping
-	 * 
+	 * Like post postmapping.
+	 *
+	 * @param view
+	 *            the view
 	 * @param postId
 	 *            the post id
 	 * @param model
@@ -195,12 +283,10 @@ public class UserPostListViewController {
 	 * @param session
 	 *            the http session
 	 * @return string
-	 * @throws InstanceNotFoundException
-	 * @throws AlreadyLikedException
 	 */
 	@PostMapping("likePost")
-	public final String likePost(@RequestParam Long postId, final ModelMap model, Principal userAuthenticated,
-			HttpSession session) {
+	public final String likePost(@RequestParam String view, @RequestParam Long postId, final ModelMap model,
+			Principal userAuthenticated, HttpSession session) {
 
 		Post post = postRepository.findById(postId).get();
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
@@ -228,18 +314,18 @@ public class UserPostListViewController {
 			error_message = SUCESS_LIKED_POST;
 			sucess = true;
 		}
-		model.put("currentUser", author);
-		model.put("likesService", likesService);
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
-		loadViewModel(model, userAuthenticated);
+		loadViewModel(model, userAuthenticated, view);
 
-		return PostViewConstants.VIEW_POST_LIST;
+		return view;
 	}
 
 	/**
-	 * Unlike post postmapping
-	 * 
+	 * Unlike post postmapping.
+	 *
+	 * @param view
+	 *            the view
 	 * @param postId
 	 *            the post id
 	 * @param model
@@ -251,8 +337,8 @@ public class UserPostListViewController {
 	 * @return string
 	 */
 	@PostMapping("unlikePost")
-	public final String unlikePost(@RequestParam Long postId, final ModelMap model, Principal userAuthenticated,
-			HttpSession session) {
+	public final String unlikePost(@RequestParam String view, @RequestParam Long postId, final ModelMap model,
+			Principal userAuthenticated, HttpSession session) {
 
 		Post post = postRepository.findById(postId).get();
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
@@ -280,13 +366,56 @@ public class UserPostListViewController {
 			error_message = SUCESS_UNLIKED_POST;
 			sucess = true;
 		}
+		model.put("error_message", error_message);
+		model.put("sucess", sucess);
+		loadViewModel(model, userAuthenticated, view);
+
+		return view;
+	}
+
+	/**
+	 * Reshare post postmapping.
+	 *
+	 * @param postId
+	 *            the post id
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param session
+	 *            the http session
+	 * @return string
+	 */
+	@PostMapping("resharePost")
+	public final String resharePost(@RequestParam Long postId, final ModelMap model, Principal userAuthenticated,
+			HttpSession session) {
+
+		Post post = postRepository.findById(postId).get();
+		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+		String error_message = "";
+		Boolean sucess = false;
+
+		if (post == null) {
+			error_message = POST_NOT_FOUND_ERROR;
+		} else if (author == null) {
+			error_message = USER_NOT_FOUND_ERROR;
+		} else {
+			try {
+				postService.newReshare(post, author);
+			} catch (InstanceNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			error_message = SUCESS_RESHARE_POST;
+			sucess = true;
+		}
 		model.put("currentUser", author);
 		model.put("likesService", likesService);
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
-		loadViewModel(model, userAuthenticated);
+		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_GLOBAL_FEED);
 
-		return PostViewConstants.VIEW_POST_LIST;
+		return PostViewConstants.VIEW_GLOBAL_FEED;
 	}
 
 }

@@ -67,7 +67,7 @@ public class PostService {
 	}
 
 	/**
-	 * Find user posts.
+	 * Method that fins all the user's posts.
 	 * 
 	 * @param user
 	 *            the user
@@ -98,7 +98,7 @@ public class PostService {
 	}
 
 	/**
-	 * NewPost.
+	 * Method that creates a new post from an user and an existing picture.
 	 *
 	 * @param picture
 	 *            the picture
@@ -124,7 +124,7 @@ public class PostService {
 	}
 
 	/**
-	 * DeletePost.
+	 * Method that deletes an existing post from the database.
 	 *
 	 * @param post
 	 *            the post

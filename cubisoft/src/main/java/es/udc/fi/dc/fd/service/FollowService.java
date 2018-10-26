@@ -23,7 +23,7 @@ public class FollowService {
 	private FollowRepository followRepository;
 
 	/**
-	 * Follow.
+	 * Method that allows an user to follow another one.
 	 *
 	 * @param user
 	 *            the user
@@ -39,7 +39,7 @@ public class FollowService {
 	}
 
 	/**
-	 * UnFollow.
+	 * Method that allows an user to unfollow another one.
 	 *
 	 * @param user
 	 *            the user
@@ -53,7 +53,7 @@ public class FollowService {
 	}
 
 	/**
-	 * Gets the user follows.
+	 * Method that obtains all the user follows.
 	 *
 	 * @param user
 	 *            the user
@@ -67,7 +67,8 @@ public class FollowService {
 	}
 
 	/**
-	 * Find follow by users.
+	 * Method that returns true if an user is following the another or false in
+	 * another case.
 	 *
 	 * @param userA
 	 *            the user A

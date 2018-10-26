@@ -8,8 +8,8 @@ public class PostViewConstants {
 
 	public static final String PARAM_POSTVIEWS = "postviews";
 
-	public static final String VIEW_POST_LIST = "post/list";
+	public static final String VIEW_POST_LIST = "post/myFeed";
 
-	public static final String VIEW_FOLLOWS_POST_LIST = "followsPost/list";
+	public static final String VIEW_GLOBAL_FEED = "post/globalFeed";
 
 }

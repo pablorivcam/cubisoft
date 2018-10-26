@@ -39,6 +39,17 @@ public class PostViewService {
 		return view;
 	}
 
+	/**
+	 * Find post view by post user.
+	 *
+	 * @param post
+	 *            the post
+	 * @param user
+	 *            the user
+	 * @return the post view
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
 	@Transactional
 	public PostView findPostViewByPostUser(Post post, UserProfile user) throws InstanceNotFoundException {
 		if (post == null) {
@@ -53,6 +64,15 @@ public class PostViewService {
 		return postViewRepository.findPostView(post, user);
 	}
 
+	/**
+	 * Find post view.
+	 *
+	 * @param post
+	 *            the post
+	 * @return the list
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
 	@Transactional
 	public List<PostView> findPostView(Post post) throws InstanceNotFoundException {
 		if (post == null) {
@@ -64,15 +84,24 @@ public class PostViewService {
 		return postViewRepository.findViewsByPost(post);
 	}
 
+	/**
+	 * Find posts views.
+	 *
+	 * @param posts
+	 *            the posts
+	 * @return the list
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
 	@Transactional
-	public List<List<PostView>> findPostsViews(List<Post> posts) throws InstanceNotFoundException {
-		List<List<PostView>> viewsPosts = new ArrayList<List<PostView>>();
+	public List<PostView> findPostsViews(List<Post> posts) throws InstanceNotFoundException {
+		List<PostView> viewsPosts = new ArrayList<PostView>();
 
 		if (posts == null) {
 			throw new NullPointerException("The posts param cannot be null.");
 		}
 		for (Post post : posts) {
-			viewsPosts.add(postViewRepository.findViewsByPost(post));
+			viewsPosts.addAll(postViewRepository.findViewsByPost(post));
 		}
 		return viewsPosts;
 	}

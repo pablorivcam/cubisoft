@@ -47,9 +47,9 @@ public class PostViewServiceTest {
 	private PostViewService postViewService;
 
 	private UserProfile userA, userB, userC;
-	private Post postA1, postA2;
+	private Post postA1;
 	private Picture picture;
-	private PostView pv1, pv2, pv3, pv4;
+	private PostView pv1, pv2, pv3;
 
 	@Before
 	public void initialize() {
@@ -68,13 +68,12 @@ public class PostViewServiceTest {
 		picture = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA);
 
 		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0, false);
-		postA2 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0, false);
+		// postA2 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0,
+		// false);
 
 		pv1 = new PostView(userA, postA1);
 		pv2 = new PostView(userB, postA1);
 		pv3 = new PostView(userC, postA1);
-
-		pv4 = new PostView(userC, postA2);
 
 	}
 

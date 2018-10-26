@@ -54,6 +54,12 @@ public class Post {
 	 *            the picture
 	 * @param user
 	 *            the user
+	 * @param views
+	 *            the views
+	 * @param number_of_likes
+	 *            the number of likes
+	 * @param reshare
+	 *            the reshare
 	 */
 	public Post(Calendar date, Picture picture, UserProfile user, Long views, Long number_of_likes, Boolean reshare) {
 		this.date = date;
@@ -166,7 +172,8 @@ public class Post {
 	}
 
 	/**
-	 * 
+	 * Gets the number of likes.
+	 *
 	 * @return the number of likes
 	 */
 	@Column(nullable = true)
@@ -175,8 +182,10 @@ public class Post {
 	}
 
 	/**
-	 * @param views
-	 *            the number of likes to set
+	 * Sets the number of likes.
+	 *
+	 * @param number_of_likes
+	 *            the new number of likes
 	 */
 	@JoinColumn(name = "number_of_likes")
 	public void setNumber_of_likes(Long number_of_likes) {

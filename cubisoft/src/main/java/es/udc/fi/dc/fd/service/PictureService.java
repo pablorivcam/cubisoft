@@ -66,7 +66,7 @@ public class PictureService {
 	}
 
 	/**
-	 * Delete a picture.
+	 * Deletes a picture.
 	 *
 	 * @param picture
 	 *            the picture

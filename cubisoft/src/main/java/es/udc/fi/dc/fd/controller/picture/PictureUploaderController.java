@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.udc.fi.dc.fd.controller.post.PostViewConstants;
 import es.udc.fi.dc.fd.model.form.MultipartFileValidator;
 import es.udc.fi.dc.fd.model.form.UploadPictureForm;
 import es.udc.fi.dc.fd.model.persistence.Picture;
@@ -79,8 +80,8 @@ public class PictureUploaderController {
 	}
 
 	/**
-	 * Submit. Process the uploadPicture POST request to upload an image into
-	 * the server. In adition, a single post is created with the image.
+	 * Submit. Process the uploadPicture POST request to upload an image into the
+	 * server. In adition, a single post is created with the image.
 	 *
 	 * @param session
 	 *            the session
@@ -182,7 +183,8 @@ public class PictureUploaderController {
 			}
 		}
 
-		return "redirect:../" + PictureViewConstants.VIEW_PICTURE_LIST;
+		return "redirect:../" + PostViewConstants.VIEW_POST_LIST;
+
 	}
 
 	/**
