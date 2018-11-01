@@ -26,7 +26,7 @@ import es.udc.fi.dc.fd.repository.PostViewRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.PostViewService;
 
-public class PostViewServiceTest {
+public class PostViewServiceUnitTest {
 
 	public static final String TEST_LOGIN = "test";
 	public static final String TEST_FIRSTNAME = "Test";
