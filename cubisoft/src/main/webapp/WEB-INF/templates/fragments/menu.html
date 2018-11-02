@@ -15,7 +15,7 @@
 		}
 	
 	</style>
-	<nav id="navbar-main" class="navbar navbar-main navbar-default" style="background:#ffffff">
+	<nav id="navbar-main" class="navbar navbar-fixed-top navbar-main navbar-default" style="background:#ffffff">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -35,7 +35,7 @@
 
 			<div id="navbar-main-body"
 				class="navbar-body navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-right" th:if="${#authorization.expression('isAuthenticated()')}">
+				<ul class="nav navbar-nav navbar-right">
 
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -44,11 +44,11 @@
 					</a>
 						<ul class="dropdown-menu" role="menu">
 						<!-- Picture menu -->						
-			              	<li><a th:href="@{/picture/upload}" th:text="#{label.upload}">Upload Picture</a></li>
-		                    <li><a th:href="@{/post/myFeed}" th:text="#{label.myfeed}">My Feed</a></li>  
-		                    <li><a th:href="@{/post/globalFeed}" th:text="#{label.globalfeed}">Global Feed</a></li>  
+			              	<li><a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/picture/upload}" th:text="#{label.upload}">Upload Picture</a></li>
+		                    <li><a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/post/myFeed}" th:text="#{label.myfeed}">My Feed</a></li>  
+		                    <li><a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/post/globalFeed}" th:text="#{label.globalfeed}">Global Feed</a></li>  
 		                    <li><a th:href="@{/account/list}" th:text="#{label.find_users}">Find Users</a></li>
-		                    <li><a th:href="@{/followed/list}" th:text="#{label.myfollows}">My Follows</a></li>
+		                    <li><a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/followed/list}" th:text="#{label.myfollows}">My Follows</a></li>
 						<!-- Old menu 
 							<li><a th:href="@{/entity/list}" th:text="#{label.list}">List</a></li>
                      <li><a th:href="@{/entity/list/ajax}" th:text="#{label.list.ajax}">List</a></li>

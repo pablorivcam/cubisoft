@@ -40,10 +40,12 @@ public class FindUsersController {
 	public final String showPictureList(@RequestParam String keywords, final ModelMap model,
 			Principal userAuthenticated) {
 
-		UserProfile currentUser = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+		if (userAuthenticated != null) {
+			UserProfile currentUser = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+			model.put("currentUser", currentUser);
+		}
 
 		model.put(USERS_PARAM, userProfileService.findUserProfileByKeywords(keywords));
-		model.put("currentUser", currentUser);
 		model.put("followService", followService);
 		model.put("keywords", keywords);
 

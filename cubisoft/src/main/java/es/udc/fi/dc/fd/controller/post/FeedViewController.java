@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.io.File;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import javax.management.InstanceNotFoundException;
 import javax.servlet.http.HttpSession;
@@ -53,6 +54,8 @@ public class FeedViewController {
 
 	public static final String ALREADY_LIKED_POST_ERROR = "That post was already liked.";
 
+	public static final String PICTURE_DELETE_ERROR = "Error deleting the picture";
+
 	public static final String POST_NOT_LIKED_YET_ERROR = "That post isn't liked yet.";
 
 	/** The Constant SUCESS_DELETED_PICTURE. */
@@ -99,13 +102,16 @@ public class FeedViewController {
 	 *            the model
 	 * @param userAuthenticated
 	 *            the user authenticated
+	 * @param user_id
+	 *            the user id
 	 * @return the string
 	 */
-	@GetMapping(path = "/myFeed")
-	public final String showMyFeed(final ModelMap model, Principal userAuthenticated) {
-		// Loads required data into the model
+	@GetMapping(path = "/myFeed{user_id}")
+	public final String showMyFeed(final ModelMap model, Principal userAuthenticated,
+			@RequestParam("user_id") Optional<Long> user_id) {
 
-		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_POST_LIST);
+		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_POST_LIST,
+				(user_id.isPresent()) ? user_id.get() : null);
 
 		return PostViewConstants.VIEW_POST_LIST;
 	}
@@ -123,7 +129,7 @@ public class FeedViewController {
 	public final String showGlobalFeed(final ModelMap model, Principal userAuthenticated) {
 		// Loads required data into the model
 
-		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_GLOBAL_FEED);
+		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_GLOBAL_FEED, null);
 
 		return PostViewConstants.VIEW_GLOBAL_FEED;
 	}
@@ -136,8 +142,10 @@ public class FeedViewController {
 		return postViewService;
 	}
 
-	private final void loadViewModel(final ModelMap model, Principal userAuthenticated, String view) {
+	private final void loadViewModel(final ModelMap model, Principal userAuthenticated, String view, Long user_id) {
+
 		UserProfile user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+
 		try {
 
 			List<Post> posts = null;
@@ -145,7 +153,14 @@ public class FeedViewController {
 			if (view.equals(PostViewConstants.VIEW_GLOBAL_FEED)) {
 				posts = getPostService().findFollowsAndUserPosts(user);
 			} else {
-				posts = getPostService().findUserPosts(user);
+
+				if (user_id == null || user_id == user.getUser_id()) {
+					posts = getPostService().findUserPosts(user);
+				} else {
+					UserProfile userFound = userProfileRepository.findById(user_id).get();
+					posts = getPostService().findUserPosts(userFound);
+					model.put("userFound", userFound);
+				}
 			}
 
 			for (Post post : posts) {
@@ -191,6 +206,9 @@ public class FeedViewController {
 		Boolean sucess = false;
 		Picture p = pictureRepository.findById(modifyId).get();
 
+		// FIXME: de esta manera si modificamos una imagen desde el perfil de otro
+		// usuario nos lleva al nuestro.
+
 		// Modificamos la descripcion de la imagen en la BD
 		// pictureService.modifyPicture(p, pictureDescription);
 		p.setDescription(description);
@@ -201,7 +219,7 @@ public class FeedViewController {
 		// Devolvemos el mensaje
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
-		loadViewModel(model, userAuthenticated, view);
+		loadViewModel(model, userAuthenticated, view, null);
 
 		return view;
 	}
@@ -250,20 +268,25 @@ public class FeedViewController {
 				File pictureFile = new File(imagePath);
 
 				if (pictureFile.exists()) {
-					pictureFile.delete();
+					boolean deleted = pictureFile.delete();
+					if (!deleted) {
+						error_message = PICTURE_DELETE_ERROR;
+					}
 				}
 
 			}
 
-			error_message = SUCESS_DELETED_POST;
-			sucess = true;
+			if (!error_message.equals("")) {
+				error_message = SUCESS_DELETED_POST;
+				sucess = true;
+			}
 		}
 
 		// Devolvemos el mensaje
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
 
-		loadViewModel(model, userAuthenticated, view);
+		loadViewModel(model, userAuthenticated, view, null);
 
 		return view;
 
@@ -316,7 +339,7 @@ public class FeedViewController {
 		}
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
-		loadViewModel(model, userAuthenticated, view);
+		loadViewModel(model, userAuthenticated, view, null);
 
 		return view;
 	}
@@ -368,7 +391,7 @@ public class FeedViewController {
 		}
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
-		loadViewModel(model, userAuthenticated, view);
+		loadViewModel(model, userAuthenticated, view, null);
 
 		return view;
 	}
@@ -413,7 +436,7 @@ public class FeedViewController {
 		model.put("likesService", likesService);
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
-		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_GLOBAL_FEED);
+		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_GLOBAL_FEED, null);
 
 		return PostViewConstants.VIEW_GLOBAL_FEED;
 	}

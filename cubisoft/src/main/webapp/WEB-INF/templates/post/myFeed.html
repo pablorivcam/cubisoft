@@ -15,7 +15,14 @@
 				th:text="${error_message}">Error message</p>
 		</div>
 
-		<h1 th:text="#{title.yourposts}">Your posts</h1>
+		<h1 th:if="${userFound != null}" th:text="${userFound.login}+' posts'">Your posts</h1>
+		<h1 th:if="${userFound == null}" th:text="#{title.yourposts}">Your posts</h1>
+
+		<div th:if="${#lists.isEmpty(posts)}" style="padding:10px; background:#000000AA; text-align:center">
+			<h2 th:text="#{message.noposts}" style="color:white">No posts</h2>
+			<a th:if="${userFound == null}" href="#" th:text="#{label.upload}" th:href="@{/picture/upload}" class="btn btn-info" role="button" style="margin:10px">Go to feed</a>      				
+		</div>
+
 		<table class="table table-striped display">
 			<tr th:each="post : ${posts}">
 				<td>

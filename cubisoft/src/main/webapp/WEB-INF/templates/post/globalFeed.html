@@ -16,6 +16,14 @@
 		</div>
 
 		<h1 th:text="#{title.yourfollowsposts}">Your follows posts</h1>
+		
+		<div th:if="${#lists.isEmpty(posts)}" style="padding:10px; background:#000000AA; text-align:center">
+			<h2 th:text="#{message.noposts}" style="color:white">No posts</h2>
+			<a href="#" th:text="#{label.upload}" th:href="@{/picture/upload}" class="btn btn-info" role="button" style="margin:10px">Go to feed</a>      				
+		    <a href="#" th:href="@{/account/list}" th:text="#{label.find_users}" class="btn btn-info" role="button" style="margin:10px">Find Users</a>
+
+		</div>
+		
 		<table class="table table-striped display">
 			<tr th:each="post : ${posts}">
 				<td>
