@@ -136,7 +136,7 @@ public class Comment {
 	 * @return the post
 	 */
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "post_id")
+	@JoinColumn(name = "post")
 	public Post getPost() {
 		return post;
 	}

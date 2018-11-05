@@ -141,7 +141,7 @@
 		        <constraints nullable="false" />
 		     </column>	
 		     
-		     <column name="text" type="VARCHAR(30)">
+		     <column name="text" type="VARCHAR(150)">
 		        <constraints nullable="false" />
 		     </column>
 		     

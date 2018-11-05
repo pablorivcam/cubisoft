@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.File;
 import java.security.Principal;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.management.InstanceNotFoundException;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.udc.fi.dc.fd.controller.picture.PictureUploaderController;
+import es.udc.fi.dc.fd.model.persistence.Comment;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.PostView;
@@ -26,6 +28,7 @@ import es.udc.fi.dc.fd.repository.PictureRepository;
 import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.AlreadyLikedException;
+import es.udc.fi.dc.fd.service.CommentService;
 import es.udc.fi.dc.fd.service.LikesService;
 import es.udc.fi.dc.fd.service.NotLikedYetException;
 import es.udc.fi.dc.fd.service.PictureService;
@@ -81,6 +84,9 @@ public class FeedViewController {
 
 	@Autowired
 	private PostRepository postRepository;
+
+	@Autowired
+	private CommentService commentService;
 
 	@Autowired
 	public FeedViewController(final PostService service, final PictureService servicePicture,
@@ -159,6 +165,7 @@ public class FeedViewController {
 			model.put(PostViewConstants.PARAM_POSTS, posts);
 			model.put("postService", getPostService());
 			model.put(PostViewConstants.PARAM_POSTVIEWS, getPostViewService().findPostsViews(posts));
+			model.put("commentService", commentService);
 		} catch (InstanceNotFoundException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
@@ -416,6 +423,37 @@ public class FeedViewController {
 		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_GLOBAL_FEED);
 
 		return PostViewConstants.VIEW_GLOBAL_FEED;
+	}
+
+	/**
+	 * Adds the comment.
+	 *
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param view
+	 *            the view
+	 * @param postId
+	 *            the post id
+	 * @param text
+	 *            the text
+	 * @return the string
+	 */
+	@PostMapping("addComment")
+	public final String addComment(final ModelMap model, Principal userAuthenticated, @RequestParam String view,
+			@RequestParam Long postId, @RequestParam String text) {
+
+		Post p = postRepository.findById(postId).get();
+		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+
+		if (p != null) {
+
+			Comment c = new Comment(text, Calendar.getInstance(), p, author, null);
+			commentService.save(c);
+
+		}
+		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_GLOBAL_FEED);
+
+		return view;
 	}
 
 }

@@ -2,6 +2,7 @@ package es.udc.fi.dc.fd.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,18 +19,22 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 	 *
 	 * @param post
 	 *            the post
+	 * @param pageable
+	 *            the pageable
 	 * @return the list of comments
 	 */
 	@Query("SELECT c FROM Comment c WHERE c.post=:post ORDER BY c.date DESC")
-	List<Comment> findCommentsByPost(@Param("post") Post post);
+	List<Comment> findCommentsByPost(@Param("post") Post post, Pageable pageable);
 
 	/**
 	 * Find all the comments by post without their responses.
 	 *
 	 * @param post
 	 *            the post
+	 * @param pageable
+	 *            the pageable
 	 * @return the list
 	 */
 	@Query("SELECT c FROM Comment c WHERE c.post=:post AND c.parent IS NULL ORDER BY c.date DESC")
-	List<Comment> findParentCommentsByPost(@Param("post") Post post);
+	List<Comment> findParentCommentsByPost(@Param("post") Post post, Pageable pageable);
 }

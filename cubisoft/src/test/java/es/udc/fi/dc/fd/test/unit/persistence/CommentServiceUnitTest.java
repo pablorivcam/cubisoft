@@ -13,7 +13,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.PageRequest;
 
+import es.udc.fi.dc.fd.model.Block;
 import es.udc.fi.dc.fd.model.persistence.Comment;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
@@ -69,15 +71,38 @@ public class CommentServiceUnitTest {
 		ArrayList<Comment> commentsFound = new ArrayList<>();
 		commentsFound.add(commentA);
 		commentsFound.add(commentB);
-		commentsFound.add(commentC);
 
-		Mockito.when(commentRepository.findCommentsByPost(postA)).thenReturn(commentsFound);
-		assertEquals(commentService.findPostComments(postA), commentsFound);
+		ArrayList<Comment> commentsFound2 = new ArrayList<>();
+		commentsFound2.add(commentA);
+		commentsFound2.add(commentB);
+		commentsFound2.add(commentC);
+
+		Block<Comment> commentsBlock = new Block<>(commentsFound, true);
+		Block<Comment> commentsBlock2 = new Block<>(commentsFound2, false);
+
+		Mockito.when(commentRepository.findCommentsByPost(postA, PageRequest.of(0, 3))).thenReturn(commentsFound2);
+		Mockito.when(commentRepository.findCommentsByPost(postA, PageRequest.of(0, 4))).thenReturn(commentsFound2);
+
+		Block<Comment> expected1 = commentService.findPostComments(postA, 0, 2);
+		Block<Comment> expected2 = commentService.findPostComments(postA, 0, 3);
+
+		assertEquals(expected1.getExistMoreItems(), commentsBlock.getExistMoreItems());
+		assertEquals(expected1.getItems().size(), commentsBlock.getItems().size());
+		assertEquals(expected2.getExistMoreItems(), commentsBlock2.getExistMoreItems());
+		assertEquals(expected2.getItems().size(), commentsBlock2.getItems().size());
+
+		for (int i = 0; i < expected1.getItems().size(); i++) {
+			assertEquals(expected1.getItems().get(i), commentsBlock.getItems().get(i));
+		}
+		for (int i = 0; i < expected2.getItems().size(); i++) {
+			assertEquals(expected2.getItems().get(i), commentsBlock2.getItems().get(i));
+		}
+
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void findUnexistentPostCommentsTest() {
-		Mockito.when(commentService.findPostComments(null)).thenReturn(null);
+		Mockito.when(commentService.findPostComments(null, 0, 0)).thenReturn(null);
 	}
 
 	@Test
@@ -85,13 +110,35 @@ public class CommentServiceUnitTest {
 		ArrayList<Comment> commentsFound = new ArrayList<>();
 		commentsFound.add(commentA);
 		commentsFound.add(commentB);
-		Mockito.when(commentRepository.findParentCommentsByPost(postA)).thenReturn(commentsFound);
-		assertEquals(commentService.findPostParentComments(postA), commentsFound);
+
+		ArrayList<Comment> commentsFound2 = new ArrayList<>();
+		commentsFound2.add(commentA);
+
+		Block<Comment> commentsBlock = new Block<>(commentsFound, true);
+		Block<Comment> commentsBlock2 = new Block<>(commentsFound2, false);
+
+		Mockito.when(commentRepository.findParentCommentsByPost(postA, PageRequest.of(0, 2))).thenReturn(commentsFound);
+		Mockito.when(commentRepository.findParentCommentsByPost(postA, PageRequest.of(0, 3))).thenReturn(commentsFound);
+
+		Block<Comment> expected1 = commentService.findPostParentComments(postA, 0, 1);
+		Block<Comment> expected2 = commentService.findPostParentComments(postA, 0, 2);
+
+		assertEquals(expected1.getExistMoreItems(), commentsBlock.getExistMoreItems());
+		assertEquals(expected1.getItems().size(), commentsBlock.getItems().size());
+		assertEquals(expected2.getExistMoreItems(), commentsBlock2.getExistMoreItems());
+		assertEquals(expected2.getItems().size(), commentsBlock2.getItems().size());
+
+		for (int i = 0; i < expected1.getItems().size(); i++) {
+			assertEquals(expected1.getItems().get(i), commentsBlock.getItems().get(i));
+		}
+		for (int i = 0; i < expected2.getItems().size(); i++) {
+			assertEquals(expected2.getItems().get(i), commentsBlock2.getItems().get(i));
+		}
 
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void findParentCommentsByUnexistentPostTest() {
-		Mockito.when(commentService.findPostParentComments(null)).thenReturn(null);
+		Mockito.when(commentService.findPostParentComments(null, 0, 0)).thenReturn(null);
 	}
 }

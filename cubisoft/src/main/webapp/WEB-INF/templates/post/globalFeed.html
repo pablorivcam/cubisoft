@@ -20,26 +20,13 @@
 			<tr th:each="post : ${posts}">
 				<td>
 					<!-- Parte de la visualización de la imagen -->
-					<div style="width: 400px; margin-left: 25%">
+					<div  style="width: 75%; margin-left: 25%">
 						<div>
-
 							<img th:src="@{'/Pictures/' + ${post?.picture.image_path}}"
-								width="400px" /> <br />
+								width="400px" height="400px" /> <br />
 							<hr style="margin: 5px" />
 						</div>
-						<div style="width: 80%">
-
-							<div style="margin-left: 5%">
-								<span th:text="${post?.picture.description}">Description
-									placeholder</span>
-
-								<div th:if="${post?.reshare}"
-									style="display: inline-block; padding: 5px; color:#4582ec">
-									<span>Reshared</span>
-									<span class="glyphicon glyphicon-share-alt"></span>
-								</div>
-
-							</div>
+						<div style="width: 100%">
 
 							<div>
 
@@ -108,7 +95,49 @@
 									class="glyphicon glyphicon-share-alt"></span>
 								</a>
 							</div>
+							
+							<div>
+								<span th:text="${post?.picture.description}">Description
+									placeholder</span>
 
+								<div th:if="${post?.reshare}"
+									style="display: inline-block; padding: 5px; color:#4582ec">
+									<span>Reshared</span>
+									<span class="glyphicon glyphicon-share-alt"></span>
+								</div>
+
+							</div>	
+													
+							<!-- Parte de los comentarios -->
+							<div th:fragment="comments" style="width:75%;background:#00000010">
+							
+								<!-- Visualización de los comentarios -->
+								<div th:each="comment : ${commentService.findPostParentComments(post, 0, 5).getItems()}">
+									<p><span style="font-weight: bold;" th:text="${comment?.user.login}"></span>:
+									<span th:text="${comment?.text}"></span></p>
+									<a href="#" th:text="#{button.reply}">Reply</a>
+									<a href="#" th:text="#{button.modify}">Modify</a>
+									<a href="#" th:text="#{button.delete}">Delete</a>
+									<span style="color:#777777" th:text="${comment?.date.getTime()}"></span>
+									<hr/>									
+								</div>
+								
+								<!-- Botón de mostrar más -->
+								<div th:if="${commentService.findPostParentComments(post, 0, 5).getExistMoreItems() == true}">
+									<a href="#" th:text="#{label.showmore}">Show more</a>
+								</div>
+											
+								<!-- Formulario para añadir comentarios -->
+			                	<form  method="post" th:action="@{/post/addComment}">
+			                		<input style="width:300px;display:inline" type="text" class="form-control" id="text" placeholder="Text" name="text" />	
+									<input type="hidden" id="view" name="view" value="post/globalFeed">	
+									<input type="hidden" id="postId" name="postId" th:value="${post?.post_id}">							
+									<button type="submit" class="btn btn-info" role="button">
+										<span th:text="#{label.comment}">Comment</span>		
+										<span class="glyphicon glyphicon-comment"></span>														
+									</button>
+								</form>
+							</div>
 						</div>
 					</div>
 

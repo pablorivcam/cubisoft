@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.fi.dc.fd.model.Block;
 import es.udc.fi.dc.fd.model.persistence.Comment;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.repository.CommentRepository;
@@ -38,14 +40,29 @@ public class CommentService {
 	 *
 	 * @param post
 	 *            the post
+	 * @param startIndex
+	 *            the start index
+	 * @param count
+	 *            the count
 	 * @return the list of comments from the post.
 	 */
-	public List<Comment> findPostComments(Post post) {
+	public Block<Comment> findPostComments(Post post, int startIndex, int count) {
+
+		List<Comment> comments;
+		boolean existMoreItems = false;
+
 		if (post == null) {
 			throw new NullPointerException("The post param cannot be null");
 		}
 
-		return commentRepository.findCommentsByPost(post);
+		comments = commentRepository.findCommentsByPost(post, PageRequest.of(startIndex, count + 1));
+
+		if (comments.size() > count) {
+			comments.remove(count);
+			existMoreItems = true;
+		}
+
+		return new Block<>(comments, existMoreItems);
 	}
 
 	/**
@@ -53,14 +70,27 @@ public class CommentService {
 	 *
 	 * @param post
 	 *            the post
+	 * @param startIndex
+	 *            the start index
+	 * @param count
+	 *            the count
 	 * @return the list
 	 */
-	public List<Comment> findPostParentComments(Post post) {
+	public Block<Comment> findPostParentComments(Post post, int startIndex, int count) {
+		List<Comment> comments;
+		boolean existMoreItems = false;
+
 		if (post == null) {
 			throw new NullPointerException("The post param cannot be null");
 		}
+		comments = commentRepository.findParentCommentsByPost(post, PageRequest.of(startIndex, count + 1));
 
-		return commentRepository.findParentCommentsByPost(post);
+		if (comments.size() > count) {
+			comments.remove(count);
+			existMoreItems = true;
+		}
+
+		return new Block<>(comments, existMoreItems);
 	}
 
 	/**
