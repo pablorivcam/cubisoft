@@ -4,6 +4,7 @@
 
 <head th:include="fragments/header :: header" />
 <body>
+
 	<header class="header" th:include="fragments/menu :: menu" /></header>
 
 	<section id="main-section" class="container-fluid">
@@ -112,14 +113,43 @@
 							<div th:fragment="comments" style="width:75%;background:#00000010">
 							
 								<!-- Visualización de los comentarios -->
-								<div th:each="comment : ${commentService.findPostParentComments(post, 0, 5).getItems()}">
+								<div th:each="comment : ${commentService.findPostParentComments(post, 0, 5).getItems()}"
+									style="margin:10px 10px 10px 10px; padding:3px; font-size:13px">
 									<p><span style="font-weight: bold;" th:text="${comment?.user.login}"></span>:
 									<span th:text="${comment?.text}"></span></p>
-									<a href="#" th:text="#{button.reply}">Reply</a>
+									
+									<!-- Botón de responder comentario -->
+									<div class = "dropdown" style="display:inline">
+										<a class="dropdown-toggle" data-toggle="dropdown" href="#" th:text="#{button.reply}">Reply</a>
+										<form class = "dropdown-menu" method="post" th:action="@{/post/replyComment}">
+											<input type="hidden" id="commentId" name="commentId" th:value="${comment?.comment_id}"/>
+											<input type="hidden" id="view" name="view" value="post/globalFeed">	
+											<input style="width:300px;display:inline" type="text" class="form-control" id="text" placeholder="Text" name="text" />	
+											<button type="submit" class="btn btn-info" role="button">
+												<span th:text="#{button.reply}">Reply</span>		
+												<span class="glyphicon glyphicon-comment"></span>														
+											</button>					
+										</form>	
+									</div>
+									<!-- Fin de responder comentario -->
+												
 									<a href="#" th:text="#{button.modify}">Modify</a>
 									<a href="#" th:text="#{button.delete}">Delete</a>
 									<span style="color:#777777" th:text="${comment?.date.getTime()}"></span>
-									<hr/>									
+									
+									<!-- Comentarios hijo -->
+									<div style="margin:10px 10px 10px 50px; padding:3px; background:#ffffff" th:each="child_comment: ${comment.child_comments}">
+										<p>
+											<span style="font-weight: bold;" th:text="${child_comment?.user.login}"></span>:
+											<span th:text="${child_comment?.text}"></span>
+										</p>
+										<a href="#" th:text="#{button.modify}">Modify</a>
+										<a href="#" th:text="#{button.delete}">Delete</a>
+										<span style="color:#777777" th:text="${child_comment?.date.getTime()}"></span>
+									</div>						
+									
+									<hr style="margin:10px"/>									
+									
 								</div>
 								
 								<!-- Botón de mostrar más -->

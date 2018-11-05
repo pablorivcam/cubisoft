@@ -1,5 +1,6 @@
 package es.udc.fi.dc.fd.service;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.udc.fi.dc.fd.model.Block;
 import es.udc.fi.dc.fd.model.persistence.Comment;
 import es.udc.fi.dc.fd.model.persistence.Post;
+import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.repository.CommentRepository;
 
 @Service
@@ -114,5 +116,23 @@ public class CommentService {
 	public void delete(Comment comment) {
 		commentRepository.delete(comment);
 
+	}
+
+	/**
+	 * Replies a comment with annother comment.
+	 *
+	 * @param comment
+	 *            the comment that an user whats to reply.
+	 * @param text
+	 *            the text of the reply.
+	 * @param user
+	 *            the user that makes the reply.
+	 * @param date
+	 *            the date of the reply.
+	 * @return the comment generated for the reply.
+	 */
+	@Transactional
+	public Comment replyComment(Comment comment, String text, UserProfile user, Calendar date) {
+		return save(new Comment(text, date, comment.getPost(), user, comment));
 	}
 }

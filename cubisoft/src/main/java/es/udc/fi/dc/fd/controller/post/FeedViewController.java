@@ -456,4 +456,21 @@ public class FeedViewController {
 		return view;
 	}
 
+	@PostMapping("replyComment")
+	public final String replyComment(final ModelMap model, Principal userAuthenticated, @RequestParam String view,
+			@RequestParam Long commentId, @RequestParam String text) {
+
+		Comment c = commentService.findCommentByCommentId(commentId);
+		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+
+		if (c != null) {
+			commentService.replyComment(c, text, author, Calendar.getInstance());
+		}
+
+		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_GLOBAL_FEED);
+
+		return view;
+
+	}
+
 }
