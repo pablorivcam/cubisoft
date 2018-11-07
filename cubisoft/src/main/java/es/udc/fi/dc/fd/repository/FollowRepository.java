@@ -19,8 +19,10 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
 	/**
 	 * Find follow by users
 	 *
-	 * @param user          the user
-	 * @param followed_user the user followed
+	 * @param user
+	 *            the user
+	 * @param followed_user
+	 *            the user followed
 	 * @return the follow
 	 */
 
@@ -29,5 +31,8 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
 
 	@Query("SELECT f FROM Follow f WHERE f.user=:user")
 	List<Follow> findFollowsByUser(@Param("user") UserProfile user);
+
+	@Query("SELECT f FROM Follow f WHERE f.user=:user AND f.pending=:true")
+	List<Follow> findFollowsPending(@Param("user") UserProfile user);
 
 }

@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.dc.fd.config.SecurityConfig;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
 /**
@@ -89,4 +90,10 @@ public class UserProfileService implements UserDetailsService {
 		return lista;
 	}
 
+	public UserProfile changeUserProfileType(UserProfile account, UserType userType) {
+
+		account.setUserType(userType);
+
+		return userProfileRepository.save(account);
+	}
 }

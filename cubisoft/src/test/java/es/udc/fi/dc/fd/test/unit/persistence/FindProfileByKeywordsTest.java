@@ -15,6 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -40,15 +41,16 @@ public class FindProfileByKeywordsTest {
 
 	@Before
 	public void initialize() {
-		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null);
+		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null,
+				UserType.PUBLIC);
 		userA.setUser_id(1L);
 
-		userB = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME + "11", TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null,
-				null);
+		userB = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME + "11", TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null,
+				UserType.PUBLIC);
 		userB.setUser_id(2L);
 
 		userC = new UserProfile(TEST_LOGIN, "11" + TEST_FIRSTNAME + "11", TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL,
-				null, null);
+				null, null, UserType.PUBLIC);
 		userC.setUser_id(3L);
 
 	}

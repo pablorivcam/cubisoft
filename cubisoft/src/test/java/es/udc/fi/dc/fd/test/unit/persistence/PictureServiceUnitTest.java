@@ -19,6 +19,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.PictureRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.PictureService;
@@ -50,7 +51,8 @@ public class PictureServiceUnitTest {
 
 	@Before
 	public void initialize() {
-		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null);
+		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null,
+				UserType.PUBLIC);
 		userA.setUser_id(1L);
 
 		pictureA = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA);

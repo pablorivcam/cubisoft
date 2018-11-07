@@ -17,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import es.udc.fi.dc.fd.model.persistence.Follow;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.FollowRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.FollowService;
@@ -49,22 +50,23 @@ public class FollowServiceUnitTest {
 
 		MockitoAnnotations.initMocks(this);
 
-		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null);
+		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null,
+				UserType.PUBLIC);
 		userA.setUser_id(1L);
 		userB = new UserProfile(TEST_LOGIN + 2, TEST_FIRSTNAME + 2, TEST_LASTNAME + 2, TEST_PASSWORD, "2" + TEST_EMAIL,
-				null, null);
+				null, null, UserType.PUBLIC);
 		userB.setUser_id(2L);
 		userC = new UserProfile(TEST_LOGIN + 3, TEST_FIRSTNAME + 3, TEST_LASTNAME + 3, TEST_PASSWORD, "3" + TEST_EMAIL,
-				null, null);
+				null, null, UserType.PUBLIC);
 		userC.setUser_id(3L);
 	}
 
 	@Test
 	public void followTest() {
 
-		Follow follow = followService.follow(userA, userB);
-		Follow follow2 = followService.follow(userB, userC);
-		Follow follow3 = followService.follow(userC, userA);
+		Follow follow = followService.follow(userA, userB, false);
+		Follow follow2 = followService.follow(userB, userC, false);
+		Follow follow3 = followService.follow(userC, userA, false);
 
 		Mockito.when(followRepository.findFollowByUsers(userA, userB)).thenReturn(follow);
 		Mockito.when(followRepository.findFollowByUsers(userB, userC)).thenReturn(follow2);
@@ -79,9 +81,9 @@ public class FollowServiceUnitTest {
 	@Test
 	public void unfollowTest() {
 
-		followService.follow(userA, userB);
-		Follow follow2 = followService.follow(userB, userC);
-		followService.follow(userC, userA);
+		followService.follow(userA, userB, false);
+		Follow follow2 = followService.follow(userB, userC, false);
+		followService.follow(userC, userA, false);
 
 		Mockito.when(followRepository.findFollowByUsers(userB, userC)).thenReturn(follow2);
 
@@ -96,8 +98,8 @@ public class FollowServiceUnitTest {
 
 	@Test
 	public void getUserFollowedProfilesTest() {
-		Follow follow = followService.follow(userA, userB);
-		Follow follow2 = followService.follow(userA, userC);
+		Follow follow = followService.follow(userA, userB, false);
+		Follow follow2 = followService.follow(userA, userC, false);
 
 		ArrayList<Follow> followList = new ArrayList<>();
 		followList.add(follow);
@@ -111,7 +113,7 @@ public class FollowServiceUnitTest {
 
 	@Test
 	public void isUserAFollowingUserBTest() {
-		Follow follow = new Follow(userA, userB);
+		Follow follow = new Follow(userA, userB, false);
 
 		Mockito.when(followRepository.findFollowByUsers(userA, userB)).thenReturn(follow);
 

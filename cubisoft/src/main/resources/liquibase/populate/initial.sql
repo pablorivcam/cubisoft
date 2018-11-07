@@ -59,11 +59,11 @@ INSERT INTO example_entities (name) VALUES
    ('entity_29'),
    ('entity_30');
    
-   INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email) 
-   	VALUES (1,'admin','Admin','Admin','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','admin@admin.com');
+   INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (1,'admin','Admin','Admin','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','admin@admin.com','PUBLIC');
    	
    INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email) 
-   	VALUES (2,'user1','User','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','user1@user.com');
+   	VALUES (2,'user1','User','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','user1@user.com','PUBLIC');
    	
    INSERT INTO Follow (follow_id,user,followed_user) 
    	VALUES (1,2,1);

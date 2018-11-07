@@ -32,10 +32,25 @@ public class FollowService {
 	 * @return the follow
 	 */
 	@Transactional
-	public Follow follow(UserProfile user, UserProfile followed_user) {
-		Follow follow = new Follow(user, followed_user);
+	public Follow follow(UserProfile user, UserProfile followed_user, Boolean pending) {
+		Follow follow = new Follow(user, followed_user, pending);
 		follow = followRepository.save(follow);
 		return follow;
+	}
+
+	public List<Follow> findFollowsPending(UserProfile user) {
+		return followRepository.findFollowsPending(user);
+	}
+
+	@Transactional
+	public void processPendingFollows(Follow follow, Boolean option) {
+
+		if (option) {
+			follow.setPending(false);
+			followRepository.save(follow);
+		} else {
+			followRepository.delete(follow);
+		}
 	}
 
 	/**
