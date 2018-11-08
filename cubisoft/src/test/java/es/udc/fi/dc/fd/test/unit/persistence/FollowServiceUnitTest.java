@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import javax.management.InstanceNotFoundException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,17 +66,17 @@ public class FollowServiceUnitTest {
 	@Test
 	public void followTest() {
 
-		Follow follow = followService.follow(userA, userB, false);
-		Follow follow2 = followService.follow(userB, userC, false);
-		Follow follow3 = followService.follow(userC, userA, false);
+		Follow follow = new Follow(userA, userB, false);
+		Follow follow2 = new Follow(userB, userC, false);
+		Follow follow3 = new Follow(userC, userA, false);
 
 		Mockito.when(followRepository.findFollowByUsers(userA, userB)).thenReturn(follow);
 		Mockito.when(followRepository.findFollowByUsers(userB, userC)).thenReturn(follow2);
 		Mockito.when(followRepository.findFollowByUsers(userC, userA)).thenReturn(follow3);
 
-		assertEquals(followRepository.findFollowByUsers(userA, userB), follow);
-		assertEquals(followRepository.findFollowByUsers(userB, userC), follow2);
-		assertEquals(followRepository.findFollowByUsers(userC, userA), follow3);
+		assertTrue(followService.isUserAFollowingUserB(userA, userB));
+		assertTrue(followService.isUserAFollowingUserB(userB, userC));
+		assertTrue(followService.isUserAFollowingUserB(userC, userA));
 
 	}
 
@@ -82,7 +84,7 @@ public class FollowServiceUnitTest {
 	public void unfollowTest() {
 
 		followService.follow(userA, userB, false);
-		Follow follow2 = followService.follow(userB, userC, false);
+		Follow follow2 = new Follow(userB, userC, false);
 		followService.follow(userC, userA, false);
 
 		Mockito.when(followRepository.findFollowByUsers(userB, userC)).thenReturn(follow2);
@@ -90,9 +92,9 @@ public class FollowServiceUnitTest {
 		followService.unfollow(userA, userB);
 		followService.unfollow(userC, userA);
 
-		assertEquals(followRepository.findFollowByUsers(userA, userB), null);
-		assertEquals(followRepository.findFollowByUsers(userB, userC), follow2);
-		assertEquals(followRepository.findFollowByUsers(userC, userA), null);
+		assertFalse(followService.isUserAFollowingUserB(userA, userB));
+		assertTrue(followService.isUserAFollowingUserB(userB, userC));
+		assertFalse(followService.isUserAFollowingUserB(userC, userA));
 
 	}
 
@@ -107,7 +109,12 @@ public class FollowServiceUnitTest {
 
 		Mockito.when(followRepository.findFollowsByUser(userA)).thenReturn(followList);
 
-		assertEquals(followRepository.findFollowsByUser(userA), followList);
+		try {
+			assertEquals(followService.getUserFollows(userA), followList);
+		} catch (InstanceNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -130,6 +137,41 @@ public class FollowServiceUnitTest {
 	@Test(expected = NullPointerException.class)
 	public void isUnexistentUserFollowingUserBTest() {
 		assertTrue(followService.isUserAFollowingUserB(null, userA));
+	}
+
+	@Test
+	public void findFollowsPendingTest() {
+
+		Follow follow = followService.follow(userA, userB, true);
+		Follow follow2 = followService.follow(userA, userC, true);
+		followService.follow(userB, userC, false);
+
+		ArrayList<Follow> followList = new ArrayList<>();
+		followList.add(follow);
+		followList.add(follow2);
+
+		Mockito.when(followRepository.findFollowsPending(userA)).thenReturn(followList);
+
+		assertEquals(followService.findFollowsPending(userA), followList);
+
+	}
+
+	@Test
+	public void processPendingFollowsTest() {
+
+		Follow follow = new Follow(userA, userB, true);
+		Follow follow2 = followService.follow(userA, userC, true);
+		followService.follow(userB, userC, false);
+
+		followService.processPendingFollows(follow, true);
+
+		followService.processPendingFollows(follow2, false);
+
+		Mockito.when(followRepository.findFollowByUsers(userA, userB)).thenReturn(follow);
+
+		assertTrue(followService.isUserAFollowingUserB(userA, userB));
+		assertFalse(followService.isUserAFollowingUserB(userA, userC));
+
 	}
 
 }

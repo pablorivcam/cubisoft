@@ -42,10 +42,12 @@ public class UserProfile {
 	/** The posts. */
 	private List<Post> posts;
 
+	/** The possible types of the users. */
 	public enum UserType {
 		PUBLIC, PRIVATE
 	}
 
+	/** Type of the user. */
 	private UserType userType;
 
 	/**
@@ -71,6 +73,8 @@ public class UserProfile {
 	 *            the follows
 	 * @param posts
 	 *            the posts
+	 * @param userType
+	 *            the type of the user
 	 */
 	public UserProfile(String login, String firstName, String lastName, String password, String email,
 			List<Follow> follows, List<Post> posts, UserType userType) {
@@ -249,6 +253,7 @@ public class UserProfile {
 	/**
 	 * @return the userType
 	 */
+	@Column(nullable = false)
 	public UserType getUserType() {
 		return userType;
 	}

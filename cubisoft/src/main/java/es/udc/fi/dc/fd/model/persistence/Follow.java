@@ -25,6 +25,7 @@ public class Follow {
 	/** The followed user. */
 	private UserProfile followed_user;
 
+	/** The status of follow. */
 	private Boolean pending;
 
 	/**
@@ -40,8 +41,10 @@ public class Follow {
 	 *            the user
 	 * @param followed_user
 	 *            the followed user
+	 * @param pending
+	 *            status of the follow
 	 */
-	public Follow(UserProfile user, UserProfile followed_user, Boolean pendng) {
+	public Follow(UserProfile user, UserProfile followed_user, Boolean pending) {
 		this.user = user;
 		this.followed_user = followed_user;
 		this.pending = pending;

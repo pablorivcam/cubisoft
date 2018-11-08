@@ -62,10 +62,10 @@ INSERT INTO example_entities (name) VALUES
    INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
    	VALUES (1,'admin','Admin','Admin','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','admin@admin.com','PUBLIC');
    	
-   INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email) 
+   INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
    	VALUES (2,'user1','User','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','user1@user.com','PUBLIC');
    	
-   INSERT INTO Follow (follow_id,user,followed_user) 
-   	VALUES (1,2,1);
+   INSERT INTO Follow (follow_id,user,followed_user,pending) 
+   	VALUES (1,2,1,false);
    	
    

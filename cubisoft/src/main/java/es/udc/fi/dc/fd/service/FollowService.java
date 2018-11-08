@@ -29,6 +29,8 @@ public class FollowService {
 	 *            the user
 	 * @param followed_user
 	 *            the followed_user
+	 * @param pending
+	 *            the status of the follow
 	 * @return the follow
 	 */
 	@Transactional

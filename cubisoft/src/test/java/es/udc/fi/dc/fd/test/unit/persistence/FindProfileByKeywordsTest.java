@@ -3,12 +3,14 @@ package es.udc.fi.dc.fd.test.unit.persistence;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
+import es.udc.fi.dc.fd.service.UserProfileService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FindProfileByKeywordsTest {
@@ -33,6 +36,9 @@ public class FindProfileByKeywordsTest {
 	@Mock
 	@Autowired
 	private UserProfileRepository userProfileRepository;
+
+	@InjectMocks
+	private UserProfileService userProfileService;
 
 	// @InjectMocks
 	// private PictureService pictureService;
@@ -115,6 +121,20 @@ public class FindProfileByKeywordsTest {
 
 		try {
 			assertThat(userProfileRepository.findUserProfileByKeywords("ola"), is(equalTo(usersList)));
+
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void changeUserProfileTest() {
+
+		Mockito.when(userProfileRepository.findOneByEmail(userA.getEmail())).thenReturn(userA);
+		try {
+			userProfileService.changeUserProfileType(userA, UserType.PRIVATE);
+			UserProfile user_test = userProfileRepository.findOneByEmail(userA.getEmail());
+			assertEquals(user_test.getUserType(), UserType.PRIVATE);
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();

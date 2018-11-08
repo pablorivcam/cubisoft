@@ -69,7 +69,7 @@
 		     <column name="email" type="VARCHAR(30)">
 		        <constraints nullable="false" unique="true" />
 		     </column>
-		     <column name="userType" type="VARCHAR(30)">
+		     <column name="userType" type="ENUM('PUBLIC','PRIVATE')">
 		        <constraints nullable="false" />
 		     </column>
 		</createTable>  
@@ -232,3 +232,4 @@
    </changeSet>
 
 </databaseChangeLog>
+
