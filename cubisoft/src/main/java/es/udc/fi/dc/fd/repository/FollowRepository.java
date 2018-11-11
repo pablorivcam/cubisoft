@@ -29,10 +29,10 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
 	@Query("SELECT f FROM Follow f WHERE f.user=:user AND f.followed_user=:followed_user")
 	Follow findFollowByUsers(@Param("user") UserProfile user, @Param("followed_user") UserProfile followed_user);
 
-	@Query("SELECT f FROM Follow f WHERE f.user=:user")
+	@Query("SELECT f FROM Follow f WHERE f.user=:user AND f.pending = FALSE")
 	List<Follow> findFollowsByUser(@Param("user") UserProfile user);
 
-	@Query("SELECT f FROM Follow f WHERE f.user=:user AND f.pending=:true")
+	@Query("SELECT f FROM Follow f WHERE f.followed_user=:user AND f.pending = TRUE")
 	List<Follow> findFollowsPending(@Param("user") UserProfile user);
 
 }

@@ -65,6 +65,9 @@ INSERT INTO example_entities (name) VALUES
    INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
    	VALUES (2,'user1','User','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','user1@user.com','PUBLIC');
    	
+   	INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (3,'private','User','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','private@user.com','PRIVATE');
+   	
    INSERT INTO Follow (follow_id,user,followed_user,pending) 
    	VALUES (1,2,1,false);
    	

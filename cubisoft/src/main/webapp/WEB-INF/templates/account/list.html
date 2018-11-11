@@ -29,20 +29,35 @@
 				</tr>
 
             	<tr th:each="user : ${users}">
-            		<td><a th:text="${user?.login}" th:href="@{/post/myFeed(user_id=${user?.user_id})}">Login</a> </td>
+            		<td th:if="${ user?.userType.toString() == 'PUBLIC'}"><a th:text="${user?.login}" th:href="@{/post/myFeed(user_id=${user?.user_id})}">Login</a> </td>
+            		<td th:if="${ user?.userType.toString() == 'PRIVATE'}"><a th:text="${user?.login}">Login</a> </td>
             		<td><span th:remove="tag" th:text="${user?.firstName}">Name</span></td>
             		<td><span th:remove="tag" th:text="${user?.lastName}">Lastname</span></td>    
                		<td>
                			<div th:if="${#authorization.expression('isAuthenticated()')}">
 	               			<span th:remove="tag" th:if="${user?.email}==${#authentication.getPrincipal().getUsername()}" th:text="#{label.its_you}">Its you!</span>
-	               			<div th:if="${user?.email}!=${#authentication.getPrincipal().getUsername()} and !${followService.isUserAFollowingUserB(currentUser,user)}">
+	               			<div th:if="${user?.email}!=${#authentication.getPrincipal().getUsername()} and !${followService.isUserAFollowingUserB(currentUser,user)}  and ${user?.userType.toString() == 'PRIVATE'}">
+	               				<form id="followUserForm" action="#" th:action="@{/account/followUser}" class="form-narrow form-horizontal" method="post">
+	               					<input type="hidden" id="user_id" name="user_id" th:value="${user?.user_id}">
+	               					<input type="hidden" id="keywords" name="keywords" th:value="${keywords}">               					
+	               					<button th:text="#{button.request}" type="submit" class="btn btn-info">Request</button>	
+	               				</form>
+	               			</div>
+	               			<div th:if="${user?.email}!=${#authentication.getPrincipal().getUsername()} and !${followService.isUserAFollowingUserB(currentUser,user)}  and ${user?.userType.toString() == 'PUBLIC'}">
 	               				<form id="followUserForm" action="#" th:action="@{/account/followUser}" class="form-narrow form-horizontal" method="post">
 	               					<input type="hidden" id="user_id" name="user_id" th:value="${user?.user_id}">
 	               					<input type="hidden" id="keywords" name="keywords" th:value="${keywords}">               					
 	               					<button th:text="#{button.follow}" type="submit" class="btn btn-info">Follow</button>	
 	               				</form>
 	               			</div>
-	               			<div th:if="${user?.email}!=${#authentication.getPrincipal().getUsername()} and ${followService.isUserAFollowingUserB(currentUser,user)}">
+	               			<div th:if="${user?.email}!=${#authentication.getPrincipal().getUsername()} and ${followService.isUserAFollowingUserB(currentUser,user)}  and ${ user?.userType.toString() == 'PRIVATE'}">
+	               				<form id="unfollowUserForm" action="#" th:action="@{/account/unfollowUser}" class="form-narrow form-horizontal" method="post">
+	               					<input type="hidden" id="user_id" name="user_id" th:value="${user?.user_id}">
+	               					<input type="hidden" id="keywords" name="keywords" th:value="${keywords}">               					
+	               					<button th:text="#{button.norequest}" type="submit" class="btn btn-danger">Cancel Request</button>	
+	               				</form>
+	               			</div>
+	               			<div th:if="${user?.email}!=${#authentication.getPrincipal().getUsername()} and ${followService.isUserAFollowingUserB(currentUser,user)} and ${ user?.userType.toString() == 'PUBLIC'}">
 	               				<form id="unfollowUserForm" action="#" th:action="@{/account/unfollowUser}" class="form-narrow form-horizontal" method="post">
 	               					<input type="hidden" id="user_id" name="user_id" th:value="${user?.user_id}">
 	               					<input type="hidden" id="keywords" name="keywords" th:value="${keywords}">               					

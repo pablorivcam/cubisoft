@@ -152,7 +152,12 @@ public class FollowServiceUnitTest {
 
 		Mockito.when(followRepository.findFollowsPending(userA)).thenReturn(followList);
 
-		assertEquals(followService.findFollowsPending(userA), followList);
+		try {
+			assertEquals(followService.findFollowsPending(userA), followList);
+		} catch (InstanceNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

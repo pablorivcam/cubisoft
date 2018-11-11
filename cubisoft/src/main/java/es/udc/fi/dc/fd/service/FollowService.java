@@ -40,7 +40,7 @@ public class FollowService {
 		return follow;
 	}
 
-	public List<Follow> findFollowsPending(UserProfile user) {
+	public List<Follow> findFollowsPending(UserProfile user) throws InstanceNotFoundException {
 		return followRepository.findFollowsPending(user);
 	}
 

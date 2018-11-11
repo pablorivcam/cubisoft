@@ -25,7 +25,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	 */
 
 	@Query("SELECT p FROM Post p WHERE p.user "
-			+ "IN (SELECT f.followed_user FROM Follow f WHERE f.user=:user) ORDER BY p.date DESC")
+			+ "IN (SELECT f.followed_user FROM Follow f WHERE f.user=:user AND f.pending = FALSE) ORDER BY p.date DESC")
 	List<Post> findUserFollowsPosts(@Param("user") UserProfile user);
 
 	/**
@@ -38,7 +38,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	@Query("SELECT p FROM Post p WHERE p.user=:user ORDER BY p.date DESC")
 	List<Post> findUserPosts(@Param("user") UserProfile user);
 
-	@Query("SELECT p FROM Post p WHERE p.user " + "IN (SELECT f.followed_user FROM Follow f WHERE f.user=:user)"
+	@Query("SELECT p FROM Post p WHERE p.user "
+			+ "IN (SELECT f.followed_user FROM Follow f WHERE f.user=:user AND f.pending = FALSE)"
 			+ "OR p.user=:user ORDER BY p.date DESC")
 	List<Post> findFollowsAndUserPosts(@Param("user") UserProfile user);
 
