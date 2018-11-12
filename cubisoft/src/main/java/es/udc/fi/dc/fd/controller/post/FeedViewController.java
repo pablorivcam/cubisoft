@@ -109,10 +109,9 @@ public class FeedViewController {
 	@GetMapping(path = "/myFeed{user_id}")
 	public final String showMyFeed(final ModelMap model, Principal userAuthenticated,
 			@RequestParam("user_id") Optional<Long> user_id) {
-
 		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_POST_LIST,
 				(user_id.isPresent()) ? user_id.get() : null);
-
+		
 		return PostViewConstants.VIEW_POST_LIST;
 	}
 
@@ -143,9 +142,10 @@ public class FeedViewController {
 	}
 
 	private final void loadViewModel(final ModelMap model, Principal userAuthenticated, String view, Long user_id) {
-
-		UserProfile user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
-
+		UserProfile user = null;
+		if(userAuthenticated != null) {
+			user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+		}
 		try {
 
 			List<Post> posts = null;
@@ -153,16 +153,22 @@ public class FeedViewController {
 			if (view.equals(PostViewConstants.VIEW_GLOBAL_FEED)) {
 				posts = getPostService().findFollowsAndUserPosts(user);
 			} else {
-
-				if (user_id == null || user_id == user.getUser_id()) {
-					posts = getPostService().findUserPosts(user);
-				} else {
+				if(user != null) {
+					if (user_id == null || user_id == user.getUser_id()) {
+						posts = getPostService().findUserPosts(user);
+					} else {
+						UserProfile userFound = userProfileRepository.findById(user_id).get();
+						posts = getPostService().findUserPosts(userFound);
+						model.put("userFound", userFound);
+					}
+				}else {
+					/*The user is anonymous*/
 					UserProfile userFound = userProfileRepository.findById(user_id).get();
 					posts = getPostService().findUserPosts(userFound);
 					model.put("userFound", userFound);
 				}
 			}
-
+			if(user != null) {
 			for (Post post : posts) {
 				if (getPostViewService().findPostViewByPostUser(post, user) == null) {
 					getPostViewService().save(new PostView(user, post));
@@ -170,6 +176,8 @@ public class FeedViewController {
 			}
 
 			model.put("currentUser", user);
+			}
+			
 			model.put("likesService", likesService);
 			model.put(PostViewConstants.PARAM_POSTS, posts);
 			model.put("postService", getPostService());

@@ -41,7 +41,7 @@
 									placeholder</span>
 							</div>
 
-							<div>
+							<div th:if="${currentUser!=null}">
 
 								<!-- Botón para los likes -->
 								<div th:if="!${likesService.existLikes(currentUser,post)}"
@@ -73,7 +73,7 @@
 											class="btn btn-link fa fa-thumbs-up">Unlike</button>
 									</form>
 								</div>
-								<!-- Fin botón likes -->
+							<!-- Fin botón likes -->
 
 								<!-- Botón de ver views -->
 								<a href="#showViewModal"
