@@ -83,7 +83,7 @@
 	
 									<!-- Botón de ver views -->
 									<a href="#showViewModal"
-										th:attr="data-viewpostid=''+${post?.post_id}+''"
+										th:attr="data-viewpostid=''+${post?.post_id}+'',data-anonymousviews=''+${post?.anonymousViews}+''"
 										data-toggle="modal"
 										class="showViewModalButton btn btn-secondary" role="button">
 										<span class="glyphicon glyphicon-eye-open"></span> <span
@@ -130,6 +130,11 @@
 					</button>
 				</div>
 				<div class="modal-body">
+					<div>
+						<span th:text="#{label.anonymousViews}" style="display:inline-block">Anonymous Views:</span>
+						<span id="numberOfAnonymousViews" style="display:inline-block"></span>
+					</div>
+					<span th:text="#{label.registeredUserViews}" >Registered user Views:</span>
 					<table class="table table-striped display">
 						<tbody id="views-table"></tbody>
 					</table>
@@ -232,9 +237,10 @@
 				
 				// Se recoje su valor de data-viewpostId
 	    		var viewpostId = $(this).data('viewpostid');
-
+				var numberOfAnonymousViews =$(this).data('anonymousviews');
 				// Y se usa en el campo oculto del formulario del modal
 	        	$("#viewpostId").val( viewpostId );
+				$("#numberOfAnonymousViews").text( numberOfAnonymousViews );
 				
 				//Procesamos las visitas
 				$("#views-table").empty();

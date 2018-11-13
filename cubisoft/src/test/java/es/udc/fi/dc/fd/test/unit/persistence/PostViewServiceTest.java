@@ -69,7 +69,7 @@ public class PostViewServiceTest {
 
 		picture = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA);
 
-		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0, false);
+		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0, (long) 0, false);
 		// postA2 = new Post(Calendar.getInstance(), picture, userA, (long) 0,
 		// (long) 0,
 		// false);

@@ -71,10 +71,10 @@ public class PostServiceUnitTest {
 
 		picture = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA);
 
-		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0, false);
-		postB1 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0, false);
-		postB2 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0, false);
-		postC1 = new Post(Calendar.getInstance(), picture, userC, (long) 0, (long) 0, false);
+		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0,(long) 0, false);
+		postB1 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0,(long) 0, false);
+		postB2 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0,(long) 0, false);
+		postC1 = new Post(Calendar.getInstance(), picture, userC, (long) 0, (long) 0,(long) 0, false);
 
 	}
 
