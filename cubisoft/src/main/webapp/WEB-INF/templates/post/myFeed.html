@@ -17,96 +17,103 @@
 
 		<h1 th:if="${userFound != null}" th:text="${userFound.login}+' posts'">Your posts</h1>
 		<h1 th:if="${userFound == null}" th:text="#{title.yourposts}">Your posts</h1>
-
-		<div th:if="${#lists.isEmpty(posts)}" style="padding:10px; background:#000000AA; text-align:center">
-			<h2 th:text="#{message.noposts}" style="color:white">No posts</h2>
-			<a th:if="${userFound == null}" href="#" th:text="#{label.upload}" th:href="@{/picture/upload}" class="btn btn-info" role="button" style="margin:10px">Go to feed</a>      				
+		
+		<div th:if="${userFound != null AND userFound.getUserType().toString()=='PRIVATE' AND currentUser == null}">
+			<div style="padding:10px; background:#000000AA; text-align:center;  margin-bottom:20px">
+				<h2 th:text="#{label.privateProfile}" style="color:white;">Private Profile</h2>
+			</div>
 		</div>
-
-		<table class="table table-striped display">
-			<tr th:each="post : ${posts}">
-				<td>
-					<!-- Parte de la visualización de la imagen -->
-					<div style="width: 400px; margin-left: 25%">
-						<div>
-
-							<img th:src="@{'/Pictures/' + ${post?.picture.image_path}}"
-								width="400px" /> <br />
-							<hr style="margin: 5px" />
-						</div>
-						<div style="width: 80%">
-
-							<div style="margin-left: 5%">
-								<span th:text="${post?.picture.description}">Description
-									placeholder</span>
+		<div th:if="${(userFound != null AND userFound.getUserType().toString()=='PUBLIC') OR currentUser != null}">
+			<div th:if="${#lists.isEmpty(posts)}" style="padding:10px; background:#000000AA; text-align:center">
+				<h2 th:text="#{message.noposts}" style="color:white">No posts</h2>
+				<a th:if="${userFound == null}" href="#" th:text="#{label.upload}" th:href="@{/picture/upload}" class="btn btn-info" role="button" style="margin:10px">Go to feed</a>      				
+			</div>
+	
+			<table class="table table-striped display">
+				<tr th:each="post : ${posts}">
+					<td>
+						<!-- Parte de la visualización de la imagen -->
+						<div style="width: 400px; margin-left: 25%">
+							<div>
+	
+								<img th:src="@{'/Pictures/' + ${post?.picture.image_path}}"
+									width="400px" /> <br />
+								<hr style="margin: 5px" />
 							</div>
-
-							<div th:if="${currentUser!=null}">
-
-								<!-- Botón para los likes -->
-								<div th:if="!${likesService.existLikes(currentUser,post)}"
-									style="display: inline-block; padding: 5px">
-									<!-- Boton de Like -->
-									<form id="likePostForm" action="#"
-										th:action="@{/post/likePost}"
-										class="form-narrow form-horizontal" method="post">
-										<input type="hidden" id="like-postId" name="postId"
-											th:value="${post?.post_id}">
-										<input type="hidden" id="view" name="view" value="post/myFeed">	
-										<button style="color: #777777"
-											th:text="${post?.number_of_likes}" type="submit"
-											class="btn btn-link fa fa-thumbs-up">Like</button>
-									</form>
+							<div style="width: 80%">
+	
+								<div style="margin-left: 5%">
+									<span th:text="${post?.picture.description}">Description
+										placeholder</span>
 								</div>
-								<div th:if="${likesService.existLikes(currentUser,post)}"
-									style="display: inline-block; padding: 5px;">
-									<!-- Boton de Unlike -->
-									<form id="unlikePostForm" action="#"
-										th:action="@{/post/unlikePost}"
-										class="form-narrow form-horizontal" method="post">
-										<input type="hidden" id="unlike-postId" name="postId"
-											th:value="${post?.post_id}">
-										<input type="hidden" id="view" name="view" value="post/myFeed">
-											
-										<button style="color: #5bc0de"
-											th:text="${post?.number_of_likes}" type="submit"
-											class="btn btn-link fa fa-thumbs-up">Unlike</button>
-									</form>
+	
+								<div th:if="${currentUser!=null}">
+	
+									<!-- Botón para los likes -->
+									<div th:if="!${likesService.existLikes(currentUser,post)}"
+										style="display: inline-block; padding: 5px">
+										<!-- Boton de Like -->
+										<form id="likePostForm" action="#"
+											th:action="@{/post/likePost}"
+											class="form-narrow form-horizontal" method="post">
+											<input type="hidden" id="like-postId" name="postId"
+												th:value="${post?.post_id}">
+											<input type="hidden" id="view" name="view" value="post/myFeed">	
+											<button style="color: #777777"
+												th:text="${post?.number_of_likes}" type="submit"
+												class="btn btn-link fa fa-thumbs-up">Like</button>
+										</form>
+									</div>
+									<div th:if="${likesService.existLikes(currentUser,post)}"
+										style="display: inline-block; padding: 5px;">
+										<!-- Boton de Unlike -->
+										<form id="unlikePostForm" action="#"
+											th:action="@{/post/unlikePost}"
+											class="form-narrow form-horizontal" method="post">
+											<input type="hidden" id="unlike-postId" name="postId"
+												th:value="${post?.post_id}">
+											<input type="hidden" id="view" name="view" value="post/myFeed">
+												
+											<button style="color: #5bc0de"
+												th:text="${post?.number_of_likes}" type="submit"
+												class="btn btn-link fa fa-thumbs-up">Unlike</button>
+										</form>
+									</div>
+								<!-- Fin botón likes -->
+	
+									<!-- Botón de ver views -->
+									<a href="#showViewModal"
+										th:attr="data-viewpostid=''+${post?.post_id}+''"
+										data-toggle="modal"
+										class="showViewModalButton btn btn-secondary" role="button">
+										<span class="glyphicon glyphicon-eye-open"></span> <span
+										th:text="#{button.views}">Views</span>
+									</a>
+	
+									<!-- Botón de modificar descripción de la imagen del post  -->
+									<div th:if="${currentUser==post?.picture.author}"
+										style="display: inline">
+										<a href="#modifyPictureModal"
+											th:attr="data-modifyid=''+${post?.picture.picture_id}+'',data-description=''+${post?.picture.description}+''"
+											th:text="#{button.modify}" data-toggle="modal"
+											class="modifyPictureModalButton btn btn-info" role="button">Modify</a>
+									</div>
+	
+									<!-- Botón de eliminar post -->
+									<a href="#deletePostModal"
+										th:attr="data-postid=''+${post?.post_id}+''"
+										th:text="#{button.delete}" data-toggle="modal"
+										class="deletePostModalButton btn btn-danger" role="button">Delete</a>
+	
 								</div>
-							<!-- Fin botón likes -->
-
-								<!-- Botón de ver views -->
-								<a href="#showViewModal"
-									th:attr="data-viewpostid=''+${post?.post_id}+''"
-									data-toggle="modal"
-									class="showViewModalButton btn btn-secondary" role="button">
-									<span class="glyphicon glyphicon-eye-open"></span> <span
-									th:text="#{button.views}">Views</span>
-								</a>
-
-								<!-- Botón de modificar descripción de la imagen del post  -->
-								<div th:if="${currentUser==post?.picture.author}"
-									style="display: inline">
-									<a href="#modifyPictureModal"
-										th:attr="data-modifyid=''+${post?.picture.picture_id}+'',data-description=''+${post?.picture.description}+''"
-										th:text="#{button.modify}" data-toggle="modal"
-										class="modifyPictureModalButton btn btn-info" role="button">Modify</a>
-								</div>
-
-								<!-- Botón de eliminar post -->
-								<a href="#deletePostModal"
-									th:attr="data-postid=''+${post?.post_id}+''"
-									th:text="#{button.delete}" data-toggle="modal"
-									class="deletePostModalButton btn btn-danger" role="button">Delete</a>
-
+	
 							</div>
-
 						</div>
-					</div>
-
-				</td>
-			</tr>
-		</table>
+	
+					</td>
+				</tr>
+			</table>
+		</div>
 	</section>
 
 	<!-- Modal para ver las visitas al post -->
