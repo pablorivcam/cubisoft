@@ -64,6 +64,9 @@ public class FeedViewController {
 	/** The Constant SUCESS_RESHARE_POST. */
 	public static final String SUCESS_RESHARE_POST = "The post has been reshared sucessfully.";
 
+	/** The Constant SUCESS_DELETED_PICTURE. */
+	public static final String SUCESS_EDITED_COMMENT = "The comment has been edited sucessfully.";
+
 	@Autowired
 	private final PostService postService;
 
@@ -471,6 +474,47 @@ public class FeedViewController {
 
 		return view;
 
+	}
+
+	/**
+	 * Edit a comment.
+	 *
+	 * @param modifyCommentId
+	 *            the modify id
+	 * @param view
+	 *            the view
+	 * @param newContent
+	 *            the new content for the commentary
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param session
+	 *            the session
+	 * @return the string
+	 */
+	@PostMapping("modifyComment")
+	public final String modifyComment(@RequestParam Long modifyCommentId, @RequestParam String view,
+			@RequestParam String newContent, final ModelMap model, Principal userAuthenticated, HttpSession session) {
+
+		String error_message = "";
+		Boolean sucess = false;
+		Comment c = commentService.findCommentByCommentId(modifyCommentId);
+
+		// Modifies the comment in DB
+		if (c != null) {
+			c.setText(newContent);
+			commentService.save(c);
+			error_message = SUCESS_EDITED_COMMENT;
+			sucess = true;
+		}
+
+		// Devolvemos el mensaje
+		model.put("error_message", error_message);
+		model.put("sucess", sucess);
+		loadViewModel(model, userAuthenticated, view);
+
+		return view;
 	}
 
 }
