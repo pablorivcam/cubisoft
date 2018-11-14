@@ -176,6 +176,11 @@ public class FeedViewController {
 			}
 
 			model.put("currentUser", user);
+			}else {
+				for (Post post : posts) {
+					post.setAnonymousViews(post.getAnonymousViews()+1);
+					postService.save(post);
+				}
 			}
 			
 			model.put("likesService", likesService);
