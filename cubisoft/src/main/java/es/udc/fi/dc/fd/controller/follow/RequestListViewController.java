@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package es.udc.fi.dc.fd.controller.follow;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -5,7 +8,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.security.Principal;
 
 import javax.management.InstanceNotFoundException;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,21 +17,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.udc.fi.dc.fd.model.persistence.Follow;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.repository.FollowRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.FollowService;
 
 @Controller
-@RequestMapping("/followed")
-public class FollowedListViewController {
+@RequestMapping("/request")
+public class RequestListViewController {
+
 	@Autowired
 	private final FollowService followService;
+
+	@Autowired
+	private FollowRepository followRepository;
 
 	@Autowired
 	private UserProfileRepository userProfileRepository;
 
 	@Autowired
-	public FollowedListViewController(final FollowService service) {
+	public RequestListViewController(final FollowService service) {
 		super();
 
 		followService = checkNotNull(service, "Received a null pointer as service");
@@ -49,11 +57,12 @@ public class FollowedListViewController {
 		// Loads required data into the model
 		loadViewModel(model, userAuthenticated);
 
-		return FollowViewConstants.VIEW_FOLLOWED_LIST;
+		return FollowViewConstants.VIEW_REQUEST_LIST;
 	}
 
 	/**
-	 * Loads the data required for showing all the followed profiles of a user.
+	 * Loads the data required for showing all the followed requestd profiles of
+	 * a user.
 	 *
 	 * @param model
 	 *            model map
@@ -64,7 +73,7 @@ public class FollowedListViewController {
 		UserProfile user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 
 		try {
-			model.put(FollowViewConstants.PARAM_FOLLOW, followService.getUserFollows(user));
+			model.put(FollowViewConstants.PARAM_REQUEST, followService.findFollowsPending(user));
 		} catch (InstanceNotFoundException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
@@ -72,19 +81,28 @@ public class FollowedListViewController {
 		}
 	}
 
-	@PostMapping("unfollowUser")
-	public final String unfollow(@RequestParam Long user_id, final ModelMap model, Principal userAuthenticated,
-			HttpSession session) {
+	@PostMapping(path = "/acceptRequest")
+	public final String acceptRequest(@RequestParam Long follow_id, final ModelMap model, Principal userAuthenticated) {
 
-		UserProfile user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
-		UserProfile userFollowed = userProfileRepository.findById(user_id).get();
+		Follow follow = followRepository.getOne(follow_id);
 
-		followService.unfollow(user, userFollowed);
+		followService.processPendingFollows(follow, true);
 
 		loadViewModel(model, userAuthenticated);
 
-		return FollowViewConstants.VIEW_FOLLOWED_LIST;
+		return FollowViewConstants.VIEW_REQUEST_LIST;
+	}
 
+	@PostMapping(path = "/cancelRequest")
+	public final String cancelRequest(@RequestParam Long follow_id, final ModelMap model, Principal userAuthenticated) {
+
+		Follow follow = followRepository.getOne(follow_id);
+
+		followService.processPendingFollows(follow, false);
+
+		loadViewModel(model, userAuthenticated);
+
+		return FollowViewConstants.VIEW_REQUEST_LIST;
 	}
 
 }

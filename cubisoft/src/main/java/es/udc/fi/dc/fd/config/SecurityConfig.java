@@ -52,13 +52,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	/**
 	 * Here we configure what resources and pages can be used by everyone or by
-	 * authenticated users. FIXME: Change .permitAll() in second line to
-	 * .authenticated(), and change the path to the css
+	 * authenticated users.
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/", "/favicon.ico", "/resources/**", "/signup", "/static/**", "/about", "/account/list")
+				.antMatchers("/", "/favicon.ico", "/resources/**", "/signup", "/static/**", "/about", "/account/list","/Pictures/**", "/post/myFeed")
 				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/signin").permitAll()
 				.failureUrl("/signin?error=1").loginProcessingUrl("/authenticate").and().logout().logoutUrl("/logout")
 				.permitAll().logoutSuccessUrl("/signin?logout").and().rememberMe()

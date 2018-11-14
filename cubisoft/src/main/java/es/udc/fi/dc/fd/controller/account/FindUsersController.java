@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.FollowService;
 import es.udc.fi.dc.fd.service.UserProfileService;
@@ -65,7 +66,13 @@ public class FindUsersController {
 		model.put("keywords", keywords);
 
 		if (!followService.isUserAFollowingUserB(currentUser, followed_user)) {
-			followService.follow(currentUser, followed_user);
+			if (followed_user.getUserType() == UserType.PRIVATE) {
+				followService.follow(currentUser, followed_user, true);
+
+			} else {
+				followService.follow(currentUser, followed_user, false);
+
+			}
 		}
 
 		return AccountViewConstants.LIST_VIEW;

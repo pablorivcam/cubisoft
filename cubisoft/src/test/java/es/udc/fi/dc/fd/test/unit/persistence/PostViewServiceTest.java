@@ -21,6 +21,7 @@ import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.PostView;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.PostViewRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
@@ -56,19 +57,21 @@ public class PostViewServiceTest {
 
 		MockitoAnnotations.initMocks(this);
 
-		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null);
+		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null,
+				UserType.PUBLIC);
 		userA.setUser_id(1L);
 		userB = new UserProfile(TEST_LOGIN + 2, TEST_FIRSTNAME + 2, TEST_LASTNAME + 2, TEST_PASSWORD, "2" + TEST_EMAIL,
-				null, null);
+				null, null, UserType.PUBLIC);
 		userB.setUser_id(2L);
 		userC = new UserProfile(TEST_LOGIN + 3, TEST_FIRSTNAME + 3, TEST_LASTNAME + 3, TEST_PASSWORD, "3" + TEST_EMAIL,
-				null, null);
+				null, null, UserType.PUBLIC);
 		userC.setUser_id(3L);
 
 		picture = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA);
 
-		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0, false);
-		// postA2 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0,
+		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0, (long) 0, false);
+		// postA2 = new Post(Calendar.getInstance(), picture, userA, (long) 0,
+		// (long) 0,
 		// false);
 
 		pv1 = new PostView(userA, postA1);

@@ -7,6 +7,8 @@ public final class AccountViewConstants {
 
 	/** The Constant LIST_VIEW. */
 	public static final String LIST_VIEW = "account/list";
+	
+	public static final String VIEW_SETTINGS ="account/settings";
 
 	private AccountViewConstants() {
 		super();

@@ -3,19 +3,23 @@ package es.udc.fi.dc.fd.test.unit.persistence;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
+import es.udc.fi.dc.fd.service.UserProfileService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FindProfileByKeywordsTest {
@@ -33,6 +37,9 @@ public class FindProfileByKeywordsTest {
 	@Autowired
 	private UserProfileRepository userProfileRepository;
 
+	@InjectMocks
+	private UserProfileService userProfileService;
+
 	// @InjectMocks
 	// private PictureService pictureService;
 
@@ -40,15 +47,16 @@ public class FindProfileByKeywordsTest {
 
 	@Before
 	public void initialize() {
-		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null);
+		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null,
+				UserType.PUBLIC);
 		userA.setUser_id(1L);
 
-		userB = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME + "11", TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null,
-				null);
+		userB = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME + "11", TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null,
+				UserType.PUBLIC);
 		userB.setUser_id(2L);
 
 		userC = new UserProfile(TEST_LOGIN, "11" + TEST_FIRSTNAME + "11", TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL,
-				null, null);
+				null, null, UserType.PUBLIC);
 		userC.setUser_id(3L);
 
 	}
@@ -113,6 +121,20 @@ public class FindProfileByKeywordsTest {
 
 		try {
 			assertThat(userProfileRepository.findUserProfileByKeywords("ola"), is(equalTo(usersList)));
+
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void changeUserProfileTest() {
+
+		Mockito.when(userProfileRepository.findOneByEmail(userA.getEmail())).thenReturn(userA);
+		try {
+			userProfileService.changeUserProfileType(userA, UserType.PRIVATE);
+			UserProfile user_test = userProfileRepository.findOneByEmail(userA.getEmail());
+			assertEquals(user_test.getUserType(), UserType.PRIVATE);
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();

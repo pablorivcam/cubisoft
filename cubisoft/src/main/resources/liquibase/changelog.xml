@@ -69,6 +69,9 @@
 		     <column name="email" type="VARCHAR(30)">
 		        <constraints nullable="false" unique="true" />
 		     </column>
+		     <column name="userType" type="ENUM('PUBLIC','PRIVATE')">
+		        <constraints nullable="false" />
+		     </column>
 		</createTable>  
 
 		<createTable tableName="Picture">
@@ -117,6 +120,10 @@
 		     <column name="number_of_likes" type="BIGINT">
 		     	<constraints nullable="false" />
 		     </column>
+		     
+		      <column name="anonymousViews" type="BIGINT">
+		     	<constraints nullable="false" />
+		     </column>
 		   
 		     <column name="reshare" type="BOOLEAN">
 		     	<constraints nullable="false" />
@@ -138,6 +145,9 @@
 		         	foreignKeyName="follow_followed_user_fk" 
                 	references="UserProfile(user_id)"
        	            />
+		     </column>
+		     <column name="pending" type="BOOLEAN">
+		        <constraints nullable="false" />
 		     </column>
 		</createTable>
 		
@@ -226,3 +236,4 @@
    </changeSet>
 
 </databaseChangeLog>
+
