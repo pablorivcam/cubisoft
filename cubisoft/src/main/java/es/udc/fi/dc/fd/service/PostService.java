@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.repository.CommentRepository;
 import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
@@ -27,6 +28,9 @@ public class PostService {
 	/** The post repository. */
 	@Autowired
 	private PostRepository postRepository;
+
+	@Autowired
+	private CommentRepository commentRepository;
 
 	@Autowired
 	private UserProfileRepository userProfileRepository;
@@ -117,7 +121,7 @@ public class PostService {
 			throw new InstanceNotFoundException("The user with email" + user.getEmail() + " doesnt exist.");
 		}
 
-		Post post = new Post(Calendar.getInstance(), picture, user, (long) 0, (long) 0,(long) 0, false);
+		Post post = new Post(Calendar.getInstance(), picture, user, (long) 0, (long) 0, (long) 0, false);
 
 		postRepository.save(post);
 		return post;
@@ -154,7 +158,8 @@ public class PostService {
 			throw new InstanceNotFoundException("The user with email" + user.getEmail() + " doesn't exist.");
 		}
 
-		Post postReshare = new Post(Calendar.getInstance(), post.getPicture(), user, (long) 0, (long) 0,(long) 0, true);
+		Post postReshare = new Post(Calendar.getInstance(), post.getPicture(), user, (long) 0, (long) 0, (long) 0,
+				true);
 		postRepository.save(postReshare);
 		return postReshare;
 	}

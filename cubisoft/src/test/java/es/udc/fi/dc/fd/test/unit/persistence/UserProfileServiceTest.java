@@ -14,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
@@ -22,7 +21,7 @@ import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.UserProfileService;
 
 @RunWith(MockitoJUnitRunner.class)
-public class FindProfileByKeywordsTest {
+public class UserProfileServiceTest {
 
 	public static final String TEST_LOGIN = "test";
 	public static final String TEST_FIRSTNAME = "eve";
@@ -34,14 +33,10 @@ public class FindProfileByKeywordsTest {
 	public static final String KEYWORD = "eve";
 
 	@Mock
-	@Autowired
 	private UserProfileRepository userProfileRepository;
 
 	@InjectMocks
 	private UserProfileService userProfileService;
-
-	// @InjectMocks
-	// private PictureService pictureService;
 
 	private UserProfile userA, userB, userC;
 
@@ -72,7 +67,7 @@ public class FindProfileByKeywordsTest {
 		Mockito.when(userProfileRepository.findUserProfileByKeywords(KEYWORD)).thenReturn(usersList);
 
 		try {
-			assertThat(userProfileRepository.findUserProfileByKeywords(KEYWORD), is(equalTo(usersList)));
+			assertThat(userProfileService.findUserProfileByKeywords(KEYWORD), is(equalTo(usersList)));
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -89,7 +84,7 @@ public class FindProfileByKeywordsTest {
 		Mockito.when(userProfileRepository.findUserProfileByKeywords("11")).thenReturn(usersList1);
 
 		try {
-			assertThat(userProfileRepository.findUserProfileByKeywords("11"), is(equalTo(usersList1)));
+			assertThat(userProfileService.findUserProfileByKeywords("11"), is(equalTo(usersList1)));
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -104,7 +99,7 @@ public class FindProfileByKeywordsTest {
 		Mockito.when(userProfileRepository.findUserProfileByKeywords("ola")).thenReturn(usersList1);
 
 		try {
-			assertThat(userProfileRepository.findUserProfileByKeywords("ola"), is(equalTo(usersList1)));
+			assertThat(userProfileService.findUserProfileByKeywords("ola"), is(equalTo(usersList1)));
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -120,7 +115,7 @@ public class FindProfileByKeywordsTest {
 		Mockito.when(userProfileRepository.findUserProfileByKeywords("ola")).thenReturn(usersList);
 
 		try {
-			assertThat(userProfileRepository.findUserProfileByKeywords("ola"), is(equalTo(usersList)));
+			assertThat(userProfileService.findUserProfileByKeywords("ola"), is(equalTo(usersList)));
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();

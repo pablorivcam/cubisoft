@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.File;
 import java.security.Principal;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,14 +20,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.udc.fi.dc.fd.controller.picture.PictureUploaderController;
+import es.udc.fi.dc.fd.model.persistence.Comment;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.PostView;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.repository.CommentRepository;
 import es.udc.fi.dc.fd.repository.PictureRepository;
 import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.AlreadyLikedException;
+import es.udc.fi.dc.fd.service.CommentService;
 import es.udc.fi.dc.fd.service.LikesService;
 import es.udc.fi.dc.fd.service.NotLikedYetException;
 import es.udc.fi.dc.fd.service.PictureService;
@@ -43,6 +47,9 @@ public class FeedViewController {
 	/** The Constant NO_PERMISSION_TO_DELETE. */
 	public static final String NO_PERMISSION_TO_DELETE = "You dont have permission to delete this post";
 
+	/** The Constant NO_PERMISSION_TO_DELETE_COMMENT. */
+	public static final String NO_PERMISSION_TO_DELETE_COMMENT = "You dont have permission to delete this comment";
+
 	/** The Constant SUCESS_DELETED_PICTURE. */
 	public static final String SUCESS_DELETED_POST = "The post has been deleted sucessfully.";
 
@@ -51,6 +58,8 @@ public class FeedViewController {
 	public static final String SUCESS_UNLIKED_POST = "The post has been unliked sucessfully.";
 
 	public static final String USER_NOT_FOUND_ERROR = "That user doesn't exist.";
+
+	public static final String COMMENT_NOT_FOUND_ERROR = "The comment doesn't exist";
 
 	public static final String ALREADY_LIKED_POST_ERROR = "That post was already liked.";
 
@@ -63,6 +72,11 @@ public class FeedViewController {
 
 	/** The Constant SUCESS_RESHARE_POST. */
 	public static final String SUCESS_RESHARE_POST = "The post has been reshared sucessfully.";
+
+	/** The Constant SUCESS_DELETED_PICTURE. */
+	public static final String SUCESS_EDITED_COMMENT = "The comment has been edited sucessfully.";
+
+	public static final String SUCESS_DELETED_COMMENT = "The comment has been deleted sucessfully.";
 
 	@Autowired
 	private final PostService postService;
@@ -84,6 +98,12 @@ public class FeedViewController {
 
 	@Autowired
 	private PostRepository postRepository;
+
+	@Autowired
+	private CommentRepository commentRepository;
+
+	@Autowired
+	private CommentService commentService;
 
 	@Autowired
 	public FeedViewController(final PostService service, final PictureService servicePicture,
@@ -111,7 +131,7 @@ public class FeedViewController {
 			@RequestParam("user_id") Optional<Long> user_id) {
 		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_POST_LIST,
 				(user_id.isPresent()) ? user_id.get() : null);
-		
+
 		return PostViewConstants.VIEW_POST_LIST;
 	}
 
@@ -143,7 +163,7 @@ public class FeedViewController {
 
 	private final void loadViewModel(final ModelMap model, Principal userAuthenticated, String view, Long user_id) {
 		UserProfile user = null;
-		if(userAuthenticated != null) {
+		if (userAuthenticated != null) {
 			user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 		}
 		try {
@@ -153,7 +173,7 @@ public class FeedViewController {
 			if (view.equals(PostViewConstants.VIEW_GLOBAL_FEED)) {
 				posts = getPostService().findFollowsAndUserPosts(user);
 			} else {
-				if(user != null) {
+				if (user != null) {
 					if (user_id == null || user_id == user.getUser_id()) {
 						posts = getPostService().findUserPosts(user);
 					} else {
@@ -161,32 +181,33 @@ public class FeedViewController {
 						posts = getPostService().findUserPosts(userFound);
 						model.put("userFound", userFound);
 					}
-				}else {
-					/*The user is anonymous*/
+				} else {
+					/* The user is anonymous */
 					UserProfile userFound = userProfileRepository.findById(user_id).get();
 					posts = getPostService().findUserPosts(userFound);
 					model.put("userFound", userFound);
 				}
 			}
-			if(user != null) {
-			for (Post post : posts) {
-				if (getPostViewService().findPostViewByPostUser(post, user) == null) {
-					getPostViewService().save(new PostView(user, post));
-				}
-			}
-
-			model.put("currentUser", user);
-			}else {
+			if (user != null) {
 				for (Post post : posts) {
-					post.setAnonymousViews(post.getAnonymousViews()+1);
+					if (getPostViewService().findPostViewByPostUser(post, user) == null) {
+						getPostViewService().save(new PostView(user, post));
+					}
+				}
+
+				model.put("currentUser", user);
+			} else {
+				for (Post post : posts) {
+					post.setAnonymousViews(post.getAnonymousViews() + 1);
 					postService.save(post);
 				}
 			}
-			
+
 			model.put("likesService", likesService);
 			model.put(PostViewConstants.PARAM_POSTS, posts);
 			model.put("postService", getPostService());
 			model.put(PostViewConstants.PARAM_POSTVIEWS, getPostViewService().findPostsViews(posts));
+			model.put("commentService", commentService);
 		} catch (InstanceNotFoundException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
@@ -219,7 +240,8 @@ public class FeedViewController {
 		Boolean sucess = false;
 		Picture p = pictureRepository.findById(modifyId).get();
 
-		// FIXME: de esta manera si modificamos una imagen desde el perfil de otro
+		// FIXME: de esta manera si modificamos una imagen desde el perfil de
+		// otro
 		// usuario nos lleva al nuestro.
 
 		// Modificamos la descripcion de la imagen en la BD
@@ -452,6 +474,158 @@ public class FeedViewController {
 		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_GLOBAL_FEED, null);
 
 		return PostViewConstants.VIEW_GLOBAL_FEED;
+	}
+
+	/**
+	 * Adds the comment.
+	 *
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param view
+	 *            the view
+	 * @param postId
+	 *            the post id
+	 * @param text
+	 *            the text
+	 * @return the string
+	 */
+	@PostMapping("addComment")
+	public final String addComment(final ModelMap model, Principal userAuthenticated, @RequestParam String view,
+			@RequestParam Long postId, @RequestParam String text) {
+
+		Post p = postRepository.findById(postId).get();
+		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+
+		if (p != null) {
+
+			Comment c = new Comment(text, Calendar.getInstance(), p, author, null);
+			commentService.save(c);
+
+		}
+		loadViewModel(model, userAuthenticated, view, null);
+
+		return view;
+	}
+
+	/**
+	 * Replys the comment.
+	 *
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param view
+	 *            the view
+	 * @param commentId
+	 *            the comment id
+	 * @param text
+	 *            the text
+	 * @return the string
+	 */
+	@PostMapping("replyComment")
+	public final String replyComment(final ModelMap model, Principal userAuthenticated, @RequestParam String view,
+			@RequestParam Long commentId, @RequestParam String text) {
+
+		Comment c = commentService.findCommentByCommentId(commentId);
+		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+
+		if (c != null) {
+			commentService.replyComment(c, text, author, Calendar.getInstance());
+		}
+
+		loadViewModel(model, userAuthenticated, view, null);
+
+		return view;
+
+	}
+
+	/**
+	 * Edit a comment.
+	 *
+	 * @param modifyCommentId
+	 *            the modify id
+	 * @param view
+	 *            the view
+	 * @param newContent
+	 *            the new content for the commentary
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param session
+	 *            the session
+	 * @return the string
+	 */
+	@PostMapping("modifyComment")
+	public final String modifyComment(@RequestParam Long modifyCommentId, @RequestParam String view,
+			@RequestParam String newContent, final ModelMap model, Principal userAuthenticated, HttpSession session) {
+
+		String error_message = "";
+		Boolean sucess = false;
+		Comment c = commentService.findCommentByCommentId(modifyCommentId);
+
+		// Modifies the comment in DB
+		if (c != null) {
+			c.setText(newContent);
+			commentService.save(c);
+			error_message = SUCESS_EDITED_COMMENT;
+			sucess = true;
+		}
+
+		// Devolvemos el mensaje
+		model.put("error_message", error_message);
+		model.put("sucess", sucess);
+		loadViewModel(model, userAuthenticated, view, null);
+
+		return view;
+	}
+
+	/**
+	 * Delete comment post mapping.
+	 *
+	 * @param view
+	 *            the view
+	 * @param deleteCommentId
+	 *            the comment id
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param session
+	 *            the session
+	 * @return the string
+	 */
+	@PostMapping("deleteComment")
+	public final String deleteComment(@RequestParam String view, @RequestParam Long deleteCommentId,
+			final ModelMap model, Principal userAuthenticated, HttpSession session) {
+
+		String error_message = "";
+		Boolean sucess = false;
+		Comment comment = commentRepository.findById(deleteCommentId).get();
+		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+
+		// We delete the comment
+		if (comment == null) {
+			error_message = COMMENT_NOT_FOUND_ERROR;
+		} else if (comment.getUser().getUser_id() != author.getUser_id()) {
+			error_message = NO_PERMISSION_TO_DELETE_COMMENT;
+		} else {
+			// Remove it from our DB
+			commentService.delete(comment);
+			error_message = SUCESS_DELETED_COMMENT;
+			sucess = true;
+		}
+
+		// We return the message
+		model.put("error_message", error_message);
+		model.put("sucess", sucess);
+
+		loadViewModel(model, userAuthenticated, view, null);
+
+		return view;
+
 	}
 
 }
