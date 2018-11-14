@@ -24,6 +24,7 @@ import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.PostView;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.repository.CommentRepository;
 import es.udc.fi.dc.fd.repository.PictureRepository;
 import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
@@ -45,6 +46,9 @@ public class FeedViewController {
 	/** The Constant NO_PERMISSION_TO_DELETE. */
 	public static final String NO_PERMISSION_TO_DELETE = "You dont have permission to delete this post";
 
+	/** The Constant NO_PERMISSION_TO_DELETE_COMMENT. */
+	public static final String NO_PERMISSION_TO_DELETE_COMMENT = "You dont have permission to delete this comment";
+
 	/** The Constant SUCESS_DELETED_PICTURE. */
 	public static final String SUCESS_DELETED_POST = "The post has been deleted sucessfully.";
 
@@ -53,6 +57,8 @@ public class FeedViewController {
 	public static final String SUCESS_UNLIKED_POST = "The post has been unliked sucessfully.";
 
 	public static final String USER_NOT_FOUND_ERROR = "That user doesn't exist.";
+
+	public static final String COMMENT_NOT_FOUND_ERROR = "The comment doesn't exist";
 
 	public static final String ALREADY_LIKED_POST_ERROR = "That post was already liked.";
 
@@ -66,6 +72,8 @@ public class FeedViewController {
 
 	/** The Constant SUCESS_DELETED_PICTURE. */
 	public static final String SUCESS_EDITED_COMMENT = "The comment has been edited sucessfully.";
+
+	public static final String SUCESS_DELETED_COMMENT = "The comment has been deleted sucessfully.";
 
 	@Autowired
 	private final PostService postService;
@@ -87,6 +95,9 @@ public class FeedViewController {
 
 	@Autowired
 	private PostRepository postRepository;
+
+	@Autowired
+	private CommentRepository commentRepository;
 
 	@Autowired
 	private CommentService commentService;
@@ -515,6 +526,52 @@ public class FeedViewController {
 		loadViewModel(model, userAuthenticated, view);
 
 		return view;
+	}
+
+	/**
+	 * Delete comment post mapping.
+	 *
+	 * @param view
+	 *            the view
+	 * @param commentId
+	 *            the comment id
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param session
+	 *            the session
+	 * @return the string
+	 */
+	@PostMapping("deleteComment")
+	public final String deleteComment(@RequestParam String view, @RequestParam Long deleteCommentId,
+			final ModelMap model, Principal userAuthenticated, HttpSession session) {
+
+		String error_message = "";
+		Boolean sucess = false;
+		Comment comment = commentRepository.findById(deleteCommentId).get();
+		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+
+		// We delete the comment
+		if (comment == null) {
+			error_message = COMMENT_NOT_FOUND_ERROR;
+		} else if (comment.getUser().getUser_id() != author.getUser_id()) {
+			error_message = NO_PERMISSION_TO_DELETE_COMMENT;
+		} else {
+			// Remove it from our DB
+			commentService.delete(comment);
+			error_message = SUCESS_DELETED_COMMENT;
+			sucess = true;
+		}
+
+		// We return the message
+		model.put("error_message", error_message);
+		model.put("sucess", sucess);
+
+		loadViewModel(model, userAuthenticated, view);
+
+		return view;
+
 	}
 
 }

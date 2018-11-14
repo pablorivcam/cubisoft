@@ -124,10 +124,11 @@
 										th:attr="data-modifycommentid=''+${comment?.comment_id}+'',data-newcontent=''+${comment?.text}+''"
 										th:text="#{button.modify}" data-toggle="modal"
 										class="modifyCommentModalButton btn btn-info" role="button">Modify</a>
-											
-									
-									<a href="#" th:text="#{button.delete}">Delete</a>
-									
+										
+									<a href="#deleteCommentModal"
+										th:attr="data-deletecommentid=''+${comment?.comment_id}+''"
+										th:text="#{button.delete}" data-toggle="modal"
+										class="deleteCommentModalButton btn btn-danger" role="button">Delete</a>
 									<span style="color:#777777" th:text="${comment?.date.getTime()}"></span>
 
 									<!-- Comentarios hijo -->
@@ -141,7 +142,10 @@
 											th:text="#{button.modify}" data-toggle="modal"
 											class="modifyCommentModalButton btn btn-info" role="button">Modify</a>
 											
-										<a href="#" th:text="#{button.delete}">Delete</a>
+										<a href="#deleteCommentModal"
+											th:attr="data-deletecommentid=''+${child_comment?.comment_id}+''"
+											th:text="#{button.delete}" data-toggle="modal"
+											class="deleteCommentModalButton btn btn-danger" role="button">Delete</a>
 										
 										<span style="color:#777777" th:text="${child_comment?.date.getTime()}"></span>
 									</div>			
@@ -297,6 +301,38 @@
 			</div>
 		</div>
 	</div>
+	<!-- Modal to remove comments -->
+	<div class="modal fade" id="deleteCommentModal" tabindex="-1"
+		role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteCommentModalLabel"
+						th:text="#{title.comment.delete}">Delete Comment</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p th:text="#{label.comment.confirmation}">Confirmation</p>
+					<span id="modal-postid"></span>
+				</div>
+				<div class="modal-footer">
+					<form id="deleteCommentForm" action="#"
+						th:action="@{/post/deleteComment}"
+						class="form-narrow form-horizontal" method="post">
+						<input type="hidden" id="deleteCommentId" name="deleteCommentId" value="-1">
+						<input type="hidden" id="view" name="view" value="post/myFeed">
+						<button th:text="#{button.cancel}" type="button"
+							class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button th:text="#{button.delete}" type="submit"
+							class="btn btn-danger">Delete</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<footer>
 		<div th:include="fragments/scripts :: general" />
@@ -366,6 +402,16 @@
 				$("#newContent").val(newContent);
 
 			});
+			// Whenever you click on a comment's delete button
+			$(document).on("click", ".deleteCommentModalButton", function () {
+				
+				// We get his deleteCommentId value
+	    		var deleteCommentId = $(this).data('deletecommentid');
+
+				// And use it in the modal's hidden formulary field
+	        	$("#deleteCommentId").val( deleteCommentId );
+
+			});	
 			
 		});
 	</script>
