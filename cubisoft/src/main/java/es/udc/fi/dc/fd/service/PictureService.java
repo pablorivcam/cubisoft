@@ -66,6 +66,19 @@ public class PictureService {
 	}
 
 	/**
+	 * Gets the pictures by description.
+	 *
+	 * @param description
+	 *            the description
+	 * @return the pictures by description
+	 */
+	public List<Picture> getPicturesByDescription(String description) {
+
+		return pictureRepository.findPicturesByDescription(description);
+
+	}
+
+	/**
 	 * Deletes a picture.
 	 *
 	 * @param picture

@@ -26,4 +26,7 @@ public interface PictureRepository extends JpaRepository<Picture, Long> {
 	@Query("select p from Picture p where p.author=:author")
 	List<Picture> findPicturesByAuthor(@Param("author") UserProfile author);
 
+	@Query("SELECT p FROM Picture p WHERE p.description LIKE CONCAT('%',:description,'%')")
+	List<Picture> findPicturesByDescription(@Param("description") String description);
+
 }

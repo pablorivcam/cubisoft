@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -253,6 +255,7 @@ public class UserProfile {
 	/**
 	 * @return the userType
 	 */
+	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	public UserType getUserType() {
 		return userType;
