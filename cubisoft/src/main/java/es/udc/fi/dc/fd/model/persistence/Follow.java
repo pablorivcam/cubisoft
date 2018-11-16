@@ -25,6 +25,9 @@ public class Follow {
 	/** The followed user. */
 	private UserProfile followed_user;
 
+	/** The status of follow. */
+	private Boolean pending;
+
 	/**
 	 * Instantiates a new follow.
 	 */
@@ -38,10 +41,13 @@ public class Follow {
 	 *            the user
 	 * @param followed_user
 	 *            the followed user
+	 * @param pending
+	 *            status of the follow
 	 */
-	public Follow(UserProfile user, UserProfile followed_user) {
+	public Follow(UserProfile user, UserProfile followed_user, Boolean pending) {
 		this.user = user;
 		this.followed_user = followed_user;
+		this.pending = pending;
 	}
 
 	/**
@@ -106,6 +112,21 @@ public class Follow {
 	 */
 	public void setFollowed_user(UserProfile followed_user) {
 		this.followed_user = followed_user;
+	}
+
+	/**
+	 * @return the pending
+	 */
+	public Boolean getPending() {
+		return pending;
+	}
+
+	/**
+	 * @param pending
+	 *            the pending to set
+	 */
+	public void setPending(Boolean pending) {
+		this.pending = pending;
 	}
 
 }

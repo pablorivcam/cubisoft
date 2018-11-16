@@ -22,6 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.PostService;
@@ -58,26 +59,33 @@ public class PostServiceUnitTest {
 
 		MockitoAnnotations.initMocks(this);
 
-		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null);
+		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null,
+				UserType.PUBLIC);
 		userA.setUser_id(1L);
 		userB = new UserProfile(TEST_LOGIN + 2, TEST_FIRSTNAME + 2, TEST_LASTNAME + 2, TEST_PASSWORD, "2" + TEST_EMAIL,
-				null, null);
+				null, null, UserType.PUBLIC);
 		userB.setUser_id(2L);
 		userC = new UserProfile(TEST_LOGIN + 3, TEST_FIRSTNAME + 3, TEST_LASTNAME + 3, TEST_PASSWORD, "3" + TEST_EMAIL,
-				null, null);
+				null, null, UserType.PUBLIC);
 		userC.setUser_id(3L);
 
 		picture = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA);
 
-		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0, false);
-		postB1 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0, false);
-		postB2 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0, false);
-		postC1 = new Post(Calendar.getInstance(), picture, userC, (long) 0, (long) 0, false);
+		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0, (long) 0, false);
+		postB1 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0, (long) 0, false);
+		postB2 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0, (long) 0, false);
+		postC1 = new Post(Calendar.getInstance(), picture, userC, (long) 0, (long) 0, (long) 0, false);
 
+	}
+	
+	@Test
+	public void saveTest(){
+		Mockito.when(postRepository.save(postA1)).thenReturn(postA1);;
+		assertThat(postService.save(postA1), is(equalTo(postA1)));
 	}
 
 	@Test
-	public void findUserFollowersPostsTest() {
+	public void findUserFollowsPostsTest() {
 
 		// Datos esperados por el test
 		ArrayList<Post> postsA = new ArrayList<>();
@@ -139,7 +147,55 @@ public class PostServiceUnitTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test(expected = NullPointerException.class)
+	public void findNullUserPostsTest() throws InstanceNotFoundException {
+		postService.findUserPosts(null);
+	}
+	@Test(expected = InstanceNotFoundException.class)
+	public void findNonExistentUserPostsTest() throws InstanceNotFoundException {
+		UserProfile user = new UserProfile();
+		user.setEmail("");
+		Mockito.when(userProfileRepository.exists(user.getEmail())).thenReturn(false);
+		
+		postService.findUserPosts(user);
+	}
+	
+	@Test
+	public void findFollowsAndUserPostsTest() {
+		//debería meter también un post de un follow
+		ArrayList<Post> postsB = new ArrayList<>();
+		postsB.add(postB1);
+		postsB.add(postB2);
 
+		Mockito.when(userProfileRepository.exists("2" + TEST_EMAIL)).thenReturn(true);
+		Mockito.when(postRepository.findFollowsAndUserPosts(userB)).thenReturn(postsB);
+
+		try {
+			assertThat(postService.findFollowsAndUserPosts(userB), is(equalTo(postsB)));
+		} catch (
+
+		InstanceNotFoundException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void findFollowsAndNullUserPostsTest() throws InstanceNotFoundException {
+		postService.findFollowsAndUserPosts(null);
+	}
+	
+	@Test(expected = InstanceNotFoundException.class)
+	public void findFollowsAndNonExistentUserPostsTest() throws InstanceNotFoundException {
+		UserProfile user = new UserProfile();
+		user.setEmail("");
+		Mockito.when(userProfileRepository.exists(user.getEmail())).thenReturn(false);
+		
+		postService.findFollowsAndUserPosts(user);
+	}
+	
 	@Test
 	public void newPostTest() throws InstanceNotFoundException {
 		// Datos esperados por el test
@@ -209,4 +265,43 @@ public class PostServiceUnitTest {
 		// Realizamos comprobaciones
 		assertEquals(postRepository.findPostByPostId(resharepost.getPost_id()).getPost_id(), resharepost.getPost_id());
 	}
+	
+	@Test(expected = NullPointerException.class)
+
+	public void newReshareNullUserTest() throws InstanceNotFoundException {
+		postService.newReshare(postA1, null);
+	}
+	
+	@Test(expected = InstanceNotFoundException.class)
+	public void newReshareNonExistentUserTest() throws InstanceNotFoundException {
+		UserProfile user = new UserProfile();
+		user.setEmail("");
+		Mockito.when(userProfileRepository.exists(user.getEmail())).thenReturn(false);
+		
+		postService.newReshare(postA1, user);
+
+	}
+
+	@Test
+	public void getSetPostTest() {
+		Calendar date = Calendar.getInstance();
+
+		Post postD = new Post();
+		postD.setPicture(picture);
+		postD.setUser(userA);
+		postD.setDate(date);
+		postD.setViews(0L);
+		postD.setAnonymousViews(0L);
+		postD.setReshare(false);
+
+		Post postE = new Post(date, picture, userA, (long) 0, (long) 0, (long) 0, false);
+
+		assertEquals(postD.getPicture(), postE.getPicture());
+		assertEquals(postD.getDate(), postE.getDate());
+		assertEquals(postD.getUser(), postE.getUser());
+		assertEquals(postD.getViews(), postE.getViews());
+		assertEquals(postD.getAnonymousViews(), postE.getAnonymousViews());
+		assertEquals(postD.getReshare(), postE.getReshare());
+	}
+
 }

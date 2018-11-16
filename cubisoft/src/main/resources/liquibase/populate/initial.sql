@@ -59,13 +59,19 @@ INSERT INTO example_entities (name) VALUES
    ('entity_29'),
    ('entity_30');
    
-   INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email) 
-   	VALUES (1,'admin','Admin','Admin','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','admin@admin.com');
+   INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (1,'admin','Admin','Admin','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','admin@admin.com','PUBLIC');
    	
-   INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email) 
-   	VALUES (2,'user1','User','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','user1@user.com');
+   INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (2,'user1','User','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','user1@user.com','PUBLIC');
    	
-   INSERT INTO Follow (follow_id,user,followed_user) 
-   	VALUES (1,2,1);
+   	INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (3,'private','User','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','private@user.com','PRIVATE');
    	
+   INSERT INTO Follow (follow_id,user,followed_user,pending) 
+   	VALUES (1,2,1,false);
+   	
+   INSERT INTO Picture (picture_id,description,image_path,date,user_id) VALUES (1,'asdfgasdfghg','null',now(),1);
+   	
+   INSERT INTO Post(post_id,date,user_id,picture_id,views,number_of_likes,anonymousViews,reshare) VALUES (1,now(),1,1,0,0,0,0);
    

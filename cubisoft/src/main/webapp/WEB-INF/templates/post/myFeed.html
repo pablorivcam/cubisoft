@@ -15,97 +15,178 @@
 				th:text="${error_message}">Error message</p>
 		</div>
 
-		<h1 th:text="#{title.yourposts}">Your posts</h1>
+		<h1 th:if="${userFound != null}" th:text="${userFound.login}+' posts'">Your posts</h1>
+		<h1 th:if="${userFound == null}" th:text="#{title.yourposts}">Your posts</h1>
 		
-		<div th:if="${#lists.isEmpty(posts)}" style="padding:10px; background:#000000AA; text-align:center">
-			<h2 th:text="#{message.noposts}" style="color:white">No posts</h2>
-			<a href="#" th:text="#{label.upload}" th:href="@{/picture/upload}" class="btn btn-info" role="button" style="margin:10px">Go to feed</a>      				
+		<div th:if="${userFound != null AND userFound.getUserType().toString()=='PRIVATE' AND currentUser == null}">
+			<div style="padding:10px; background:#000000AA; text-align:center;  margin-bottom:20px">
+				<h2 th:text="#{label.privateProfile}" style="color:white;">Private Profile</h2>
+			</div>
 		</div>
-		
-		<table class="table table-striped display">
-			<tr th:each="post : ${posts}">
-				<td>
-					<!-- Parte de la visualización de la imagen -->
-					<div style="width: 400px; margin-left: 25%">
-						<div>
-
-							<img th:src="@{'/Pictures/' + ${post?.picture.image_path}}"
-								width="400px" /> <br />
-							<hr style="margin: 5px" />
-						</div>
-						<div style="width: 80%">
-
-							<div style="margin-left: 5%">
-								<span th:text="${post?.picture.description}">Description
-									placeholder</span>
-							</div>
-
+		<div th:if="${(userFound != null AND userFound.getUserType().toString()=='PUBLIC') OR currentUser != null}">
+			<div th:if="${#lists.isEmpty(posts)}" style="padding:10px; background:#000000AA; text-align:center">
+				<h2 th:text="#{message.noposts}" style="color:white">No posts</h2>
+				<a th:if="${userFound == null}" href="#" th:text="#{label.upload}" th:href="@{/picture/upload}" class="btn btn-info" role="button" style="margin:10px">Go to feed</a>      				
+			</div>
+	
+			<table class="table table-striped display">
+				<tr th:each="post : ${posts}">
+					<td>
+						<!-- Parte de la visualización de la imagen -->
+						<div style="width: 400px; margin-left: 25%">
 							<div>
-
-								<!-- Botón para los likes -->
-								<div th:if="!${likesService.existLikes(currentUser,post)}"
-									style="display: inline-block; padding: 5px">
-									<!-- Boton de Like -->
-									<form id="likePostForm" action="#"
-										th:action="@{/post/likePost}"
-										class="form-narrow form-horizontal" method="post">
-										<input type="hidden" id="like-postId" name="postId"
-											th:value="${post?.post_id}">
-										<input type="hidden" id="view" name="view" value="post/myFeed">	
-										<button style="color: #777777"
-											th:text="${post?.number_of_likes}" type="submit"
-											class="btn btn-link fa fa-thumbs-up">Like</button>
-									</form>
-								</div>
-								<div th:if="${likesService.existLikes(currentUser,post)}"
-									style="display: inline-block; padding: 5px;">
-									<!-- Boton de Unlike -->
-									<form id="unlikePostForm" action="#"
-										th:action="@{/post/unlikePost}"
-										class="form-narrow form-horizontal" method="post">
-										<input type="hidden" id="unlike-postId" name="postId"
-											th:value="${post?.post_id}">
-										<input type="hidden" id="view" name="view" value="post/myFeed">
-											
-										<button style="color: #5bc0de"
-											th:text="${post?.number_of_likes}" type="submit"
-											class="btn btn-link fa fa-thumbs-up">Unlike</button>
-									</form>
-								</div>
-								<!-- Fin botón likes -->
-
-								<!-- Botón de ver views -->
-								<a href="#showViewModal"
-									th:attr="data-viewpostid=''+${post?.post_id}+''"
-									data-toggle="modal"
-									class="showViewModalButton btn btn-secondary" role="button">
-									<span class="glyphicon glyphicon-eye-open"></span> <span
-									th:text="#{button.views}">Views</span>
-								</a>
-
-								<!-- Botón de modificar descripción de la imagen del post  -->
-								<div th:if="${currentUser==post?.picture.author}"
-									style="display: inline">
-									<a href="#modifyPictureModal"
-										th:attr="data-modifyid=''+${post?.picture.picture_id}+'',data-description=''+${post?.picture.description}+''"
-										th:text="#{button.modify}" data-toggle="modal"
-										class="modifyPictureModalButton btn btn-info" role="button">Modify</a>
-								</div>
-
-								<!-- Botón de eliminar post -->
-								<a href="#deletePostModal"
-									th:attr="data-postid=''+${post?.post_id}+''"
-									th:text="#{button.delete}" data-toggle="modal"
-									class="deletePostModalButton btn btn-danger" role="button">Delete</a>
-
+	
+								<img th:src="@{'/Pictures/' + ${post?.picture.image_path}}"
+									width="400px" /> <br />
+								<hr style="margin: 5px" />
 							</div>
+							<div style="width: 80%">
+	
+									<span th:text="${post?.picture.description}">Description
+										placeholder</span>	
+								<div th:if="${currentUser!=null}">
+	
+									<!-- Botón para los likes -->
+									<div th:if="!${likesService.existLikes(currentUser,post)}"
+										style="display: inline-block; padding: 5px">
+										<!-- Boton de Like -->
+										<form id="likePostForm" action="#"
+											th:action="@{/post/likePost}"
+											class="form-narrow form-horizontal" method="post">
+											<input type="hidden" id="like-postId" name="postId"
+												th:value="${post?.post_id}">
+											<input type="hidden" id="view" name="view" value="post/myFeed">	
+											<button style="color: #777777"
+												th:text="${post?.number_of_likes}" type="submit"
+												class="btn btn-link fa fa-thumbs-up">Like</button>
+										</form>
+									</div>
+									<div th:if="${likesService.existLikes(currentUser,post)}"
+										style="display: inline-block; padding: 5px;">
+										<!-- Boton de Unlike -->
+										<form id="unlikePostForm" action="#"
+											th:action="@{/post/unlikePost}"
+											class="form-narrow form-horizontal" method="post">
+											<input type="hidden" id="unlike-postId" name="postId"
+												th:value="${post?.post_id}">
+											<input type="hidden" id="view" name="view" value="post/myFeed">
+												
+											<button style="color: #5bc0de"
+												th:text="${post?.number_of_likes}" type="submit"
+												class="btn btn-link fa fa-thumbs-up">Unlike</button>
+										</form>
+									</div>
+								<!-- Fin botón likes -->
+	
+									<!-- Botón de ver views -->
+									<a href="#showViewModal"
+										th:attr="data-viewpostid=''+${post?.post_id}+'',data-anonymousviews=''+${post?.anonymousViews}+''"
+										data-toggle="modal"
+										class="showViewModalButton btn btn-secondary" role="button">
+										<span class="glyphicon glyphicon-eye-open"></span> <span
+										th:text="#{button.views}">Views</span>
+									</a>
+	
+									<!-- Botón de modificar descripción de la imagen del post  -->
+									<div th:if="${currentUser==post?.picture.author}"
+										style="display: inline">
+										<a href="#modifyPictureModal"
+											th:attr="data-modifyid=''+${post?.picture.picture_id}+'',data-description=''+${post?.picture.description}+''"
+											th:text="#{button.modify}" data-toggle="modal"
+											class="modifyPictureModalButton btn btn-info" role="button">Modify</a>
+									</div>
+	
+									<!-- Botón de eliminar post -->
+									<a href="#deletePostModal"
+										th:attr="data-postid=''+${post?.post_id}+''"
+										th:text="#{button.delete}" data-toggle="modal"
+										class="deletePostModalButton btn btn-danger" role="button">Delete</a>
+	
+								</div>
+	
+							</div>
+							
+							<!-- Parte de los comentarios -->
+							<div th:fragment="comments" style="width:75%;background:#00000010">
+							
+								<!-- Visualización de los comentarios -->
+								<div th:each="comment : ${commentService.findPostParentComments(post, 0, 5).getItems()}"
+									style="margin:10px 10px 10px 10px; padding:3px; font-size:13px">
+									
+									<p><span style="font-weight: bold;" th:text="${comment?.user.login}"></span>:
+									<span th:text="${comment?.text}"></span></p>
+									
+									<!-- Botón de responder comentario -->
+									<div class = "dropdown" style="display:inline">
+										<a class="dropdown-toggle" data-toggle="dropdown" href="#" th:text="#{button.reply}">Reply</a>
+										<form class = "dropdown-menu" method="post" th:action="@{/post/replyComment}">
+											<input type="hidden" id="commentId" name="commentId" th:value="${comment?.comment_id}"/>
+											<input type="hidden" id="view" name="view" value="post/globalFeed">	
+											<input style="width:300px;display:inline" type="text" class="form-control" id="text" placeholder="Text" name="text" />	
+											<button type="submit" class="btn btn-info" role="button">
+												<span th:text="#{button.reply}">Reply</span>		
+												<span class="glyphicon glyphicon-comment"></span>														
+											</button>					
+										</form>	
+									</div>
+									<!-- Fin de responder comentario -->
+									
+									<!-- Modify and delete  -->
+									<a href="#modifyCommentModal"
+										th:attr="data-modifycommentid=''+${comment?.comment_id}+'',data-newcontent=''+${comment?.text}+''"
+										th:text="#{button.modify}" data-toggle="modal"
+										class="modifyCommentModalButton btn btn-info" role="button">Modify</a>
+										
+									<a href="#deleteCommentModal"
+										th:attr="data-deletecommentid=''+${comment?.comment_id}+''"
+										th:text="#{button.delete}" data-toggle="modal"
+										class="deleteCommentModalButton btn btn-danger" role="button">Delete</a>
+									<span style="color:#777777" th:text="${comment?.date.getTime()}"></span>
 
+									<!-- Comentarios hijo -->
+									<div style="margin:10px 10px 10px 50px; padding:3px; background:#ffffff" th:each="child_comment: ${comment.child_comments}">
+										<p>
+											<span style="font-weight: bold;" th:text="${child_comment?.user.login}"></span>:
+											<span th:text="${child_comment?.text}"></span>
+										</p>
+										<a href="#modifyCommentModal"
+											th:attr="data-modifycommentid=''+${child_comment?.comment_id}+'',data-newcontent=''+${child_comment?.text}+''"
+											th:text="#{button.modify}" data-toggle="modal"
+											class="modifyCommentModalButton btn btn-info" role="button">Modify</a>
+											
+										<a href="#deleteCommentModal"
+											th:attr="data-deletecommentid=''+${child_comment?.comment_id}+''"
+											th:text="#{button.delete}" data-toggle="modal"
+											class="deleteCommentModalButton btn btn-danger" role="button">Delete</a>
+										
+										<span style="color:#777777" th:text="${child_comment?.date.getTime()}"></span>
+									</div>			
+									
+									<hr style="margin:10px"/>									
+								</div>
+								
+								<!-- Botón de mostrar más -->
+								<div th:if="${commentService.findPostParentComments(post, 0, 5).getExistMoreItems() == true}">
+									<a href="#" th:text="#{label.showmore}">Show more</a>
+								</div>
+											
+								<!-- Formulario para añadir comentarios -->
+			                	<form  method="post" th:action="@{/post/addComment}">
+			                		<input style="width:300px;display:inline" type="text" class="form-control" id="text" placeholder="Text" name="text" />	
+									<input type="hidden" id="view" name="view" value="post/myFeed">	
+									<input type="hidden" id="postId" name="postId" th:value="${post?.post_id}">							
+									<button type="submit" class="btn btn-info" role="button">
+										<span th:text="#{label.comment}">Comment</span>		
+										<span class="glyphicon glyphicon-comment"></span>														
+									</button>
+								</form>
+							</div>
 						</div>
-					</div>
-
-				</td>
-			</tr>
-		</table>
+	
+					</td>
+				</tr>
+			</table>
+		</div>
 	</section>
 
 	<!-- Modal para ver las visitas al post -->
@@ -122,6 +203,11 @@
 					</button>
 				</div>
 				<div class="modal-body">
+					<div>
+						<span th:text="#{label.anonymousViews}" style="display:inline-block">Anonymous Views:</span>
+						<span id="numberOfAnonymousViews" style="display:inline-block"></span>
+					</div>
+					<span th:text="#{label.registeredUserViews}" >Registered user Views:</span>
 					<table class="table table-striped display">
 						<tbody id="views-table"></tbody>
 					</table>
@@ -155,7 +241,7 @@
 					<form id="deletePostForm" action="#"
 						th:action="@{/post/deletePost}"
 						class="form-narrow form-horizontal" method="post">
-						<input type="hidden" id="postId" name="postId" value="-1">
+						<input type="hidden" id="deletePostId" name="postId" value="-1">
 						<input type="hidden" id="view" name="view" value="post/myFeed">
 						<button th:text="#{button.cancel}" type="button"
 							class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -199,6 +285,71 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Comment modifying Modal -->
+	<div class="modal fade" id="modifyCommentModal" tabindex="-2"
+		role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modifyCommentModalLabel"
+						th:text="#{title.comment.modify}">Modify comment</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p th:text="#{label.newtext}">New text</p>
+					<form id="modifyCommentForm" action="#"
+						th:action="@{/post/modifyComment}"
+						class="form-narrow form-horizontal" method="post">
+						<input type="hidden" id="view" name="view" value="post/myFeed">
+						<input type="hidden" id="modifyCommentId" name="modifyCommentId" value="-1">
+						<input type="text" class="form-control" id="newContent"
+							name="newContent" placeholder="new Content" />
+						<button th:text="#{button.cancel}" type="button"
+							class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button th:text="#{button.submit}" type="submit"
+							class="btn btn-info">Submit</button>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal to remove comments -->
+	<div class="modal fade" id="deleteCommentModal" tabindex="-1"
+		role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteCommentModalLabel"
+						th:text="#{title.comment.delete}">Delete Comment</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p th:text="#{label.comment.confirmation}">Confirmation</p>
+					<span id="modal-postid"></span>
+				</div>
+				<div class="modal-footer">
+					<form id="deleteCommentForm" action="#"
+						th:action="@{/post/deleteComment}"
+						class="form-narrow form-horizontal" method="post">
+						<input type="hidden" id="deleteCommentId" name="deleteCommentId" value="-1">
+						<input type="hidden" id="view" name="view" value="post/myFeed">
+						<button th:text="#{button.cancel}" type="button"
+							class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button th:text="#{button.delete}" type="submit"
+							class="btn btn-danger">Delete</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<footer>
 		<div th:include="fragments/scripts :: general" />
@@ -215,7 +366,7 @@
 	    		var postId = $(this).data('postid');
 
 				// Y se usa en el campo oculto del formulario del modal
-	        	$("#postId").val( postId );
+	        	$("#deletePostId").val( postId );
 
 			});
 			
@@ -224,9 +375,10 @@
 				
 				// Se recoje su valor de data-viewpostId
 	    		var viewpostId = $(this).data('viewpostid');
-
+				var numberOfAnonymousViews =$(this).data('anonymousviews');
 				// Y se usa en el campo oculto del formulario del modal
 	        	$("#viewpostId").val( viewpostId );
+				$("#numberOfAnonymousViews").text( numberOfAnonymousViews );
 				
 				//Procesamos las visitas
 				$("#views-table").empty();
@@ -255,6 +407,29 @@
 				$("#description").val(description);
 
 			});
+			
+			// Whenever you click on a comment's modify button
+			$(document).on("click", ".modifyCommentModalButton", function () {
+				
+				// We get his modifyCommentId value
+	    		var modifyCommentId = $(this).data('modifycommentid');
+	    		var newContent = $(this).data('newcontent');
+
+				// And use it in the modal's hidden formulary field
+	        	$("#modifyCommentId").val( modifyCommentId );
+				$("#newContent").val(newContent);
+
+			});
+			// Whenever you click on a comment's delete button
+			$(document).on("click", ".deleteCommentModalButton", function () {
+				
+				// We get his deleteCommentId value
+	    		var deleteCommentId = $(this).data('deletecommentid');
+
+				// And use it in the modal's hidden formulary field
+	        	$("#deleteCommentId").val( deleteCommentId );
+
+			});	
 			
 		});
 	</script>

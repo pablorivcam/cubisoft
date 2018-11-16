@@ -40,8 +40,7 @@ public class PostService {
 	 */
 	@Transactional
 	public Post save(Post post) {
-		Post p = postRepository.save(post);
-		return p;
+		return postRepository.save(post);
 	}
 
 	/**
@@ -53,7 +52,6 @@ public class PostService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
 	public List<Post> findUserFollowsPosts(UserProfile user) throws InstanceNotFoundException {
 
 		if (user == null) {
@@ -75,7 +73,7 @@ public class PostService {
 	 * @throws InstanceNotFoundException
 	 *             If the user does not exists
 	 */
-	@Transactional
+	@Transactional(noRollbackFor=Exception.class)
 	public List<Post> findUserPosts(UserProfile user) throws InstanceNotFoundException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
@@ -86,7 +84,7 @@ public class PostService {
 		return postRepository.findUserPosts(user);
 	}
 
-	@Transactional
+	@Transactional(noRollbackFor=Exception.class)
 	public List<Post> findFollowsAndUserPosts(UserProfile user) throws InstanceNotFoundException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
@@ -108,7 +106,7 @@ public class PostService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor = Exception.class)
 	public Post newPost(Picture picture, UserProfile user) throws InstanceNotFoundException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
@@ -117,7 +115,7 @@ public class PostService {
 			throw new InstanceNotFoundException("The user with email" + user.getEmail() + " doesnt exist.");
 		}
 
-		Post post = new Post(Calendar.getInstance(), picture, user, (long) 0, (long) 0, false);
+		Post post = new Post(Calendar.getInstance(), picture, user, (long) 0, (long) 0, (long) 0, false);
 
 		postRepository.save(post);
 		return post;
@@ -145,8 +143,9 @@ public class PostService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor = Exception.class)
 	public Post newReshare(Post post, UserProfile user) throws InstanceNotFoundException {
+		//TODO falta comprobar que el post no sea null o que no exista
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null");
 		}
@@ -154,7 +153,8 @@ public class PostService {
 			throw new InstanceNotFoundException("The user with email" + user.getEmail() + " doesn't exist.");
 		}
 
-		Post postReshare = new Post(Calendar.getInstance(), post.getPicture(), user, (long) 0, (long) 0, true);
+		Post postReshare = new Post(Calendar.getInstance(), post.getPicture(), user, (long) 0, (long) 0, (long) 0,
+				true);
 		postRepository.save(postReshare);
 		return postReshare;
 	}

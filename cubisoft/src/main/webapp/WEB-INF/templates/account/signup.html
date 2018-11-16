@@ -4,9 +4,9 @@
 <body>
    <header class="header" th:include="fragments/menu :: menu" />
 
-   <section id="main-section" class="container-fluid">
+   <section id="main-section" class="container-fluid"
+   		th:style="'background: url(\''+@{/resources/images/background2.png}+ '\');background-repeat: no-repeat; background-size: cover'">
    		<h1 th:text="#{title.signup.form}">Sign Up form</h1>
-      	<p>This view allows to sign up through an HTML form.</p>
       
 		<section id="form" class="form-well">
 			<form class="form-narrow form-horizontal" method="post" th:action="@{/signup}" th:object="${signUpForm}" th:fragment="singnUpForm">
@@ -56,20 +56,17 @@
 				                <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Invalid Email</span>
 				            </div>
 				        </div>
-				        
+				        <div class="form-group">
+				            <div class="col-lg-offset-2 col-lg-10">
+				            	<button class="btn btn-info" role="button" type="submit" th:text="#{button.signup}">Sign Up</button>
+				                <span style="float:right">Already have an account? <a style="margin-left:10px" href="signin" th:href="@{/signin}" class="btn btn-success" role="button">Sign In</a></span>	        
+				            </div>
+				        </div>				        
 			      </div>
                   
                </div>
             </div>
 			
-			<div id="submit" class="row">
-	            <div class="col-md-12">
-	               <button type="submit" th:text="#{button.submit}" class="btn btn-info" role="button">Submit</button>
-	            </div>
-	            <div class="col-lg-offset-2 col-lg-10">
-	                <p>Already have an account? <a href="signin" th:href="@{/signin}" class="btn btn-success" role="button">Sign In</a></p>
-	            </div>
-	        </div>
 			</form>
 		</section>
 	   

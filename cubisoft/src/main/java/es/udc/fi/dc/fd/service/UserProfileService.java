@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.dc.fd.config.SecurityConfig;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
 /**
@@ -48,8 +49,7 @@ public class UserProfileService implements UserDetailsService {
 	@Transactional
 	public UserProfile save(UserProfile userProfile) {
 		userProfile.setPassword(passwordEncoder.encode(userProfile.getPassword()));
-		UserProfile p = userProfileRepository.save(userProfile);
-		return p;
+		return userProfileRepository.save(userProfile);
 	}
 
 	@Override
@@ -62,8 +62,7 @@ public class UserProfileService implements UserDetailsService {
 	}
 
 	public UserProfile validateUser(String email, String password) {
-		UserProfile account = userProfileRepository.findOneByEmail(email);
-		return account;
+		return userProfileRepository.findOneByEmail(email);
 	}
 
 	public void signin(UserProfile account) {
@@ -71,22 +70,27 @@ public class UserProfileService implements UserDetailsService {
 	}
 
 	private User createUser(UserProfile account) {
-		return new User(account.getEmail(), account.getPassword(), Collections.singleton(createAuthority(account)));
+		return new User(account.getEmail(), account.getPassword(), Collections.singleton(createAuthority()));
 	}
 
 	private Authentication authenticate(UserProfile account) {
 		return new UsernamePasswordAuthenticationToken(createUser(account), null,
-				Collections.singleton(createAuthority(account)));
+				Collections.singleton(createAuthority()));
 	}
 
-	private GrantedAuthority createAuthority(UserProfile account) {
+	private GrantedAuthority createAuthority() {
 		return new SimpleGrantedAuthority(SecurityConfig.DEFAULT_ROLE);
 	}
 
 	public ArrayList<UserProfile> findUserProfileByKeywords(String keywords) {
-		ArrayList<UserProfile> lista = new ArrayList<UserProfile>(
+		return new ArrayList<UserProfile>(
 				userProfileRepository.findUserProfileByKeywords(keywords));
-		return lista;
 	}
 
+	public UserProfile changeUserProfileType(UserProfile account, UserType userType) {
+
+		account.setUserType(userType);
+
+		return userProfileRepository.save(account);
+	}
 }

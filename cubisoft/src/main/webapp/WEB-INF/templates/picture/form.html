@@ -7,7 +7,8 @@
 
    <header class="header" th:include="fragments/menu :: menu" />
 
-   <section id="main-section" class="container-fluid">
+	<section id="main-section" class="container-fluid" 
+		th:style="'background: url(\''+@{/resources/images/background2.png}+ '\');background-repeat: no-repeat; background-size: cover'">
 
       <h1 th:text="#{title.picture.form}">Picture form</h1>
       <p>This view allows upload pictures through an HTML form.</p>

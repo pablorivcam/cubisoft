@@ -51,10 +51,12 @@ public class SignUpController {
 		if (errors.hasErrors()) {
 			return AccountViewConstants.VIEW_SIGNUP;
 		}
-		UserProfile account = userProfileService.save(new UserProfile(signupForm.getLogin(), signupForm.getName(),
-				signupForm.getSurname(), signupForm.getPassword(), signupForm.getEmail(), null, null));
+		UserProfile account = userProfileService
+				.save(new UserProfile(signupForm.getLogin(), signupForm.getName(), signupForm.getSurname(),
+						signupForm.getPassword(), signupForm.getEmail(), null, null, signupForm.getUserType()));
 		userProfileService.signin(account);
-		// see /WEB-INF/i18n/messages.properties and /WEB-INF/views/homeSignedIn.html
+		// see /WEB-INF/i18n/messages.properties and
+		// /WEB-INF/views/homeSignedIn.html
 		return "redirect:/";
 	}
 

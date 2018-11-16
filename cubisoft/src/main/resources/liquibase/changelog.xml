@@ -30,6 +30,12 @@
 		        tableName="Follow"/>
 	</changeSet>
 	
+	<changeSet author="PabloRivas" id="dropCommentTable" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Comment"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="Comment"/>
+	</changeSet>
+	
 	<changeSet author="PabloRivas" id="dropPostTable" runAlways="true">
 		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Post"/></preConditions>
 		<dropTable cascadeConstraints="true"
@@ -49,6 +55,7 @@
 	</changeSet>
 	<!-- Creación de tablas -->
 
+	<!-- Tabla UserProfile -->
 	<changeSet author="PabloRivas" id="cubisoft_tables" runAlways="true">
 		<createTable tableName="UserProfile">
 		     <column autoIncrement="true" name="user_id" type="BIGINT">
@@ -69,8 +76,12 @@
 		     <column name="email" type="VARCHAR(30)">
 		        <constraints nullable="false" unique="true" />
 		     </column>
+		     <column name="userType" type="ENUM('PUBLIC','PRIVATE')">
+		        <constraints nullable="false" />
+		     </column>
 		</createTable>  
 
+		<!-- Tabla Picture -->
 		<createTable tableName="Picture">
 		     <column autoIncrement="true" name="picture_id" type="BIGINT">
 		        <constraints primaryKey="true" />
@@ -91,6 +102,7 @@
 
 		</createTable>
 		
+		<!-- Tabla Post -->
 		<createTable tableName="Post">
 		     <column autoIncrement="true" name="post_id" type="BIGINT">
 		        <constraints primaryKey="true" />
@@ -117,12 +129,48 @@
 		     <column name="number_of_likes" type="BIGINT">
 		     	<constraints nullable="false" />
 		     </column>
+		     
+		      <column name="anonymousViews" type="BIGINT">
+		     	<constraints nullable="false" />
+		     </column>
 		   
 		     <column name="reshare" type="BOOLEAN">
 		     	<constraints nullable="false" />
 		     </column>
 		</createTable>
 		
+		<!-- Tabla Comentarios -->
+		<createTable tableName="Comment">
+		     <column autoIncrement="true" name="comment_id" type="BIGINT">
+		        <constraints primaryKey="true" />
+		     </column>
+		     <column name="date" type="DATETIME">
+		        <constraints nullable="false" />
+		     </column>	
+		     
+		     <column name="text" type="VARCHAR(150)">
+		        <constraints nullable="false" />
+		     </column>
+		     
+		     <column name="user_id" type="BIGINT">
+		         <constraints nullable="false" 
+		         	foreignKeyName="comment_user_id_fk" 
+                	references="UserProfile(user_id)"
+       	            />
+		         
+		     </column>
+		     <column name="post" type="BIGINT">
+		         <constraints nullable="false" 
+       	            />
+		     </column>	
+		     	  
+		     <column name="parent_id" type="BIGINT">
+		         <constraints nullable="true"/>
+		     </column>   	    
+		     
+		</createTable>
+		
+		<!-- Tabla Follow -->
 		<createTable tableName="Follow">
 		     <column autoIncrement="true" name="follow_id" type="BIGINT">
 		        <constraints primaryKey="true" />
@@ -139,8 +187,12 @@
                 	references="UserProfile(user_id)"
        	            />
 		     </column>
+		     <column name="pending" type="BOOLEAN">
+		        <constraints nullable="false" />
+		     </column>
 		</createTable>
 		
+		<!-- Tabla Likes -->
 		<createTable tableName="Likes">
 		<column autoIncrement="true" name="likes_id" type="BIGINT">
 		        <constraints primaryKey="true" />
@@ -157,6 +209,7 @@
 		     </column>
 		</createTable>
 
+		<!-- Tabla Post View -->
 		<createTable tableName="PostView">
 		<column autoIncrement="true" name="view_id" type="BIGINT">
 			<constraints primaryKey="true" />
@@ -183,13 +236,30 @@
 	            onUpdate="RESTRICT"
 	            referencedColumnNames="picture_id"
 	            referencedTableName="Picture"/>
-	            <addForeignKeyConstraint baseColumnNames="post"
+		    
+	        <addForeignKeyConstraint baseColumnNames="post"
 	            baseTableName="Likes"
 	            constraintName="like_post_id_fk"
 	            onDelete="CASCADE"
 	            onUpdate="RESTRICT"
 	            referencedColumnNames="post_id"
 	            referencedTableName="Post"/>	
+	            
+	       	<addForeignKeyConstraint baseColumnNames="post"
+	            baseTableName="Comment"
+	            constraintName="comment_post_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="post_id"
+	            referencedTableName="Post"/>
+	       	
+	       	<addForeignKeyConstraint baseColumnNames="parent_id"
+	            baseTableName="Comment"
+	            constraintName="comment_parent_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="comment_id"
+	            referencedTableName="Comment"/>	        
 	</changeSet>
 	<changeSet author="YankoNion" id="foreign_keys" runAlways="true">
 		    <addForeignKeyConstraint baseColumnNames="post"
@@ -226,3 +296,4 @@
    </changeSet>
 
 </databaseChangeLog>
+

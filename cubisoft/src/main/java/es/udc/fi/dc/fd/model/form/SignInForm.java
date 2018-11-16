@@ -1,6 +1,5 @@
 package es.udc.fi.dc.fd.model.form;
 
-
 import java.io.Serializable;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -10,38 +9,39 @@ public class SignInForm implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@NotEmpty
 	private String email;
-	
+
 	@NotEmpty
 	private String password;
 
 	public SignInForm() {
 		super();
 	}
-	
+
 	public final String getEmail() {
-        return email;
-    }
+		return email;
+	}
+
 	public final String getPassword() {
-        return password;
-    }
-	
+		return password;
+	}
+
 	public final void setEmail(final String value) {
-        email = value;
-    }
+		email = value;
+	}
+
 	public final void setPassword(final String value) {
-        password = value;
-    }
+		password = value;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		return result;
+		return prime * result + ((password == null) ? 0 : password.hashCode());
 	}
 
 	@Override

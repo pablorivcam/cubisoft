@@ -1,6 +1,8 @@
 package es.udc.fi.dc.fd.service;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.management.InstanceNotFoundException;
 
@@ -10,6 +12,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.fi.dc.fd.controller.post.FeedViewController;
 import es.udc.fi.dc.fd.model.persistence.Likes;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
@@ -27,12 +30,14 @@ public class LikesService {
 	private PostRepository postRepository;
 	@Autowired
 	private UserProfileRepository userProfileRepository;
+	
+	private static final Logger logger = Logger.getLogger(PictureService.class.getName());
 
-	@Transactional
+
+	/*@Transactional
 	public Likes save(Likes likes) {
-		Likes l = likesRepository.save(likes);
-		return l;
-	}
+		return likesRepository.save(likes);
+	}*/
 
 	/**
 	 * Method that allows an user to like some existing post.
@@ -47,25 +52,26 @@ public class LikesService {
 	 * @throws AlreadyLikedException
 	 *             the already liked exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor = Exception.class)
 	public Likes newLikes(UserProfile user, Post post) throws InstanceNotFoundException, AlreadyLikedException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
 		}
-		if (!userProfileRepository.exists(user.getEmail())) {
-			throw new InstanceNotFoundException("The user with email" + user.getEmail() + " doesnt exist.");
-		}
 		if (post == null) {
 			throw new NullPointerException("The post param cannot be null.");
+		}
+		if (!userProfileRepository.exists(user.getEmail())) {
+			throw new InstanceNotFoundException("The user with email" + user.getEmail() + " doesnt exist.");
 		}
 		if (!postRepository.existsById(post.getPost_id())) {
 			throw new InstanceNotFoundException("The post with the id" + post.getPost_id() + " doesnt exists.");
 		}
 		Likes like = new Likes(user, post);
-		try {
-			likesRepository.save(like);
-		} catch (Exception e) {
+
+		if (this.existLikes(user, post)) {
 			throw new AlreadyLikedException("The post has been already liked");
+		} else {
+			likesRepository.save(like);
 		}
 
 		return like;
@@ -80,7 +86,7 @@ public class LikesService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor = Exception.class)
 	public List<Likes> findUserLikes(UserProfile user) throws InstanceNotFoundException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
@@ -100,7 +106,7 @@ public class LikesService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor = Exception.class)
 	public List<Likes> findPostLikes(Post post) throws InstanceNotFoundException {
 		if (post == null) {
 			throw new NullPointerException("The post param cannot be null.");
@@ -123,26 +129,25 @@ public class LikesService {
 	 * @throws NotLikedYetException
 	 *             the not liked yet exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor = Exception.class)
 	public void deleteUserPostLikes(UserProfile user, Post post)
 			throws InstanceNotFoundException, NotLikedYetException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
 		}
-		if (!userProfileRepository.exists(user.getEmail())) {
-			throw new InstanceNotFoundException("The user with the id" + user.getUser_id() + " doesnt exists.");
-		}
 		if (post == null) {
 			throw new NullPointerException("The post param cannot be null.");
 		}
+		if (!userProfileRepository.exists(user.getEmail())) {
+			throw new InstanceNotFoundException("The user with the id" + user.getUser_id() + " doesnt exists.");
+		}	
 		if (!postRepository.existsById(post.getPost_id())) {
 			throw new InstanceNotFoundException("The post with the id" + post.getPost_id() + " doesnt exists.");
 		}
-		try {
+		if (this.existLikes(user, post)) {
 			Likes like = likesRepository.findLikesByUserAndPost(user, post);
 			likesRepository.delete(like);
-
-		} catch (Error e) {
+		} else {
 			throw new NotLikedYetException("The post is not liked yet");
 		}
 	}
@@ -156,17 +161,16 @@ public class LikesService {
 	 *            the post
 	 * @return true, if successful
 	 */
-	@Transactional
 	public boolean existLikes(UserProfile user, Post post) {
 		boolean result = false;
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
 		}
-		if (!userProfileRepository.exists(user.getEmail())) {
-			return result;
-		}
 		if (post == null) {
 			throw new NullPointerException("The post param cannot be null.");
+		}
+		if (!userProfileRepository.exists(user.getEmail())) {
+			return result;
 		}
 		if (!postRepository.existsById(post.getPost_id())) {
 			return result;
@@ -183,6 +187,95 @@ public class LikesService {
 	@Transactional
 	public void delete(Likes like) {
 		likesRepository.delete(like);
-
 	}
+
+	/**
+	 * Likes a post.
+	 *
+	 * @param postId
+	 *            the post id
+	 * @param authorEmail
+	 *            the author of the like emails.
+	 * @return the succes/error message.
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	@Transactional(rollbackFor = InstanceNotFoundException.class)
+	public String likePost(Long postId, String authorEmail) throws InstanceNotFoundException {
+
+		if (!userProfileRepository.exists(authorEmail)) {
+			throw new InstanceNotFoundException("The user with that email doesn't exists.");
+		}
+
+		if (!postRepository.existsById(postId)) {
+			throw new InstanceNotFoundException("The post with that id doesn't exists.");
+		}
+
+		Post post = postRepository.findById(postId).get();
+		UserProfile author = userProfileRepository.findOneByEmail(authorEmail);
+		String error_message = "";
+
+		if (existLikes(author, post)) {
+			error_message = FeedViewController.ALREADY_LIKED_POST_ERROR;
+		} else {
+			try {
+				newLikes(author, post);
+				post.setNumber_of_likes(post.getNumber_of_likes() + 1);
+				postRepository.save(post);
+			/*} catch (InstanceNotFoundException e) {
+				logger.log(Level.INFO, e.getMessage(), e); //Unreachable code?
+			*/} catch (AlreadyLikedException e) {
+				logger.log(Level.INFO, e.getMessage(), e);
+			}
+			error_message = FeedViewController.SUCESS_LIKED_POST;
+		}
+
+		return error_message;
+	}
+
+	/**
+	 * Unlike post.
+	 *
+	 * @param postId
+	 *            the post id
+	 * @param authorEmail
+	 *            the author email
+	 * @return the string
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 * @throws NotLikedYetException
+	 */
+	@Transactional(noRollbackFor = InstanceNotFoundException.class)
+	public String unlikePost(Long postId, String authorEmail) throws InstanceNotFoundException, NotLikedYetException {
+
+		if (!userProfileRepository.exists(authorEmail)) {
+			throw new InstanceNotFoundException("The user with that email doesn't exists.");
+		}
+
+		if (!postRepository.existsById(postId)) {
+			throw new InstanceNotFoundException("The post with that id doesn't exists.");
+		}
+
+		Post post = postRepository.findById(postId).get();
+		UserProfile author = userProfileRepository.findOneByEmail(authorEmail);
+		String error_message = "";
+
+		if (!existLikes(author, post)) {
+			error_message = FeedViewController.POST_NOT_LIKED_YET_ERROR;
+		} else {
+			try {
+				deleteUserPostLikes(author, post);
+				post.setNumber_of_likes(post.getNumber_of_likes() - 1);
+				postRepository.save(post);
+			}/* catch (InstanceNotFoundException e) {
+				logger.log(Level.INFO, e.getMessage(), e); //Unreachable code?
+			}*/ catch (NotLikedYetException e) {
+				logger.log(Level.INFO, e.getMessage(), e);
+			}
+			error_message = FeedViewController.SUCESS_UNLIKED_POST;
+		}
+
+		return error_message;
+	}
+
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,6 +44,14 @@ public class UserProfile {
 	/** The posts. */
 	private List<Post> posts;
 
+	/** The possible types of the users. */
+	public enum UserType {
+		PUBLIC, PRIVATE
+	}
+
+	/** Type of the user. */
+	private UserType userType;
+
 	/**
 	 * Instantiates a new user profile.
 	 */
@@ -65,9 +75,11 @@ public class UserProfile {
 	 *            the follows
 	 * @param posts
 	 *            the posts
+	 * @param userType
+	 *            the type of the user
 	 */
 	public UserProfile(String login, String firstName, String lastName, String password, String email,
-			List<Follow> follows, List<Post> posts) {
+			List<Follow> follows, List<Post> posts, UserType userType) {
 		this.login = login;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -75,6 +87,7 @@ public class UserProfile {
 		this.email = email;
 		this.follows = follows;
 		this.posts = posts;
+		this.userType = userType;
 	}
 
 	/**
@@ -237,6 +250,23 @@ public class UserProfile {
 	 */
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
+	}
+
+	/**
+	 * @return the userType
+	 */
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	public UserType getUserType() {
+		return userType;
+	}
+
+	/**
+	 * @param userType
+	 *            the userType to set
+	 */
+	public void setUserType(UserType userType) {
+		this.userType = userType;
 	}
 
 }

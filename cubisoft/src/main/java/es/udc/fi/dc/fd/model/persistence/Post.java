@@ -35,6 +35,8 @@ public class Post {
 
 	/** The number of likes. */
 	private Long number_of_likes;
+	
+	private Long anonymousViews;
 
 	/** The reshare status. */
 	private Boolean reshare;
@@ -61,12 +63,13 @@ public class Post {
 	 * @param reshare
 	 *            the reshare
 	 */
-	public Post(Calendar date, Picture picture, UserProfile user, Long views, Long number_of_likes, Boolean reshare) {
+	public Post(Calendar date, Picture picture, UserProfile user, Long views, Long number_of_likes,Long anonymousViews, Boolean reshare) {
 		this.date = date;
 		this.picture = picture;
 		this.user = user;
 		this.views = views;
 		this.number_of_likes = number_of_likes;
+		this.anonymousViews = anonymousViews;
 		this.reshare = reshare;
 		date.set(Calendar.MILLISECOND, 0);
 
@@ -190,6 +193,27 @@ public class Post {
 	@JoinColumn(name = "number_of_likes")
 	public void setNumber_of_likes(Long number_of_likes) {
 		this.number_of_likes = number_of_likes;
+	}
+	
+	/**
+	 * Gets the anonymous Views.
+	 *
+	 * @return the anonymous Views
+	 */
+	@Column(nullable = true)
+	public Long getAnonymousViews() {
+		return anonymousViews;
+	}
+
+	/**
+	 * Sets the number of anonymous views
+	 *
+	 * @param anonymousViews
+	 *            the new anonymous views
+	 */
+	@JoinColumn(name = "anonymousViews")
+	public void setAnonymousViews(Long anonymousViews) {
+		this.anonymousViews = anonymousViews;
 	}
 
 	/**
