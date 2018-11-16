@@ -136,4 +136,31 @@ public class UserProfileServiceTest {
 		}
 	}
 
+	@Test
+	public void getSetUserProfileTest() {
+		UserProfile userD = new UserProfile();
+		userD.setUser_id(4L);
+		userD.setLogin(TEST_LOGIN);
+		userD.setFirstName(TEST_FIRSTNAME);
+		userD.setLastName(TEST_LASTNAME);
+		userD.setPassword(TEST_PASSWORD);
+		userD.setEmail(TEST_EMAIL);
+		userD.setFollows(null);
+		userD.setPosts(null);
+		userD.setUserType(UserType.PUBLIC);
+
+		UserProfile userE = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null,
+				null, UserType.PUBLIC);
+		userE.setUser_id(5L);
+
+		assertEquals(userD.getLogin(), userE.getLogin());
+		assertEquals(userD.getFirstName(), userE.getFirstName());
+		assertEquals(userD.getLastName(), userE.getLastName());
+		assertEquals(userD.getPassword(), userE.getPassword());
+		assertEquals(userD.getEmail(), userE.getEmail());
+		assertEquals(userD.getFollows(), userE.getFollows());
+		assertEquals(userD.getPosts(), userE.getPosts());
+		assertEquals(userD.getUserType(), userE.getUserType());
+	}
+
 }

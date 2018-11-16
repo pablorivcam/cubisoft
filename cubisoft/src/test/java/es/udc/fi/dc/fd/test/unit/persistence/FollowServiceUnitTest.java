@@ -179,4 +179,20 @@ public class FollowServiceUnitTest {
 
 	}
 
+	@Test
+	public void getSetFollowTest() {
+		Follow followD = new Follow();
+		followD.setFollow_id(4L);
+		followD.setUser(userA);
+		followD.setFollowed_user(userB);
+		followD.setPending(false);
+
+		Follow followE = new Follow(userA, userB, false);
+		followE.setFollow_id(followD.getFollow_id());
+
+		assertEquals(followD.getUser(), followE.getUser());
+		assertEquals(followD.getFollowed_user(), followE.getFollowed_user());
+		assertEquals(followD.getPending(), followE.getPending());
+	}
+
 }

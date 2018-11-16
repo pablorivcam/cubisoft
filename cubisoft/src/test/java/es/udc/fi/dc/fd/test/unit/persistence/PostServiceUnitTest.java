@@ -71,10 +71,10 @@ public class PostServiceUnitTest {
 
 		picture = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA);
 
-		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0,(long) 0, false);
-		postB1 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0,(long) 0, false);
-		postB2 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0,(long) 0, false);
-		postC1 = new Post(Calendar.getInstance(), picture, userC, (long) 0, (long) 0,(long) 0, false);
+		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0, (long) 0, false);
+		postB1 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0, (long) 0, false);
+		postB2 = new Post(Calendar.getInstance(), picture, userB, (long) 0, (long) 0, (long) 0, false);
+		postC1 = new Post(Calendar.getInstance(), picture, userC, (long) 0, (long) 0, (long) 0, false);
 
 	}
 
@@ -211,4 +211,27 @@ public class PostServiceUnitTest {
 		// Realizamos comprobaciones
 		assertEquals(postRepository.findPostByPostId(resharepost.getPost_id()).getPost_id(), resharepost.getPost_id());
 	}
+
+	@Test
+	public void getSetPostTest() {
+		Calendar date = Calendar.getInstance();
+
+		Post postD = new Post();
+		postD.setPicture(picture);
+		postD.setUser(userA);
+		postD.setDate(date);
+		postD.setViews(0L);
+		postD.setAnonymousViews(0L);
+		postD.setReshare(false);
+
+		Post postE = new Post(date, picture, userA, (long) 0, (long) 0, (long) 0, false);
+
+		assertEquals(postD.getPicture(), postE.getPicture());
+		assertEquals(postD.getDate(), postE.getDate());
+		assertEquals(postD.getUser(), postE.getUser());
+		assertEquals(postD.getViews(), postE.getViews());
+		assertEquals(postD.getAnonymousViews(), postE.getAnonymousViews());
+		assertEquals(postD.getReshare(), postE.getReshare());
+	}
+
 }

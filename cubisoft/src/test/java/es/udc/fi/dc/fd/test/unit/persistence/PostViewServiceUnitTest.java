@@ -137,4 +137,19 @@ public class PostViewServiceUnitTest {
 
 		assertThat(postViewService.findPostView(p), is(equalTo(null)));
 	}
+
+	@Test
+	public void getSetPostViewTest() {
+		PostView pviewD = new PostView();
+		pviewD.setView_id(4L);
+		pviewD.setUser(userA);
+		pviewD.setPost(postA1);
+
+		PostView pviewE = new PostView(userA, postA1);
+		pviewE.setView_id(pviewD.getView_id());
+
+		assertEquals(pviewD.getView_id(), pviewE.getView_id());
+		assertEquals(pviewD.getPost(), pviewE.getPost());
+		assertEquals(pviewD.getUser(), pviewE.getUser());
+	}
 }
