@@ -30,8 +30,7 @@ public class LikesService {
 
 	@Transactional
 	public Likes save(Likes likes) {
-		Likes l = likesRepository.save(likes);
-		return l;
+		return likesRepository.save(likes);
 	}
 
 	/**
@@ -47,7 +46,7 @@ public class LikesService {
 	 * @throws AlreadyLikedException
 	 *             the already liked exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor=Exception.class)
 	public Likes newLikes(UserProfile user, Post post) throws InstanceNotFoundException, AlreadyLikedException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
@@ -62,10 +61,11 @@ public class LikesService {
 			throw new InstanceNotFoundException("The post with the id" + post.getPost_id() + " doesnt exists.");
 		}
 		Likes like = new Likes(user, post);
-		try {
-			likesRepository.save(like);
-		} catch (Exception e) {
+		
+		if(this.existLikes(user, post)) {
 			throw new AlreadyLikedException("The post has been already liked");
+		}else {
+			likesRepository.save(like);
 		}
 
 		return like;
@@ -80,7 +80,7 @@ public class LikesService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor=Exception.class)
 	public List<Likes> findUserLikes(UserProfile user) throws InstanceNotFoundException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
@@ -100,7 +100,7 @@ public class LikesService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor=Exception.class)
 	public List<Likes> findPostLikes(Post post) throws InstanceNotFoundException {
 		if (post == null) {
 			throw new NullPointerException("The post param cannot be null.");
@@ -123,7 +123,7 @@ public class LikesService {
 	 * @throws NotLikedYetException
 	 *             the not liked yet exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor=Exception.class)
 	public void deleteUserPostLikes(UserProfile user, Post post)
 			throws InstanceNotFoundException, NotLikedYetException {
 		if (user == null) {
@@ -138,11 +138,10 @@ public class LikesService {
 		if (!postRepository.existsById(post.getPost_id())) {
 			throw new InstanceNotFoundException("The post with the id" + post.getPost_id() + " doesnt exists.");
 		}
-		try {
+		if(this.existLikes(user, post)) {
 			Likes like = likesRepository.findLikesByUserAndPost(user, post);
 			likesRepository.delete(like);
-
-		} catch (Error e) {
+		}else {
 			throw new NotLikedYetException("The post is not liked yet");
 		}
 	}

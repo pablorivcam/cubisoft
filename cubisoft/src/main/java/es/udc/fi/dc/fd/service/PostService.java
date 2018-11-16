@@ -73,7 +73,7 @@ public class PostService {
 	 * @throws InstanceNotFoundException
 	 *             If the user does not exists
 	 */
-	@Transactional
+	@Transactional(noRollbackFor=Exception.class)
 	public List<Post> findUserPosts(UserProfile user) throws InstanceNotFoundException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
@@ -84,7 +84,7 @@ public class PostService {
 		return postRepository.findUserPosts(user);
 	}
 
-	@Transactional
+	@Transactional(noRollbackFor=Exception.class)
 	public List<Post> findFollowsAndUserPosts(UserProfile user) throws InstanceNotFoundException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");

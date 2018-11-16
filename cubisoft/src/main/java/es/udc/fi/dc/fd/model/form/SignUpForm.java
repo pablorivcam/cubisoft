@@ -91,8 +91,7 @@ public class SignUpForm implements Serializable {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
-		result = prime * result + ((userType == null) ? 0 : userType.hashCode());
-		return result;
+		return prime * result + ((userType == null) ? 0 : userType.hashCode());
 	}
 
 	@Override

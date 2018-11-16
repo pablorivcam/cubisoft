@@ -36,9 +36,9 @@
 							<hr style="margin: 5px" />
 						</div>
 						<div style="width: 100%">
-
+									<span th:text="${post?.picture.description}">Description
+										placeholder</span>
 							<div>
-
 								<!-- Botón para los likes -->
 								<div th:if="!${likesService.existLikes(currentUser,post)}"
 									style="display: inline-block; padding: 5px">
@@ -106,8 +106,6 @@
 							</div>
 							
 							<div>
-								<span th:text="${post?.picture.description}">Description
-									placeholder</span>
 
 								<div th:if="${post?.reshare}"
 									style="display: inline-block; padding: 5px; color:#4582ec">

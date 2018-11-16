@@ -7,6 +7,8 @@ import java.security.Principal;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.management.InstanceNotFoundException;
 import javax.servlet.http.HttpSession;
@@ -104,6 +106,8 @@ public class FeedViewController {
 
 	@Autowired
 	private CommentService commentService;
+	
+	private Logger logger;
 
 	@Autowired
 	public FeedViewController(final PostService service, final PictureService servicePicture,
@@ -209,9 +213,9 @@ public class FeedViewController {
 			model.put(PostViewConstants.PARAM_POSTVIEWS, getPostViewService().findPostsViews(posts));
 			model.put("commentService", commentService);
 		} catch (InstanceNotFoundException e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, e.getMessage(), e);		
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, e.getMessage(), e);		
 		}
 	}
 
@@ -349,7 +353,7 @@ public class FeedViewController {
 		Post post = postRepository.findById(postId).get();
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 		String error_message = "";
-		Boolean sucess = false;
+		boolean sucess = Boolean.FALSE;
 
 		if (post == null) {
 			error_message = POST_NOT_FOUND_ERROR;
@@ -363,14 +367,12 @@ public class FeedViewController {
 				post.setNumber_of_likes(post.getNumber_of_likes() + 1);
 				postService.save(post);
 			} catch (InstanceNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.log(Level.INFO, e.getMessage(), e);
 			} catch (AlreadyLikedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.log(Level.INFO, e.getMessage(), e);
 			}
 			error_message = SUCESS_LIKED_POST;
-			sucess = true;
+			sucess = Boolean.TRUE;
 		}
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
@@ -401,7 +403,7 @@ public class FeedViewController {
 		Post post = postRepository.findById(postId).get();
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 		String error_message = "";
-		Boolean sucess = false;
+		boolean sucess = Boolean.FALSE;
 
 		if (post == null) {
 			error_message = POST_NOT_FOUND_ERROR;
@@ -415,14 +417,12 @@ public class FeedViewController {
 				post.setNumber_of_likes(post.getNumber_of_likes() - 1);
 				postService.save(post);
 			} catch (InstanceNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.log(Level.INFO, e.getMessage(), e);
 			} catch (NotLikedYetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.log(Level.INFO, e.getMessage(), e);
 			}
 			error_message = SUCESS_UNLIKED_POST;
-			sucess = true;
+			sucess = Boolean.TRUE;
 		}
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
@@ -461,8 +461,7 @@ public class FeedViewController {
 			try {
 				postService.newReshare(post, author);
 			} catch (InstanceNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.log(Level.INFO, e.getMessage(), e);
 			}
 			error_message = SUCESS_RESHARE_POST;
 			sucess = true;

@@ -221,6 +221,8 @@ public class LikesServiceUnitTest {
 		Likes likeT1 = likesService.newLikes(userA, postA1);
 
 		Mockito.when(likesRepository.findLikesById(likeT1.getLikes_id())).thenReturn(likeT1);
+		Mockito.when(likesRepository.findLikesByUserAndPost(userA, postA1)).thenReturn(likeT1);
+
 
 		likesService.deleteUserPostLikes(userA, postA1);
 
