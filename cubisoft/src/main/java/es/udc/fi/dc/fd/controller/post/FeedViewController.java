@@ -563,7 +563,7 @@ public class FeedViewController {
 			@RequestParam String newContent, final ModelMap model, Principal userAuthenticated, HttpSession session) {
 
 		String error_message = "";
-		Boolean sucess = false;
+		Boolean sucess = Boolean.FALSE;
 		Comment c = commentService.findCommentByCommentId(modifyCommentId);
 
 		// Modifies the comment in DB
@@ -571,7 +571,7 @@ public class FeedViewController {
 			c.setText(newContent);
 			commentService.save(c);
 			error_message = SUCESS_EDITED_COMMENT;
-			sucess = true;
+			sucess = Boolean.TRUE;
 		}
 
 		// Devolvemos el mensaje
@@ -602,7 +602,7 @@ public class FeedViewController {
 			final ModelMap model, Principal userAuthenticated, HttpSession session) {
 
 		String error_message = "";
-		Boolean sucess = false;
+		Boolean sucess = Boolean.FALSE;
 		Comment comment = commentRepository.findById(deleteCommentId).get();
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 
@@ -615,7 +615,7 @@ public class FeedViewController {
 			// Remove it from our DB
 			commentService.delete(comment);
 			error_message = SUCESS_DELETED_COMMENT;
-			sucess = true;
+			sucess = Boolean.TRUE;
 		}
 
 		// We return the message
