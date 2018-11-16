@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Optional;
@@ -43,6 +44,9 @@ public class PictureServiceUnitTest {
 
 	@Mock
 	private UserProfileRepository userProfileRepository;
+
+	@Mock
+	private Principal principal;
 
 	@InjectMocks
 	private PictureService pictureService;

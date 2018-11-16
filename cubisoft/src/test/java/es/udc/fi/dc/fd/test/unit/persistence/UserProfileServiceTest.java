@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import es.udc.fi.dc.fd.config.SecurityConfig;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
@@ -35,10 +44,26 @@ public class UserProfileServiceTest {
 	@Mock
 	private UserProfileRepository userProfileRepository;
 
+	@Mock
+	private PasswordEncoder passwordEncoder;
+
 	@InjectMocks
 	private UserProfileService userProfileService;
 
 	private UserProfile userA, userB, userC;
+
+	private User createUser(UserProfile account) {
+		return new User(account.getEmail(), account.getPassword(), Collections.singleton(createAuthority()));
+	}
+
+	private Authentication authenticate(UserProfile account) {
+		return new UsernamePasswordAuthenticationToken(createUser(account), null,
+				Collections.singleton(createAuthority()));
+	}
+
+	private GrantedAuthority createAuthority() {
+		return new SimpleGrantedAuthority(SecurityConfig.DEFAULT_ROLE);
+	}
 
 	@Before
 	public void initialize() {
@@ -53,6 +78,43 @@ public class UserProfileServiceTest {
 		userC = new UserProfile(TEST_LOGIN, "11" + TEST_FIRSTNAME + "11", TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL,
 				null, null, UserType.PUBLIC);
 		userC.setUser_id(3L);
+
+	}
+
+	@Test
+	public void SaveUserTest() {
+
+		Mockito.when(userProfileRepository.save(userA)).thenReturn(userA);
+
+		userA.setPassword(passwordEncoder.encode(userA.getPassword()));
+		assertThat(userProfileService.save(userA), is(equalTo(userA)));
+
+	}
+
+	@Test
+	public void loadUserByUsernameTest() {
+
+		Mockito.when(userProfileRepository.findOneByEmail(userA.getEmail())).thenReturn(userA);
+		User expected = createUser(userA);
+
+		assertThat(userProfileService.loadUserByUsername(userA.getEmail()), is(equalTo(expected)));
+
+	}
+
+	@Test
+	public void ValidateUserTest() {
+
+		Mockito.when(userProfileRepository.findOneByEmail(userA.getEmail())).thenReturn(userA);
+
+		assertThat(userProfileService.validateUser(userA.getEmail(), userA.getPassword()), is(equalTo(userA)));
+
+	}
+
+	@Test
+	public void SignInTest() {
+
+		userProfileService.signin(userA);
+		assertThat(SecurityContextHolder.getContext().getAuthentication(), is(equalTo(authenticate(userA))));
 
 	}
 
