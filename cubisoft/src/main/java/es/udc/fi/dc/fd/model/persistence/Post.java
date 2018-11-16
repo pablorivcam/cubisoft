@@ -17,27 +17,20 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Post {
-
 	/** The post id. */
 	private Long post_id = -1L;
-
 	/** The date. */
 	private Calendar date;
-
 	/** The picture. */
 	private Picture picture;
-
 	/** The user. */
 	private UserProfile user;
-
 	/** The views. */
 	private Long views;
-
 	/** The number of likes. */
 	private Long number_of_likes;
-	
-	private Long anonymousViews;
 
+	private Long anonymousViews;
 	/** The reshare status. */
 	private Boolean reshare;
 
@@ -63,7 +56,8 @@ public class Post {
 	 * @param reshare
 	 *            the reshare
 	 */
-	public Post(Calendar date, Picture picture, UserProfile user, Long views, Long number_of_likes,Long anonymousViews, Boolean reshare) {
+	public Post(Calendar date, Picture picture, UserProfile user, Long views, Long number_of_likes, Long anonymousViews,
+			Boolean reshare) {
 		this.date = date;
 		this.picture = picture;
 		this.user = user;
@@ -72,7 +66,6 @@ public class Post {
 		this.anonymousViews = anonymousViews;
 		this.reshare = reshare;
 		date.set(Calendar.MILLISECOND, 0);
-
 	}
 
 	/**
@@ -194,7 +187,7 @@ public class Post {
 	public void setNumber_of_likes(Long number_of_likes) {
 		this.number_of_likes = number_of_likes;
 	}
-	
+
 	/**
 	 * Gets the anonymous Views.
 	 *
@@ -230,5 +223,4 @@ public class Post {
 	public void setReshare(Boolean reshare) {
 		this.reshare = reshare;
 	}
-
 }

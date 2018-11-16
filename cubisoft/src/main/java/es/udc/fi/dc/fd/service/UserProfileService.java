@@ -30,11 +30,9 @@ import es.udc.fi.dc.fd.repository.UserProfileRepository;
 @Service
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserProfileService implements UserDetailsService {
-
 	/** The user profile repository. */
 	@Autowired
 	private UserProfileRepository userProfileRepository;
-
 	/** The password encoder. */
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -83,14 +81,11 @@ public class UserProfileService implements UserDetailsService {
 	}
 
 	public ArrayList<UserProfile> findUserProfileByKeywords(String keywords) {
-		return new ArrayList<UserProfile>(
-				userProfileRepository.findUserProfileByKeywords(keywords));
+		return new ArrayList<UserProfile>(userProfileRepository.findUserProfileByKeywords(keywords));
 	}
 
 	public UserProfile changeUserProfileType(UserProfile account, UserType userType) {
-
 		account.setUserType(userType);
-
 		return userProfileRepository.save(account);
 	}
 }
