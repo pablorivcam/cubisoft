@@ -38,7 +38,7 @@ public class RequestListViewController {
 	@Autowired
 	private UserProfileRepository userProfileRepository;
 
-	private Logger logger;
+	private final static Logger logger = Logger.getLogger(RequestListViewController.class.getName());
 
 	@Autowired
 	public RequestListViewController(final FollowService service) {

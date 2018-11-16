@@ -7,7 +7,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.udc.fi.dc.fd.controller.post.FeedViewController;
 import es.udc.fi.dc.fd.controller.post.PostViewConstants;
 import es.udc.fi.dc.fd.model.form.MultipartFileValidator;
 import es.udc.fi.dc.fd.model.form.UploadPictureForm;
@@ -58,6 +62,9 @@ public class PictureUploaderController {
 
 	@Autowired
 	private UserProfileRepository userProfileRepository;
+	
+	private final static Logger logger = Logger.getLogger(PictureUploaderController.class.getName());
+
 
 	public PictureUploaderController() {
 	}
@@ -178,7 +185,7 @@ public class PictureUploaderController {
 				postService.save(post);
 
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.log(Level.INFO, e.getMessage(), e);		
 			}
 		}
 

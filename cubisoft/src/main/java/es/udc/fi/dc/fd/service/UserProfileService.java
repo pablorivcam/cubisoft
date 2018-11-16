@@ -83,9 +83,8 @@ public class UserProfileService implements UserDetailsService {
 	}
 
 	public ArrayList<UserProfile> findUserProfileByKeywords(String keywords) {
-		ArrayList<UserProfile> lista = new ArrayList<UserProfile>(
+		return new ArrayList<UserProfile>(
 				userProfileRepository.findUserProfileByKeywords(keywords));
-		return lista;
 	}
 
 	public UserProfile changeUserProfileType(UserProfile account, UserType userType) {

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.udc.fi.dc.fd.controller.follow.RequestListViewController;
 import es.udc.fi.dc.fd.controller.picture.PictureUploaderController;
 import es.udc.fi.dc.fd.model.persistence.Comment;
 import es.udc.fi.dc.fd.model.persistence.Picture;
@@ -107,7 +108,7 @@ public class FeedViewController {
 	@Autowired
 	private CommentService commentService;
 	
-	private Logger logger;
+	private final static Logger logger = Logger.getLogger(FeedViewController.class.getName());
 
 	@Autowired
 	public FeedViewController(final PostService service, final PictureService servicePicture,
@@ -241,7 +242,7 @@ public class FeedViewController {
 			@RequestParam String description, final ModelMap model, Principal userAuthenticated, HttpSession session) {
 
 		String error_message = "";
-		Boolean sucess = false;
+		Boolean sucess = Boolean.FALSE;
 		Picture p = pictureRepository.findById(modifyId).get();
 
 		// FIXME: de esta manera si modificamos una imagen desde el perfil de
@@ -253,7 +254,7 @@ public class FeedViewController {
 		p.setDescription(description);
 		pictureService.save(p);
 		error_message = SUCESS_EDITED_PICTURE;
-		sucess = true;
+		sucess = Boolean.TRUE;
 
 		// Devolvemos el mensaje
 		model.put("error_message", error_message);
@@ -353,7 +354,7 @@ public class FeedViewController {
 		Post post = postRepository.findById(postId).get();
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 		String error_message = "";
-		boolean sucess = Boolean.FALSE;
+		Boolean sucess = Boolean.FALSE;
 
 		if (post == null) {
 			error_message = POST_NOT_FOUND_ERROR;
@@ -403,7 +404,7 @@ public class FeedViewController {
 		Post post = postRepository.findById(postId).get();
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 		String error_message = "";
-		boolean sucess = Boolean.FALSE;
+		Boolean sucess = Boolean.FALSE;
 
 		if (post == null) {
 			error_message = POST_NOT_FOUND_ERROR;
@@ -451,7 +452,7 @@ public class FeedViewController {
 		Post post = postRepository.findById(postId).get();
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 		String error_message = "";
-		boolean sucess = false;
+		Boolean sucess = Boolean.FALSE;
 
 		if (post == null) {
 			error_message = POST_NOT_FOUND_ERROR;
@@ -464,7 +465,7 @@ public class FeedViewController {
 				logger.log(Level.INFO, e.getMessage(), e);
 			}
 			error_message = SUCESS_RESHARE_POST;
-			sucess = true;
+			sucess = Boolean.TRUE;
 		}
 		model.put("currentUser", author);
 		model.put("likesService", likesService);

@@ -41,7 +41,7 @@ public class SignInForm implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		return result = prime * result + ((password == null) ? 0 : password.hashCode());
+		return prime * result + ((password == null) ? 0 : password.hashCode());
 	}
 
 	@Override
