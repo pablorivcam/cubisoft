@@ -451,7 +451,7 @@ public class FeedViewController {
 		Post post = postRepository.findById(postId).get();
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 		String error_message = "";
-		Boolean sucess = false;
+		boolean sucess = false;
 
 		if (post == null) {
 			error_message = POST_NOT_FOUND_ERROR;

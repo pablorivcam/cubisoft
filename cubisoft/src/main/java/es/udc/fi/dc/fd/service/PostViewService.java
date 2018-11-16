@@ -93,7 +93,6 @@ public class PostViewService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
 	public List<PostView> findPostsViews(List<Post> posts) throws InstanceNotFoundException {
 		List<PostView> viewsPosts = new ArrayList<PostView>();
 

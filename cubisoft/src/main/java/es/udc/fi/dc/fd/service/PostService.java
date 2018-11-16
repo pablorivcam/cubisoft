@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
-import es.udc.fi.dc.fd.repository.CommentRepository;
 import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
@@ -30,9 +29,6 @@ public class PostService {
 	private PostRepository postRepository;
 
 	@Autowired
-	private CommentRepository commentRepository;
-
-	@Autowired
 	private UserProfileRepository userProfileRepository;
 
 	/**
@@ -44,8 +40,7 @@ public class PostService {
 	 */
 	@Transactional
 	public Post save(Post post) {
-		Post p = postRepository.save(post);
-		return p;
+		return postRepository.save(post);
 	}
 
 	/**
@@ -57,7 +52,6 @@ public class PostService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
 	public List<Post> findUserFollowsPosts(UserProfile user) throws InstanceNotFoundException {
 
 		if (user == null) {

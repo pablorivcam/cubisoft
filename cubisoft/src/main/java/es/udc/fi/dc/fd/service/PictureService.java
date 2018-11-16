@@ -38,8 +38,7 @@ public class PictureService {
 	 */
 	@Transactional
 	public Picture save(Picture picture) {
-		Picture p = pictureRepository.save(picture);
-		return p;
+		return pictureRepository.save(picture);
 	}
 
 	/**
