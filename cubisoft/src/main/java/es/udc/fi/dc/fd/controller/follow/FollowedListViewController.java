@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.udc.fi.dc.fd.controller.post.FeedViewController;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.FollowService;
@@ -30,7 +31,7 @@ public class FollowedListViewController {
 	@Autowired
 	private UserProfileRepository userProfileRepository;
 	
-	private Logger logger;
+	private final static Logger logger = Logger.getLogger(FollowedListViewController.class.getName());
 
 	@Autowired
 	public FollowedListViewController(final FollowService service) {
