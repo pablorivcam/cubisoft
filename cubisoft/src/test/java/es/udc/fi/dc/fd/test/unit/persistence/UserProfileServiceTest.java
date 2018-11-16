@@ -21,6 +21,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import es.udc.fi.dc.fd.config.SecurityConfig;
@@ -98,6 +99,15 @@ public class UserProfileServiceTest {
 		User expected = createUser(userA);
 
 		assertThat(userProfileService.loadUserByUsername(userA.getEmail()), is(equalTo(expected)));
+
+	}
+	
+	@Test(expected = UsernameNotFoundException.class)
+	public void loadUserByNullUsernameTest() throws UsernameNotFoundException{
+
+		Mockito.when(userProfileRepository.findOneByEmail(userA.getEmail())).thenReturn(null);
+
+		assertThat(userProfileService.loadUserByUsername(userA.getEmail()), is(equalTo(null)));
 
 	}
 

@@ -79,6 +79,7 @@ public class CommentServiceUnitTest {
 	public void saveCommentTest() {
 		Mockito.when(commentRepository.save(commentA)).thenReturn(commentA);
 		assertEquals(commentService.save(commentA), commentA);
+		commentService.delete(commentA);
 	}
 
 	@Test

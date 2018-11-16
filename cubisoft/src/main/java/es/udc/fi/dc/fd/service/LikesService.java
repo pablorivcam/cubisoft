@@ -34,10 +34,10 @@ public class LikesService {
 	private static final Logger logger = Logger.getLogger(PictureService.class.getName());
 
 
-	@Transactional
+	/*@Transactional
 	public Likes save(Likes likes) {
 		return likesRepository.save(likes);
-	}
+	}*/
 
 	/**
 	 * Method that allows an user to like some existing post.
@@ -245,7 +245,7 @@ public class LikesService {
 	 *             the instance not found exception
 	 * @throws NotLikedYetException
 	 */
-	@Transactional(rollbackFor = InstanceNotFoundException.class)
+	@Transactional(noRollbackFor = InstanceNotFoundException.class)
 	public String unlikePost(Long postId, String authorEmail) throws InstanceNotFoundException, NotLikedYetException {
 
 		if (!userProfileRepository.exists(authorEmail)) {
