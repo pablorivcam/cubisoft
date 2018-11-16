@@ -1,0 +1,60 @@
+# Usage
+
+The project requires a database and a server. But the included Maven profiles allow running it locally for development.
+
+## Running the project locally
+
+To run the project locally in Jetty with an H2 in-memory database:
+
+```
+$ mvn jetty:run-war -P h2,jetty
+```
+Note: upload images service is unavaliable with this option.
+
+An embedded Tomcat can be used through this other profile:
+
+```
+$ mvn tomcat7:run-war -P h2,tomcat7
+```
+
+For make the upload images service avaliable you need to add this configuration to your tomcat's context.xml:
+```
+<Context allowCasualMultipartParsing="true" path="/">
+
+	<ResourceLink global="jdbc/pojo-examples-ds" name="jdbc/pojo-examples-ds" type="javax.sql.DataSource"/>
+
+    <ResourceLink global="jdbc/ws-javaexamples-ds" name="jdbc/ws-javaexamples-ds" type="javax.sql.DataSource"/>
+    <!-- Default set of monitored resources. If one of these changes, the    -->
+    <!-- web application will be reloaded.                                   -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+
+     <Resources
+        cachingAllowed="true"
+        cacheMaxSize="100000"
+    />
+
+    <Resources cachingAllowed="true" cacheMaxSize="100000" />
+
+
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="" />
+    -->
+</Context>
+```
+This makes the project be accessible at [http://localhost:8080/](http://localhost:8080/).
+
+## Maven profiles
+
+| Profile  | Database              |
+|----------|-----------------------|
+| h2       | H2 in-memory database |
+| mysql    | MySQL database        |
+| postgres | PostgreSQL database   |
+
+| Profile  | Server                   |
+|----------|--------------------------|
+| jetty    | Jetty embedded server    |
+| tomcat7  | Tomcat 7 embedded server |
+
