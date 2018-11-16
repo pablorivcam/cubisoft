@@ -6,6 +6,8 @@ package es.udc.fi.dc.fd.controller.follow;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.security.Principal;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.management.InstanceNotFoundException;
 
@@ -35,6 +37,8 @@ public class RequestListViewController {
 
 	@Autowired
 	private UserProfileRepository userProfileRepository;
+
+	private Logger logger;
 
 	@Autowired
 	public RequestListViewController(final FollowService service) {
@@ -75,9 +79,10 @@ public class RequestListViewController {
 		try {
 			model.put(FollowViewConstants.PARAM_REQUEST, followService.findFollowsPending(user));
 		} catch (InstanceNotFoundException e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, e.getMessage(), e);
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, e.getMessage(), e);
+
 		}
 	}
 
@@ -86,7 +91,7 @@ public class RequestListViewController {
 
 		Follow follow = followRepository.getOne(follow_id);
 
-		followService.processPendingFollows(follow, true);
+		followService.processPendingFollows(follow, Boolean.TRUE);
 
 		loadViewModel(model, userAuthenticated);
 
@@ -98,7 +103,7 @@ public class RequestListViewController {
 
 		Follow follow = followRepository.getOne(follow_id);
 
-		followService.processPendingFollows(follow, false);
+		followService.processPendingFollows(follow, Boolean.FALSE);
 
 		loadViewModel(model, userAuthenticated);
 

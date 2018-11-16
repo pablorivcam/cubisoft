@@ -279,7 +279,7 @@ public class FeedViewController {
 			Principal userAuthenticated, HttpSession session) {
 
 		String error_message = "";
-		Boolean sucess = false;
+		Boolean sucess = Boolean.FALSE;
 		Post post = postRepository.findById(postId).get();
 		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 
@@ -313,7 +313,7 @@ public class FeedViewController {
 
 			if (!error_message.equals("")) {
 				error_message = SUCESS_DELETED_POST;
-				sucess = true;
+				sucess = Boolean.TRUE;
 			}
 		}
 

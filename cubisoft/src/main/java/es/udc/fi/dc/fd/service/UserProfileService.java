@@ -62,8 +62,7 @@ public class UserProfileService implements UserDetailsService {
 	}
 
 	public UserProfile validateUser(String email, String password) {
-		UserProfile account = userProfileRepository.findOneByEmail(email);
-		return account;
+		return userProfileRepository.findOneByEmail(email);
 	}
 
 	public void signin(UserProfile account) {
