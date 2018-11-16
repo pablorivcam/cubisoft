@@ -145,6 +145,7 @@ public class PostService {
 	 */
 	@Transactional(noRollbackFor = Exception.class)
 	public Post newReshare(Post post, UserProfile user) throws InstanceNotFoundException {
+		//TODO falta comprobar que el post no sea null o que no exista
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null");
 		}
