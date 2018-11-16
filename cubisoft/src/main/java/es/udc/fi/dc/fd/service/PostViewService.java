@@ -89,10 +89,10 @@ public class PostViewService {
 	 * @param posts
 	 *            the posts
 	 * @return the list
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
+	 * @throws NullPointerException
+	 *             the null pointer exception
 	 */
-	public List<PostView> findPostsViews(List<Post> posts) throws InstanceNotFoundException {
+	public List<PostView> findPostsViews(List<Post> posts) throws NullPointerException {
 		List<PostView> viewsPosts = new ArrayList<PostView>();
 
 		if (posts == null) {

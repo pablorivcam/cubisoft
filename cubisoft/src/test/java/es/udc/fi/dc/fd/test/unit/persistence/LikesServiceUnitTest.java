@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Optional;
 
 import javax.management.InstanceNotFoundException;
 
@@ -17,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import es.udc.fi.dc.fd.controller.post.FeedViewController;
 import es.udc.fi.dc.fd.model.persistence.Likes;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
@@ -70,7 +72,7 @@ public class LikesServiceUnitTest {
 
 		picture = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA);
 
-		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0,(long) 0, false);
+		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0, (long) 0, false);
 
 		like1 = new Likes(userA, postA1);
 		like2 = new Likes(userB, postA1);
@@ -223,7 +225,6 @@ public class LikesServiceUnitTest {
 		Mockito.when(likesRepository.findLikesById(likeT1.getLikes_id())).thenReturn(likeT1);
 		Mockito.when(likesRepository.findLikesByUserAndPost(userA, postA1)).thenReturn(likeT1);
 
-
 		likesService.deleteUserPostLikes(userA, postA1);
 
 		Mockito.when(likesRepository.findLikesById(likeT1.getLikes_id())).thenReturn(null);
@@ -253,4 +254,88 @@ public class LikesServiceUnitTest {
 
 	}
 
+	@Test
+	public void likePostTest() throws InstanceNotFoundException {
+
+		Post p2 = new Post();
+		p2.setPost_id(235L);
+
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+		Mockito.when(postRepository.existsById(postA1.getPost_id())).thenReturn(true);
+
+		Mockito.when(postRepository.findById(postA1.getPost_id())).thenReturn(Optional.of(postA1));
+		Mockito.when(userProfileRepository.findOneByEmail(TEST_EMAIL)).thenReturn(userA);
+
+		Mockito.when(postRepository.existsById(p2.getPost_id())).thenReturn(true);
+		Mockito.when(postRepository.findById(p2.getPost_id())).thenReturn(Optional.of(p2));
+		Mockito.when(likesRepository.findLikesByUserAndPost(userA, p2)).thenReturn(like1);
+
+		assertThat(likesService.likePost(postA1.getPost_id(), TEST_EMAIL),
+				is(equalTo(FeedViewController.SUCESS_LIKED_POST)));
+
+		assertThat(likesService.likePost(p2.getPost_id(), TEST_EMAIL),
+				is(equalTo(FeedViewController.ALREADY_LIKED_POST_ERROR)));
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void likeUnexistentPostTest() throws InstanceNotFoundException {
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+		Mockito.when(postRepository.existsById(postA1.getPost_id())).thenReturn(false);
+
+		assertThat(likesService.likePost(postA1.getPost_id(), TEST_EMAIL),
+				is(equalTo(FeedViewController.SUCESS_LIKED_POST)));
+
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void likePostWithUnexistentUserTest() throws InstanceNotFoundException {
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(false);
+
+		assertThat(likesService.likePost(postA1.getPost_id(), TEST_EMAIL),
+				is(equalTo(FeedViewController.SUCESS_LIKED_POST)));
+
+	}
+
+	@Test
+	public void unlikePostTest() throws InstanceNotFoundException, NotLikedYetException {
+
+		Post p2 = new Post();
+		p2.setPost_id(235L);
+
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+		Mockito.when(postRepository.existsById(postA1.getPost_id())).thenReturn(true);
+
+		Mockito.when(postRepository.findById(postA1.getPost_id())).thenReturn(Optional.of(postA1));
+		Mockito.when(userProfileRepository.findOneByEmail(TEST_EMAIL)).thenReturn(userA);
+
+		Mockito.when(postRepository.existsById(p2.getPost_id())).thenReturn(true);
+
+		Mockito.when(postRepository.findById(p2.getPost_id())).thenReturn(Optional.of(p2));
+		Mockito.when(likesRepository.findLikesByUserAndPost(userA, postA1)).thenReturn(like1);
+
+		assertThat(likesService.unlikePost(postA1.getPost_id(), TEST_EMAIL),
+				is(equalTo(FeedViewController.SUCESS_UNLIKED_POST)));
+
+		assertThat(likesService.unlikePost(p2.getPost_id(), TEST_EMAIL),
+				is(equalTo(FeedViewController.POST_NOT_LIKED_YET_ERROR)));
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void unlikeUnexistentPostTest() throws InstanceNotFoundException, NotLikedYetException {
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+		Mockito.when(postRepository.existsById(postA1.getPost_id())).thenReturn(false);
+
+		assertThat(likesService.unlikePost(postA1.getPost_id(), TEST_EMAIL),
+				is(equalTo(FeedViewController.SUCESS_LIKED_POST)));
+
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void unlikePostWithUnexistentUserTest() throws InstanceNotFoundException, NotLikedYetException {
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(false);
+
+		assertThat(likesService.unlikePost(postA1.getPost_id(), TEST_EMAIL),
+				is(equalTo(FeedViewController.SUCESS_LIKED_POST)));
+
+	}
 }

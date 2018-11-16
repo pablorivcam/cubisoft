@@ -1,9 +1,15 @@
 package es.udc.fi.dc.fd.test.unit.persistence;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Optional;
+
+import javax.management.InstanceNotFoundException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +28,8 @@ import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.CommentRepository;
+import es.udc.fi.dc.fd.repository.PostRepository;
+import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.CommentService;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -37,6 +45,12 @@ public class CommentServiceUnitTest {
 
 	@Mock
 	private CommentRepository commentRepository;
+
+	@Mock
+	private UserProfileRepository userProfileRepository;
+
+	@Mock
+	private PostRepository postRepository;
 
 	@InjectMocks
 	private CommentService commentService;
@@ -142,5 +156,100 @@ public class CommentServiceUnitTest {
 	@Test(expected = NullPointerException.class)
 	public void findParentCommentsByUnexistentPostTest() {
 		Mockito.when(commentService.findPostParentComments(null, 0, 0)).thenReturn(null);
+	}
+
+	@Test
+	public void addCommentTest() throws InstanceNotFoundException {
+
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+		Mockito.when(userProfileRepository.findOneByEmail(TEST_EMAIL)).thenReturn(userA);
+
+		Mockito.when(postRepository.existsById(postA.getPost_id())).thenReturn(true);
+		Mockito.when(postRepository.findPostByPostId(postA.getPost_id())).thenReturn(postA);
+
+		assertThat(commentService.addComment(TEST_TEXT, postA.getPost_id(), TEST_EMAIL), is(equalTo(null)));
+
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void addCommentWithUnexistentUserTest() throws InstanceNotFoundException {
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL + "123")).thenReturn(false);
+
+		assertThat(commentService.addComment(TEST_TEXT, postA.getPost_id(), TEST_EMAIL + "123"), is(equalTo(null)));
+
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void addCommentWithUnexistentPostTest() throws InstanceNotFoundException {
+
+		Post p = new Post();
+
+		Mockito.when(postRepository.existsById(p.getPost_id())).thenReturn(false);
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+
+		assertThat(commentService.addComment(TEST_TEXT, p.getPost_id(), TEST_EMAIL), is(equalTo(null)));
+
+	}
+
+	@Test
+	public void modifyCommentTest() throws InstanceNotFoundException {
+		Comment c = new Comment();
+
+		Mockito.when(commentRepository.existsById(c.getComment_id())).thenReturn(true);
+		Mockito.when(commentRepository.save(c)).thenReturn(c);
+
+		Mockito.when(commentRepository.findById(c.getComment_id())).thenReturn(Optional.of(c));
+
+		assertThat(commentService.modifyComment(c.getComment_id(), TEST_TEXT), is(equalTo(c)));
+
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void modifyUnexistentCommentTest() throws InstanceNotFoundException {
+		Comment c = new Comment();
+
+		Mockito.when(commentRepository.existsById(c.getComment_id())).thenReturn(false);
+
+		assertThat(commentService.modifyComment(c.getComment_id(), TEST_TEXT), is(equalTo(null)));
+
+	}
+
+	@Test
+	public void replyCommentTest() throws InstanceNotFoundException {
+
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+		Mockito.when(userProfileRepository.findOneByEmail(TEST_EMAIL)).thenReturn(userA);
+
+		Mockito.when(commentRepository.existsById(commentA.getComment_id())).thenReturn(true);
+		Mockito.when(commentRepository.findById(commentA.getComment_id())).thenReturn(Optional.of(commentA));
+
+		assertThat(commentService.replyComment(commentA.getComment_id(), TEST_TEXT, userA.getEmail(),
+				Calendar.getInstance()), is(equalTo(null)));
+
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void replyUnexistentCommentTest() throws InstanceNotFoundException {
+
+		Comment c = new Comment();
+
+		Mockito.when(commentRepository.existsById(c.getComment_id())).thenReturn(false);
+
+		assertThat(commentService.replyComment(c.getComment_id(), TEST_TEXT, userA.getEmail(), Calendar.getInstance()),
+				is(equalTo(null)));
+
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void replyUnexistentUserTest() throws InstanceNotFoundException {
+
+		Comment c = new Comment();
+
+		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(false);
+		Mockito.when(commentRepository.existsById(commentA.getComment_id())).thenReturn(true);
+
+		assertThat(commentService.replyComment(c.getComment_id(), TEST_TEXT, userA.getEmail(), Calendar.getInstance()),
+				is(equalTo(null)));
+
 	}
 }

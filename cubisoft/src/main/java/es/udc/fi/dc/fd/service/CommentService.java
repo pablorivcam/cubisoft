@@ -3,6 +3,8 @@ package es.udc.fi.dc.fd.service;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.management.InstanceNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -15,6 +17,8 @@ import es.udc.fi.dc.fd.model.persistence.Comment;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.repository.CommentRepository;
+import es.udc.fi.dc.fd.repository.PostRepository;
+import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
 @Service
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -23,6 +27,12 @@ public class CommentService {
 	/** The comment repository. */
 	@Autowired
 	private CommentRepository commentRepository;
+
+	@Autowired
+	private UserProfileRepository userProfileRepository;
+
+	@Autowired
+	private PostRepository postRepository;
 
 	/**
 	 * Method that adds or updates a comment into the database.
@@ -120,18 +130,92 @@ public class CommentService {
 	/**
 	 * Replies a comment with annother comment.
 	 *
-	 * @param comment
-	 *            the comment that an user whats to reply.
+	 * @param commentId
+	 *            the comment id
 	 * @param text
 	 *            the text of the reply.
-	 * @param user
-	 *            the user that makes the reply.
+	 * @param userName
+	 *            the user name
 	 * @param date
 	 *            the date of the reply.
 	 * @return the comment generated for the reply.
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
 	 */
 	@Transactional
-	public Comment replyComment(Comment comment, String text, UserProfile user, Calendar date) {
+	public Comment replyComment(Long commentId, String text, String userName, Calendar date)
+			throws InstanceNotFoundException {
+
+		if (!commentRepository.existsById(commentId)) {
+			throw new InstanceNotFoundException("That post with that id doesn't exists.");
+		}
+
+		if (!userProfileRepository.exists(userName)) {
+			throw new InstanceNotFoundException("That user doesn't exists.");
+		}
+
+		Comment comment = findCommentByCommentId(commentId);
+
+		UserProfile user = userProfileRepository.findOneByEmail(userName);
+
 		return save(new Comment(text, date, comment.getPost(), user, comment));
+	}
+
+	/**
+	 * Adds the comment.
+	 *
+	 * @param text
+	 *            the text
+	 * @param postId
+	 *            the post id
+	 * @param authorEmail
+	 *            the author email
+	 * @return the comment
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	@Transactional
+	public Comment addComment(String text, Long postId, String authorEmail) throws InstanceNotFoundException {
+
+		if (!userProfileRepository.exists(authorEmail)) {
+			throw new InstanceNotFoundException("That user doesn't exists.");
+		}
+
+		if (!postRepository.existsById(postId)) {
+			throw new InstanceNotFoundException("That post with that id doesn't exists.");
+		}
+
+		UserProfile author = userProfileRepository.findOneByEmail(authorEmail);
+		Post p = postRepository.findPostByPostId(postId);
+
+		Comment c = new Comment(text, Calendar.getInstance(), p, author, null);
+		return save(c);
+
+	}
+
+	/**
+	 * Modify comment.
+	 *
+	 * @param commentId
+	 *            the comment id
+	 * @param newContent
+	 *            the new content of the comment
+	 * @return the comment
+	 */
+	@Transactional
+	public Comment modifyComment(Long commentId, String newContent) throws InstanceNotFoundException {
+
+		if (!commentRepository.existsById(commentId)) {
+			throw new InstanceNotFoundException("That post with that id doesn't exists.");
+		}
+
+		Comment c = findCommentByCommentId(commentId);
+
+		if (c != null) {
+			c.setText(newContent);
+			return save(c);
+		}
+
+		return null;
 	}
 }

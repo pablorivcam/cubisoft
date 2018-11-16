@@ -21,18 +21,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import es.udc.fi.dc.fd.controller.follow.RequestListViewController;
 import es.udc.fi.dc.fd.controller.picture.PictureUploaderController;
 import es.udc.fi.dc.fd.model.persistence.Comment;
-import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.PostView;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.repository.CommentRepository;
-import es.udc.fi.dc.fd.repository.PictureRepository;
 import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
-import es.udc.fi.dc.fd.service.AlreadyLikedException;
 import es.udc.fi.dc.fd.service.CommentService;
 import es.udc.fi.dc.fd.service.LikesService;
 import es.udc.fi.dc.fd.service.NotLikedYetException;
@@ -97,9 +93,6 @@ public class FeedViewController {
 	private UserProfileRepository userProfileRepository;
 
 	@Autowired
-	private PictureRepository pictureRepository;
-
-	@Autowired
 	private PostRepository postRepository;
 
 	@Autowired
@@ -107,7 +100,7 @@ public class FeedViewController {
 
 	@Autowired
 	private CommentService commentService;
-	
+
 	private final static Logger logger = Logger.getLogger(FeedViewController.class.getName());
 
 	@Autowired
@@ -214,9 +207,9 @@ public class FeedViewController {
 			model.put(PostViewConstants.PARAM_POSTVIEWS, getPostViewService().findPostsViews(posts));
 			model.put("commentService", commentService);
 		} catch (InstanceNotFoundException e) {
-			logger.log(Level.INFO, e.getMessage(), e);		
+			logger.log(Level.INFO, e.getMessage(), e);
 		} catch (NullPointerException e) {
-			logger.log(Level.INFO, e.getMessage(), e);		
+			logger.log(Level.INFO, e.getMessage(), e);
 		}
 	}
 
@@ -243,16 +236,13 @@ public class FeedViewController {
 
 		String error_message = "";
 		Boolean sucess = Boolean.FALSE;
-		Picture p = pictureRepository.findById(modifyId).get();
 
-		// FIXME: de esta manera si modificamos una imagen desde el perfil de
-		// otro
-		// usuario nos lleva al nuestro.
+		try {
+			pictureService.modifyPictureDescription(modifyId, description);
+		} catch (InstanceNotFoundException e) {
+			e.printStackTrace();
+		}
 
-		// Modificamos la descripcion de la imagen en la BD
-		// pictureService.modifyPicture(p, pictureDescription);
-		p.setDescription(description);
-		pictureService.save(p);
 		error_message = SUCESS_EDITED_PICTURE;
 		sucess = Boolean.TRUE;
 
@@ -351,30 +341,16 @@ public class FeedViewController {
 	public final String likePost(@RequestParam String view, @RequestParam Long postId, final ModelMap model,
 			Principal userAuthenticated, HttpSession session) {
 
-		Post post = postRepository.findById(postId).get();
-		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 		String error_message = "";
-		Boolean sucess = Boolean.FALSE;
 
-		if (post == null) {
-			error_message = POST_NOT_FOUND_ERROR;
-		} else if (author == null) {
-			error_message = USER_NOT_FOUND_ERROR;
-		} else if (likesService.existLikes(author, post)) {
-			error_message = ALREADY_LIKED_POST_ERROR;
-		} else {
-			try {
-				likesService.newLikes(author, post);
-				post.setNumber_of_likes(post.getNumber_of_likes() + 1);
-				postService.save(post);
-			} catch (InstanceNotFoundException e) {
-				logger.log(Level.INFO, e.getMessage(), e);
-			} catch (AlreadyLikedException e) {
-				logger.log(Level.INFO, e.getMessage(), e);
-			}
-			error_message = SUCESS_LIKED_POST;
-			sucess = Boolean.TRUE;
+		try {
+			error_message = likesService.likePost(postId, userAuthenticated.getName());
+		} catch (InstanceNotFoundException e1) {
+			e1.printStackTrace();
 		}
+
+		Boolean sucess = error_message.equals(SUCESS_LIKED_POST);
+
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
 		loadViewModel(model, userAuthenticated, view, null);
@@ -401,30 +377,16 @@ public class FeedViewController {
 	public final String unlikePost(@RequestParam String view, @RequestParam Long postId, final ModelMap model,
 			Principal userAuthenticated, HttpSession session) {
 
-		Post post = postRepository.findById(postId).get();
-		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 		String error_message = "";
-		Boolean sucess = Boolean.FALSE;
-
-		if (post == null) {
-			error_message = POST_NOT_FOUND_ERROR;
-		} else if (author == null) {
-			error_message = USER_NOT_FOUND_ERROR;
-		} else if (!likesService.existLikes(author, post)) {
-			error_message = POST_NOT_LIKED_YET_ERROR;
-		} else {
-			try {
-				likesService.deleteUserPostLikes(author, post);
-				post.setNumber_of_likes(post.getNumber_of_likes() - 1);
-				postService.save(post);
-			} catch (InstanceNotFoundException e) {
-				logger.log(Level.INFO, e.getMessage(), e);
-			} catch (NotLikedYetException e) {
-				logger.log(Level.INFO, e.getMessage(), e);
-			}
-			error_message = SUCESS_UNLIKED_POST;
-			sucess = Boolean.TRUE;
+		try {
+			error_message = likesService.unlikePost(postId, userAuthenticated.getName());
+		} catch (InstanceNotFoundException e) {
+			e.printStackTrace();
+		} catch (NotLikedYetException e) {
+			e.printStackTrace();
 		}
+		Boolean sucess = error_message.equals(SUCESS_UNLIKED_POST);
+
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
 		loadViewModel(model, userAuthenticated, view, null);
@@ -495,15 +457,12 @@ public class FeedViewController {
 	public final String addComment(final ModelMap model, Principal userAuthenticated, @RequestParam String view,
 			@RequestParam Long postId, @RequestParam String text) {
 
-		Post p = postRepository.findById(postId).get();
-		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
-
-		if (p != null) {
-
-			Comment c = new Comment(text, Calendar.getInstance(), p, author, null);
-			commentService.save(c);
-
+		try {
+			commentService.addComment(text, postId, userAuthenticated.getName());
+		} catch (InstanceNotFoundException e) {
+			e.printStackTrace();
 		}
+
 		loadViewModel(model, userAuthenticated, view, null);
 
 		return view;
@@ -528,11 +487,10 @@ public class FeedViewController {
 	public final String replyComment(final ModelMap model, Principal userAuthenticated, @RequestParam String view,
 			@RequestParam Long commentId, @RequestParam String text) {
 
-		Comment c = commentService.findCommentByCommentId(commentId);
-		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
-
-		if (c != null) {
-			commentService.replyComment(c, text, author, Calendar.getInstance());
+		try {
+			commentService.replyComment(commentId, text, userAuthenticated.getName(), Calendar.getInstance());
+		} catch (InstanceNotFoundException e) {
+			e.printStackTrace();
 		}
 
 		loadViewModel(model, userAuthenticated, view, null);
@@ -563,18 +521,24 @@ public class FeedViewController {
 			@RequestParam String newContent, final ModelMap model, Principal userAuthenticated, HttpSession session) {
 
 		String error_message = "";
-		Boolean sucess = Boolean.FALSE;
-		Comment c = commentService.findCommentByCommentId(modifyCommentId);
+		boolean sucess = false;
+
+		Comment c = null;
+
+		try {
+			c = commentService.modifyComment(modifyCommentId, newContent);
+		} catch (InstanceNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// Modifies the comment in DB
 		if (c != null) {
-			c.setText(newContent);
-			commentService.save(c);
 			error_message = SUCESS_EDITED_COMMENT;
-			sucess = Boolean.TRUE;
+			sucess = true;
 		}
 
-		// Devolvemos el mensaje
+		// Return the message
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
 		loadViewModel(model, userAuthenticated, view, null);

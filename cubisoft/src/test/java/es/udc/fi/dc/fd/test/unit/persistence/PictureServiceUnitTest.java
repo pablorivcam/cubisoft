@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Optional;
 
 import javax.management.InstanceNotFoundException;
 
@@ -63,6 +64,9 @@ public class PictureServiceUnitTest {
 	@Test
 	public void getPicturesByAuthorTest() {
 
+		pictureService.save(pictureA);
+		pictureService.save(pictureB);
+
 		ArrayList<Picture> pictures = new ArrayList<>();
 		pictures.add(pictureA);
 		pictures.add(pictureB);
@@ -77,6 +81,9 @@ public class PictureServiceUnitTest {
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
+
+		pictureService.delete(pictureA);
+		pictureService.delete(pictureB);
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -87,6 +94,44 @@ public class PictureServiceUnitTest {
 	@Test(expected = InstanceNotFoundException.class)
 	public void getPicturesByUnexistentAuthorTest() throws InstanceNotFoundException {
 		assertThat(pictureService.getPicturesByAuthor(new UserProfile()), is(equalTo(null)));
+	}
+
+	@Test
+	public void getPicturesByDescriptionTest() {
+
+		pictureService.save(pictureA);
+		pictureService.save(pictureB);
+		ArrayList<Picture> pictures = new ArrayList<>();
+
+		pictures.add(pictureA);
+		pictures.add(pictureB);
+
+		Mockito.when(pictureRepository.findPicturesByDescription(pictureA.getDescription())).thenReturn(pictures);
+		assertThat(pictureService.getPicturesByDescription(pictureA.getDescription()), is(equalTo(pictures)));
+
+		pictureService.delete(pictureA);
+		pictureService.delete(pictureB);
+
+	}
+
+	@Test
+	public void modifyPictureDescriptionTest() throws InstanceNotFoundException {
+
+		Mockito.when(pictureRepository.existsById(pictureA.getPicture_id())).thenReturn(true);
+		Mockito.when(pictureRepository.findById(pictureA.getPicture_id())).thenReturn(Optional.of(pictureA));
+		Mockito.when(pictureRepository.save(pictureA)).thenReturn(pictureA);
+
+		assertThat(pictureService.modifyPictureDescription(pictureA.getPicture_id(), TEST_DESCRIPTION),
+				is(equalTo(pictureA)));
+
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void modifyUnexistentPictureDescriptionTest() throws InstanceNotFoundException {
+		Picture p = new Picture();
+		Mockito.when(pictureRepository.existsById(p.getPicture_id())).thenReturn(false);
+		assertThat(pictureService.modifyPictureDescription(p.getPicture_id(), TEST_DESCRIPTION), is(equalTo(null)));
+
 	}
 
 }
