@@ -35,8 +35,7 @@ public class PostViewService {
 	 */
 	@Transactional
 	public PostView save(PostView postView) {
-		PostView view = postViewRepository.save(postView);
-		return view;
+		return postViewRepository.save(postView);
 	}
 
 	/**
@@ -50,7 +49,7 @@ public class PostViewService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor = Exception.class)
 	public PostView findPostViewByPostUser(Post post, UserProfile user) throws InstanceNotFoundException {
 		if (post == null) {
 			throw new NullPointerException("The post param cannot be null.");
@@ -73,7 +72,7 @@ public class PostViewService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor = Exception.class)
 	public List<PostView> findPostView(Post post) throws InstanceNotFoundException {
 		if (post == null) {
 			throw new NullPointerException("The post param cannot be null.");
@@ -93,7 +92,6 @@ public class PostViewService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
 	public List<PostView> findPostsViews(List<Post> posts) throws InstanceNotFoundException {
 		List<PostView> viewsPosts = new ArrayList<PostView>();
 

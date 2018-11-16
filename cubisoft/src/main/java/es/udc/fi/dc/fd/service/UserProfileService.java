@@ -49,8 +49,7 @@ public class UserProfileService implements UserDetailsService {
 	@Transactional
 	public UserProfile save(UserProfile userProfile) {
 		userProfile.setPassword(passwordEncoder.encode(userProfile.getPassword()));
-		UserProfile p = userProfileRepository.save(userProfile);
-		return p;
+		return userProfileRepository.save(userProfile);
 	}
 
 	@Override
@@ -63,8 +62,7 @@ public class UserProfileService implements UserDetailsService {
 	}
 
 	public UserProfile validateUser(String email, String password) {
-		UserProfile account = userProfileRepository.findOneByEmail(email);
-		return account;
+		return userProfileRepository.findOneByEmail(email);
 	}
 
 	public void signin(UserProfile account) {
@@ -72,15 +70,15 @@ public class UserProfileService implements UserDetailsService {
 	}
 
 	private User createUser(UserProfile account) {
-		return new User(account.getEmail(), account.getPassword(), Collections.singleton(createAuthority(account)));
+		return new User(account.getEmail(), account.getPassword(), Collections.singleton(createAuthority()));
 	}
 
 	private Authentication authenticate(UserProfile account) {
 		return new UsernamePasswordAuthenticationToken(createUser(account), null,
-				Collections.singleton(createAuthority(account)));
+				Collections.singleton(createAuthority()));
 	}
 
-	private GrantedAuthority createAuthority(UserProfile account) {
+	private GrantedAuthority createAuthority() {
 		return new SimpleGrantedAuthority(SecurityConfig.DEFAULT_ROLE);
 	}
 

@@ -65,7 +65,7 @@ public class SettingsController {
 		List<Follow> follows = followRepository.findFollowsPending(user);
 
 		for (Follow follow : follows) {
-			followService.processPendingFollows(follow, true);
+			followService.processPendingFollows(follow, Boolean.TRUE);
 		}
 
 		loadViewModel(model, userAuthenticated);

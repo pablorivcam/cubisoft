@@ -67,10 +67,10 @@ public class FindUsersController {
 
 		if (!followService.isUserAFollowingUserB(currentUser, followed_user)) {
 			if (followed_user.getUserType() == UserType.PRIVATE) {
-				followService.follow(currentUser, followed_user, true);
+				followService.follow(currentUser, followed_user, Boolean.TRUE);
 
 			} else {
-				followService.follow(currentUser, followed_user, false);
+				followService.follow(currentUser, followed_user, Boolean.FALSE);
 
 			}
 		}

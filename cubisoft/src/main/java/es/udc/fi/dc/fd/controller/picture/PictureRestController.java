@@ -24,7 +24,7 @@ public class PictureRestController {
 	public List<PictureDTO> findPicturesByDescription(@PathVariable String description) {
 
 		List<Picture> pictures = pictureService.getPicturesByDescription(description);
-		List<PictureDTO> result = new ArrayList<>();
+		List<PictureDTO> result = new ArrayList<>(pictures.size());
 		for (Picture p : pictures) {
 			result.add(new PictureDTO(p.getPicture_id(), p.getAuthor().getEmail(), p.getDescription(),
 					p.getImage_path(), p.getDate()));
@@ -34,7 +34,25 @@ public class PictureRestController {
 		return result;
 	}
 
-	public class PictureDTO {
+	public static class PictureDTO {
+
+		public PictureDTO(Long image_id, String author, String description, String image_path, Calendar date) {
+			this.image_id = image_id;
+			this.author = author;
+			this.description = description;
+			this.image_path = image_path;
+			this.date = date;
+		}
+
+		private Long image_id;
+
+		private String author;
+
+		private String description;
+
+		private String image_path;
+
+		private Calendar date;
 
 		public Long getImage_id() {
 			return image_id;
@@ -76,23 +94,6 @@ public class PictureRestController {
 			this.date = date;
 		}
 
-		private Long image_id;
-
-		private String author;
-
-		private String description;
-
-		private String image_path;
-
-		private Calendar date;
-
-		public PictureDTO(Long image_id, String author, String description, String image_path, Calendar date) {
-			this.image_id = image_id;
-			this.author = author;
-			this.description = description;
-			this.image_path = image_path;
-			this.date = date;
-		}
 	}
 
 }

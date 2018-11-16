@@ -59,8 +59,6 @@ public class PictureUploaderController {
 	@Autowired
 	private UserProfileRepository userProfileRepository;
 
-	private MultipartFileValidator multipartFileValidator;
-
 	public PictureUploaderController() {
 	}
 
@@ -99,7 +97,7 @@ public class PictureUploaderController {
 	public String submit(HttpSession session, @Valid @ModelAttribute UploadPictureForm uploadPictureForm,
 			ModelMap modelMap, Principal userAuthenticated, BindingResult errors) {
 
-		multipartFileValidator = new MultipartFileValidator();
+		MultipartFileValidator multipartFileValidator = new MultipartFileValidator();
 
 		MultipartFile file = uploadPictureForm.getPictureFile();
 
@@ -175,7 +173,7 @@ public class PictureUploaderController {
 
 				p = pictureService.save(p);
 
-				Post post = new Post(Calendar.getInstance(), p, author, (long) 0, (long) 0,(long) 0, false);
+				Post post = new Post(Calendar.getInstance(), p, author, (long) 0, (long) 0, (long) 0, false);
 
 				postService.save(post);
 

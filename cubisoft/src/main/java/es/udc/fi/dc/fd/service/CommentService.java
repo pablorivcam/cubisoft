@@ -33,8 +33,7 @@ public class CommentService {
 	 */
 	@Transactional
 	public Comment save(Comment comment) {
-		Comment c = commentRepository.save(comment);
-		return c;
+		return commentRepository.save(comment);
 	}
 
 	/**

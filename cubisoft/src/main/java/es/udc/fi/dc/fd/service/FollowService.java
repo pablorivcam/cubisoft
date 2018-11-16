@@ -36,8 +36,7 @@ public class FollowService {
 	@Transactional
 	public Follow follow(UserProfile user, UserProfile followed_user, Boolean pending) {
 		Follow follow = new Follow(user, followed_user, pending);
-		follow = followRepository.save(follow);
-		return follow;
+		return followRepository.save(follow);
 	}
 
 	public List<Follow> findFollowsPending(UserProfile user) throws InstanceNotFoundException {
@@ -48,7 +47,7 @@ public class FollowService {
 	public void processPendingFollows(Follow follow, Boolean option) {
 
 		if (option) {
-			follow.setPending(false);
+			follow.setPending(Boolean.FALSE);
 			followRepository.save(follow);
 		} else {
 			followRepository.delete(follow);
@@ -78,7 +77,7 @@ public class FollowService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor = Exception.class)
 	public List<Follow> getUserFollows(UserProfile user) throws InstanceNotFoundException {
 		return followRepository.findFollowsByUser(user);
 	}

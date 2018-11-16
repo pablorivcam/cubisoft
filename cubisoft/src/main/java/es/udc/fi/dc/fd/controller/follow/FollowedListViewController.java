@@ -3,6 +3,8 @@ package es.udc.fi.dc.fd.controller.follow;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.security.Principal;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.management.InstanceNotFoundException;
 import javax.servlet.http.HttpSession;
@@ -27,6 +29,8 @@ public class FollowedListViewController {
 
 	@Autowired
 	private UserProfileRepository userProfileRepository;
+	
+	private Logger logger;
 
 	@Autowired
 	public FollowedListViewController(final FollowService service) {
@@ -66,10 +70,9 @@ public class FollowedListViewController {
 		try {
 			model.put(FollowViewConstants.PARAM_FOLLOW, followService.getUserFollows(user));
 		} catch (InstanceNotFoundException e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, e.getMessage(), e);
 		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
+			logger.log(Level.INFO, e.getMessage(), e);		}
 	}
 
 	@PostMapping("unfollowUser")
