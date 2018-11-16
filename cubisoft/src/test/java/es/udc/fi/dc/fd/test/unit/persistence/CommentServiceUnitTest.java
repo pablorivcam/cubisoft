@@ -252,4 +252,29 @@ public class CommentServiceUnitTest {
 				is(equalTo(null)));
 
 	}
+
+	@Test
+	public void getSetCommentsTest() {
+		Calendar date = Calendar.getInstance();
+
+		Comment commentD = new Comment();
+		commentD.setComment_id(4L);
+		commentD.setText(TEST_TEXT);
+		commentD.setDate(date);
+		commentD.setPost(postA);
+		commentD.setUser(userA);
+		commentD.setParent(commentB);
+		commentD.setChild_comments(null);
+
+		Comment commentE = new Comment(TEST_TEXT, date, postA, userA, commentB);
+		commentE.setComment_id(5L);
+		commentD.setChild_comments(null);
+
+		assertEquals(commentD.getText(), commentE.getText());
+		assertEquals(commentD.getDate(), commentE.getDate());
+		assertEquals(commentD.getPost(), commentE.getPost());
+		assertEquals(commentD.getUser(), commentE.getUser());
+		assertEquals(commentD.getParent(), commentE.getParent());
+		assertEquals(commentD.getChild_comments(), commentE.getChild_comments());
+	}
 }

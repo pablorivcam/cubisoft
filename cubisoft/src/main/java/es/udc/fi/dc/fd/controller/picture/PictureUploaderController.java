@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.security.Principal;
-import java.util.logging.Logger;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
@@ -27,9 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import es.udc.fi.dc.fd.controller.post.PostViewConstants;
 import es.udc.fi.dc.fd.model.form.MultipartFileValidator;
 import es.udc.fi.dc.fd.model.form.UploadPictureForm;
-import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.PictureService;
-import es.udc.fi.dc.fd.service.PostService;
 
 /**
  * The Class PictureUploaderController.
@@ -44,14 +41,6 @@ public class PictureUploaderController {
 	/** The picture service. */
 	@Autowired
 	private PictureService pictureService;
-
-	@Autowired
-	private PostService postService;
-
-	@Autowired
-	private UserProfileRepository userProfileRepository;
-
-	private final static Logger logger = Logger.getLogger(PictureUploaderController.class.getName());
 
 	public PictureUploaderController() {
 	}
@@ -72,8 +61,8 @@ public class PictureUploaderController {
 	}
 
 	/**
-	 * Submit. Process the uploadPicture POST request to upload an image into the
-	 * server. In adition, a single post is created with the image.
+	 * Submit. Process the uploadPicture POST request to upload an image into
+	 * the server. In adition, a single post is created with the image.
 	 *
 	 * @param session
 	 *            the session

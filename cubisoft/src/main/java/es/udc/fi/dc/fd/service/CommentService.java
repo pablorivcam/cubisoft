@@ -142,7 +142,7 @@ public class CommentService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor = Exception.class)
 	public Comment replyComment(Long commentId, String text, String userName, Calendar date)
 			throws InstanceNotFoundException {
 
@@ -174,7 +174,7 @@ public class CommentService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional
+	@Transactional(noRollbackFor = Exception.class)
 	public Comment addComment(String text, Long postId, String authorEmail) throws InstanceNotFoundException {
 
 		if (!userProfileRepository.exists(authorEmail)) {
@@ -202,7 +202,7 @@ public class CommentService {
 	 *            the new content of the comment
 	 * @return the comment
 	 */
-	@Transactional
+	@Transactional(noRollbackFor = Exception.class)
 	public Comment modifyComment(Long commentId, String newContent) throws InstanceNotFoundException {
 
 		if (!commentRepository.existsById(commentId)) {
@@ -210,12 +210,7 @@ public class CommentService {
 		}
 
 		Comment c = findCommentByCommentId(commentId);
-
-		if (c != null) {
-			c.setText(newContent);
-			return save(c);
-		}
-
-		return null;
+		c.setText(newContent);
+		return save(c);
 	}
 }

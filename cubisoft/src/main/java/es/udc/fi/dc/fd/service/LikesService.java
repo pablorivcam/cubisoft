@@ -30,6 +30,9 @@ public class LikesService {
 	private PostRepository postRepository;
 	@Autowired
 	private UserProfileRepository userProfileRepository;
+	
+	private static final Logger logger = Logger.getLogger(PictureService.class.getName());
+
 
 	@Transactional
 	public Likes save(Likes likes) {
@@ -54,11 +57,11 @@ public class LikesService {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
 		}
-		if (!userProfileRepository.exists(user.getEmail())) {
-			throw new InstanceNotFoundException("The user with email" + user.getEmail() + " doesnt exist.");
-		}
 		if (post == null) {
 			throw new NullPointerException("The post param cannot be null.");
+		}
+		if (!userProfileRepository.exists(user.getEmail())) {
+			throw new InstanceNotFoundException("The user with email" + user.getEmail() + " doesnt exist.");
 		}
 		if (!postRepository.existsById(post.getPost_id())) {
 			throw new InstanceNotFoundException("The post with the id" + post.getPost_id() + " doesnt exists.");
@@ -132,12 +135,12 @@ public class LikesService {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
 		}
-		if (!userProfileRepository.exists(user.getEmail())) {
-			throw new InstanceNotFoundException("The user with the id" + user.getUser_id() + " doesnt exists.");
-		}
 		if (post == null) {
 			throw new NullPointerException("The post param cannot be null.");
 		}
+		if (!userProfileRepository.exists(user.getEmail())) {
+			throw new InstanceNotFoundException("The user with the id" + user.getUser_id() + " doesnt exists.");
+		}	
 		if (!postRepository.existsById(post.getPost_id())) {
 			throw new InstanceNotFoundException("The post with the id" + post.getPost_id() + " doesnt exists.");
 		}
@@ -163,11 +166,11 @@ public class LikesService {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
 		}
-		if (!userProfileRepository.exists(user.getEmail())) {
-			return result;
-		}
 		if (post == null) {
 			throw new NullPointerException("The post param cannot be null.");
+		}
+		if (!userProfileRepository.exists(user.getEmail())) {
+			return result;
 		}
 		if (!postRepository.existsById(post.getPost_id())) {
 			return result;
@@ -184,7 +187,6 @@ public class LikesService {
 	@Transactional
 	public void delete(Likes like) {
 		likesRepository.delete(like);
-
 	}
 
 	/**
@@ -200,7 +202,6 @@ public class LikesService {
 	 */
 	@Transactional(rollbackFor = InstanceNotFoundException.class)
 	public String likePost(Long postId, String authorEmail) throws InstanceNotFoundException {
-		Logger logger = Logger.getLogger(PictureService.class.getName());
 
 		if (!userProfileRepository.exists(authorEmail)) {
 			throw new InstanceNotFoundException("The user with that email doesn't exists.");
@@ -221,9 +222,9 @@ public class LikesService {
 				newLikes(author, post);
 				post.setNumber_of_likes(post.getNumber_of_likes() + 1);
 				postRepository.save(post);
-			} catch (InstanceNotFoundException e) {
-				logger.log(Level.INFO, e.getMessage(), e);
-			} catch (AlreadyLikedException e) {
+			/*} catch (InstanceNotFoundException e) {
+				logger.log(Level.INFO, e.getMessage(), e); //Unreachable code?
+			*/} catch (AlreadyLikedException e) {
 				logger.log(Level.INFO, e.getMessage(), e);
 			}
 			error_message = FeedViewController.SUCESS_LIKED_POST;
@@ -246,7 +247,6 @@ public class LikesService {
 	 */
 	@Transactional(rollbackFor = InstanceNotFoundException.class)
 	public String unlikePost(Long postId, String authorEmail) throws InstanceNotFoundException, NotLikedYetException {
-		Logger logger = Logger.getLogger(PictureService.class.getName());
 
 		if (!userProfileRepository.exists(authorEmail)) {
 			throw new InstanceNotFoundException("The user with that email doesn't exists.");
@@ -267,9 +267,9 @@ public class LikesService {
 				deleteUserPostLikes(author, post);
 				post.setNumber_of_likes(post.getNumber_of_likes() - 1);
 				postRepository.save(post);
-			} catch (InstanceNotFoundException e) {
-				logger.log(Level.INFO, e.getMessage(), e);
-			} catch (NotLikedYetException e) {
+			}/* catch (InstanceNotFoundException e) {
+				logger.log(Level.INFO, e.getMessage(), e); //Unreachable code?
+			}*/ catch (NotLikedYetException e) {
 				logger.log(Level.INFO, e.getMessage(), e);
 			}
 			error_message = FeedViewController.SUCESS_UNLIKED_POST;

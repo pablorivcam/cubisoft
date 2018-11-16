@@ -3,7 +3,9 @@ package es.udc.fi.dc.fd.test.unit.persistence;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Optional;
@@ -42,6 +44,9 @@ public class PictureServiceUnitTest {
 
 	@Mock
 	private UserProfileRepository userProfileRepository;
+
+	@Mock
+	private Principal principal;
 
 	@InjectMocks
 	private PictureService pictureService;
@@ -132,6 +137,26 @@ public class PictureServiceUnitTest {
 		Mockito.when(pictureRepository.existsById(p.getPicture_id())).thenReturn(false);
 		assertThat(pictureService.modifyPictureDescription(p.getPicture_id(), TEST_DESCRIPTION), is(equalTo(null)));
 
+	}
+
+	@Test
+	public void getSetPictureTest() {
+		Calendar date = Calendar.getInstance();
+		Picture pictureD = new Picture();
+		pictureD.setPicture_id(4L);
+		pictureD.setDate(date);
+		pictureD.setAuthor(userA);
+		pictureD.setImage_path(TEST_PATH);
+		pictureD.setDescription(TEST_DESCRIPTION);
+
+		Picture pictureE = new Picture(TEST_DESCRIPTION, date, TEST_PATH, userA);
+		pictureE.setPicture_id(pictureD.getPicture_id());
+
+		assertEquals(pictureD.getPicture_id(), pictureE.getPicture_id());
+		assertEquals(pictureD.getDate(), pictureE.getDate());
+		assertEquals(pictureD.getAuthor(), pictureE.getAuthor());
+		assertEquals(pictureD.getImage_path(), pictureE.getImage_path());
+		assertEquals(pictureD.getDescription(), pictureE.getDescription());
 	}
 
 }

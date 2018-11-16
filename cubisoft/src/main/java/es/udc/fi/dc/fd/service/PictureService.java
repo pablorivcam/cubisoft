@@ -1,10 +1,10 @@
 package es.udc.fi.dc.fd.service;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.List;
@@ -44,6 +44,8 @@ public class PictureService {
 
 	@Autowired
 	private PostService postService;
+
+	private final static Logger logger = Logger.getLogger(PictureService.class.getName());
 
 	/**
 	 * Save a picture into the database.
@@ -149,8 +151,6 @@ public class PictureService {
 	public MultipartFile uploadPicture(UploadPictureForm uploadPictureForm, Principal userAuthenticated,
 			String folderPath) {
 
-		Logger logger = Logger.getLogger(PictureService.class.getName());
-
 		MultipartFile file = uploadPictureForm.getPictureFile();
 
 		InputStream inputStream = null;
@@ -191,7 +191,7 @@ public class PictureService {
 				System.out.println("" + finalFileName);
 
 				// Save the image into the file
-				outputStream = new FileOutputStream(newFile);
+				outputStream = Files.newOutputStream(newFile.toPath());
 				int read = 0;
 				byte[] bytes = new byte[1024];
 

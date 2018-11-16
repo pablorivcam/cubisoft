@@ -49,7 +49,10 @@
 		                    <li><a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/post/globalFeed}" th:text="#{label.globalfeed}">Global Feed</a></li>  
 		                    <li><a th:href="@{/account/list}" th:text="#{label.find_users}">Find Users</a></li>
 		                    <li><a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/followed/list}" th:text="#{label.myfollows}">My Follows</a></li>
+<<<<<<< Updated upstream
 							<li><a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/settings/view}" th:text="#{label.settings}">My Settings</a></li>
+=======
+>>>>>>> Stashed changes
 		                    <li><a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/request/list}" th:text="#{label.myrequests}">Requests</a></li>
 						<!-- Old menu 
 							<li><a th:href="@{/entity/list}" th:text="#{label.list}">List</a></li>
