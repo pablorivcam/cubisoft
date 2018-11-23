@@ -1,11 +1,12 @@
 package es.udc.fi.dc.fd.service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.dc.fd.config.SecurityConfig;
+import es.udc.fi.dc.fd.model.Block;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
@@ -52,6 +54,28 @@ public class UserProfileService implements UserDetailsService {
 		return userProfileRepository.save(userProfile);
 	}
 
+	/**
+	 * Finds an user by email.
+	 *
+	 * @param email
+	 *            the email
+	 * @return the user profile
+	 */
+	public UserProfile findUserByEmail(String email) {
+		return userProfileRepository.findOneByEmail(email);
+	}
+
+	/**
+	 * Find by id.
+	 *
+	 * @param id
+	 *            the id
+	 * @return the user profile
+	 */
+	public UserProfile findById(Long id) {
+		return userProfileRepository.findById(id).get();
+	}
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserProfile account = userProfileRepository.findOneByEmail(username);
@@ -82,9 +106,24 @@ public class UserProfileService implements UserDetailsService {
 		return new SimpleGrantedAuthority(SecurityConfig.DEFAULT_ROLE);
 	}
 
-	public ArrayList<UserProfile> findUserProfileByKeywords(String keywords) {
-		return new ArrayList<UserProfile>(
-				userProfileRepository.findUserProfileByKeywords(keywords));
+	/**
+	 * Find user profile by keywords.
+	 *
+	 * @param keywords
+	 *            the keywords
+	 * @param startIndex
+	 *            the start index
+	 * @param count
+	 *            the count
+	 * @return the array list
+	 */
+	public Block<UserProfile> findUserProfileByKeywords(String keywords, int startIndex, int count) {
+
+		Page<UserProfile> users = userProfileRepository.findUserProfileByKeywords(keywords,
+				PageRequest.of(startIndex, count));
+
+		return new Block<>(users.getContent(), users.hasNext());
+
 	}
 
 	public UserProfile changeUserProfileType(UserProfile account, UserType userType) {

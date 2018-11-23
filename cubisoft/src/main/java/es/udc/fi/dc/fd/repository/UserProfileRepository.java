@@ -1,7 +1,7 @@
 package es.udc.fi.dc.fd.repository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,5 +28,5 @@ public interface UserProfileRepository extends JpaRepository<UserProfile, Long> 
 	boolean exists(@Param("email") String email);
 
 	@Query("SELECT u FROM UserProfile u WHERE u.login LIKE CONCAT('%',:keywords,'%') ORDER BY u.login")
-	List<UserProfile> findUserProfileByKeywords(@Param("keywords") String keywords);
+	Page<UserProfile> findUserProfileByKeywords(@Param("keywords") String keywords, Pageable pageable);
 }

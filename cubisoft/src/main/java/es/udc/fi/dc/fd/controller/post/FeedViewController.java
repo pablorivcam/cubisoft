@@ -2,7 +2,6 @@ package es.udc.fi.dc.fd.controller.post;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.io.File;
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.List;
@@ -21,20 +20,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import es.udc.fi.dc.fd.controller.picture.PictureUploaderController;
 import es.udc.fi.dc.fd.model.persistence.Comment;
 import es.udc.fi.dc.fd.model.persistence.Post;
-import es.udc.fi.dc.fd.model.persistence.PostView;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
-import es.udc.fi.dc.fd.repository.CommentRepository;
-import es.udc.fi.dc.fd.repository.PostRepository;
-import es.udc.fi.dc.fd.repository.UserProfileRepository;
 import es.udc.fi.dc.fd.service.CommentService;
 import es.udc.fi.dc.fd.service.LikesService;
 import es.udc.fi.dc.fd.service.NotLikedYetException;
 import es.udc.fi.dc.fd.service.PictureService;
 import es.udc.fi.dc.fd.service.PostService;
 import es.udc.fi.dc.fd.service.PostViewService;
+import es.udc.fi.dc.fd.service.UserProfileService;
 
 @Controller
 @RequestMapping("/post")
@@ -90,13 +85,7 @@ public class FeedViewController {
 	private final PictureService pictureService;
 
 	@Autowired
-	private UserProfileRepository userProfileRepository;
-
-	@Autowired
-	private PostRepository postRepository;
-
-	@Autowired
-	private CommentRepository commentRepository;
+	private UserProfileService userProfileService;
 
 	@Autowired
 	private CommentService commentService;
@@ -155,62 +144,29 @@ public class FeedViewController {
 		return postService;
 	}
 
-	private final PostViewService getPostViewService() {
-		return postViewService;
-	}
-
 	private final void loadViewModel(final ModelMap model, Principal userAuthenticated, String view, Long user_id) {
-		UserProfile user = null;
+
+		List<Post> posts = postService.loadFeed(user_id, userAuthenticated, view);
+
+		UserProfile userFound = null;
+
 		if (userAuthenticated != null) {
-			user = userProfileRepository.findOneByEmail(userAuthenticated.getName());
-		}
-		try {
-
-			List<Post> posts = null;
-
+			UserProfile user = userProfileService.findUserByEmail(userAuthenticated.getName());
+			model.put("currentUser", user);
 			if (view.equals(PostViewConstants.VIEW_GLOBAL_FEED)) {
-				posts = getPostService().findFollowsAndUserPosts(user);
-			} else {
-				if (user != null) {
-					if (user_id == null || user_id == user.getUser_id()) {
-						posts = getPostService().findUserPosts(user);
-					} else {
-						UserProfile userFound = userProfileRepository.findById(user_id).get();
-						posts = getPostService().findUserPosts(userFound);
-						model.put("userFound", userFound);
-					}
-				} else {
-					/* The user is anonymous */
-					UserProfile userFound = userProfileRepository.findById(user_id).get();
-					posts = getPostService().findUserPosts(userFound);
-					model.put("userFound", userFound);
-				}
+				userFound = user;
 			}
-			if (user != null) {
-				for (Post post : posts) {
-					if (getPostViewService().findPostViewByPostUser(post, user) == null) {
-						getPostViewService().save(new PostView(user, post));
-					}
-				}
-
-				model.put("currentUser", user);
-			} else {
-				for (Post post : posts) {
-					post.setAnonymousViews(post.getAnonymousViews() + 1);
-					postService.save(post);
-				}
-			}
-
-			model.put("likesService", likesService);
-			model.put(PostViewConstants.PARAM_POSTS, posts);
-			model.put("postService", getPostService());
-			model.put(PostViewConstants.PARAM_POSTVIEWS, getPostViewService().findPostsViews(posts));
-			model.put("commentService", commentService);
-		} catch (InstanceNotFoundException e) {
-			logger.log(Level.INFO, e.getMessage(), e);
-		} catch (NullPointerException e) {
-			logger.log(Level.INFO, e.getMessage(), e);
+		} else if (!view.equals(PostViewConstants.VIEW_GLOBAL_FEED)) {
+			userFound = userProfileService.findById(user_id);
 		}
+		model.put("userFound", userFound);
+
+		model.put("likesService", likesService);
+		model.put(PostViewConstants.PARAM_POSTS, posts);
+		model.put("postService", getPostService());
+		model.put(PostViewConstants.PARAM_POSTVIEWS, postViewService.findPostsViews(posts));
+		model.put("commentService", commentService);
+
 	}
 
 	/**
@@ -275,8 +231,8 @@ public class FeedViewController {
 
 		String error_message = "";
 		Boolean sucess = Boolean.FALSE;
-		Post post = postRepository.findById(postId).get();
-		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+		Post post = postService.findByID(postId);
+		UserProfile author = userProfileService.findUserByEmail(userAuthenticated.getName());
 
 		// Eliminamos la imagen
 		if (post == null) {
@@ -285,26 +241,7 @@ public class FeedViewController {
 			error_message = NO_PERMISSION_TO_DELETE;
 		} else {
 			// Eliminamos la imagen de la BD
-			postService.deletePost(post);
-
-			if (post.getPicture().getAuthor().getUser_id() == author.getUser_id()) {
-
-				pictureService.delete(post.getPicture());
-
-				String folderPath = session.getServletContext().getRealPath("/")
-						+ PictureUploaderController.UPLOADS_FOLDER_NAME;
-
-				String imagePath = folderPath + "/" + post.getPicture().getImage_path();
-				File pictureFile = new File(imagePath);
-
-				if (pictureFile.exists()) {
-					boolean deleted = pictureFile.delete();
-					if (!deleted) {
-						error_message = PICTURE_DELETE_ERROR;
-					}
-				}
-
-			}
+			error_message = postService.deletePost(session.getServletContext().getRealPath("/"), post);
 
 			if (!error_message.equals("")) {
 				error_message = SUCESS_DELETED_POST;
@@ -411,8 +348,9 @@ public class FeedViewController {
 	public final String resharePost(@RequestParam Long postId, final ModelMap model, Principal userAuthenticated,
 			HttpSession session) {
 
-		Post post = postRepository.findById(postId).get();
-		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+		Post post = postService.findByID(postId);
+		UserProfile author = userProfileService.findUserByEmail(userAuthenticated.getName());
+
 		String error_message = "";
 		Boolean sucess = Boolean.FALSE;
 
@@ -567,8 +505,8 @@ public class FeedViewController {
 
 		String error_message = "";
 		Boolean sucess = Boolean.FALSE;
-		Comment comment = commentRepository.findById(deleteCommentId).get();
-		UserProfile author = userProfileRepository.findOneByEmail(userAuthenticated.getName());
+		Comment comment = commentService.findById(deleteCommentId);
+		UserProfile author = userProfileService.findUserByEmail(userAuthenticated.getName());
 
 		// We delete the comment
 		if (comment == null) {

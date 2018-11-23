@@ -213,4 +213,15 @@ public class CommentService {
 		c.setText(newContent);
 		return save(c);
 	}
+
+	/**
+	 * Finds a comment by its id.
+	 *
+	 * @param comment_id
+	 *            the comment id
+	 * @return the comment
+	 */
+	public Comment findById(Long comment_id) {
+		return commentRepository.findById(comment_id).get();
+	}
 }

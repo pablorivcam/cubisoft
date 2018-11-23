@@ -278,4 +278,10 @@ public class CommentServiceUnitTest {
 		assertEquals(commentD.getParent(), commentE.getParent());
 		assertEquals(commentD.getChild_comments(), commentE.getChild_comments());
 	}
+
+	@Test
+	public void findCommentByIdTest() {
+		Mockito.when(commentRepository.findById(1L)).thenReturn(Optional.of(commentA));
+		assertThat(commentService.findById(1L), is(equalTo(commentA)));
+	}
 }

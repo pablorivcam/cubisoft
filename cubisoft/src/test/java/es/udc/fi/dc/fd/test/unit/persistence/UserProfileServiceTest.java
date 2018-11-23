@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,6 +29,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import es.udc.fi.dc.fd.config.SecurityConfig;
+import es.udc.fi.dc.fd.model.Block;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
@@ -68,16 +73,16 @@ public class UserProfileServiceTest {
 
 	@Before
 	public void initialize() {
-		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null,
+		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, "e" + TEST_EMAIL, null, null,
 				UserType.PUBLIC);
 		userA.setUser_id(1L);
 
-		userB = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME + "11", TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null,
-				UserType.PUBLIC);
+		userB = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME + "11", TEST_LASTNAME, TEST_PASSWORD, "e2" + TEST_EMAIL,
+				null, null, UserType.PUBLIC);
 		userB.setUser_id(2L);
 
-		userC = new UserProfile(TEST_LOGIN, "11" + TEST_FIRSTNAME + "11", TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL,
-				null, null, UserType.PUBLIC);
+		userC = new UserProfile(TEST_LOGIN, "11" + TEST_FIRSTNAME + "11", TEST_LASTNAME, TEST_PASSWORD,
+				"e3" + TEST_EMAIL, null, null, UserType.PUBLIC);
 		userC.setUser_id(3L);
 
 	}
@@ -101,9 +106,9 @@ public class UserProfileServiceTest {
 		assertThat(userProfileService.loadUserByUsername(userA.getEmail()), is(equalTo(expected)));
 
 	}
-	
+
 	@Test(expected = UsernameNotFoundException.class)
-	public void loadUserByNullUsernameTest() throws UsernameNotFoundException{
+	public void loadUserByNullUsernameTest() throws UsernameNotFoundException {
 
 		Mockito.when(userProfileRepository.findOneByEmail(userA.getEmail())).thenReturn(null);
 
@@ -126,72 +131,6 @@ public class UserProfileServiceTest {
 		userProfileService.signin(userA);
 		assertThat(SecurityContextHolder.getContext().getAuthentication(), is(equalTo(authenticate(userA))));
 
-	}
-
-	/* Se añaden 2 usuarios y se tienen obtener esos 2 */
-	@Test
-	public void ProfileByKeywordsTest() {
-
-		ArrayList<UserProfile> usersList = new ArrayList<UserProfile>();
-		usersList.add(userA);
-		usersList.add(userC);
-
-		Mockito.when(userProfileRepository.findUserProfileByKeywords(KEYWORD)).thenReturn(usersList);
-
-		try {
-			assertThat(userProfileService.findUserProfileByKeywords(KEYWORD), is(equalTo(usersList)));
-
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/* Se meten 2 usuarios y solo tiene que devolver 1 */
-	@Test
-	public void ProfileByKeywordsTest1() {
-
-		ArrayList<UserProfile> usersList1 = new ArrayList<UserProfile>();
-		usersList1.add(userC);
-
-		Mockito.when(userProfileRepository.findUserProfileByKeywords("11")).thenReturn(usersList1);
-
-		try {
-			assertThat(userProfileService.findUserProfileByKeywords("11"), is(equalTo(usersList1)));
-
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/* Se meten 2 y no devuelve ninguno */
-	@Test
-	public void ProfileByKeywordsTest2() {
-
-		ArrayList<UserProfile> usersList1 = new ArrayList<UserProfile>();
-		Mockito.when(userProfileRepository.findUserProfileByKeywords("ola")).thenReturn(usersList1);
-
-		try {
-			assertThat(userProfileService.findUserProfileByKeywords("ola"), is(equalTo(usersList1)));
-
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Test
-	public void ProfileByKeywordsTest3() {
-
-		ArrayList<UserProfile> usersList = new ArrayList<UserProfile>();
-		usersList.add(userB);
-		usersList.add(userC);
-		Mockito.when(userProfileRepository.findUserProfileByKeywords("ola")).thenReturn(usersList);
-
-		try {
-			assertThat(userProfileService.findUserProfileByKeywords("ola"), is(equalTo(usersList)));
-
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Test
@@ -233,6 +172,49 @@ public class UserProfileServiceTest {
 		assertEquals(userD.getFollows(), userE.getFollows());
 		assertEquals(userD.getPosts(), userE.getPosts());
 		assertEquals(userD.getUserType(), userE.getUserType());
+	}
+
+	@Test
+	public void findByKeywordsNASAMastodonteTest() {
+		ArrayList<UserProfile> usersFound = new ArrayList<>();
+		usersFound.add(userA);
+		usersFound.add(userB);
+
+		Page<UserProfile> page1 = new PageImpl<>(usersFound, PageRequest.of(0, 1), 2);
+		Page<UserProfile> page2 = new PageImpl<>(usersFound, PageRequest.of(0, 2), 2);
+
+		Block<UserProfile> usersBlock = new Block<>(usersFound, true);
+		Block<UserProfile> usersBlock2 = new Block<>(usersFound, false);
+
+		Mockito.when(userProfileRepository.findUserProfileByKeywords("e", PageRequest.of(0, 1))).thenReturn(page1);
+		Mockito.when(userProfileRepository.findUserProfileByKeywords("e", PageRequest.of(0, 2))).thenReturn(page2);
+
+		Block<UserProfile> expected1 = userProfileService.findUserProfileByKeywords("e", 0, 1);
+		Block<UserProfile> expected2 = userProfileService.findUserProfileByKeywords("e", 0, 2);
+
+		assertEquals(expected1.getExistMoreItems(), usersBlock.getExistMoreItems());
+		assertEquals(expected1.getItems().size(), usersBlock.getItems().size());
+		assertEquals(expected2.getExistMoreItems(), usersBlock2.getExistMoreItems());
+		assertEquals(expected2.getItems().size(), usersBlock2.getItems().size());
+
+		for (int i = 0; i < expected1.getItems().size(); i++) {
+			assertEquals(expected1.getItems().get(i), usersBlock.getItems().get(i));
+		}
+		for (int i = 0; i < expected2.getItems().size(); i++) {
+			assertEquals(expected2.getItems().get(i), usersBlock2.getItems().get(i));
+		}
+	}
+
+	@Test
+	public void findUserByEmailTest() {
+		Mockito.when(userProfileRepository.findOneByEmail(TEST_EMAIL)).thenReturn(userA);
+		assertThat(userProfileService.findUserByEmail(TEST_EMAIL), is(equalTo(userA)));
+	}
+
+	@Test
+	public void findUserByIdTest() {
+		Mockito.when(userProfileRepository.findById(1L)).thenReturn(Optional.of(userA));
+		assertThat(userProfileService.findById(1L), is(equalTo(userA)));
 	}
 
 }

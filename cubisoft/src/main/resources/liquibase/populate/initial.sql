@@ -68,6 +68,31 @@ INSERT INTO example_entities (name) VALUES
    	INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
    	VALUES (3,'private','User','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','private@user.com','PRIVATE');
    	
+    INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (4,'mastodonte','Mastodonte','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','mastodonte@user.com','PUBLIC');
+   	
+    INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (5,'megalodon','Megalodón','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','megalodon@user.com','PUBLIC');
+   	
+    INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (6,'maquina','Máquina','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','maquina@user.com','PUBLIC');
+   	
+    INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (7,'pimbatumba','PimbaTumba','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','pimbatumba@user.com','PUBLIC');
+   	
+    INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (8,'gigantosaurio','Gigantosaurio','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','gigantosaurio@user.com','PUBLIC');
+   		
+    INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (9,'nasa','NASA','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','nasa@user.com','PUBLIC');
+   	
+    INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (10,'muydificil','MuyDifícil','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','muydificil@user.com','PUBLIC');
+ 
+    INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (11,'crack','Crack','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','crack@user.com','PUBLIC');
+ 
+   	
    INSERT INTO Follow (follow_id,user,followed_user,pending) 
    	VALUES (1,2,1,false);
    	

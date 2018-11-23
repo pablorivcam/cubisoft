@@ -11,7 +11,7 @@
       
 		<section id="form">  	
 		
-			<form id="findUsersForm" action="#" th:action="@{/account/list}" class="form-narrow form-horizontal" method="post">
+			<form id="findUsersForm" action="#" th:action="@{/account/list}" class="form-narrow form-horizontal" method="get">
 				<label style="text-align:none; width:auto" for="keywords" class="col-lg-2 control-label">Keywords</label>		
 				<input style="display:inline; width:auto" type="text" class="form-control" id="keywords" placeholder="Keywords" name="keywords" />
 				<button th:text="#{label.find}" type="submit" class="btn btn-info">Find</button>	
@@ -28,7 +28,7 @@
 					<th> </th>				
 				</tr>
 
-            	<tr th:each="user : ${users}">
+            	<tr th:each="user : ${users.getItems()}">
             		<td th:if="${ user?.userType.toString() == 'PUBLIC'}"><a th:text="${user?.login}" th:href="@{/post/myFeed(user_id=${user?.user_id})}">Login</a> </td>
             		<td th:if="${ user?.userType.toString() == 'PRIVATE'}"><a th:text="${user?.login}">Login</a> </td>
             		<td><span th:remove="tag" th:text="${user?.firstName}">Name</span></td>
@@ -70,6 +70,19 @@
 
 	    </table>
 	   
+		<div style="display:inline; color: #4582ec; ">
+
+			<a th:if="${startIndex&gt;0}" th:href="@{list(startIndex=${startIndex-1})}" 
+				class="btn btn-outline-primary" style="padding:10px; border-color: #4582ec;
+				 border-width: 2px; background:#ffffff" th:text="#{button.back}">Back</a> 
+			
+			<spam style="color: #000000">Page <spam th:text="${startIndex+1}"></spam></spam>
+			
+			<a th:if="${users.getExistMoreItems()==true}" th:href="@{list(startIndex=${startIndex+1})}"
+				class="btn btn-outline-primary" style="padding:10px; border-color: #4582ec;
+				 border-width: 2px; background:#ffffff" th:text="#{button.next}">Next</a> 
+		</div>
+
    </section>
    
 	<footer>

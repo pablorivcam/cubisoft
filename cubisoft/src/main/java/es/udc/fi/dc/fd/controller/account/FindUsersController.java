@@ -33,37 +33,36 @@ public class FindUsersController {
 	private FollowService followService;
 
 	@GetMapping(path = "/list")
-	public final String showPictureList() {
-		return AccountViewConstants.LIST_VIEW;
-	}
-
-	@PostMapping(path = "/list")
-	public final String showPictureList(@RequestParam String keywords, final ModelMap model,
-			Principal userAuthenticated) {
+	public final String showPictureList(@RequestParam(required = false, defaultValue = "") String keywords,
+			final ModelMap model, Principal userAuthenticated,
+			@RequestParam(required = false, defaultValue = "0") int startIndex) {
 
 		if (userAuthenticated != null) {
 			UserProfile currentUser = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 			model.put("currentUser", currentUser);
 		}
 
-		model.put(USERS_PARAM, userProfileService.findUserProfileByKeywords(keywords));
-		model.put("followService", followService);
-		model.put("keywords", keywords);
-
+		if (keywords != null) {
+			model.put(USERS_PARAM, userProfileService.findUserProfileByKeywords(keywords, startIndex, 5));
+			model.put("followService", followService);
+			model.put("keywords", keywords);
+			model.put("startIndex", startIndex);
+		}
 		return AccountViewConstants.LIST_VIEW;
 	}
 
 	@PostMapping(path = "/followUser")
 	public final String followUser(@RequestParam String keywords, @RequestParam Long user_id, final ModelMap model,
-			Principal userAuthenticated) {
+			Principal userAuthenticated, @RequestParam(required = false, defaultValue = "0") int startIndex) {
 
 		UserProfile followed_user = userProfileRepository.findById(user_id).get();
 		UserProfile currentUser = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 
-		model.put(USERS_PARAM, userProfileService.findUserProfileByKeywords(keywords));
+		model.put(USERS_PARAM, userProfileService.findUserProfileByKeywords(keywords, startIndex, 5));
 		model.put("currentUser", currentUser);
 		model.put("followService", followService);
 		model.put("keywords", keywords);
+		model.put("startIndex", startIndex);
 
 		if (!followService.isUserAFollowingUserB(currentUser, followed_user)) {
 			if (followed_user.getUserType() == UserType.PRIVATE) {
@@ -80,15 +79,16 @@ public class FindUsersController {
 
 	@PostMapping(path = "/unfollowUser")
 	public final String unfollowUser(@RequestParam String keywords, @RequestParam Long user_id, final ModelMap model,
-			Principal userAuthenticated) {
+			Principal userAuthenticated, @RequestParam(required = false, defaultValue = "0") int startIndex) {
 
 		UserProfile followed_user = userProfileRepository.findById(user_id).get();
 		UserProfile currentUser = userProfileRepository.findOneByEmail(userAuthenticated.getName());
 
-		model.put(USERS_PARAM, userProfileService.findUserProfileByKeywords(keywords));
+		model.put(USERS_PARAM, userProfileService.findUserProfileByKeywords(keywords, startIndex, 5));
 		model.put("currentUser", currentUser);
 		model.put("followService", followService);
 		model.put("keywords", keywords);
+		model.put("startIndex", startIndex);
 
 		if (followService.isUserAFollowingUserB(currentUser, followed_user)) {
 			followService.unfollow(currentUser, followed_user);
