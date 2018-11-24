@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,9 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.udc.fi.dc.fd.model.form.UploadPictureForm;
 import es.udc.fi.dc.fd.model.persistence.Picture;
+import es.udc.fi.dc.fd.model.persistence.PictureTag;
 import es.udc.fi.dc.fd.model.persistence.Post;
+import es.udc.fi.dc.fd.model.persistence.Tag;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.repository.PictureRepository;
+import es.udc.fi.dc.fd.repository.PictureTagRepository;
+import es.udc.fi.dc.fd.repository.TagRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
 /**
@@ -41,6 +46,12 @@ public class PictureService {
 
 	@Autowired
 	private UserProfileRepository userProfileRepository;
+
+	@Autowired
+	private TagRepository tagRepository;
+
+	@Autowired
+	private PictureTagRepository pictureTagRepository;
 
 	@Autowired
 	private PostService postService;
@@ -137,6 +148,51 @@ public class PictureService {
 	}
 
 	/**
+	 * Sets the tags of a Picture.
+	 *
+	 * @param picture_id
+	 *            the picture's picture id that we want to modify the tags.
+	 * @param tags_text
+	 *            the text of the tags that we want to add to the image.
+	 * @return the picture with the new tags
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	@Transactional(rollbackFor = InstanceNotFoundException.class)
+	public Picture setPictureTags(Long picture_id, List<String> tags_text) throws InstanceNotFoundException {
+
+		if (!pictureRepository.existsById(picture_id)) {
+			throw new InstanceNotFoundException("That picture with that id doesn't exist.");
+		}
+
+		Picture p = pictureRepository.findById(picture_id).get();
+
+		List<PictureTag> pictureTags = new ArrayList<>();
+
+		// Deletion of the existent pictureTags at the picture
+		for (PictureTag imageTag : p.getPicture_tags()) {
+			pictureTagRepository.delete(imageTag);
+		}
+
+		for (String tag_text : tags_text) {
+
+			// Creation of the new tags if they dont exist.
+			if (!tagRepository.existsByText(tag_text)) {
+				tagRepository.save(new Tag(tag_text, new ArrayList<>()));
+			}
+
+			PictureTag pictureTag = new PictureTag(p, tagRepository.findTagByText(tag_text));
+			pictureTagRepository.save(pictureTag);
+
+			pictureTags.add(pictureTag);
+		}
+
+		p.setPicture_tags(pictureTags);
+		return pictureRepository.save(p);
+
+	}
+
+	/**
 	 * Method that uploads a file into the server.
 	 *
 	 * @param uploadPictureForm
@@ -207,7 +263,7 @@ public class PictureService {
 
 				// Guardamos todo en la base de datos
 				Picture p = new Picture(uploadPictureForm.getDescription(), Calendar.getInstance(), finalFileName,
-						author);
+						author, null);
 
 				p = save(p);
 

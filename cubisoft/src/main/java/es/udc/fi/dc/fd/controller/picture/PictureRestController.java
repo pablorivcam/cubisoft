@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.fi.dc.fd.model.persistence.Picture;
@@ -20,8 +20,8 @@ public class PictureRestController {
 	@Autowired
 	private PictureService pictureService;
 
-	@GetMapping(path = "/{description}", produces = "application/json")
-	public List<PictureDTO> findPicturesByDescription(@PathVariable String description) {
+	@GetMapping(path = "/", produces = "application/json")
+	public List<PictureDTO> findPicturesByDescription(@RequestParam("description") String description) {
 
 		List<Picture> pictures = pictureService.getPicturesByDescription(description);
 		List<PictureDTO> result = new ArrayList<>(pictures.size());
