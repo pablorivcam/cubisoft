@@ -164,6 +164,7 @@ public class FeedViewController {
 		model.put("likesService", likesService);
 		model.put(PostViewConstants.PARAM_POSTS, posts);
 		model.put("postService", getPostService());
+		model.put("pictureService", pictureService);
 		model.put(PostViewConstants.PARAM_POSTVIEWS, postViewService.findPostsViews(posts));
 		model.put("commentService", commentService);
 

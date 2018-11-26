@@ -181,7 +181,7 @@ public class PictureServiceUnitTest {
 	}
 
 	@Test
-	public void setPictureTagsTest() throws InstanceNotFoundException {
+	public void setPictureTagsTest() {
 
 		ArrayList<String> tags_text = new ArrayList<>();
 		tags_text.add(TEST_TAG_NAME + "1");
@@ -194,27 +194,18 @@ public class PictureServiceUnitTest {
 		assertEquals(pictureA.getPicture_tags().size(), 1);
 		assertEquals(pictureA.getPicture_tags().get(0).getTag().getText(), tag1.getText());
 
-		Mockito.when(pictureRepository.findById(pictureA.getPicture_id())).thenReturn(Optional.of(pictureA));
-
-		Mockito.when(pictureRepository.existsById(pictureA.getPicture_id())).thenReturn(true);
 		Mockito.when(tagRepository.existsByText(TEST_TAG_NAME + "1")).thenReturn(true);
 		Mockito.when(tagRepository.existsByText(TEST_TAG_NAME + "2")).thenReturn(false);
 
 		Mockito.when(tagRepository.findTagByText(TEST_TAG_NAME + "1")).thenReturn(tag1);
 		Mockito.when(tagRepository.findTagByText(TEST_TAG_NAME + "2")).thenReturn(tag2);
 
-		pictureService.setPictureTags(pictureA.getPicture_id(), tags_text);
+		pictureService.setPictureTags(pictureA, tags_text);
 
 		assertThat(pictureA.getPicture_tags().size(), is(equalTo(2)));
 		assertThat(pictureA.getPicture_tags().get(0).getTag().getText(), is(equalTo(tag1.getText())));
 		assertThat(pictureA.getPicture_tags().get(1).getTag().getText(), is(equalTo(tag2.getText())));
 
-	}
-
-	@Test(expected = InstanceNotFoundException.class)
-	public void setUnexistentPictureTagsTest() throws InstanceNotFoundException {
-		Mockito.when(pictureRepository.existsById(1234L)).thenReturn(false);
-		pictureService.setPictureTags(1234L, null);
 	}
 
 }

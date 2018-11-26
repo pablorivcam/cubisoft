@@ -71,3 +71,8 @@ body > section {
 .table-striped > tbody > tr:nth-child(2n+2) > td, .table-striped > tbody > tr:nth-child(2n+2) > th {
    background-color: #dddddd;
 }
+
+.hashtag{
+	background: #4582ec33;
+	color: #4582ec;
+}

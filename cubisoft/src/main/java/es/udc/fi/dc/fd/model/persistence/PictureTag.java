@@ -39,7 +39,7 @@ public class PictureTag {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "picture_id")
+	@JoinColumn(name = "picture")
 	public Picture getPicture() {
 		return picture;
 	}
@@ -49,7 +49,7 @@ public class PictureTag {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tag_id")
+	@JoinColumn(name = "tag")
 	public Tag getTag() {
 		return tag;
 	}

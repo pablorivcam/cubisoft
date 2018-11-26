@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import es.udc.fi.dc.fd.model.persistence.PictureTag;
 
-@Repository("pictureTagrepository")
+@Repository("pictureTagRepository")
 public interface PictureTagRepository extends JpaRepository<PictureTag, Long> {
 
 }
