@@ -174,13 +174,21 @@ public class PictureService {
 		}
 		for (String tag_text : tags_text) {
 
+			String aux_tag_text = tag_text.substring(1, tag_text.length());
+
 			// Creation of the new tags if they dont exist.
-			if (!tagRepository.existsByText(tag_text)) {
-				tagRepository.save(new Tag(tag_text, new ArrayList<>()));
+			if (!tagRepository.existsByText(aux_tag_text)) {
+				tagRepository.save(new Tag(aux_tag_text, new ArrayList<>()));
 			}
 
-			PictureTag pictureTag = new PictureTag(picture, tagRepository.findTagByText(tag_text));
+			PictureTag pictureTag = new PictureTag(picture, tagRepository.findTagByText(aux_tag_text));
+
 			pictureTagRepository.save(pictureTag);
+			// System.out.println("Esta wea sigue siendo: " + pictureTag + " porque encontre
+			// " + pictureTag.getTag()
+			// + " con imagen " + pictureTag.getPicture());
+
+			// System.out.println(pictureTag.getTag().getText());
 
 			pictureTags.add(pictureTag);
 		}
@@ -275,6 +283,32 @@ public class PictureService {
 		}
 
 		return file;
+	}
+
+	/**
+	 * Gets the pictures by hashtags.
+	 *
+	 * @param hashtags
+	 *            the hashtags text
+	 * @return the pictures found with that hashtags
+	 */
+	public List<Picture> getPicturesByHashtags(String[] hashtags) {
+
+		List<Tag> tags = new ArrayList<>();
+
+		for (String hashtag : hashtags) {
+
+			if (tagRepository.existsByText(hashtag)) {
+				tags.add(tagRepository.findTagByText(hashtag));
+			}
+		}
+
+		if (tags.size() == 0) {
+			return new ArrayList<Picture>();
+		}
+
+		return pictureRepository.findPicturesByTags(tags);
+
 	}
 
 	public String formatDescriptionToHTML(String description) {

@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class PictureTag {
 
-	private Long image_tag_id = -1L;
+	private Long picture_tag_id = -1L;
 
 	private Picture picture;
 
@@ -30,12 +30,12 @@ public class PictureTag {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, unique = true)
-	public Long getImage_tag_id() {
-		return image_tag_id;
+	public Long getPicture_tag_id() {
+		return picture_tag_id;
 	}
 
-	public void setImage_tag_id(Long image_tag_id) {
-		this.image_tag_id = image_tag_id;
+	public void setPicture_tag_id(Long picture_tag_id) {
+		this.picture_tag_id = picture_tag_id;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -184,8 +184,8 @@ public class PictureServiceUnitTest {
 	public void setPictureTagsTest() {
 
 		ArrayList<String> tags_text = new ArrayList<>();
-		tags_text.add(TEST_TAG_NAME + "1");
-		tags_text.add(TEST_TAG_NAME + "2");
+		tags_text.add("#" + TEST_TAG_NAME + "1");
+		tags_text.add("#" + TEST_TAG_NAME + "2");
 
 		Tag tag2 = new Tag();
 		tag2.setText(TEST_TAG_NAME + "2");
@@ -200,12 +200,60 @@ public class PictureServiceUnitTest {
 		Mockito.when(tagRepository.findTagByText(TEST_TAG_NAME + "1")).thenReturn(tag1);
 		Mockito.when(tagRepository.findTagByText(TEST_TAG_NAME + "2")).thenReturn(tag2);
 
+		Mockito.when(pictureRepository.save(pictureA)).thenReturn(pictureA);
+
 		pictureService.setPictureTags(pictureA, tags_text);
 
 		assertThat(pictureA.getPicture_tags().size(), is(equalTo(2)));
 		assertThat(pictureA.getPicture_tags().get(0).getTag().getText(), is(equalTo(tag1.getText())));
 		assertThat(pictureA.getPicture_tags().get(1).getTag().getText(), is(equalTo(tag2.getText())));
 
+	}
+
+	@Test
+	public void getPicturesByHashtagsTest() {
+
+		String[] hashtag_text = new String[] { TEST_TAG_NAME + "1", TEST_TAG_NAME + "2" };
+
+		Tag tag1 = new Tag(hashtag_text[0], new ArrayList<PictureTag>());
+		Tag tag2 = new Tag(hashtag_text[1], new ArrayList<PictureTag>());
+
+		Picture p = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), "", userA, new ArrayList<PictureTag>());
+		Picture p2 = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), "", userA, new ArrayList<PictureTag>());
+
+		PictureTag pt1 = new PictureTag(p, tag1);
+		PictureTag pt2 = new PictureTag(p2, tag1);
+		PictureTag pt3 = new PictureTag(p2, tag2);
+
+		p.getPicture_tags().add(pt1);
+		p2.getPicture_tags().add(pt1);
+		p2.getPicture_tags().add(pt3);
+
+		tag1.getPictureTags().add(pt1);
+		tag1.getPictureTags().add(pt3);
+		tag2.getPictureTags().add(pt2);
+
+		pictureService.save(p);
+		pictureService.save(p2);
+
+		ArrayList<Picture> pictures = new ArrayList<>();
+		pictures.add(p);
+		pictures.add(p2);
+
+		ArrayList<Tag> tags = new ArrayList<>();
+		tags.add(tag1);
+		tags.add(tag2);
+
+		Mockito.when(tagRepository.existsByText(hashtag_text[0])).thenReturn(true);
+		Mockito.when(tagRepository.existsByText(hashtag_text[1])).thenReturn(true);
+		Mockito.when(tagRepository.findTagByText(hashtag_text[0])).thenReturn(tag1);
+		Mockito.when(tagRepository.findTagByText(hashtag_text[1])).thenReturn(tag2);
+
+		Mockito.when(pictureRepository.findPicturesByTags(tags)).thenReturn(pictures);
+		assertThat(pictureService.getPicturesByHashtags(hashtag_text), is(equalTo(pictures)));
+
+		pictureService.delete(p);
+		pictureService.delete(p2);
 	}
 
 }

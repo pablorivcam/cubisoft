@@ -21,9 +21,19 @@ public class PictureRestController {
 	private PictureService pictureService;
 
 	@GetMapping(path = "/", produces = "application/json")
-	public List<PictureDTO> findPicturesByDescription(@RequestParam("description") String description) {
+	public List<PictureDTO> findPicturesByDescription(
+			@RequestParam(value = "description", required = false) String description,
+			@RequestParam(value = "tags", required = false) String[] tags) {
+		List<Picture> pictures = null;
 
-		List<Picture> pictures = pictureService.getPicturesByDescription(description);
+		if (description != null) {
+			pictures = pictureService.getPicturesByDescription(description);
+		}
+
+		if (tags != null) {
+			pictures = pictureService.getPicturesByHashtags(tags);
+		}
+
 		List<PictureDTO> result = new ArrayList<>(pictures.size());
 		for (Picture p : pictures) {
 			result.add(new PictureDTO(p.getPicture_id(), p.getAuthor().getEmail(), p.getDescription(),
