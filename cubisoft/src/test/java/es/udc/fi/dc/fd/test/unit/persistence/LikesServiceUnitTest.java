@@ -70,7 +70,7 @@ public class LikesServiceUnitTest {
 				null, null, UserType.PUBLIC);
 		userC.setUser_id(3L);
 
-		picture = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA);
+		picture = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), TEST_PATH, userA, null);
 
 		postA1 = new Post(Calendar.getInstance(), picture, userA, (long) 0, (long) 0, (long) 0, false);
 

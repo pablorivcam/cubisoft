@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import es.udc.fi.dc.fd.model.persistence.Picture;
+import es.udc.fi.dc.fd.model.persistence.Tag;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 
 /**
@@ -28,5 +29,8 @@ public interface PictureRepository extends JpaRepository<Picture, Long> {
 
 	@Query("SELECT p FROM Picture p WHERE p.description LIKE CONCAT('%',:description,'%')")
 	List<Picture> findPicturesByDescription(@Param("description") String description);
+
+	@Query("SELECT p FROM Picture p WHERE p IN (SELECT pt.picture FROM PictureTag pt WHERE pt.tag IN (:tags))")
+	List<Picture> findPicturesByTags(@Param("tags") List<Tag> tags);
 
 }

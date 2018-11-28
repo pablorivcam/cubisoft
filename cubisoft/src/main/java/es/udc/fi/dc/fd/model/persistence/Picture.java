@@ -1,6 +1,7 @@
 package es.udc.fi.dc.fd.model.persistence;
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -34,6 +36,8 @@ public class Picture {
 
 	private UserProfile author;
 
+	private List<PictureTag> picture_tags;
+
 	public Picture() {
 
 	}
@@ -50,11 +54,13 @@ public class Picture {
 	 * @param author
 	 *            the author
 	 */
-	public Picture(String description, Calendar date, String image_path, UserProfile author) {
+	public Picture(String description, Calendar date, String image_path, UserProfile author,
+			List<PictureTag> picture_tags) {
 		this.description = description;
 		this.date = date;
 		this.image_path = image_path;
 		this.author = author;
+		this.picture_tags = picture_tags;
 
 		date.set(Calendar.MILLISECOND, 0);
 	}
@@ -161,6 +167,15 @@ public class Picture {
 	 */
 	public void setAuthor(UserProfile author) {
 		this.author = author;
+	}
+
+	@OneToMany(mappedBy = "picture")
+	public List<PictureTag> getPicture_tags() {
+		return picture_tags;
+	}
+
+	public void setPicture_tags(List<PictureTag> picture_tags) {
+		this.picture_tags = picture_tags;
 	}
 
 }

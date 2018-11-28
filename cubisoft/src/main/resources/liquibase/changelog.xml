@@ -11,7 +11,19 @@
 		<dropTable cascadeConstraints="true"
 		        tableName="example_entities"/>
 	</changeSet>
-	
+
+	<changeSet author="PabloRivas" id="dropPictureTag" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="PictureTag"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="PictureTag"/>
+	</changeSet>	
+
+	<changeSet author="PabloRivas" id="dropTag" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Tag"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="Tag"/>
+	</changeSet>
+
 	<changeSet author="YankoNion"  id="dropPostView" runAlways="true">
 		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="PostView"/></preConditions>
 		<dropTable cascadeConstraints="true"
@@ -47,7 +59,7 @@
 		<dropTable cascadeConstraints="true"
 		        tableName="Picture"/>
 	</changeSet>
-	
+
 	<changeSet author="PabloRivas" id="dropUserProfile" runAlways="true">
 		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="UserProfile"/></preConditions>
 		<dropTable cascadeConstraints="true"
@@ -225,7 +237,30 @@
        	            />
 		     </column>
 		</createTable>
-		
+				
+		<!-- Tabla Tag -->
+		<createTable tableName="Tag">
+		<column autoIncrement="true" name="tag_id" type="BIGINT">
+			<constraints primaryKey="true" />
+			</column>
+		    <column name="text" type="VARCHAR(90)">
+		    	<constraints nullable="false" unique="true" />
+		    </column>
+		</createTable>
+
+		<!-- Tabla PictureTag -->
+		<createTable tableName="PictureTag">
+			<column autoIncrement="true" name="picture_tag_id" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+		    <column name="tag" type="BIGINT">
+		    	<constraints nullable="false"/>
+		    </column>
+		    <column name="picture" type="BIGINT">
+		    	<constraints nullable="false"/>
+		    </column>
+		</createTable>	
+
 	</changeSet>
 	
 	<changeSet author="PabloRivas" id="foreign_keys" runAlways="true">
@@ -259,7 +294,24 @@
 	            onDelete="CASCADE"
 	            onUpdate="RESTRICT"
 	            referencedColumnNames="comment_id"
-	            referencedTableName="Comment"/>	        
+	            referencedTableName="Comment"/>	  
+
+			<addForeignKeyConstraint baseColumnNames="picture"
+	            baseTableName="PictureTag"
+	            constraintName="picture_tag_image_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="picture_id"
+	            referencedTableName="Picture"/>	      
+
+			<addForeignKeyConstraint baseColumnNames="tag"
+	            baseTableName="PictureTag"
+	            constraintName="picture_tag_tag_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="tag_id"
+	            referencedTableName="Tag"/>
+
 	</changeSet>
 	<changeSet author="YankoNion" id="foreign_keys" runAlways="true">
 		    <addForeignKeyConstraint baseColumnNames="post"
