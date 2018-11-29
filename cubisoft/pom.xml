@@ -22,7 +22,7 @@
 	<groupId>es.udc.fi.dc.fd</groupId>
 	<artifactId>cubisoft</artifactId>
 	<version>3.0-RELEASE</version>
-	<packaging>war</packaging>
+	<packaging>pom</packaging>
 
 	<name>Cubisoft</name>
 	<description>Test project for FD 2018</description>
@@ -188,88 +188,7 @@
 		<!-- ============================================== -->
 		<!-- ========= EMBEDDED SERVER PROFILES =========== -->
 		<!-- ============================================== -->
-		<profile>
-			<!-- Jetty profile -->
-			<!-- Sets ups Jetty for testing and local deployment -->
-			<id>jetty</id>
-			<build>
-				<plugins>
-					<plugin>
-						<!-- Jetty -->
-						<!-- Jetty will run the web service during the integration tests -->
-						<groupId>org.eclipse.jetty</groupId>
-						<artifactId>jetty-maven-plugin</artifactId>
-						<version>${plugin.jetty.version}</version>
-						<configuration>
-							<stopKey>STOP</stopKey>
-							<stopPort>9999</stopPort>
-							<stopWait>5</stopWait>
-						</configuration>
-						<executions>
-							<execution>
-								<id>start-jetty-it</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>start</goal>
-								</goals>
-								<configuration>
-									<scanIntervalSeconds>0</scanIntervalSeconds>
-									<daemon>true</daemon>
-									<useTestScope>true</useTestScope>
-									<webApp>
-										<overrideDescriptor>${project.build.directory}/${project.build.finalName}/WEB-INF/web.xml</overrideDescriptor>
-									</webApp>
-								</configuration>
-							</execution>
-							<execution>
-								<id>stop-jetty-it</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<!-- Tomcat 7 profile -->
-			<!-- Sets ups Tomcat 7 for testing and local deployment -->
-			<id>tomcat7</id>
-			<build>
-				<plugins>
-					<plugin>
-						<!-- Tomcat 7 -->
-						<!-- Tomcat 7 will run the web service during the integration tests -->
-						<groupId>org.apache.tomcat.maven</groupId>
-						<artifactId>tomcat7-maven-plugin</artifactId>
-						<version>${plugin.tomcat7.version}</version>
-						<executions>
-							<execution>
-								<id>start-tomcat-it</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<fork>true</fork>
-									<useTestClasspath>true</useTestClasspath>
-									<warSourceDirectory>${project.build.directory}/${project.build.finalName}/</warSourceDirectory>
-								</configuration>
-							</execution>
-							<execution>
-								<id>stop-tomcat-it</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>shutdown</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
+
 		<!-- ============================================== -->
 		<!-- ============ DEPLOYMENT PROFILES ============= -->
 		<!-- ============================================== -->
@@ -1253,4 +1172,9 @@
 		</plugins>
 	</reporting>
 
+	<modules>
+		<module>CubisoftModel</module>
+		<module>CubisoftWeb</module>
+		<module>CubisoftRest</module>
+	</modules>
 </project>

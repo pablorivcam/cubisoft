@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+	<!-- DROP TABLES -->
+	<changeSet author="liquibase-docs" id="dropTable-example" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="example_entities"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="example_entities"/>
+	</changeSet>
+
+	<changeSet author="PabloRivas" id="dropPictureTag" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="PictureTag"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="PictureTag"/>
+	</changeSet>	
+
+	<changeSet author="PabloRivas" id="dropTag" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Tag"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="Tag"/>
+	</changeSet>
+
+	<changeSet author="YankoNion"  id="dropPostView" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="PostView"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="PostView"/>
+	</changeSet>
+	
+	<changeSet author="BranLopez"  id="dropLikes" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Likes"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="Likes"/>
+	</changeSet>
+	
+	<changeSet author="PabloRivas" id="dropFollow" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Follow"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="Follow"/>
+	</changeSet>
+	
+	<changeSet author="PabloRivas" id="dropCommentTable" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Comment"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="Comment"/>
+	</changeSet>
+	
+	<changeSet author="PabloRivas" id="dropPostTable" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Post"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="Post"/>
+	</changeSet>
+	
+	<changeSet author="PabloRivas" id="dropPicture" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Picture"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="Picture"/>
+	</changeSet>
+
+	<changeSet author="PabloRivas" id="dropUserProfile" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="UserProfile"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="UserProfile"/>
+	</changeSet>
+	<!-- Creación de tablas -->
+
+	<!-- Tabla UserProfile -->
+	<changeSet author="PabloRivas" id="cubisoft_tables" runAlways="true">
+		<createTable tableName="UserProfile">
+		     <column autoIncrement="true" name="user_id" type="BIGINT">
+		        <constraints primaryKey="true" />
+		     </column>
+		     <column name="login" type="VARCHAR(30)">
+		        <constraints nullable="false" unique="true" />
+		     </column>
+		     <column name="firstName" type="VARCHAR(30)">
+		        <constraints nullable="false" />
+		     </column>
+		     <column name="lastName" type="VARCHAR(30)">
+		        <constraints nullable="false" />
+		     </column>
+		     <column name="password" type="VARCHAR(60)">
+		        <constraints nullable="false" />
+		     </column>
+		     <column name="email" type="VARCHAR(30)">
+		        <constraints nullable="false" unique="true" />
+		     </column>
+		     <column name="userType" type="ENUM('PUBLIC','PRIVATE')">
+		        <constraints nullable="false" />
+		     </column>
+		</createTable>  
+
+		<!-- Tabla Picture -->
+		<createTable tableName="Picture">
+		     <column autoIncrement="true" name="picture_id" type="BIGINT">
+		        <constraints primaryKey="true" />
+		     </column>
+		     <column name="description" type="VARCHAR(240)"/>      
+		     <column name="image_path" type="VARCHAR(200)">
+		        <constraints nullable="false" />
+		     </column>
+		     <column name="date" type="DATETIME">
+		        <constraints nullable="false" />
+		     </column>
+		     <column name="user_id" type="BIGINT">
+		         <constraints nullable="false" 
+		         	foreignKeyName="fk_user_id" 
+                	references="UserProfile(user_id)"
+       	            />
+		     </column>
+
+		</createTable>
+		
+		<!-- Tabla Post -->
+		<createTable tableName="Post">
+		     <column autoIncrement="true" name="post_id" type="BIGINT">
+		        <constraints primaryKey="true" />
+		     </column>
+		     <column name="date" type="DATETIME">
+		        <constraints nullable="false" />
+		     </column>
+
+		     <column name="user_id" type="BIGINT">
+		         <constraints nullable="false" 
+		         	foreignKeyName="post_user_id_fk" 
+                	references="UserProfile(user_id)"
+       	            />
+		     </column>
+		     
+		     <column name="picture_id" type="BIGINT">
+		     	<constraints nullable="false" />
+		     </column>
+		     
+		      <column name="views" type="BIGINT">
+		     	<constraints nullable="false" />
+		     </column>
+		     
+		     <column name="number_of_likes" type="BIGINT">
+		     	<constraints nullable="false" />
+		     </column>
+		     
+		      <column name="anonymousViews" type="BIGINT">
+		     	<constraints nullable="false" />
+		     </column>
+		   
+		     <column name="reshare" type="BOOLEAN">
+		     	<constraints nullable="false" />
+		     </column>
+		</createTable>
+		
+		<!-- Tabla Comentarios -->
+		<createTable tableName="Comment">
+		     <column autoIncrement="true" name="comment_id" type="BIGINT">
+		        <constraints primaryKey="true" />
+		     </column>
+		     <column name="date" type="DATETIME">
+		        <constraints nullable="false" />
+		     </column>	
+		     
+		     <column name="text" type="VARCHAR(150)">
+		        <constraints nullable="false" />
+		     </column>
+		     
+		     <column name="user_id" type="BIGINT">
+		         <constraints nullable="false" 
+		         	foreignKeyName="comment_user_id_fk" 
+                	references="UserProfile(user_id)"
+       	            />
+		         
+		     </column>
+		     <column name="post" type="BIGINT">
+		         <constraints nullable="false" 
+       	            />
+		     </column>	
+		     	  
+		     <column name="parent_id" type="BIGINT">
+		         <constraints nullable="true"/>
+		     </column>   	    
+		     
+		</createTable>
+		
+		<!-- Tabla Follow -->
+		<createTable tableName="Follow">
+		     <column autoIncrement="true" name="follow_id" type="BIGINT">
+		        <constraints primaryKey="true" />
+		     </column>
+		     <column name="user" type="BIGINT">
+		         <constraints nullable="false" 
+		         	foreignKeyName="follow_user_fk" 
+                	references="UserProfile(user_id)"
+       	            />
+		     </column>
+		     <column name="followed_user" type="BIGINT">
+		         <constraints nullable="false" 
+		         	foreignKeyName="follow_followed_user_fk" 
+                	references="UserProfile(user_id)"
+       	            />
+		     </column>
+		     <column name="pending" type="BOOLEAN">
+		        <constraints nullable="false" />
+		     </column>
+		</createTable>
+		
+		<!-- Tabla Likes -->
+		<createTable tableName="Likes">
+		<column autoIncrement="true" name="likes_id" type="BIGINT">
+		        <constraints primaryKey="true" />
+		     </column>
+		     <column name="user" type="BIGINT">
+		         <constraints nullable="false" 
+		         	foreignKeyName="like_user_fk" 
+                	references="UserProfile(user_id)"
+       	            />
+		     </column>
+		     <column name="post" type="BIGINT">
+		         <constraints nullable="false" 
+       	            />
+		     </column>
+		</createTable>
+
+		<!-- Tabla Post View -->
+		<createTable tableName="PostView">
+		<column autoIncrement="true" name="view_id" type="BIGINT">
+			<constraints primaryKey="true" />
+			</column>
+		    <column name="user" type="BIGINT">
+		    	<constraints nullable="false" 
+		         	foreignKeyName="view_user_fk" 
+                	references="UserProfile(user_id)"
+       	            />
+		     </column>
+		     <column name="post" type="BIGINT">
+		         <constraints nullable="false" 
+       	            />
+		     </column>
+		</createTable>
+				
+		<!-- Tabla Tag -->
+		<createTable tableName="Tag">
+		<column autoIncrement="true" name="tag_id" type="BIGINT">
+			<constraints primaryKey="true" />
+			</column>
+		    <column name="text" type="VARCHAR(90)">
+		    	<constraints nullable="false" unique="true" />
+		    </column>
+		</createTable>
+
+		<!-- Tabla PictureTag -->
+		<createTable tableName="PictureTag">
+			<column autoIncrement="true" name="picture_tag_id" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+		    <column name="tag" type="BIGINT">
+		    	<constraints nullable="false"/>
+		    </column>
+		    <column name="picture" type="BIGINT">
+		    	<constraints nullable="false"/>
+		    </column>
+		</createTable>	
+
+	</changeSet>
+	
+	<changeSet author="PabloRivas" id="foreign_keys" runAlways="true">
+		    <addForeignKeyConstraint baseColumnNames="picture_id"
+	            baseTableName="Post"
+	            constraintName="post_picture_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="picture_id"
+	            referencedTableName="Picture"/>
+		    
+	        <addForeignKeyConstraint baseColumnNames="post"
+	            baseTableName="Likes"
+	            constraintName="like_post_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="post_id"
+	            referencedTableName="Post"/>	
+	            
+	       	<addForeignKeyConstraint baseColumnNames="post"
+	            baseTableName="Comment"
+	            constraintName="comment_post_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="post_id"
+	            referencedTableName="Post"/>
+	       	
+	       	<addForeignKeyConstraint baseColumnNames="parent_id"
+	            baseTableName="Comment"
+	            constraintName="comment_parent_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="comment_id"
+	            referencedTableName="Comment"/>	  
+
+			<addForeignKeyConstraint baseColumnNames="picture"
+	            baseTableName="PictureTag"
+	            constraintName="picture_tag_image_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="picture_id"
+	            referencedTableName="Picture"/>	      
+
+			<addForeignKeyConstraint baseColumnNames="tag"
+	            baseTableName="PictureTag"
+	            constraintName="picture_tag_tag_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="tag_id"
+	            referencedTableName="Tag"/>
+
+	</changeSet>
+	<changeSet author="YankoNion" id="foreign_keys" runAlways="true">
+		    <addForeignKeyConstraint baseColumnNames="post"
+	            baseTableName="PostView"
+	            constraintName="postview_post_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="post_id"
+	            referencedTableName="Post"/>	
+	</changeSet>
+	<changeSet author="YankoNion" id="postview_unique_contraint" runAlways="true">
+		<addUniqueConstraint
+			columnNames="user, post"
+			constraintName="postview_unique_constraint"
+			tableName="PostView"/>
+	</changeSet>
+	
+	<!-- Contenido por defecto -->
+
+   <changeSet author="Bernardo" id="initial_tables" runAlways="true">
+      <createTable tableName="example_entities">
+         <column autoIncrement="true" name="id" type="BIGINT">
+            <constraints primaryKey="true" />
+         </column>
+         <column name="name" type="VARCHAR(30)">
+            <constraints nullable="false" unique="true" />
+         </column>
+      </createTable>
+   </changeSet>
+
+   <changeSet author="Bernardo" id="initial_data" runAlways="true">
+      <sqlFile encoding="utf8" path="populate/initial.sql"
+         relativeToChangelogFile="true" stripComments="true" />
+   </changeSet>
+
+</databaseChangeLog>
+

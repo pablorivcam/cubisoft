@@ -1,0 +1,61 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>es.udc.fi.dc.fd</groupId>
+    <artifactId>cubisoft</artifactId>
+    <version>3.0-RELEASE</version>
+  </parent>
+  <artifactId>CubisoftWeb</artifactId>
+  
+  <dependencies>
+  
+  	<dependency>
+  		<artifactId>CubisoftModel</artifactId>
+  		<groupId>es.udc.fi.dc.fd</groupId>
+  		<version>3.0-RELEASE</version>
+  	</dependency>
+  
+  </dependencies>
+  
+  <packaging>war</packaging>
+  <profiles>
+  		<profile>
+			<!-- Tomcat 7 profile -->
+			<!-- Sets ups Tomcat 7 for testing and local deployment -->
+			<id>tomcat7</id>
+			<build>
+				<plugins>
+					<plugin>
+						<!-- Tomcat 7 -->
+						<!-- Tomcat 7 will run the web service during the integration tests -->
+						<groupId>org.apache.tomcat.maven</groupId>
+						<artifactId>tomcat7-maven-plugin</artifactId>
+						<version>${plugin.tomcat7.version}</version>
+						<executions>
+							<execution>
+								<id>start-tomcat-it</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<fork>true</fork>
+									<useTestClasspath>true</useTestClasspath>
+									<warSourceDirectory>${project.build.directory}/${project.build.finalName}/</warSourceDirectory>
+								</configuration>
+							</execution>
+							<execution>
+								<id>stop-tomcat-it</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>shutdown</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+  		
+	</profiles>
+</project>
