@@ -21,7 +21,7 @@
 
 	<groupId>es.udc.fi.dc.fd</groupId>
 	<artifactId>cubisoft</artifactId>
-	<version>3.0-RELEASE</version>
+	<version>4.0-RELEASE</version>
 	<packaging>pom</packaging>
 
 	<name>Cubisoft</name>

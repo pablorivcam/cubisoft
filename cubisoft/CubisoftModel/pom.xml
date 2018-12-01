@@ -3,9 +3,9 @@
   <parent>
     <groupId>es.udc.fi.dc.fd</groupId>
     <artifactId>cubisoft</artifactId>
-    <version>3.0-RELEASE</version>
+    <version>4.0-RELEASE</version>
   </parent>
   <artifactId>CubisoftModel</artifactId>
   <groupId>es.udc.fi.dc.fd</groupId>
-  <version>3.0-RELEASE</version>
+  <version>4.0-RELEASE</version>
 </project>

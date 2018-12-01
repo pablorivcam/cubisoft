@@ -5,9 +5,9 @@
         <author email="pablo.rivas.camino@udc.es">Pablo Rivas Camino</author>
     </properties>
     <body>
-        <release version="2.0-RELEASE" date="2018-10-26" description="Second Release">
+        <release version="4.0-RELEASE" date="2018-10-26" description="Fourth Release">
             <action dev="pablo.rivas.camino" type="update">
-                First release of the library.
+                Fourth release of the library.
             </action>
         </release>
     </body>
