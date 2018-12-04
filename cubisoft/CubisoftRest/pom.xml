@@ -17,46 +17,6 @@
   
   </dependencies>
   
-  <packaging>war</packaging>
-  <profiles>
-  		<profile>
-			<!-- Tomcat 7 profile -->
-			<!-- Sets ups Tomcat 7 for testing and local deployment -->
-			<id>tomcat7</id>
-			<build>
-				<plugins>
-					<plugin>
-						<!-- Tomcat 7 -->
-						<!-- Tomcat 7 will run the web service during the integration tests -->
-						<groupId>org.apache.tomcat.maven</groupId>
-						<artifactId>tomcat7-maven-plugin</artifactId>
-						<version>${plugin.tomcat7.version}</version>
-						<executions>
-							<execution>
-								<id>start-tomcat-it</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<fork>true</fork>
-									<useTestClasspath>true</useTestClasspath>
-									<warSourceDirectory>${project.build.directory}/${project.build.finalName}/</warSourceDirectory>
-								</configuration>
-							</execution>
-							<execution>
-								<id>stop-tomcat-it</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>shutdown</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-  		
-	</profiles>
-  
+  <groupId>es.udc.fi.dc.fd</groupId>
+  <version>4.0-RELEASE</version>
 </project>
