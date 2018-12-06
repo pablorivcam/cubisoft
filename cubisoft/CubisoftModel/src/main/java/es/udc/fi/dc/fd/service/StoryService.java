@@ -1,6 +1,5 @@
 package es.udc.fi.dc.fd.service;
 
-import java.io.File;
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.List;
@@ -18,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Story;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
-import es.udc.fi.dc.fd.repository.PictureRepository;
 import es.udc.fi.dc.fd.repository.StoryRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
@@ -35,9 +33,6 @@ public class StoryService {
 
 	@Autowired
 	private UserProfileRepository userProfileRepository;
-
-	@Autowired
-	private PictureRepository pictureRepository;
 
 	private final static Logger logger = Logger.getLogger(StoryService.class.getName());
 
@@ -97,38 +92,39 @@ public class StoryService {
 		return story;
 	}
 
-	/**
-	 * Method that deletes an existing story from the database.
-	 *
-	 * @param sessionPath the session path
-	 * @param story       the story to delete.
-	 * @return the error message if something unexpected happens.
-	 */
-	@Transactional
-	public String deleteStory(String sessionPath, Story story) {
-
-		if (story.getPicture().getAuthor().getUser_id() == story.getUser().getUser_id()) {
-
-			String folderPath = sessionPath + UPLOADS_FOLDER_NAME;
-
-			String imagePath = folderPath + "/" + story.getPicture().getImage_path();
-			File pictureFile = new File(imagePath);
-
-			if (pictureFile.exists()) {
-				boolean deleted = pictureFile.delete();
-				if (!deleted) {
-					return PICTURE_DELETE_ERROR;
-				}
-			}
-
-			pictureRepository.delete(story.getPicture());
-		} else {
-			storyRepository.delete(story);
-		}
-
-		return "";
-
-	}
+//	/**
+//	 * Method that deletes an existing story from the database.
+//	 *
+//	 * @param sessionPath the session path
+//	 * @param story       the story to delete.
+//	 * @return the error message if something unexpected happens.
+//	 */
+//
+//	@Transactional
+//	public String deleteStory(String sessionPath, Story story) {
+//
+//		if (story.getPicture().getAuthor().getUser_id() == story.getUser().getUser_id()) {
+//
+//			String folderPath = sessionPath + UPLOADS_FOLDER_NAME;
+//
+//			String imagePath = folderPath + "/" + story.getPicture().getImage_path();
+//			File pictureFile = new File(imagePath);
+//
+//			if (pictureFile.exists()) {
+//				boolean deleted = pictureFile.delete();
+//				if (!deleted) {
+//					return PICTURE_DELETE_ERROR;
+//				}
+//			}
+//
+//			pictureRepository.delete(story.getPicture());
+//		} else {
+//			storyRepository.delete(story);
+//		}
+//
+//		return "";
+//
+//	}
 
 	/**
 	 * Load feed. Returns the single story feed of an user
@@ -138,11 +134,9 @@ public class StoryService {
 	 * @param view              the view
 	 * @return the story feed.
 	 */
-	public List<Story> loadFeed(Long feedUserId, Principal userAuthenticated, String view) {
+	public List<Story> loadFeed(Long feedUserId, Principal userAuthenticated) {
 		List<Story> result = null;
 		UserProfile feedUser = null;
-
-		// TODO llamar aquí al método para borrar storys expiradas
 
 		if (userAuthenticated != null) {
 			feedUser = userProfileRepository.findOneByEmail(userAuthenticated.getName());
@@ -153,6 +147,8 @@ public class StoryService {
 				feedUserId = feedUser.getUser_id();
 			}
 			UserProfile userFound = userProfileRepository.findById(feedUserId).get();
+			// TODO aqui limpiar las historias viejas(solo de la bd)
+			// storyRepository.deleteOldStories(Calendar.getInstance());
 			result = findUserStories(userFound);
 
 		} catch (InstanceNotFoundException e) {
