@@ -54,6 +54,12 @@
 		        tableName="Post"/>
 	</changeSet>
 	
+	<changeSet author="BranLopez" id="dropStoryTable" runAlways="true">
+		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Story"/></preConditions>
+		<dropTable cascadeConstraints="true"
+		        tableName="Story"/>
+	</changeSet>
+	
 	<changeSet author="PabloRivas" id="dropPicture" runAlways="true">
 		<preConditions onFail="MARK_RAN"><tableExists schemaName="cubisoft" tableName="Picture"/></preConditions>
 		<dropTable cascadeConstraints="true"
@@ -112,6 +118,28 @@
        	            />
 		     </column>
 
+		</createTable>
+		
+		<!-- Tabla Story -->
+		<createTable tableName="Story">
+		     <column autoIncrement="true" name="story_id" type="BIGINT">
+		        <constraints primaryKey="true" />
+		     </column>
+		     
+		     <column name="expiration" type="DATETIME">
+		        <constraints nullable="false" />
+		     </column>
+
+		     <column name="user_id" type="BIGINT">
+		         <constraints nullable="false" 
+		         	foreignKeyName="story_user_id_fk" 
+                	references="UserProfile(user_id)"
+       	            />
+		     </column>
+		     
+		     <column name="picture_id" type="BIGINT">
+		     	<constraints nullable="false" />
+		     </column>
 		</createTable>
 		
 		<!-- Tabla Post -->
@@ -264,6 +292,14 @@
 	</changeSet>
 	
 	<changeSet author="PabloRivas" id="foreign_keys" runAlways="true">
+			<addForeignKeyConstraint baseColumnNames="picture_id"
+	            baseTableName="Story"
+	            constraintName="story_picture_id_fk"
+	            onDelete="CASCADE"
+	            onUpdate="RESTRICT"
+	            referencedColumnNames="picture_id"
+	            referencedTableName="Picture"/>
+	            
 		    <addForeignKeyConstraint baseColumnNames="picture_id"
 	            baseTableName="Post"
 	            constraintName="post_picture_id_fk"

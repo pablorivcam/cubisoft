@@ -48,10 +48,8 @@ public class PictureUploaderController {
 	/**
 	 * Upload. Process the upload GET request to get the image upload page.
 	 *
-	 * @param model
-	 *            the model
-	 * @param requestedWith
-	 *            the requested with
+	 * @param model         the model
+	 * @param requestedWith the requested with
 	 * @return the string
 	 */
 	@GetMapping("upload")
@@ -61,19 +59,14 @@ public class PictureUploaderController {
 	}
 
 	/**
-	 * Submit. Process the uploadPicture POST request to upload an image into
-	 * the server. In adition, a single post is created with the image.
+	 * Submit. Process the uploadPicture POST request to upload an image into the
+	 * server. In adition, a single post is created with the image.
 	 *
-	 * @param session
-	 *            the session
-	 * @param uploadPictureForm
-	 *            the upload picture form
-	 * @param modelMap
-	 *            the model map
-	 * @param userAuthenticated
-	 *            the user authenticated
-	 * @param errors
-	 *            the errors
+	 * @param session           the session
+	 * @param uploadPictureForm the upload picture form
+	 * @param modelMap          the model map
+	 * @param userAuthenticated the user authenticated
+	 * @param errors            the errors
 	 * @return the string
 	 */
 	@PostMapping("/uploadPicture")
@@ -81,9 +74,13 @@ public class PictureUploaderController {
 			ModelMap modelMap, Principal userAuthenticated, BindingResult errors) {
 
 		MultipartFileValidator multipartFileValidator = new MultipartFileValidator();
-		MultipartFile file = pictureService.uploadPicture(uploadPictureForm, userAuthenticated,
-				session.getServletContext().getRealPath("/") + UPLOADS_FOLDER_NAME);
-		multipartFileValidator.validate(file, errors);
+		try {
+			MultipartFile file = pictureService.uploadPicture(uploadPictureForm, userAuthenticated,
+					session.getServletContext().getRealPath("/") + UPLOADS_FOLDER_NAME);
+			multipartFileValidator.validate(file, errors);
+		} catch (Exception e) {
+			// TODO aqui no deberia de pasar nada
+		}
 
 		if (errors.hasErrors()) {
 			return PictureViewConstants.VIEW_PICTURE_FORM;
@@ -96,11 +93,9 @@ public class PictureUploaderController {
 	/**
 	 * Gets the image.
 	 *
-	 * @param imageName
-	 *            the image name
+	 * @param imageName the image name
 	 * @return the image
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@RequestMapping(value = "image/{imageName}")
 	@ResponseBody

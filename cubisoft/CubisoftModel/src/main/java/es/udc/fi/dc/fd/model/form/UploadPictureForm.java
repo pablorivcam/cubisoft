@@ -20,6 +20,8 @@ public class UploadPictureForm implements Serializable {
 	/** The description. */
 	private String description;
 
+	private int expiration;
+
 	public UploadPictureForm() {
 	}
 
@@ -35,8 +37,7 @@ public class UploadPictureForm implements Serializable {
 	/**
 	 * Sets the picture file.
 	 *
-	 * @param pictureFile
-	 *            the new picture file
+	 * @param pictureFile the new picture file
 	 */
 	public void setPictureFile(MultipartFile pictureFile) {
 		this.pictureFile = pictureFile;
@@ -54,11 +55,28 @@ public class UploadPictureForm implements Serializable {
 	/**
 	 * Sets the description.
 	 *
-	 * @param description
-	 *            the new description
+	 * @param description the new description
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	/**
+	 * Gets the expiration time.
+	 *
+	 * @return the expiration time
+	 */
+	public int getExpiration() {
+		return expiration;
+	}
+
+	/**
+	 * Sets the expiration time.
+	 *
+	 * @param description the new expirationTime
+	 */
+	public void setExpiration(int expiration) {
+		this.expiration = expiration;
 	}
 
 	@Override
