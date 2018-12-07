@@ -6,6 +6,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -48,15 +50,17 @@ public class StoryListViewController {
 	 */
 	@GetMapping(path = "/myFeed{user_id}")
 	public final String showMyFeed(final ModelMap model, Principal userAuthenticated,
-			@RequestParam("user_id") Optional<Long> user_id) {
-		loadViewModel(model, userAuthenticated, (user_id.isPresent()) ? user_id.get() : null);
+			@RequestParam("user_id") Optional<Long> user_id, HttpSession session) {
+		loadViewModel(model, userAuthenticated, (user_id.isPresent()) ? user_id.get() : null, session);
 
 		return "story/myFeed";
 	}
 
-	private final void loadViewModel(final ModelMap model, Principal userAuthenticated, Long user_id) {
+	private final void loadViewModel(final ModelMap model, Principal userAuthenticated, Long user_id,
+			HttpSession session) {
 
-		List<Story> stories = storyService.loadFeed(user_id, userAuthenticated);
+		List<Story> stories = storyService.loadFeed(user_id, userAuthenticated,
+				session.getServletContext().getRealPath("/"));
 
 		UserProfile userFound = null;
 

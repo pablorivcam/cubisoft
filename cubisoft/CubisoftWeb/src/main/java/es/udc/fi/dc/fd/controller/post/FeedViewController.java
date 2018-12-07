@@ -105,19 +105,16 @@ public class FeedViewController {
 	/**
 	 * Show my feed.
 	 *
-	 * @param model
-	 *            the model
-	 * @param userAuthenticated
-	 *            the user authenticated
-	 * @param user_id
-	 *            the user id
+	 * @param model             the model
+	 * @param userAuthenticated the user authenticated
+	 * @param user_id           the user id
 	 * @return the string
 	 */
 	@GetMapping(path = "/myFeed{user_id}")
 	public final String showMyFeed(final ModelMap model, Principal userAuthenticated,
 			@RequestParam("user_id") Optional<Long> user_id) {
 		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_POST_LIST,
-				(user_id.isPresent()) ? user_id.get() : null);
+				(user_id.isPresent() ? user_id.get() : null));
 
 		return PostViewConstants.VIEW_POST_LIST;
 	}
@@ -125,10 +122,8 @@ public class FeedViewController {
 	/**
 	 * Show global feed.
 	 *
-	 * @param model
-	 *            the model
-	 * @param userAuthenticated
-	 *            the user authenticated
+	 * @param model             the model
+	 * @param userAuthenticated the user authenticated
 	 * @return the string
 	 */
 	@GetMapping(path = "/globalFeed")
@@ -145,7 +140,12 @@ public class FeedViewController {
 	}
 
 	private final void loadViewModel(final ModelMap model, Principal userAuthenticated, String view, Long user_id) {
-
+		/*
+		 * pillo los posts del usuario con id = user_id si no estoy autenticado,
+		 * userFound = user_id si estoy autenticado currentUser = yo si quiero ver el
+		 * feed global userFound = yo
+		 * 
+		 */
 		List<Post> posts = postService.loadFeed(user_id, userAuthenticated, view);
 
 		UserProfile userFound = null;
@@ -155,6 +155,8 @@ public class FeedViewController {
 			model.put("currentUser", user);
 			if (view.equals(PostViewConstants.VIEW_GLOBAL_FEED)) {
 				userFound = user;
+			} else if (user_id != null) {
+				userFound = userProfileService.findById(user_id);
 			}
 		} else if (!view.equals(PostViewConstants.VIEW_GLOBAL_FEED)) {
 			userFound = userProfileService.findById(user_id);
@@ -173,18 +175,12 @@ public class FeedViewController {
 	/**
 	 * Modify image description.
 	 *
-	 * @param modifyId
-	 *            the modify id
-	 * @param view
-	 *            the view
-	 * @param description
-	 *            the description
-	 * @param model
-	 *            the model
-	 * @param userAuthenticated
-	 *            the user authenticated
-	 * @param session
-	 *            the session
+	 * @param modifyId          the modify id
+	 * @param view              the view
+	 * @param description       the description
+	 * @param model             the model
+	 * @param userAuthenticated the user authenticated
+	 * @param session           the session
 	 * @return the string
 	 */
 	@PostMapping("modifyPicture")
@@ -214,16 +210,11 @@ public class FeedViewController {
 	/**
 	 * Delete post post mapping.
 	 *
-	 * @param view
-	 *            the view
-	 * @param postId
-	 *            the post id
-	 * @param model
-	 *            the model
-	 * @param userAuthenticated
-	 *            the user authenticated
-	 * @param session
-	 *            the session
+	 * @param view              the view
+	 * @param postId            the post id
+	 * @param model             the model
+	 * @param userAuthenticated the user authenticated
+	 * @param session           the session
 	 * @return the string
 	 */
 	@PostMapping("deletePost")
@@ -263,16 +254,11 @@ public class FeedViewController {
 	/**
 	 * Like post postmapping.
 	 *
-	 * @param view
-	 *            the view
-	 * @param postId
-	 *            the post id
-	 * @param model
-	 *            the model
-	 * @param userAuthenticated
-	 *            the user authenticated
-	 * @param session
-	 *            the http session
+	 * @param view              the view
+	 * @param postId            the post id
+	 * @param model             the model
+	 * @param userAuthenticated the user authenticated
+	 * @param session           the http session
 	 * @return string
 	 */
 	@PostMapping("likePost")
@@ -299,16 +285,11 @@ public class FeedViewController {
 	/**
 	 * Unlike post postmapping.
 	 *
-	 * @param view
-	 *            the view
-	 * @param postId
-	 *            the post id
-	 * @param model
-	 *            the model
-	 * @param userAuthenticated
-	 *            the user authenticated
-	 * @param session
-	 *            the http session
+	 * @param view              the view
+	 * @param postId            the post id
+	 * @param model             the model
+	 * @param userAuthenticated the user authenticated
+	 * @param session           the http session
 	 * @return string
 	 */
 	@PostMapping("unlikePost")
@@ -335,14 +316,10 @@ public class FeedViewController {
 	/**
 	 * Reshare post postmapping.
 	 *
-	 * @param postId
-	 *            the post id
-	 * @param model
-	 *            the model
-	 * @param userAuthenticated
-	 *            the user authenticated
-	 * @param session
-	 *            the http session
+	 * @param postId            the post id
+	 * @param model             the model
+	 * @param userAuthenticated the user authenticated
+	 * @param session           the http session
 	 * @return string
 	 */
 	@PostMapping("resharePost")
@@ -380,16 +357,11 @@ public class FeedViewController {
 	/**
 	 * Adds the comment.
 	 *
-	 * @param model
-	 *            the model
-	 * @param userAuthenticated
-	 *            the user authenticated
-	 * @param view
-	 *            the view
-	 * @param postId
-	 *            the post id
-	 * @param text
-	 *            the text
+	 * @param model             the model
+	 * @param userAuthenticated the user authenticated
+	 * @param view              the view
+	 * @param postId            the post id
+	 * @param text              the text
 	 * @return the string
 	 */
 	@PostMapping("addComment")
@@ -410,16 +382,11 @@ public class FeedViewController {
 	/**
 	 * Replys the comment.
 	 *
-	 * @param model
-	 *            the model
-	 * @param userAuthenticated
-	 *            the user authenticated
-	 * @param view
-	 *            the view
-	 * @param commentId
-	 *            the comment id
-	 * @param text
-	 *            the text
+	 * @param model             the model
+	 * @param userAuthenticated the user authenticated
+	 * @param view              the view
+	 * @param commentId         the comment id
+	 * @param text              the text
 	 * @return the string
 	 */
 	@PostMapping("replyComment")
@@ -441,18 +408,12 @@ public class FeedViewController {
 	/**
 	 * Edit a comment.
 	 *
-	 * @param modifyCommentId
-	 *            the modify id
-	 * @param view
-	 *            the view
-	 * @param newContent
-	 *            the new content for the commentary
-	 * @param model
-	 *            the model
-	 * @param userAuthenticated
-	 *            the user authenticated
-	 * @param session
-	 *            the session
+	 * @param modifyCommentId   the modify id
+	 * @param view              the view
+	 * @param newContent        the new content for the commentary
+	 * @param model             the model
+	 * @param userAuthenticated the user authenticated
+	 * @param session           the session
 	 * @return the string
 	 */
 	@PostMapping("modifyComment")
@@ -488,16 +449,11 @@ public class FeedViewController {
 	/**
 	 * Delete comment post mapping.
 	 *
-	 * @param view
-	 *            the view
-	 * @param deleteCommentId
-	 *            the comment id
-	 * @param model
-	 *            the model
-	 * @param userAuthenticated
-	 *            the user authenticated
-	 * @param session
-	 *            the session
+	 * @param view              the view
+	 * @param deleteCommentId   the comment id
+	 * @param model             the model
+	 * @param userAuthenticated the user authenticated
+	 * @param session           the session
 	 * @return the string
 	 */
 	@PostMapping("deleteComment")

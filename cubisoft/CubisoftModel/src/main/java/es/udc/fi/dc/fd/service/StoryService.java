@@ -1,5 +1,6 @@
 package es.udc.fi.dc.fd.service;
 
+import java.io.File;
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Story;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.repository.PictureRepository;
 import es.udc.fi.dc.fd.repository.StoryRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
@@ -27,9 +29,13 @@ import es.udc.fi.dc.fd.repository.UserProfileRepository;
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class StoryService {
 
-	/** The post repository. */
+	/** The story repository. */
 	@Autowired
 	private StoryRepository storyRepository;
+
+	/** The post repository. */
+	@Autowired
+	private PictureRepository pictureRepository;
 
 	@Autowired
 	private UserProfileRepository userProfileRepository;
@@ -92,39 +98,39 @@ public class StoryService {
 		return story;
 	}
 
-//	/**
-//	 * Method that deletes an existing story from the database.
-//	 *
-//	 * @param sessionPath the session path
-//	 * @param story       the story to delete.
-//	 * @return the error message if something unexpected happens.
-//	 */
-//
-//	@Transactional
-//	public String deleteStory(String sessionPath, Story story) {
-//
-//		if (story.getPicture().getAuthor().getUser_id() == story.getUser().getUser_id()) {
-//
-//			String folderPath = sessionPath + UPLOADS_FOLDER_NAME;
-//
-//			String imagePath = folderPath + "/" + story.getPicture().getImage_path();
-//			File pictureFile = new File(imagePath);
-//
-//			if (pictureFile.exists()) {
-//				boolean deleted = pictureFile.delete();
-//				if (!deleted) {
-//					return PICTURE_DELETE_ERROR;
-//				}
-//			}
-//
-//			pictureRepository.delete(story.getPicture());
-//		} else {
-//			storyRepository.delete(story);
-//		}
-//
-//		return "";
-//
-//	}
+	/**
+	 * Method that deletes an existing story from the database.
+	 *
+	 * @param sessionPath the session path
+	 * @param story       the story to delete.
+	 * @return the error message if something unexpected happens.
+	 */
+
+	@Transactional
+	public String deleteStory(String sessionPath, Story story) {
+
+		if (story.getPicture().getAuthor().getUser_id() == story.getUser().getUser_id()) {
+
+			String folderPath = sessionPath + UPLOADS_FOLDER_NAME;
+
+			String imagePath = folderPath + "/" + story.getPicture().getImage_path();
+			File pictureFile = new File(imagePath);
+
+			if (pictureFile.exists()) {
+				boolean deleted = pictureFile.delete();
+				if (!deleted) {
+					return PICTURE_DELETE_ERROR;
+				}
+			}
+
+			pictureRepository.delete(story.getPicture());
+		} else {
+			storyRepository.delete(story);
+		}
+
+		return "";
+
+	}
 
 	/**
 	 * Load feed. Returns the single story feed of an user
@@ -134,7 +140,7 @@ public class StoryService {
 	 * @param view              the view
 	 * @return the story feed.
 	 */
-	public List<Story> loadFeed(Long feedUserId, Principal userAuthenticated) {
+	public List<Story> loadFeed(Long feedUserId, Principal userAuthenticated, String sessionPath) {
 		List<Story> result = null;
 		UserProfile feedUser = null;
 
@@ -149,6 +155,7 @@ public class StoryService {
 			UserProfile userFound = userProfileRepository.findById(feedUserId).get();
 			// TODO aqui limpiar las historias viejas(solo de la bd)
 			// storyRepository.deleteOldStories(Calendar.getInstance());
+			deleteOldStories(userFound, sessionPath);
 			result = findUserStories(userFound);
 
 		} catch (InstanceNotFoundException e) {
@@ -156,6 +163,22 @@ public class StoryService {
 		}
 
 		return result;
+	}
+
+	/**
+	 * Deletes the expired stories in user's story feed
+	 *
+	 * @param user The owner of the feed that we want to clean.
+	 */
+	public void deleteOldStories(UserProfile user, String sessionPath) throws InstanceNotFoundException {
+		List<Story> list = findUserStories(user);
+		Calendar currentTime = Calendar.getInstance();
+		currentTime.set(Calendar.MILLISECOND, 0);
+		for (Story story : list) {
+			if (story.getExpiration().before(currentTime)) {
+				deleteStory(sessionPath, story);
+			}
+		}
 	}
 
 	/**

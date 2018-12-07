@@ -41,6 +41,6 @@ public interface StoryRepository extends JpaRepository<Story, Long> {
 	 * @param user the user
 	 * @return the list
 	 */
-	@Query("DELETE FROM Story s WHERE s.expiration<=:expiration")
+	@Query("DELETE FROM Story s WHERE s.expiration<:expiration")
 	void deleteOldStories(@Param("expiration") Calendar expiration);
 }
