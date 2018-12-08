@@ -15,6 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * The Class Picture. Represents a picture uploaded by the user on the
  * application.
@@ -23,19 +26,25 @@ import javax.persistence.TemporalType;
 public class Picture {
 
 	/** The picture id. */
+	@JsonProperty("picture_id")
 	private Long picture_id = -1L;
 
 	/** The description. */
+	@JsonProperty("description")
 	private String description;
 
 	/** The date. */
+	@JsonProperty("date")
 	private Calendar date;
 
 	/** The image path. */
+	@JsonProperty("image_path")
 	private String image_path;
 
+	@JsonIgnore
 	private UserProfile author;
 
+	@JsonIgnore
 	private List<PictureTag> picture_tags;
 
 	public Picture() {

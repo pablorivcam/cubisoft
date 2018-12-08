@@ -7,8 +7,9 @@
 
 	<header class="header" th:include="fragments/menu :: menu" /></header>
 
-	<section id="main-section" class="container-fluid">
-
+   <section id="main-section" class="container-fluid"
+   		th:style="'background: url(\''+@{/resources/images/background2.png}+ '\');background-repeat: no-repeat; background-size: cover'">
+   		
 		<div th:if="${error_message != null}">
 			<p class="alert alert-danger" role="alert" th:if="${!sucess}"
 				th:text="${error_message}">Error message</p>
@@ -16,7 +17,8 @@
 				th:text="${error_message}">Error message</p>
 		</div>
 
-		<h1 th:text="#{title.yourfollowsposts}">Your follows posts</h1>
+		<h1><span th:text="#{title.yourfollowsposts}">Your follows posts</span>
+			<span th:if="${hashtagsText}" th:text="${hashtagsText}"></span></h1>
 
 		<div th:if="${#lists.isEmpty(posts)}"
 			style="padding: 10px; background: #000000AA; text-align: center">
@@ -33,7 +35,7 @@
 			<tr th:each="post : ${posts}">
 				<td>
 					<!-- Parte de la visualización de la imagen -->
-					<div style="width: 75%; margin-left: 25%">
+						<div style="width: 400px; margin-left: 25%">
 						<div>
 							<a th:if="${post?.picture.description == 'trasco'}"
 								href="https://www.youtube.com/watch?v=eeP896-Fq0c"><img
@@ -44,11 +46,10 @@
 								width="400px" height="400px" /> <br />
 							<hr style="margin: 5px" />
 						</div>
-						<div style="width: 100%">
-							<div>
-								<span class="hashtags" th:text="${post?.picture.description}">Description
-									placeholder</span>
-							</div>
+						<div style="width: 80%">
+								<p th:utext="${pictureService.formatDescriptionToHTML(post?.picture.description)}">
+
+								</p>
 							<div>
 								<!-- Botón para los likes -->
 								<div th:if="!${likesService.existLikes(currentUser,post)}"

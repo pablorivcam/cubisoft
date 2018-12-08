@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * The Class Post. Class that model the posts shared by the users.
  */
@@ -19,23 +22,30 @@ import javax.persistence.OneToOne;
 public class Post {
 
 	/** The post id. */
+	@JsonProperty("post_id")
 	private Long post_id = -1L;
 
 	/** The date. */
+	@JsonProperty("date")
 	private Calendar date;
 
 	/** The picture. */
+	@JsonIgnore
 	private Picture picture;
 
 	/** The user. */
+	@JsonIgnore
 	private UserProfile user;
 
 	/** The views. */
+	@JsonProperty("views")
 	private Long views;
 
 	/** The number of likes. */
+	@JsonProperty("number_of_likes")
 	private Long number_of_likes;
-	
+
+	@JsonProperty("anonymousViews")
 	private Long anonymousViews;
 
 	/** The reshare status. */
@@ -63,7 +73,8 @@ public class Post {
 	 * @param reshare
 	 *            the reshare
 	 */
-	public Post(Calendar date, Picture picture, UserProfile user, Long views, Long number_of_likes,Long anonymousViews, Boolean reshare) {
+	public Post(Calendar date, Picture picture, UserProfile user, Long views, Long number_of_likes, Long anonymousViews,
+			Boolean reshare) {
 		this.date = date;
 		this.picture = picture;
 		this.user = user;
@@ -194,7 +205,7 @@ public class Post {
 	public void setNumber_of_likes(Long number_of_likes) {
 		this.number_of_likes = number_of_likes;
 	}
-	
+
 	/**
 	 * Gets the anonymous Views.
 	 *

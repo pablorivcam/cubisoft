@@ -1,8 +1,8 @@
 package es.udc.fi.dc.fd.controller.picture;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+
+import javax.management.InstanceNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,99 +11,47 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.fi.dc.fd.model.persistence.Picture;
+import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.service.PictureService;
+import es.udc.fi.dc.fd.service.PostService;
 
 @RestController
-@RequestMapping("picture")
+@RequestMapping("rest")
 public class PictureRestController {
 
 	@Autowired
 	private PictureService pictureService;
 
-	@GetMapping(path = "/", produces = "application/json")
-	public List<PictureDTO> findPicturesByDescription(
+	@Autowired
+	private PostService postService;
+
+	@GetMapping(path = "picture")
+	public List<Picture> findPicturesByDescription(
 			@RequestParam(value = "description", required = false) String description,
-			@RequestParam(value = "tags", required = false) String[] tags) {
+			@RequestParam(value = "hashtags", required = false) String[] hashtags) {
 		List<Picture> pictures = null;
 
 		if (description != null) {
 			pictures = pictureService.getPicturesByDescription(description);
 		}
 
-		if (tags != null) {
-			pictures = pictureService.getPicturesByHashtags(tags);
+		if (hashtags != null) {
+			pictures = pictureService.getPicturesByHashtags(hashtags);
 		}
 
-		List<PictureDTO> result = new ArrayList<>(pictures.size());
-		for (Picture p : pictures) {
-			result.add(new PictureDTO(p.getPicture_id(), p.getAuthor().getEmail(), p.getDescription(),
-					p.getImage_path(), p.getDate()));
-			p.setAuthor(null);
-		}
-
-		return result;
+		return pictures;
 	}
 
-	public static class PictureDTO {
+	@GetMapping(path = "post")
+	public List<Post> findPostsByHashtags(@RequestParam(value = "user", required = true) String user,
+			@RequestParam(value = "hashtags", required = true) String[] hashtags) throws InstanceNotFoundException {
+		List<Post> posts = null;
 
-		public PictureDTO(Long image_id, String author, String description, String image_path, Calendar date) {
-			this.image_id = image_id;
-			this.author = author;
-			this.description = description;
-			this.image_path = image_path;
-			this.date = date;
+		if (hashtags != null) {
+			posts = postService.findGlobalUserPostsByHashtags(user, hashtags);
 		}
 
-		private Long image_id;
-
-		private String author;
-
-		private String description;
-
-		private String image_path;
-
-		private Calendar date;
-
-		public Long getImage_id() {
-			return image_id;
-		}
-
-		public void setImage_id(Long image_id) {
-			this.image_id = image_id;
-		}
-
-		public String getAuthor() {
-			return author;
-		}
-
-		public void setAuthor(String author) {
-			this.author = author;
-		}
-
-		public String getDescription() {
-			return description;
-		}
-
-		public void setDescription(String description) {
-			this.description = description;
-		}
-
-		public String getImage_path() {
-			return image_path;
-		}
-
-		public void setImage_path(String image_path) {
-			this.image_path = image_path;
-		}
-
-		public Calendar getDate() {
-			return date;
-		}
-
-		public void setDate(Calendar date) {
-			this.date = date;
-		}
-
+		return posts;
 	}
 
 }

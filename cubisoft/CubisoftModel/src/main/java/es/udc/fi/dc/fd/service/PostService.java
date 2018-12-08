@@ -2,6 +2,7 @@ package es.udc.fi.dc.fd.service;
 
 import java.io.File;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,10 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.PostView;
+import es.udc.fi.dc.fd.model.persistence.Tag;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.repository.PictureRepository;
 import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.PostViewRepository;
+import es.udc.fi.dc.fd.repository.TagRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
 /**
@@ -43,6 +46,9 @@ public class PostService {
 
 	@Autowired
 	private PostViewRepository postViewRepository;
+
+	@Autowired
+	private TagRepository tagRepository;
 
 	private final static Logger logger = Logger.getLogger(PostService.class.getName());
 
@@ -269,6 +275,46 @@ public class PostService {
 	 */
 	public Post findByID(Long post_id) {
 		return postRepository.findPostByPostId(post_id);
+	}
+
+	/**
+	 * Find global user posts by hashtags.
+	 *
+	 * @param user
+	 *            the user
+	 * @param hashtags
+	 *            the hashtags
+	 * @return the list
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public List<Post> findGlobalUserPostsByHashtags(String user, String[] hashtags) throws InstanceNotFoundException {
+
+		UserProfile feedUser = null;
+
+		if (user != null) {
+			feedUser = userProfileRepository.findOneByEmail(user);
+		}
+
+		if (feedUser == null) {
+			throw new InstanceNotFoundException("The user with tha name " + user + " does not exist.");
+		}
+
+		List<Tag> tags = new ArrayList<>();
+
+		for (String hashtag : hashtags) {
+
+			if (tagRepository.existsByText(hashtag)) {
+				tags.add(tagRepository.findTagByText(hashtag));
+			}
+		}
+
+		if (tags.size() == 0) {
+			return new ArrayList<Post>();
+		}
+
+		return postRepository.findFollowsAndUserPostsByTags(feedUser, tags);
+
 	}
 
 }

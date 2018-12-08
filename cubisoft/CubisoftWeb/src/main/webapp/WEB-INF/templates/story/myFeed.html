@@ -6,8 +6,9 @@
 <body>
 	<header class="header" th:include="fragments/menu :: menu" /></header>
 
-	<section id="main-section" class="container-fluid">
-
+   <section id="main-section" class="container-fluid"
+   		th:style="'background: url(\''+@{/resources/images/background2.png}+ '\');background-repeat: no-repeat; background-size: cover'">
+   
 		<div th:if="${error_message != null}">
 			<p class="alert alert-danger" role="alert" th:if="${!sucess}"
 				th:text="${error_message}">Error message</p>

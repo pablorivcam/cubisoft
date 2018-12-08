@@ -2,7 +2,11 @@ package es.udc.fi.dc.fd.controller.post;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URLDecoder;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -13,16 +17,20 @@ import javax.management.InstanceNotFoundException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriTemplate;
 
 import es.udc.fi.dc.fd.model.persistence.Comment;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.service.CommentService;
 import es.udc.fi.dc.fd.service.LikesService;
 import es.udc.fi.dc.fd.service.NotLikedYetException;
@@ -90,6 +98,9 @@ public class FeedViewController {
 	@Autowired
 	private CommentService commentService;
 
+	@Autowired
+	private PostRepository postRepository;
+
 	private final static Logger logger = Logger.getLogger(FeedViewController.class.getName());
 
 	@Autowired
@@ -105,9 +116,12 @@ public class FeedViewController {
 	/**
 	 * Show my feed.
 	 *
-	 * @param model             the model
-	 * @param userAuthenticated the user authenticated
-	 * @param user_id           the user id
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param user_id
+	 *            the user id
 	 * @return the string
 	 */
 	@GetMapping(path = "/myFeed{user_id}")
@@ -122,15 +136,67 @@ public class FeedViewController {
 	/**
 	 * Show global feed.
 	 *
-	 * @param model             the model
-	 * @param userAuthenticated the user authenticated
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
 	 * @return the string
 	 */
 	@GetMapping(path = "/globalFeed")
-	public final String showGlobalFeed(final ModelMap model, Principal userAuthenticated) {
+	public final String showGlobalFeed(final ModelMap model, Principal userAuthenticated,
+			@RequestParam(value = "hashtags", required = false) String[] hashtags) {
 		// Loads required data into the model
+		List<Post> posts = new ArrayList<>();
+		UserProfile userFound = null;
 
-		loadViewModel(model, userAuthenticated, PostViewConstants.VIEW_GLOBAL_FEED, null);
+		if (hashtags != null) {
+			String tags = "", hashtagsText = "";
+
+			for (int i = 0; i < hashtags.length; i++) {
+				if (i != 0) {
+					tags += ",";
+				}
+				tags += hashtags[i];
+				hashtagsText += "#" + hashtags[i] + " ";
+			}
+
+			model.put("hashtagsText", hashtagsText);
+
+			String url = "http://{enpointUrl}?hashtags={hashtags}&user={user}";
+			URI expanded = new UriTemplate(url).expand("localhost:8080/CubisoftWeb/rest/post", tags,
+					userAuthenticated.getName()); // this is what
+
+			try {
+				url = URLDecoder.decode(expanded.toString(), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<Post[]> responseEntity = restTemplate.getForEntity(url, Post[].class);
+
+			for (Post p : responseEntity.getBody()) {
+				posts.add(postRepository.findPostByPostId(p.getPost_id()));
+			}
+
+		} else {
+			posts = postService.loadFeed(null, userAuthenticated, PostViewConstants.VIEW_GLOBAL_FEED);
+
+		}
+
+		if (userAuthenticated != null) {
+			UserProfile user = userProfileService.findUserByEmail(userAuthenticated.getName());
+			model.put("currentUser", user);
+			userFound = user;
+		}
+
+		model.put("userFound", userFound);
+		model.put("likesService", likesService);
+		model.put(PostViewConstants.PARAM_POSTS, posts);
+		model.put("postService", getPostService());
+		model.put("pictureService", pictureService);
+		model.put(PostViewConstants.PARAM_POSTVIEWS, postViewService.findPostsViews(posts));
+		model.put("commentService", commentService);
 
 		return PostViewConstants.VIEW_GLOBAL_FEED;
 	}
@@ -175,12 +241,18 @@ public class FeedViewController {
 	/**
 	 * Modify image description.
 	 *
-	 * @param modifyId          the modify id
-	 * @param view              the view
-	 * @param description       the description
-	 * @param model             the model
-	 * @param userAuthenticated the user authenticated
-	 * @param session           the session
+	 * @param modifyId
+	 *            the modify id
+	 * @param view
+	 *            the view
+	 * @param description
+	 *            the description
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param session
+	 *            the session
 	 * @return the string
 	 */
 	@PostMapping("modifyPicture")
@@ -210,11 +282,16 @@ public class FeedViewController {
 	/**
 	 * Delete post post mapping.
 	 *
-	 * @param view              the view
-	 * @param postId            the post id
-	 * @param model             the model
-	 * @param userAuthenticated the user authenticated
-	 * @param session           the session
+	 * @param view
+	 *            the view
+	 * @param postId
+	 *            the post id
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param session
+	 *            the session
 	 * @return the string
 	 */
 	@PostMapping("deletePost")
@@ -254,11 +331,16 @@ public class FeedViewController {
 	/**
 	 * Like post postmapping.
 	 *
-	 * @param view              the view
-	 * @param postId            the post id
-	 * @param model             the model
-	 * @param userAuthenticated the user authenticated
-	 * @param session           the http session
+	 * @param view
+	 *            the view
+	 * @param postId
+	 *            the post id
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param session
+	 *            the http session
 	 * @return string
 	 */
 	@PostMapping("likePost")
@@ -285,11 +367,16 @@ public class FeedViewController {
 	/**
 	 * Unlike post postmapping.
 	 *
-	 * @param view              the view
-	 * @param postId            the post id
-	 * @param model             the model
-	 * @param userAuthenticated the user authenticated
-	 * @param session           the http session
+	 * @param view
+	 *            the view
+	 * @param postId
+	 *            the post id
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param session
+	 *            the http session
 	 * @return string
 	 */
 	@PostMapping("unlikePost")
@@ -316,10 +403,14 @@ public class FeedViewController {
 	/**
 	 * Reshare post postmapping.
 	 *
-	 * @param postId            the post id
-	 * @param model             the model
-	 * @param userAuthenticated the user authenticated
-	 * @param session           the http session
+	 * @param postId
+	 *            the post id
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param session
+	 *            the http session
 	 * @return string
 	 */
 	@PostMapping("resharePost")
@@ -357,11 +448,16 @@ public class FeedViewController {
 	/**
 	 * Adds the comment.
 	 *
-	 * @param model             the model
-	 * @param userAuthenticated the user authenticated
-	 * @param view              the view
-	 * @param postId            the post id
-	 * @param text              the text
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param view
+	 *            the view
+	 * @param postId
+	 *            the post id
+	 * @param text
+	 *            the text
 	 * @return the string
 	 */
 	@PostMapping("addComment")
@@ -382,11 +478,16 @@ public class FeedViewController {
 	/**
 	 * Replys the comment.
 	 *
-	 * @param model             the model
-	 * @param userAuthenticated the user authenticated
-	 * @param view              the view
-	 * @param commentId         the comment id
-	 * @param text              the text
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param view
+	 *            the view
+	 * @param commentId
+	 *            the comment id
+	 * @param text
+	 *            the text
 	 * @return the string
 	 */
 	@PostMapping("replyComment")
@@ -408,12 +509,18 @@ public class FeedViewController {
 	/**
 	 * Edit a comment.
 	 *
-	 * @param modifyCommentId   the modify id
-	 * @param view              the view
-	 * @param newContent        the new content for the commentary
-	 * @param model             the model
-	 * @param userAuthenticated the user authenticated
-	 * @param session           the session
+	 * @param modifyCommentId
+	 *            the modify id
+	 * @param view
+	 *            the view
+	 * @param newContent
+	 *            the new content for the commentary
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param session
+	 *            the session
 	 * @return the string
 	 */
 	@PostMapping("modifyComment")
@@ -449,11 +556,16 @@ public class FeedViewController {
 	/**
 	 * Delete comment post mapping.
 	 *
-	 * @param view              the view
-	 * @param deleteCommentId   the comment id
-	 * @param model             the model
-	 * @param userAuthenticated the user authenticated
-	 * @param session           the session
+	 * @param view
+	 *            the view
+	 * @param deleteCommentId
+	 *            the comment id
+	 * @param model
+	 *            the model
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param session
+	 *            the session
 	 * @return the string
 	 */
 	@PostMapping("deleteComment")

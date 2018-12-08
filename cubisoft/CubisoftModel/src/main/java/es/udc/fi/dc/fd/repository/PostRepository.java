@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import es.udc.fi.dc.fd.model.persistence.Post;
+import es.udc.fi.dc.fd.model.persistence.Tag;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 
 /**
@@ -52,4 +53,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	 */
 	@Query("SELECT p FROM Post p where p.post_id=:post_id")
 	Post findPostByPostId(@Param("post_id") Long post_id);
+
+	@Query("SELECT p FROM Post p WHERE p.user "
+			+ "IN (SELECT f.followed_user FROM Follow f WHERE f.user=:user AND f.pending = FALSE)"
+			+ "OR p.user=:user AND p.picture IN (SELECT pt.picture FROM PictureTag pt WHERE pt.tag IN (:tags)) ORDER BY p.date DESC")
+	List<Post> findFollowsAndUserPostsByTags(@Param("user") UserProfile user, @Param("tags") List<Tag> tags);
+
 }
