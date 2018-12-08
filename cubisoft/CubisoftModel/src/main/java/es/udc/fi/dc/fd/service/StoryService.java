@@ -153,8 +153,6 @@ public class StoryService {
 				feedUserId = feedUser.getUser_id();
 			}
 			UserProfile userFound = userProfileRepository.findById(feedUserId).get();
-			// TODO aqui limpiar las historias viejas(solo de la bd)
-			// storyRepository.deleteOldStories(Calendar.getInstance());
 			deleteOldStories(userFound, sessionPath);
 			result = findUserStories(userFound);
 
@@ -182,10 +180,10 @@ public class StoryService {
 	}
 
 	/**
-	 * Find a post by its ID.
+	 * Find a story by its ID.
 	 *
-	 * @param post_id the post id
-	 * @return the post
+	 * @param story_id the story id
+	 * @return the story
 	 */
 	public Story findByID(Long story_id) {
 		return storyRepository.findStoryByStoryId(story_id);
