@@ -132,7 +132,7 @@
 
 		     <column name="user_id" type="BIGINT">
 		         <constraints nullable="false" 
-		         	foreignKeyName="story_user_id_fk" 
+		         	foreignKeyName="post_user_id_fk" 
                 	references="UserProfile(user_id)"
        	            />
 		     </column>
