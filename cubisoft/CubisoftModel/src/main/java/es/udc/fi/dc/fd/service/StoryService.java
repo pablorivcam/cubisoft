@@ -49,7 +49,8 @@ public class StoryService {
 	/**
 	 * Save.
 	 *
-	 * @param story the story
+	 * @param story
+	 *            the story
 	 * @return the picture
 	 */
 	@Transactional
@@ -60,9 +61,11 @@ public class StoryService {
 	/**
 	 * Method that fins all the user's storys.
 	 * 
-	 * @param user the user
+	 * @param user
+	 *            the user
 	 * @return the list of storys belonging to the user
-	 * @throws InstanceNotFoundException If the user does not exists
+	 * @throws InstanceNotFoundException
+	 *             If the user does not exists
 	 */
 	public List<Story> findUserStories(UserProfile user) throws InstanceNotFoundException {
 		if (user == null) {
@@ -77,11 +80,15 @@ public class StoryService {
 	/**
 	 * Method that creates a new story from an user and an existing picture.
 	 *
-	 * @param picture       the picture
-	 * @param user          the user
-	 * @param remainingTime the remaining lifetime for the story in seconds
+	 * @param picture
+	 *            the picture
+	 * @param user
+	 *            the user
+	 * @param remainingTime
+	 *            the remaining lifetime for the story in seconds
 	 * @return story the story including the date it will expire
-	 * @throws InstanceNotFoundException the instance not found exception
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
 	 */
 	@Transactional(noRollbackFor = Exception.class)
 	public Story newStory(Picture picture, UserProfile user, int remainingTime) throws InstanceNotFoundException {
@@ -101,8 +108,10 @@ public class StoryService {
 	/**
 	 * Method that deletes an existing story from the database.
 	 *
-	 * @param sessionPath the session path
-	 * @param story       the story to delete.
+	 * @param sessionPath
+	 *            the session path
+	 * @param story
+	 *            the story to delete.
 	 * @return the error message if something unexpected happens.
 	 */
 
@@ -135,9 +144,12 @@ public class StoryService {
 	/**
 	 * Load feed. Returns the single story feed of an user
 	 *
-	 * @param feedUserId        The owner of the feed that we want to return.
-	 * @param userAuthenticated the user authenticated
-	 * @param view              the view
+	 * @param feedUserId
+	 *            The owner of the feed that we want to return.
+	 * @param userAuthenticated
+	 *            the user authenticated
+	 * @param sessionPath
+	 *            the session Path
 	 * @return the story feed.
 	 */
 	public List<Story> loadFeed(Long feedUserId, Principal userAuthenticated, String sessionPath) {
@@ -166,7 +178,14 @@ public class StoryService {
 	/**
 	 * Deletes the expired stories in user's story feed
 	 *
-	 * @param user The owner of the feed that we want to clean.
+	 * @param user
+	 *            The owner of the feed that we want to clean.
+	 * @param sessionPath
+	 *            the session Path
+	 * 
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception*
+	 * 
 	 */
 	public void deleteOldStories(UserProfile user, String sessionPath) throws InstanceNotFoundException {
 		List<Story> list = findUserStories(user);
@@ -182,7 +201,8 @@ public class StoryService {
 	/**
 	 * Find a story by its ID.
 	 *
-	 * @param story_id the story id
+	 * @param story_id
+	 *            the story id
 	 * @return the story
 	 */
 	public Story findByID(Long story_id) {

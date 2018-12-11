@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
-
 public class SignUpForm implements Serializable {
 	/**
 	 * 
@@ -21,8 +19,6 @@ public class SignUpForm implements Serializable {
 	private String surname;
 	@NotEmpty
 	private String email;
-	@NotEmpty
-	private UserType userType;
 
 	public SignUpForm() {
 	}
@@ -67,21 +63,6 @@ public class SignUpForm implements Serializable {
 		this.email = email;
 	}
 
-	/**
-	 * @return the userType
-	 */
-	public UserType getUserType() {
-		return userType;
-	}
-
-	/**
-	 * @param userType
-	 *            the userType to set
-	 */
-	public void setUserType(UserType userType) {
-		this.userType = userType;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -90,8 +71,7 @@ public class SignUpForm implements Serializable {
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
-		return prime * result + ((userType == null) ? 0 : userType.hashCode());
+		return result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 	}
 
 	@Override
@@ -134,6 +114,6 @@ public class SignUpForm implements Serializable {
 	@Override
 	public String toString() {
 		return "SingUpForm [login=" + login + ", password=" + password + ", name=" + name + ", surname=" + surname
-				+ ", email=" + email + ", usertype=" + userType + "]";
+				+ ", email=" + email + "]";
 	}
 }

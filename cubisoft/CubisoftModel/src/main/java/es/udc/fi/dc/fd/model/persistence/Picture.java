@@ -62,6 +62,9 @@ public class Picture {
 	 *            the image path
 	 * @param author
 	 *            the author
+	 * 
+	 * @param picture_tags
+	 *            list of tags
 	 */
 	public Picture(String description, Calendar date, String image_path, UserProfile author,
 			List<PictureTag> picture_tags) {
@@ -183,6 +186,12 @@ public class Picture {
 		return picture_tags;
 	}
 
+	/**
+	 * Sets the tags.
+	 *
+	 * @param picture_tags
+	 *            the list of tags
+	 */
 	public void setPicture_tags(List<PictureTag> picture_tags) {
 		this.picture_tags = picture_tags;
 	}

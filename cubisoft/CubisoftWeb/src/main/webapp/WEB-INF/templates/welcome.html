@@ -37,21 +37,21 @@
 			<div class="welcome_button">
 				<a th:href="@{/post/globalFeed}">
 					<span class="glyphicon glyphicon-globe welcome_button_icon"></span>
-					<span th:text="#{label.globalfeed}">Global Feed</span>		
+					<span id="globalFeed" th:text="#{label.globalfeed}">Global Feed</span>		
 				</a>
 			</div>
 			
 			<div class="welcome_button welcome_button_alternative">
 				<a th:href="@{/account/list}">
 					<span class="fas fa-users welcome_button_icon"></span>
-					<span th:text="#{label.find_users}">Find Users</span>				
+					<span id="findUsers" th:text="#{label.find_users}">Find Users</span>				
 				</a>
 			</div>
 			
 			<div class="welcome_button">
 				<a th:href="@{/post/myFeed}">
 					<span class="glyphicon glyphicon-user welcome_button_icon"></span>
-					<span th:text="#{label.myfeed}">My Feed</span>			
+					<span id="myFeed" th:text="#{label.myfeed}">My Feed</span>			
 				</a>
 			</div>
 			</div>

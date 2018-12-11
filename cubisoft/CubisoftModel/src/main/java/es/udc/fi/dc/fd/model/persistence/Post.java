@@ -70,6 +70,9 @@ public class Post {
 	 *            the views
 	 * @param number_of_likes
 	 *            the number of likes
+	 * 
+	 * @param anonymousViews
+	 *            the number of anonymous views
 	 * @param reshare
 	 *            the reshare
 	 */

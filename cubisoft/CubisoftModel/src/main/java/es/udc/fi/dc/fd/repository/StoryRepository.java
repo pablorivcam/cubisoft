@@ -19,7 +19,8 @@ public interface StoryRepository extends JpaRepository<Story, Long> {
 	/**
 	 * Find user stories.
 	 *
-	 * @param user the user
+	 * @param user
+	 *            the user
 	 * @return the list
 	 */
 	@Query("SELECT s FROM Story s WHERE s.user=:user ORDER BY s.expiration DESC")
@@ -28,18 +29,19 @@ public interface StoryRepository extends JpaRepository<Story, Long> {
 	/**
 	 * Find one by story id.
 	 *
-	 * @param post_id the story id
+	 * @param story_id
+	 *            the story id
 	 * @return the story
 	 */
 	@Query("SELECT s FROM Story s where s.story_id=:story_id")
 	Story findStoryByStoryId(@Param("story_id") Long story_id);
 
-//	/**
-//	 * Delete old stories.
-//	 *
-//	 * @param user the user
-//	 * @return the list
-//	 */
-//	@Query("DELETE FROM Story s WHERE s.expiration<:expiration")
-//	void deleteOldStories(@Param("expiration") Calendar expiration);
+	// /**
+	// * Delete old stories.
+	// *
+	// * @param user the user
+	// * @return the list
+	// */
+	// @Query("DELETE FROM Story s WHERE s.expiration<:expiration")
+	// void deleteOldStories(@Param("expiration") Calendar expiration);
 }

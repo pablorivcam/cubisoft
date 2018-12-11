@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import es.udc.fi.dc.fd.model.form.SignUpForm;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.service.UserProfileService;
 
 @Controller
@@ -51,9 +52,8 @@ public class SignUpController {
 		if (errors.hasErrors()) {
 			return AccountViewConstants.VIEW_SIGNUP;
 		}
-		UserProfile account = userProfileService
-				.save(new UserProfile(signupForm.getLogin(), signupForm.getName(), signupForm.getSurname(),
-						signupForm.getPassword(), signupForm.getEmail(), null, null, signupForm.getUserType()));
+		UserProfile account = userProfileService.save(new UserProfile(signupForm.getLogin(), signupForm.getName(),
+				signupForm.getSurname(), signupForm.getPassword(), signupForm.getEmail(), null, null, UserType.PUBLIC));
 		userProfileService.signin(account);
 		// see /WEB-INF/i18n/messages.properties and
 		// /WEB-INF/views/homeSignedIn.html

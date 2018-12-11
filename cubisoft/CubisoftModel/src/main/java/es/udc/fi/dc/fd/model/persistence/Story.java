@@ -39,9 +39,12 @@ public class Story {
 	/**
 	 * Instantiates a new story.
 	 *
-	 * @param expirationDate the expiration date
-	 * @param picture        the picture
-	 * @param user           the user
+	 * @param expiration
+	 *            the expiration date
+	 * @param picture
+	 *            the picture
+	 * @param user
+	 *            the user
 	 */
 	public Story(Calendar expiration, Picture picture, UserProfile user) {
 		this.expiration = expiration;
@@ -66,7 +69,8 @@ public class Story {
 	/**
 	 * Sets the story id.
 	 *
-	 * @param post_id the new story id
+	 * @param story_id
+	 *            the new story id
 	 */
 	public void setStory_id(Long story_id) {
 		this.story_id = story_id;
@@ -85,7 +89,8 @@ public class Story {
 	/**
 	 * Sets the expiration date.
 	 *
-	 * @param date the new expiration date
+	 * @param expiration
+	 *            the new expiration date
 	 */
 	public void setExpiration(Calendar expiration) {
 		this.expiration = expiration;
@@ -105,7 +110,8 @@ public class Story {
 	/**
 	 * Sets the picture.
 	 *
-	 * @param picture the new picture
+	 * @param picture
+	 *            the new picture
 	 */
 	public void setPicture(Picture picture) {
 		this.picture = picture;
@@ -125,7 +131,8 @@ public class Story {
 	/**
 	 * Sets the user.
 	 *
-	 * @param user the new user
+	 * @param user
+	 *            the new user
 	 */
 	public void setUser(UserProfile user) {
 		this.user = user;
