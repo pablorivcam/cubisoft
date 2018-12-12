@@ -32,7 +32,7 @@ public class ITInterfaceWeb {
 
 	@Before
 	public void openFirefox() {
-		System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver", "geckodriver");
 
 		driver = new FirefoxDriver();
 
