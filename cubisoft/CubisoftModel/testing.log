@@ -5029,3 +5029,36 @@ Caused by: java.sql.SQLException: Access denied for user 'root'@'localhost'
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	... 71 more
+[DEBUG] 2018-12-14 16:53:20,550 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-14 16:53:20,618 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-14 16:53:20,659 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-14 16:53:20,736 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-14 16:53:20,766 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_

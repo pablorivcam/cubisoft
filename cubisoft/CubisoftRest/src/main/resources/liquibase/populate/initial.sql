@@ -91,6 +91,9 @@ INSERT INTO example_entities (name) VALUES
  
     INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
    	VALUES (11,'crack','Crack','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','crack@user.com','PUBLIC');
+
+    INSERT INTO UserProfile (user_id,login,firstName,lastName,password,email,userType) 
+   	VALUES (12,'bloqueado','Bloqueadin','1','$2a$10$vSoD57cWmHKV1I0oE75djeemKJknUfiuNvL9NoRMhhy7tvjSg4euK','bloqueado@user.com','PUBLIC');
  
    	
    INSERT INTO Follow (follow_id,user,followed_user,pending) 
@@ -100,3 +103,4 @@ INSERT INTO example_entities (name) VALUES
    	
    INSERT INTO Post(post_id,date,user_id,picture_id,views,number_of_likes,anonymousViews,reshare) VALUES (1,now(),1,1,0,0,0,0);
    
+   INSERT INTO Blocks(blocks_id,user,target,blockType) VALUES (1,2,12,'PROFILE')
