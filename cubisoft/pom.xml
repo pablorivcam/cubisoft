@@ -831,6 +831,8 @@
 	<!-- ********************************************** -->
 
 	<build>
+		<finalName>cubisoft</finalName>
+	
 		<defaultGoal>clean package</defaultGoal>
 		<resources>
 			<resource>
