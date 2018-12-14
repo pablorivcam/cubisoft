@@ -23,6 +23,9 @@
 	<artifactId>cubisoft</artifactId>
 	<version>4.0-RELEASE</version>
 	<packaging>pom</packaging>
+	<!-- build>
+		<finalName>cubisoft</finalName>
+	</build-->
 
 	<name>Cubisoft</name>
 	<description>Test project for FD 2018</description>

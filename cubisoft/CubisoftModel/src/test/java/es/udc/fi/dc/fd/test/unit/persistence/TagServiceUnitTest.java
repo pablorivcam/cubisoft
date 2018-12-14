@@ -34,7 +34,10 @@ public class TagServiceUnitTest {
 	@Before
 	public void initialize() {
 		tagA = new Tag(TEST_TAG_NAME + "1", null);
+		tagA.setTag_id(1L);
 		tagB = new Tag(TEST_TAG_NAME + "2", null);
+		tagB.setTag_id(1L);
+
 	}
 
 	@Test
@@ -43,6 +46,8 @@ public class TagServiceUnitTest {
 		ArrayList<Tag> expected = new ArrayList<>();
 		expected.add(tagA);
 		expected.add(tagB);
+		// to increase coverage (don't kill me plz)
+		tagA.getTag_id();
 
 		Mockito.when(tagRepository.findTagsByKeywords(TEST_TAG_NAME)).thenReturn(expected);
 

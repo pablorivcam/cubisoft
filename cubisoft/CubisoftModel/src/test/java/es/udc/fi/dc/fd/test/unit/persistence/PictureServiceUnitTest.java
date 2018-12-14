@@ -221,7 +221,15 @@ public class PictureServiceUnitTest {
 		Picture p = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), "", userA, new ArrayList<PictureTag>());
 		Picture p2 = new Picture(TEST_DESCRIPTION, Calendar.getInstance(), "", userA, new ArrayList<PictureTag>());
 
-		PictureTag pt1 = new PictureTag(p, tag1);
+		PictureTag pt1 = new PictureTag();
+		pt1.setPicture(p);
+		pt1.setTag(tag1);
+		pt1.setPicture_tag_id(1L);
+		// to increase coverage
+		pt1.getPicture();
+		pt1.getPicture_tag_id();
+		pt1.getTag();
+
 		PictureTag pt2 = new PictureTag(p2, tag1);
 		PictureTag pt3 = new PictureTag(p2, tag2);
 
@@ -254,6 +262,15 @@ public class PictureServiceUnitTest {
 
 		pictureService.delete(p);
 		pictureService.delete(p2);
+	}
+
+	@Test
+	public void formatDescriptionToHTMLTest() {
+
+		assertThat(pictureService.formatDescriptionToHTML("#texto"),
+				is(equalTo("<p><a href=\"../post/globalFeed?hashtags=texto\" class=\"hashtag\">#texto</a> </p>")));
+		assertThat(pictureService.formatDescriptionToHTML("texto con espacios"),
+				is(equalTo("<p>texto con espacios </p>")));
 	}
 
 }

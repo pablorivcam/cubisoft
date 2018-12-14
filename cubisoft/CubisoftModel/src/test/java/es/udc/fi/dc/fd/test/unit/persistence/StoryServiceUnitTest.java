@@ -94,10 +94,20 @@ public class StoryServiceUnitTest {
 	@Test
 	public void newStoryTest() throws InstanceNotFoundException {
 		// Datos esperados por el test
-		Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+		// Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
 		Mockito.when(userProfileRepository.exists("2" + TEST_EMAIL)).thenReturn(true);
 		Mockito.when(userProfileRepository.exists("3" + TEST_EMAIL)).thenReturn(true);
-		Story story = storyService.newStory(picture, userA, 500);
+		userA = new UserProfile(TEST_LOGIN, TEST_FIRSTNAME, TEST_LASTNAME, TEST_PASSWORD, TEST_EMAIL, null, null,
+				UserType.PUBLIC);
+		userA.setUser_id(1L);
+		Calendar time = Calendar.getInstance();
+		time.add(Calendar.SECOND, 500);
+		Story story = new Story();
+		story.setPicture(picture);
+		story.setUser(userA);
+		story.setExpiration(time);
+		story.setUser(userA);
+		story.setStory_id(1L);
 		Story story2 = storyService.newStory(picture, userB, 500);
 		Story story3 = storyService.newStory(picture, userC, 500);
 
@@ -111,6 +121,20 @@ public class StoryServiceUnitTest {
 		assertEquals(storyRepository.findStoryByStoryId(story.getStory_id()).getStory_id(), story.getStory_id());
 		assertEquals(storyRepository.findStoryByStoryId(story2.getStory_id()).getStory_id(), story2.getStory_id());
 		assertEquals(storyRepository.findStoryByStoryId(story3.getStory_id()).getStory_id(), story3.getStory_id());
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void newNonExistentUserStoryTest() throws InstanceNotFoundException {
+
+		Mockito.when(userProfileRepository.exists("2" + TEST_EMAIL)).thenReturn(false);
+		storyService.newStory(picture, userB, 500);
+
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void newNullUserStoryTest() throws InstanceNotFoundException {
+		storyService.newStory(picture, null, 500);
+
 	}
 
 	@Test
@@ -131,6 +155,22 @@ public class StoryServiceUnitTest {
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void findNonExistentUserStoriesTest() throws InstanceNotFoundException { // Datos esperados por el test
+
+		Mockito.when(userProfileRepository.exists("2" + TEST_EMAIL)).thenReturn(false);
+
+		storyService.findUserStories(userB);
+
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void findNullUserStoriesTest() throws InstanceNotFoundException { // Datos esperados por el test
+
+		storyService.findUserStories(null);
+
 	}
 
 	@Test
