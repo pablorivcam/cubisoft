@@ -149,7 +149,7 @@ public class FeedViewController {
 		List<Post> posts = new ArrayList<>();
 		UserProfile userFound = null;
 
-		if (hashtags != null) {
+		if (hashtags != null & hashtags.length > 0) {
 			String tags = "", hashtagsText = "";
 
 			for (int i = 0; i < hashtags.length; i++) {

@@ -30,6 +30,18 @@
 				style="margin: 10px">Find Users</a>
 
 		</div>
+		
+		<div>
+		
+			<form method="get" action="../post/globalFeed?hashtags=reto">
+			
+				<input style="width: 300px; display: inline" type="text"
+					class="form-control" id="hashtags" placeholder="Hashtag" name="hashtags" />
+				<button class="btn btn-info" role="button" type="submit">Find</button>
+			
+			</form>
+		
+		</div>
 
 		<table class="table table-striped display">
 			<tr th:each="post : ${posts}">

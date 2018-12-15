@@ -95,8 +95,10 @@ INSERT INTO example_entities (name) VALUES
    	
    INSERT INTO Follow (follow_id,user,followed_user,pending) 
    	VALUES (1,2,1,false);
-   	
-   INSERT INTO Picture (picture_id,description,image_path,date,user_id) VALUES (1,'asdfgasdfghg','null',now(),1);
-   	
+   	   	
+   INSERT INTO Picture (picture_id,description,image_path,date,user_id) VALUES (1,'asdfgasdfghg #hashtag1','null',now(),1);
+   INSERT INTO Tag (tag_id,text) VALUES (1,'hashtag1');
+   INSERT INTO PictureTag (picture_tag_id,tag,picture) VALUES (1,1,1);   
+   
    INSERT INTO Post(post_id,date,user_id,picture_id,views,number_of_likes,anonymousViews,reshare) VALUES (1,now(),1,1,0,0,0,0);
    
