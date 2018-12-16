@@ -87,7 +87,6 @@ public class PictureUploaderController {
 		}
 
 		return "redirect:../" + PostViewConstants.VIEW_POST_LIST;
-
 	}
 
 	/**

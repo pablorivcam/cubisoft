@@ -19,28 +19,20 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class UserProfile {
-
 	/** The user id. */
 	private Long user_id = -1L;
-
 	/** The login. */
 	private String login;
-
 	/** The first name. */
 	private String firstName;
-
 	/** The last name. */
 	private String lastName;
-
 	/** The password. */
 	private String password;
-
 	/** The email. */
 	private String email;
-
 	/** The follows. */
 	private List<Follow> follows;
-
 	/** The posts. */
 	private List<Post> posts;
 
@@ -268,5 +260,4 @@ public class UserProfile {
 	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
-
 }

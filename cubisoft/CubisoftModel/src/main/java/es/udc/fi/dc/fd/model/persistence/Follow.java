@@ -15,16 +15,12 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Follow {
-
 	/** The follow id. */
 	private Long follow_id = -1L;
-
 	/** The user. */
 	private UserProfile user;
-
 	/** The followed user. */
 	private UserProfile followed_user;
-
 	/** The status of follow. */
 	private Boolean pending;
 
@@ -128,5 +124,4 @@ public class Follow {
 	public void setPending(Boolean pending) {
 		this.pending = pending;
 	}
-
 }

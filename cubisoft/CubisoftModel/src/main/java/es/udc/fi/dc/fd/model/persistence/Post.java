@@ -20,34 +20,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @Entity
 public class Post {
-
 	/** The post id. */
 	@JsonProperty("post_id")
 	private Long post_id = -1L;
-
 	/** The date. */
 	@JsonProperty("date")
 	private Calendar date;
-
 	/** The picture. */
 	@JsonIgnore
 	private Picture picture;
-
 	/** The user. */
 	@JsonIgnore
 	private UserProfile user;
-
 	/** The views. */
 	@JsonProperty("views")
 	private Long views;
-
 	/** The number of likes. */
 	@JsonProperty("number_of_likes")
 	private Long number_of_likes;
 
 	@JsonProperty("anonymousViews")
 	private Long anonymousViews;
-
 	/** The reshare status. */
 	private Boolean reshare;
 
@@ -86,7 +79,6 @@ public class Post {
 		this.anonymousViews = anonymousViews;
 		this.reshare = reshare;
 		date.set(Calendar.MILLISECOND, 0);
-
 	}
 
 	/**
@@ -244,5 +236,4 @@ public class Post {
 	public void setReshare(Boolean reshare) {
 		this.reshare = reshare;
 	}
-
 }

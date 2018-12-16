@@ -20,7 +20,6 @@ import es.udc.fi.dc.fd.service.UserProfileService;
 
 @Controller
 public class SignUpController {
-
 	@Autowired
 	private UserProfileService userProfileService;
 
@@ -59,5 +58,4 @@ public class SignUpController {
 		// /WEB-INF/views/homeSignedIn.html
 		return "redirect:/";
 	}
-
 }

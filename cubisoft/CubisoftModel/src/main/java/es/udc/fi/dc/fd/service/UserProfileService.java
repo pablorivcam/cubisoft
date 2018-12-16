@@ -33,11 +33,10 @@ import es.udc.fi.dc.fd.repository.UserProfileRepository;
 public class UserProfileService implements UserDetailsService {
 
 	public static final String DEFAULT_ROLE = "USER";
-
+	
 	/** The user profile repository. */
 	@Autowired
 	private UserProfileRepository userProfileRepository;
-
 	/** The password encoder. */
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -124,13 +123,10 @@ public class UserProfileService implements UserDetailsService {
 				PageRequest.of(startIndex, count));
 
 		return new Block<>(users.getContent(), users.hasNext());
-
 	}
 
 	public UserProfile changeUserProfileType(UserProfile account, UserType userType) {
-
 		account.setUserType(userType);
-
 		return userProfileRepository.save(account);
 	}
 }
