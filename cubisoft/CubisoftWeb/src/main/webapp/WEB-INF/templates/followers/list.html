@@ -46,7 +46,9 @@
 	               				<button  id="unblockStories" th:text="#{button.unblockStories}" type="submit" class="btn btn-danger">Stories</button>	
 	               		</form>
 	               	</td>
-	               	<td><form id="kickFollowerForm" action="#" th:action="@{/followers/kickFollower}" class="form-narrow form-horizontal" method="post">
+	               	<td th:if="${viewer.getUserType().toString()=='PRIVATE'}">
+	               		<form id="kickFollowerForm" action="#" th:action="@{/followers/kickFollower}" class="form-narrow form-horizontal" 
+	               			method="post">
 	               		<input type="hidden" id="userId" name="userId" th:value="${follow?.user.user_id}">              					
 	               		<button id="kick" th:text="#{button.kickFollower}" type="submit" class="btn btn-danger">Kick</button>	
 	               	</form> </td>

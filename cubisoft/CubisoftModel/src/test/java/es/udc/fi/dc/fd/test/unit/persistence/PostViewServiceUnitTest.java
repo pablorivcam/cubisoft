@@ -104,14 +104,12 @@ public class PostViewServiceUnitTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void FindPostViewByPostNullUserTest() throws InstanceNotFoundException {
+	public void findPostViewByPostNullUserTest() throws InstanceNotFoundException {
 		assertThat(postViewService.findPostViewByPostUser(postA1, null), is(equalTo(null)));
 	}
 
 	@Test(expected = InstanceNotFoundException.class)
-	public void FindNonExistentPostViewTest() throws InstanceNotFoundException {
-		UserProfile user = new UserProfile();
-		user.setUser_id((long) 1);
+	public void findNonExistentPostViewTest() throws InstanceNotFoundException {
 		Mockito.when(postRepository.existsById(postA1.getPost_id())).thenReturn(false);
 
 		assertThat(postViewService.findPostViewByPostUser(postA1, userA), is(equalTo(null)));

@@ -338,7 +338,8 @@ public class PictureService {
 
 		}
 
-		return result += "</p>";
+		result += "</p>";
+		return result;
 
 	}
 

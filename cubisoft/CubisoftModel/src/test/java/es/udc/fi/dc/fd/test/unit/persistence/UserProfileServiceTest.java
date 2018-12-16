@@ -87,7 +87,7 @@ public class UserProfileServiceTest {
 	}
 
 	@Test
-	public void SaveUserTest() {
+	public void saveUserTest() {
 
 		Mockito.when(userProfileRepository.save(userA)).thenReturn(userA);
 
@@ -116,7 +116,7 @@ public class UserProfileServiceTest {
 	}
 
 	@Test
-	public void ValidateUserTest() {
+	public void validateUserTest() {
 
 		Mockito.when(userProfileRepository.findOneByEmail(userA.getEmail())).thenReturn(userA);
 
@@ -125,7 +125,7 @@ public class UserProfileServiceTest {
 	}
 
 	@Test
-	public void SignInTest() {
+	public void signInTest() {
 
 		userProfileService.signin(userA);
 		assertThat(SecurityContextHolder.getContext().getAuthentication(), is(equalTo(authenticate(userA))));

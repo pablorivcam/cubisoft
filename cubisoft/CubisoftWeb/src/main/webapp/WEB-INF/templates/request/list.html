@@ -19,9 +19,9 @@
 								
 			</tr>	 
             <tr th:each="request : ${requests}">
-            		<td><span th:remove="tag" th:text="${request?.followed_user.login}">Login</span></td>
-            		<td><span th:remove="tag" th:text="${request?.followed_user.firstName}">Name</span></td>
-            		<td><span th:remove="tag" th:text="${request?.followed_user.lastName}">Lastname</span></td>
+            		<td><span th:remove="tag" th:text="${request?.user.login}">Login</span></td>
+            		<td><span th:remove="tag" th:text="${request?.user.firstName}">Name</span></td>
+            		<td><span th:remove="tag" th:text="${request?.user.lastName}">Lastname</span></td>
             		<td>
             			<form id="acceptRequestForm" action="#" th:action="@{/request/acceptRequest}"
 							class="form-narrow form-horizontal" method="post">

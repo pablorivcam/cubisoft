@@ -179,7 +179,7 @@ public class BlocksServiceUnitTest {
 		Mockito.when(blocksRepository.save(block_posts1)).thenReturn(block_posts1);
 		Mockito.when(blocksRepository.checkBlock(userB, userC, BlockType.PROFILE)).thenReturn(false);
 
-		Blocks blockT1 = blocksService.newBlocks(userB, userC, BlockType.PROFILE);
+		blocksService.newBlocks(userB, userC, BlockType.PROFILE);
 
 		Mockito.when(blocksRepository.checkBlock(userB, userC, BlockType.PROFILE)).thenReturn(true);
 
