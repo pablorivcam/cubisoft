@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: header" />
+<body>
+	<header class="header" th:include="fragments/menu :: menu" /></header>
+   
+	<section id="main-section" class="container-fluid">
+	 <h1 th:text="#{title.yourrequests}">Your requests</h1>
+	 
+		<table class="table table-striped display">
+			<tr>
+				<th th:text="#{label.login}">Login</th>
+				<th th:text="#{label.name}">Name</th>
+				<th th:text="#{label.surname}">Surname</th>
+				<th></th>
+				<th></th>
+								
+			</tr>	 
+            <tr th:each="request : ${requests}">
+            		<td><span th:remove="tag" th:text="${request?.user.login}">Login</span></td>
+            		<td><span th:remove="tag" th:text="${request?.user.firstName}">Name</span></td>
+            		<td><span th:remove="tag" th:text="${request?.user.lastName}">Lastname</span></td>
+            		<td>
+            			<form id="acceptRequestForm" action="#" th:action="@{/request/acceptRequest}"
+							class="form-narrow form-horizontal" method="post">
+							<input type="hidden" id="follow_id" name="follow_id" th:value="${request?.follow_id}">
+							<button th:text="#{button.accept}" type="submit" id="requestOk"
+								class="btn btn-danger">Accept</button>
+						</form>
+					</td>
+					<td>
+            			<form id="cancelRequestForm" action="#" th:action="@{/request/cancelRequest}"
+							class="form-narrow form-horizontal" method="post">
+							<input type="hidden" id="follow_id" name="follow_id" th:value="${request?.follow_id}">
+							<button th:text="#{button.cancel}" type="submit" id="requestCancel"
+								class="btn btn-danger">Cancel</button>
+						</form>
+					</td>	
+            </tr>	 
+
+      </table>
+	</section>
+	<footer>
+      <div th:include="fragments/scripts :: general" />
+	</footer>
+</body>
+</html>

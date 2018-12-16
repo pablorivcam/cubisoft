@@ -1,0 +1,15 @@
+<div th:fragment="general" xmlns:th="http://www.thymeleaf.org">
+   <!-- Global scripts -->
+   <script th:src="@{/static/jquery/jquery.min.js}"></script>
+   <script th:src="@{/static/bootstrap/js/bootstrap.min.js}"></script>
+   <script th:src="@{/static/datatables/js/jquery.dataTables.min.js}"></script>
+   <script th:src="@{/static/datatables/js/dataTables.bootstrap.min.js}"></script>
+   <script th:src="@{/static/js/initialize.js}"></script>
+
+	<div class="container-fluid text-center text-md-left" style="background-color:#333333; color:#cccccc">
+		<div class="navbar-text">
+			<img width="100px" th:src="@{/resources/images/headeroff2.png}"/><span>- ${project.version} - 2018</span>
+		</div>
+	</div>
+
+</div>

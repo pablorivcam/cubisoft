@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: header" />
+<body>
+	<header class="header" th:include="fragments/menu :: menu" /></header>
+
+   <section id="main-section" class="container-fluid"
+   		th:style="'background: url(\''+@{/resources/images/background2.png}+ '\');background-repeat: no-repeat; background-size: cover'">
+   
+		<div th:if="${error_message != null}">
+			<p class="alert alert-danger" role="alert" th:if="${!sucess}"
+				th:text="${error_message}">Error message</p>
+			<p class="alert alert-success" role="alert" th:if="${sucess}"
+				th:text="${error_message}">Error message</p>
+		</div>
+
+		<h1 th:if="${userFound != null}" th:text="${userFound.login}+' stories'">Your
+			stories</h1>
+		<h1 th:if="${userFound == null}" th:text="#{title.yourStories}">Your
+			stories</h1>
+
+		<div
+			th:if="${userFound != null AND userFound.getUserType().toString()=='PRIVATE' AND currentUser == null}">
+			<div
+				style="padding: 10px; background: #000000AA; text-align: center; margin-bottom: 20px">
+				<h2 th:text="#{label.privateProfile}" style="color: white;">Private
+					Profile</h2>
+			</div>
+		</div>
+		<div
+			th:if="${(userFound != null AND userFound.getUserType().toString()=='PUBLIC') OR currentUser != null}">
+			<div th:if="${#lists.isEmpty(stories)}"
+				style="padding: 10px; background: #000000AA; text-align: center">
+				<h2 th:text="#{message.nostories}" style="color: white">No stories</h2>
+				<a th:if="${userFound == null}" href="#" th:text="#{label.upload}"
+					th:href="@{/picture/upload}" class="btn btn-info" role="button"
+					style="margin: 10px">Go to feed</a>
+			</div>
+
+			<table class="table table-striped display">
+				<tr th:each="story : ${stories}">
+					<td>
+						<!-- Parte de la visualización de la imagen -->
+						<div style="width: 400px; margin-left: 25%">
+							<div>
+								<img th:src="@{'/Pictures/' + ${story?.picture.image_path}}"
+									width="400px" /> <br />
+								<hr style="margin: 5px" />
+							</div>
+							<div style="width: 80%">
+
+								<p th:utext="${pictureService.formatDescriptionToHTML(story?.picture.description)}">
+
+								</p>	
+							</div>
+						</div>	
+					</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+	<footer>
+		<div th:include="fragments/scripts :: general" />
+	</footer>
+</body>
+</html>
