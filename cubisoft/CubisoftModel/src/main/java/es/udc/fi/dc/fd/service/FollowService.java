@@ -83,6 +83,20 @@ public class FollowService {
 	}
 
 	/**
+	 * Method that obtains all the user followers.
+	 *
+	 * @param user
+	 *            the user
+	 * @return the user's followers
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	@Transactional(noRollbackFor = Exception.class)
+	public List<Follow> getUserFollowers(UserProfile user) throws InstanceNotFoundException {
+		return followRepository.findFollowsByFollowedUser(user);
+	}
+
+	/**
 	 * Method that returns true if an user is following the another or false in
 	 * another case.
 	 *

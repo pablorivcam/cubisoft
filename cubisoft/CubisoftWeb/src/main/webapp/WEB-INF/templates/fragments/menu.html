@@ -49,6 +49,7 @@
 		                    <li><a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/post/globalFeed}" th:text="#{label.globalfeed}">Global Feed</a></li>  
 		                    <li><a th:href="@{/account/list}" th:text="#{label.find_users}">Find Users</a></li>
 		                    <li><a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/followed/list}" th:text="#{label.myfollows}">My Follows</a></li>
+		                    <li><a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/followers/list}" th:text="#{label.myfollowers}">My Followers</a></li>
 							<li><a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/settings/view}" th:text="#{label.settings}">My Settings</a></li>
 
 		                    <li><a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/request/list}" th:text="#{label.myrequests}">Requests</a></li>

@@ -16,11 +16,13 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.fi.dc.fd.model.persistence.Blocks.BlockType;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.PostView;
 import es.udc.fi.dc.fd.model.persistence.Tag;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.repository.BlocksRepository;
 import es.udc.fi.dc.fd.repository.PictureRepository;
 import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.PostViewRepository;
@@ -46,6 +48,9 @@ public class PostService {
 
 	@Autowired
 	private PostViewRepository postViewRepository;
+
+	@Autowired
+	private BlocksRepository blocksRepository;
 
 	@Autowired
 	private TagRepository tagRepository;
@@ -87,27 +92,47 @@ public class PostService {
 		if (!userProfileRepository.exists(user.getEmail())) {
 			throw new InstanceNotFoundException("The user with the mail" + user.getEmail() + " doesnt exists.");
 		}
-
-		return postRepository.findUserFollowsPosts(user);
+		// Filter the posts in case the user is blocked by the post owner
+		List<Post> blockedPosts = postRepository.findUserFollowsPosts(user);
+		List<Post> notBlockedPosts = new ArrayList<Post>();
+		for (Post post : blockedPosts) {
+			if (!blocksRepository.checkBlock(post.getUser(), user, BlockType.PROFILE)) {
+				notBlockedPosts.add(post);
+			}
+		}
+		return notBlockedPosts;
 	}
 
 	/**
-	 * Method that fins all the user's posts.
+	 * Method that finds all the user's posts.
 	 * 
 	 * @param user
 	 *            the user
+	 * @param loggedUser
+	 *            the logged user
 	 * @return the list of posts belonging to the user
 	 * @throws InstanceNotFoundException
 	 *             If the user does not exists
 	 */
-	public List<Post> findUserPosts(UserProfile user) throws InstanceNotFoundException {
+	public List<Post> findUserPosts(UserProfile user, UserProfile loggedUser) throws InstanceNotFoundException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
 		}
 		if (!userProfileRepository.exists(user.getEmail())) {
 			throw new InstanceNotFoundException("The user with the mail" + user.getEmail() + " doesnt exists.");
 		}
-		return postRepository.findUserPosts(user);
+		if (loggedUser == null || !userProfileRepository.exists(user.getEmail())) {
+			return postRepository.findUserPosts(user);
+		}
+		// Filter the posts in case the user is blocked by the post owner
+		List<Post> blockedPosts = postRepository.findUserPosts(user);
+		List<Post> notBlockedPosts = new ArrayList<Post>();
+		for (Post post : blockedPosts) {
+			if (!blocksRepository.checkBlock(post.getUser(), loggedUser, BlockType.PROFILE)) {
+				notBlockedPosts.add(post);
+			}
+		}
+		return notBlockedPosts;
 	}
 
 	public List<Post> findFollowsAndUserPosts(UserProfile user) throws InstanceNotFoundException {
@@ -117,7 +142,15 @@ public class PostService {
 		if (!userProfileRepository.exists(user.getEmail())) {
 			throw new InstanceNotFoundException("The user with the mail" + user.getEmail() + " doesnt exists.");
 		}
-		return postRepository.findFollowsAndUserPosts(user);
+		// Filter the posts in case the user is blocked by the post owner
+		List<Post> blockedPosts = postRepository.findFollowsAndUserPosts(user);
+		List<Post> notBlockedPosts = new ArrayList<Post>();
+		for (Post post : blockedPosts) {
+			if (!blocksRepository.checkBlock(post.getUser(), user, BlockType.PROFILE)) {
+				notBlockedPosts.add(post);
+			}
+		}
+		return notBlockedPosts;
 	}
 
 	/**
@@ -194,7 +227,6 @@ public class PostService {
 	 */
 	@Transactional(noRollbackFor = Exception.class)
 	public Post newReshare(Post post, UserProfile user) throws InstanceNotFoundException {
-		// TODO falta comprobar que el post no sea null o que no exista
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null");
 		}
@@ -210,21 +242,20 @@ public class PostService {
 
 	/**
 	 * Load feed. Returns the global/single feed of an user and adds a anonymous
-	 * vbiew to all the posts if the param userAuthenticated is false or creates the
-	 * view in another case.
+	 * vbiew to all the posts if the param userAuthenticated is false or creates
+	 * the view in another case.
 	 *
 	 * @param feedUserId
 	 *            The owner of the feed that we want to return.
 	 * @param userAuthenticated
 	 *            the user authenticated
 	 * @param view
-	 *            the view. This method will return the global feed if this param is
-	 *            post/globalFeed or the single feed in another case.
+	 *            the view. This method will return the global feed if this
+	 *            param is post/globalFeed or the single feed in another case.
 	 * @return the post feed.
 	 */
 	public List<Post> loadFeed(Long feedUserId, Principal userAuthenticated, String view) {
 		List<Post> result = null;
-
 		UserProfile feedUser = null;
 
 		if (userAuthenticated != null) {
@@ -241,8 +272,7 @@ public class PostService {
 					feedUserId = feedUser.getUser_id();
 				}
 				UserProfile userFound = userProfileRepository.findById(feedUserId).get();
-				result = findUserPosts(userFound);
-				// model.put("userFound", userFound);
+				result = findUserPosts(userFound, feedUser);
 			}
 
 			if (feedUser != null) {
@@ -251,7 +281,6 @@ public class PostService {
 						postViewRepository.save(new PostView(feedUser, post));
 					}
 				}
-				// model.put("currentUser", user);
 			} else {
 				for (Post post : result) {
 					post.setAnonymousViews(post.getAnonymousViews() + 1);
@@ -312,9 +341,15 @@ public class PostService {
 		if (tags.size() == 0) {
 			return new ArrayList<Post>();
 		}
-
-		return postRepository.findFollowsAndUserPostsByTags(feedUser, tags);
-
+		// Filter the posts in case the user is blocked by the post owner
+		List<Post> blockedPosts = postRepository.findFollowsAndUserPostsByTags(feedUser, tags);
+		List<Post> notBlockedPosts = new ArrayList<Post>();
+		for (Post post : blockedPosts) {
+			if (!blocksRepository.checkBlock(post.getUser(), feedUser, BlockType.PROFILE)) {
+				notBlockedPosts.add(post);
+			}
+		}
+		return notBlockedPosts;
 	}
 
 }

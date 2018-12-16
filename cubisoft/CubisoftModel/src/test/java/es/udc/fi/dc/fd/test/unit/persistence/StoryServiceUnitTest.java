@@ -26,6 +26,7 @@ import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Story;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
+import es.udc.fi.dc.fd.repository.BlocksRepository;
 import es.udc.fi.dc.fd.repository.PictureRepository;
 import es.udc.fi.dc.fd.repository.StoryRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
@@ -51,6 +52,9 @@ public class StoryServiceUnitTest {
 
 	@Mock
 	private PictureRepository pictureRepository;
+
+	@Mock
+	private BlocksRepository blocksRepository;
 
 	@InjectMocks
 	private StoryService storyService;
@@ -83,7 +87,8 @@ public class StoryServiceUnitTest {
 		storyB2 = new Story(Calendar.getInstance(), picture, userB);
 	}
 
-//TODO hay que completar los tests para comprobar excepciones donde las haya
+	// TODO hay que completar los tests para comprobar excepciones donde las
+	// haya
 	@Test
 	public void saveTest() {
 		Mockito.when(storyRepository.save(storyA1)).thenReturn(storyA1);
@@ -147,7 +152,7 @@ public class StoryServiceUnitTest {
 		Mockito.when(storyRepository.findUserStories(userB)).thenReturn(storiesB);
 
 		try {
-			assertThat(storyService.findUserStories(userB), is(equalTo(storiesB)));
+			assertThat(storyService.findUserStories(userB, null), is(equalTo(storiesB)));
 		} catch (
 
 		InstanceNotFoundException e) {
@@ -158,18 +163,26 @@ public class StoryServiceUnitTest {
 	}
 
 	@Test(expected = InstanceNotFoundException.class)
-	public void findNonExistentUserStoriesTest() throws InstanceNotFoundException { // Datos esperados por el test
+	public void findNonExistentUserStoriesTest() throws InstanceNotFoundException { // Datos
+																					// esperados
+																					// por
+																					// el
+																					// test
 
 		Mockito.when(userProfileRepository.exists("2" + TEST_EMAIL)).thenReturn(false);
 
-		storyService.findUserStories(userB);
+		storyService.findUserStories(userB, null);
 
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void findNullUserStoriesTest() throws InstanceNotFoundException { // Datos esperados por el test
+	public void findNullUserStoriesTest() throws InstanceNotFoundException { // Datos
+																				// esperados
+																				// por
+																				// el
+																				// test
 
-		storyService.findUserStories(null);
+		storyService.findUserStories(null, null);
 
 	}
 

@@ -27,6 +27,7 @@ import es.udc.fi.dc.fd.model.persistence.Post;
 import es.udc.fi.dc.fd.model.persistence.Tag;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
+import es.udc.fi.dc.fd.repository.BlocksRepository;
 import es.udc.fi.dc.fd.repository.PictureRepository;
 import es.udc.fi.dc.fd.repository.PostRepository;
 import es.udc.fi.dc.fd.repository.PostViewRepository;
@@ -48,17 +49,16 @@ public class PostServiceUnitTest {
 
 	@Mock
 	private PostRepository postRepository;
-
 	@Mock
 	private UserProfileRepository userProfileRepository;
-
 	@Mock
 	private PostViewRepository postViewRepository;
-
 	@Mock
 	private PictureRepository pictureRepository;
 	@Mock
 	private TagRepository tagRepository;
+	@Mock
+	private BlocksRepository blocksRepository;
 
 	@InjectMocks
 	private PostService postService;
@@ -154,10 +154,8 @@ public class PostServiceUnitTest {
 		Mockito.when(postRepository.findUserPosts(userB)).thenReturn(postsB);
 
 		try {
-			assertThat(postService.findUserPosts(userB), is(equalTo(postsB)));
-		} catch (
-
-		InstanceNotFoundException e) {
+			assertThat(postService.findUserPosts(userB, null), is(equalTo(postsB)));
+		} catch (InstanceNotFoundException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -166,7 +164,7 @@ public class PostServiceUnitTest {
 
 	@Test(expected = NullPointerException.class)
 	public void findNullUserPostsTest() throws InstanceNotFoundException {
-		postService.findUserPosts(null);
+		postService.findUserPosts(null, null);
 	}
 
 	@Test(expected = InstanceNotFoundException.class)
@@ -175,7 +173,7 @@ public class PostServiceUnitTest {
 		user.setEmail("");
 		Mockito.when(userProfileRepository.exists(user.getEmail())).thenReturn(false);
 
-		postService.findUserPosts(user);
+		postService.findUserPosts(user, null);
 	}
 
 	@Test
@@ -445,17 +443,19 @@ public class PostServiceUnitTest {
 
 		postService.findGlobalUserPostsByHashtags(null, list);
 	}
-//
-//	@Test(expected = NullPointerException.class)
-//	public void findGlobalNonExistentUserPostsByHashtagsTest() throws InstanceNotFoundException {
-//		Mockito.when(userProfileRepository.findOneByEmail(TEST_EMAIL)).thenReturn(null);
-//		// Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
-//
-//		Tag tag = new Tag("tag", null);
-//		String[] list = new String[1];
-//		list[0] = tag.getText();
-//
-//		postService.findGlobalUserPostsByHashtags(TEST_EMAIL, list);
-//	}
+	//
+	// @Test(expected = NullPointerException.class)
+	// public void findGlobalNonExistentUserPostsByHashtagsTest() throws
+	// InstanceNotFoundException {
+	// Mockito.when(userProfileRepository.findOneByEmail(TEST_EMAIL)).thenReturn(null);
+	// //
+	// Mockito.when(userProfileRepository.exists(TEST_EMAIL)).thenReturn(true);
+	//
+	// Tag tag = new Tag("tag", null);
+	// String[] list = new String[1];
+	// list[0] = tag.getText();
+	//
+	// postService.findGlobalUserPostsByHashtags(TEST_EMAIL, list);
+	// }
 
 }
