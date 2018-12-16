@@ -37,7 +37,7 @@ public class ITInterfaceWeb {
 		driver = new FirefoxDriver();
 
 		driver.manage().window().maximize();
-		baseUrl = "http://localhost:17070/CubisoftWeb/";
+		baseUrl = "http://localhost:17070/cubisoft/";
 
 	}
 
