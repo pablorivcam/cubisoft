@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+
+<head th:include="fragments/header :: header" />
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.4.2/css/all.css' integrity='sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns' crossorigin='anonymous'>
+
+<body style="height: 100%">
+	<header class="header" th:include="fragments/menu :: menu" />
+
+	<section id="main-section" class="container-fluid" 
+	 th:style="'background: url(\''+@{/resources/images/background.jpg}+ '\');background-repeat: no-repeat; background-size: cover'">
+
+		<div style="text-align:center; margin:10%">
+			
+			<h1 th:text="#{welcome.message}" style="color:#ffffff; background-color:#00000055; margin:0px; padding:10px">Welcome message</h1>
+
+			<div th:if="${#authorization.expression('!isAuthenticated()')}">
+				<h4 th:text="#{welcome.message2}" style="color:#ffffff; background-color:#00000055; margin:0">
+				Already have an account?</h4>
+				<div style="background-color:#00000055">
+					<a href="#" th:text="#{title.signin}" th:href="@{/signin}"class="btn btn-info" role="button" style="margin:10px">Sign In Button</a>      			
+				</div>
+			</div>
+			<div th:if="${#authorization.expression('isAuthenticated()')}">
+				<h4 th:text="#{welcome.message3}" style="color:#ffffff; background-color:#00000055; margin:0"></h4>
+				<div style="background-color:#00000055">
+					<a href="#" th:href="@{/picture/upload}" class="btn btn-info" role="button" style="margin:10px">
+						<span th:text="#{label.upload}">Upload a picture</span>
+						<span class="glyphicon glyphicon-camera"></span>
+					</a>      			
+				</div>
+			</div>
+			<div th:if="${#authorization.expression('isAuthenticated()')}">
+			
+			<div class="welcome_button">
+				<a th:href="@{/post/globalFeed}">
+					<span class="glyphicon glyphicon-globe welcome_button_icon"></span>
+					<span id="globalFeed" th:text="#{label.globalfeed}">Global Feed</span>		
+				</a>
+			</div>
+			
+			<div class="welcome_button welcome_button_alternative">
+				<a th:href="@{/account/list}">
+					<span class="fas fa-users welcome_button_icon"></span>
+					<span id="findUsers" th:text="#{label.find_users}">Find Users</span>				
+				</a>
+			</div>
+			
+			<div class="welcome_button">
+				<a th:href="@{/post/myFeed}">
+					<span class="glyphicon glyphicon-user welcome_button_icon"></span>
+					<span id="myFeed" th:text="#{label.myfeed}">My Feed</span>			
+				</a>
+			</div>
+			</div>
+		</div>
+     
+   </section>
+
+   <footer>
+      <div th:include="fragments/scripts :: general" />
+   </footer>
+</body>
+
+</html>

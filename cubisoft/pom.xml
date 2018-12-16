@@ -21,8 +21,11 @@
 
 	<groupId>es.udc.fi.dc.fd</groupId>
 	<artifactId>cubisoft</artifactId>
-	<version>3.0-RELEASE</version>
-	<packaging>war</packaging>
+	<version>4.0-RELEASE</version>
+	<packaging>pom</packaging>
+	<!-- build>
+		<finalName>cubisoft</finalName>
+	</build-->
 
 	<name>Cubisoft</name>
 	<description>Test project for FD 2018</description>
@@ -188,88 +191,7 @@
 		<!-- ============================================== -->
 		<!-- ========= EMBEDDED SERVER PROFILES =========== -->
 		<!-- ============================================== -->
-		<profile>
-			<!-- Jetty profile -->
-			<!-- Sets ups Jetty for testing and local deployment -->
-			<id>jetty</id>
-			<build>
-				<plugins>
-					<plugin>
-						<!-- Jetty -->
-						<!-- Jetty will run the web service during the integration tests -->
-						<groupId>org.eclipse.jetty</groupId>
-						<artifactId>jetty-maven-plugin</artifactId>
-						<version>${plugin.jetty.version}</version>
-						<configuration>
-							<stopKey>STOP</stopKey>
-							<stopPort>9999</stopPort>
-							<stopWait>5</stopWait>
-						</configuration>
-						<executions>
-							<execution>
-								<id>start-jetty-it</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>start</goal>
-								</goals>
-								<configuration>
-									<scanIntervalSeconds>0</scanIntervalSeconds>
-									<daemon>true</daemon>
-									<useTestScope>true</useTestScope>
-									<webApp>
-										<overrideDescriptor>${project.build.directory}/${project.build.finalName}/WEB-INF/web.xml</overrideDescriptor>
-									</webApp>
-								</configuration>
-							</execution>
-							<execution>
-								<id>stop-jetty-it</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<!-- Tomcat 7 profile -->
-			<!-- Sets ups Tomcat 7 for testing and local deployment -->
-			<id>tomcat7</id>
-			<build>
-				<plugins>
-					<plugin>
-						<!-- Tomcat 7 -->
-						<!-- Tomcat 7 will run the web service during the integration tests -->
-						<groupId>org.apache.tomcat.maven</groupId>
-						<artifactId>tomcat7-maven-plugin</artifactId>
-						<version>${plugin.tomcat7.version}</version>
-						<executions>
-							<execution>
-								<id>start-tomcat-it</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<fork>true</fork>
-									<useTestClasspath>true</useTestClasspath>
-									<warSourceDirectory>${project.build.directory}/${project.build.finalName}/</warSourceDirectory>
-								</configuration>
-							</execution>
-							<execution>
-								<id>stop-tomcat-it</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>shutdown</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
+
 		<!-- ============================================== -->
 		<!-- ============ DEPLOYMENT PROFILES ============= -->
 		<!-- ============================================== -->
@@ -875,6 +797,33 @@
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- Selenium -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.7.1</version><!--$NO-MVN-MAN-VER$ -->
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-firefox-driver</artifactId>
+			<version>3.7.1</version><!--$NO-MVN-MAN-VER$ -->
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-support</artifactId>
+			<version>3.7.1</version><!--$NO-MVN-MAN-VER$ -->
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-remote-driver</artifactId>
+			<version>3.7.1</version><!--$NO-MVN-MAN-VER$ -->
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-api</artifactId>
+			<version>3.7.1</version><!--$NO-MVN-MAN-VER$ -->
+		</dependency>
 	</dependencies>
 
 	<!-- ********************************************** -->
@@ -882,6 +831,8 @@
 	<!-- ********************************************** -->
 
 	<build>
+		<finalName>cubisoft</finalName>
+
 		<defaultGoal>clean package</defaultGoal>
 		<resources>
 			<resource>
@@ -1053,6 +1004,21 @@
 						<delimiter>@</delimiter> </delimiters> -->
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>sources</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
 			<plugin>
 				<!-- Resources -->
 				<!-- Handles the project resources. -->
@@ -1102,8 +1068,41 @@
 			        <!-- Excludes integration tests when unit tests are run. -->
 			        <excludes>
 			            <exclude>**/IT*.java</exclude>
+			            <exclude>**/UI*.java</exclude>
 			        </excludes>
 			    </configuration>
+			</plugin>
+			
+			<!-- CONFIGURACION Para maven-failsafe-plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<excludes>
+			            <exclude>**/*Test.java</exclude>
+			        </excludes>
+					<!-- Sets the VM argument line used when integration tests are run. -->
+					<argLine>${failsafeArgLine}</argLine>
+					<!-- Skips integration tests if the value of skip.integration.tests 
+						property is true -->
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+				<executions>
+					<!-- Ensures that both integration-test and verify goals of the Failsafe 
+						Maven plugin are executed. -->
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>integration-test</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>verify></id>
+						<goals>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			
 			<plugin>
@@ -1146,7 +1145,81 @@
 			                <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
 			            </configuration>
 			        </execution>
+			        
+			        <!-- AÑADIDOS PARA INTEGRAR JACOCO CON FAILSAFE -->
+					<execution>
+						<id>default-prepare-agent-integration</id>
+						<goals>
+							<goal>prepare-agent-integration</goal>
+						</goals>
+						<configuration>
+							<!-- Sets the path to the file which contains the execution data. -->
+							<destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
+							<!-- Sets the name of the property containing the settings for JaCoCo 
+								runtime agent. -->
+							<propertyName>failsafeArgLine</propertyName>
+							<propertyName>jacoco.agent.itArgLine</propertyName>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>post-integration-test</id>
+						<goals>
+							<goal>report-integration</goal>
+						</goals>
+						<configuration>
+							<!-- Sets the path to the file which contains the execution data. -->
+							<dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
+							<!-- Sets the output directory for the code coverage report. -->
+							<outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+						</configuration>
+					</execution>
 			    </executions>
+			</plugin>
+			
+			<!-- CONFIGURACION Cargo -->
+
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.6.5</version>
+
+				<configuration>
+					<container>
+						<containerId>tomcat8x</containerId>
+						<!-- <home>${project.build.directory}/tomcat8x</home> -->
+						<zipUrlInstaller>
+							<url>http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.23/bin/apache-tomcat-8.5.23.zip</url>
+							<downloadDir>${project.build.directory}/downloads</downloadDir>
+							<extractDir>${project.build.directory}/extracts</extractDir>
+						</zipUrlInstaller>
+					</container>
+
+					<configuration>
+						<home>${project.build.directory}/catalina-base</home>
+						<properties>
+							<cargo.jvmargs>${jacoco.agent.itArgLine}</cargo.jvmargs>
+							<cargo.servlet.port>17070</cargo.servlet.port>
+						</properties>
+					</configuration>
+
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-container</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop-container</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>				
 						
 		</plugins>
@@ -1180,13 +1253,13 @@
 						</reports>
 					</reportSet>
 					
-					<!-- Para maven-failsafe-plugin --><!--  
+					<!-- Para maven-failsafe-plugin -->  
 					<reportSet>
 						<id>integration-tests</id>
 						<reports>
 							<report>failsafe-report-only</report>
 						</reports>
-					</reportSet>-->
+					</reportSet>
 				</reportSets>
 			</plugin>
 			
@@ -1253,4 +1326,9 @@
 		</plugins>
 	</reporting>
 
+	<modules>
+		<module>CubisoftModel</module>
+		<module>CubisoftWeb</module>
+		<module>CubisoftRest</module>
+	</modules>
 </project>

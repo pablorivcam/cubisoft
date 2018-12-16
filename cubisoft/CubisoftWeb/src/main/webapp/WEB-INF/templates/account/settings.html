@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+
+<head th:include="fragments/header :: header" />
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.4.2/css/all.css' integrity='sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns' crossorigin='anonymous'>
+
+<body style="height: 100%">
+	<header class="header" th:include="fragments/menu :: menu"> </header>
+	
+	<section id="main-section" class="container-fluid">
+	<h1 th:text="#{label.settings}">Your Settings</h1>
+	<div style="padding:10px; text-align:center;">
+	
+		<span th:text="#{label.currentUserType}" style="display:inline-block">
+		</span><span th:text="${currentUser.getUserType()}" style="display:inline-block"></span>
+		
+		<div th:if="${currentUser.getUserType().toString()=='PUBLIC'}" style="display:inline-block">
+			<form id="setUserTypePrivate" action="#"
+				th:action="@{/settings/setToPrivate}"
+				class="form-narrow form-horizontal" method="post">
+				<input type="hidden" id="setToPrivate" name="userId"
+					th:value="${currentUser.getUser_id()}">
+				<button style="color: #FFFFFF;" id="private"
+					th:text="#{button.setPrivate}" type="submit"
+					class="btn btn-info">Set Private</button>
+			</form>
+		</div>
+		
+		<div th:if="${currentUser.getUserType().toString()=='PRIVATE'}" style="display:inline-block">
+			<form id="setUserTypePublic" action="#"
+				th:action="@{/settings/setToPublic}"
+				class="form-narrow form-horizontal" method="post">
+				<input type="hidden" id="setToPublic" name="userId"
+					th:value="${currentUser.getUser_id()}">
+				<button style="color: #FFFFFF;" id="public"
+					th:text="#{button.setPublic}" type="submit"
+					class="btn btn-info">Set Public</button>
+			</form>
+		</div>
+	</div>
+	</section>
+     
+
+   <footer>
+      <div th:include="fragments/scripts :: general" />
+   </footer>
+</body>
+
+</html>

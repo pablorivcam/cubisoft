@@ -1,0 +1,83 @@
+/*!
+ * Spring MVC Project general styles
+ * Copyright 2017 Bernardo Mart�nez Garrido
+ * Licensed under the MIT License (http://www.opensource.org/licenses/mit-license.php)
+ *
+ * This file contains general-use styles, meant to be applied to all the pages on the site.
+ */
+/*
+body {
+    margin: 2em;
+    background-color: #fcfcfc;
+}
+
+body > section {
+    background-color: white;
+    padding: 1em 1em 1em 1em;
+    border: 1px solid #d7d7d7;
+    border-radius: 4px;
+}*/
+
+#main-section {
+	padding-top: 65px;
+}
+
+.welcome_button {
+	margin:10px;
+	text-decoration:none;
+	display: inline-block;
+	text-align: center;
+	width: 200px;
+	font-family: sans-serif;
+    height: 200px;
+	background-color: #333333;
+	text-decoration-color: #00000000;
+}
+
+.welcome_button:hover {
+	background-color: #444444;
+}
+
+.welcome_button a {
+		padding: 40% 20px 32% 20px;
+	
+}
+
+.welcome_button * {
+	display: block;
+	text-decoration:none;
+	color: #ffffff;		
+}
+
+.welcome_button:hover * {
+	text-decoration:none;
+	color: #ffffff;
+	
+}
+
+.welcome_button_icon{
+	font-size: 30px;
+	width:100%;
+}
+
+.welcome_button_alternative{
+	background-color: #4bb0ce;
+}
+
+.welcome_button_alternative:hover{
+	background-color: #5bc0de;
+}
+
+.table-striped > tbody > tr:nth-child(2n+2) > td, .table-striped > tbody > tr:nth-child(2n+2) > th {
+   background-color: #dddddd;
+}
+
+.hashtag{
+	background: #4582ec33;
+	color: #4582ec;
+}
+
+h1{
+	background: #ffffff;
+	padding: 5px;
+}

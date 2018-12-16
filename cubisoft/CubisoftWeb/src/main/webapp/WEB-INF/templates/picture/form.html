@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: header" />
+<body>
+
+   <header class="header" th:include="fragments/menu :: menu" />
+
+	<section id="main-section" class="container-fluid" 
+		th:style="'background: url(\''+@{/resources/images/background2.png}+ '\');background-repeat: no-repeat; background-size: cover'">
+
+      <h1 th:text="#{title.picture.form}">Picture form</h1>
+
+      <section id="form" class="form-well">
+      
+			<form class="form-narrow form-horizontal" method="post" th:action="@{/picture/uploadPicture}" th:object="${uploadPictureForm}" th:fragment="uploadPictureForm"
+			enctype="multipart/form-data">
+			
+			<div class="col-md-12">
+               <div class="panel panel-default">
+                  <div class="panel-heading" th:text="#{title.picture.form.data}">Data</div>
+			
+                  <div class="panel-body">
+		
+				        <div class="form-group" th:classappend="${#fields.hasErrors('pictureFile')}? 'has-error'">
+				            <label for="pictureFile" class="col-lg-2 control-label" th:text="#{label.pictureFile}">PictureFile</label>
+				            <div class="col-lg-10">
+				                <input type="file" class="form-control" id="pictureFile" placeholder="Picture File" th:field="*{pictureFile}" />
+				                <span class="help-block" th:if="${#fields.hasErrors('pictureFile')}" th:errors="*{pictureFile}">Invalid Picture File</span>
+				            </div>
+				        </div>	
+				        <div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
+				            <label for="description" class="col-lg-2 control-label" th:text="#{label.description}">Description</label>
+				            <div class="col-lg-10">
+				                <input type="text" class="form-control" id="description" placeholder="Picture Description" th:field="*{Description}" />
+				                <span class="help-block" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Invalid Description</span>
+				            </div>
+				        </div>
+				        <div class="form-group" th:classappend="${#fields.hasErrors('expiration')}? 'has-error'">
+				            <label for="expiration" class="col-lg-2 control-label" th:text="#{label.expiration}">Expiration</label>
+				            <div class="col-lg-10">
+				                <input type="text" class="form-control" id="expiration" placeholder="Picture Expiration" th:field="*{Expiration}" />
+				                <span class="help-block" th:if="${#fields.hasErrors('expiration')}" th:errors="*{expiration}">Invalid Expiration</span>
+				            </div>
+				        </div>
+			      </div>
+				        
+		        </div>
+	        </div>     
+		        
+            <div id="submit" class="row">
+               <div class="col-md-12">
+                  <button id="upload" type="submit" th:text="#{button.submit}" class="btn btn-info" role="button">Submit</button>
+               </div>
+            </div>
+		        
+			</form>
+		</section>
+	</section>
+   <footer>
+      <div th:include="fragments/scripts :: general" />
+   </footer>
+
+</body>
+</html>

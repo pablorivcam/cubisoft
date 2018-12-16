@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: header" />
+<body>
+	<header class="header" th:include="fragments/menu :: menu" /></header>
+   
+	<section id="main-section" class="container-fluid">
+	 <h1 th:text="#{title.yourfollowers}">Your followers</h1>
+	 
+		<table class="table table-striped display">
+			<tr>
+				<th th:text="#{label.login}">Login</th>
+				<th th:text="#{label.name}">Name</th>
+				<th th:text="#{label.surname}">Surname</th>
+				<th th:text="#{label.block}">Block from:</th>	
+				<th th:text="#{label.unblock}">Unblock from:</th>
+				<th th:text="#{label.kickFollower}" th:if="${viewer.getUserType().toString()=='PRIVATE'}">Kick follower:</th>					
+			</tr>	 
+            <tr th:each="follow : ${followers}">
+            		<td><span th:remove="tag" th:text="${follow?.user.login}" >Login</span></td>
+            		<td><span th:remove="tag" th:text="${follow?.user.firstName}">Name</span></td>
+            		<td><span th:remove="tag" th:text="${follow?.user.lastName}">Lastname</span></td>    
+            		<td>
+            			<form id="blockPostsForm" action="#" th:action="@{/followers/blockUserPosts}" class="form-narrow form-horizontal" method="post"
+            			style="float:left">
+	               				<input type="hidden" id="user_id" name="user_id" th:value="${follow?.user.user_id}">              					
+	               				<button id="blockPosts" th:text="#{button.blockPosts}" type="submit" class="btn btn-danger">Posts</button>	
+	               		</form>
+	               		<form id="blockStoriesForm" action="#" th:action="@{/followers/blockUserStories}" class="form-narrow form-horizontal" method="post"
+	               		style="float:left">
+	               				<input type="hidden" id="user_id" name="user_id" th:value="${follow?.user.user_id}">              					
+	               				<button id="blockStories" th:text="#{button.blockStories}" type="submit" class="btn btn-danger">Stories</button>	
+	               		</form>
+	               	</td>
+	               	<td>
+	               		<form id="unblockPostsForm" action="#" th:action="@{/followers/unblockUserPosts}" class="form-narrow form-horizontal" method="post"
+	               				style="float:left">
+	               				<input type="hidden" id="user_id" name="user_id" th:value="${follow?.user.user_id}">              					
+	               				<button id="unblockPosts" th:text="#{button.unblockPosts}" type="submit" class="btn btn-danger">Posts</button>	
+	               		</form>
+	               			<form id="unblockStoriesForm" action="#" th:action="@{/followers/unblockUserStories}" class="form-narrow form-horizontal" method="post"
+	               				style="float:left">
+	               				<input type="hidden" id="user_id" name="user_id" th:value="${follow?.user.user_id}">              					
+	               				<button  id="unblockStories" th:text="#{button.unblockStories}" type="submit" class="btn btn-danger">Stories</button>	
+	               		</form>
+	               	</td>
+	               	<td th:if="${viewer.getUserType().toString()=='PRIVATE'}">
+	               		<form id="kickFollowerForm" action="#" th:action="@{/followers/kickFollower}" class="form-narrow form-horizontal" 
+	               			method="post">
+	               		<input type="hidden" id="userId" name="userId" th:value="${follow?.user.user_id}">              					
+	               		<button id="kick" th:text="#{button.kickFollower}" type="submit" class="btn btn-danger">Kick</button>	
+	               	</form> </td>
+            </tr>	 
+
+      </table>
+	</section>	
+	<footer>
+      <div th:include="fragments/scripts :: general" />
+	</footer>
+
+</body>
+</html>

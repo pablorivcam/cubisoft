@@ -1,0 +1,93 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: header" />
+<body>
+   <header class="header" th:include="fragments/menu :: menu" />
+   	
+   <section id="main-section" class="container-fluid"
+   		th:style="'background: url(\''+@{/resources/images/background2.png}+ '\');background-repeat: no-repeat; background-size: cover'">
+   		
+   		<h1 th:text="#{label.find_users}">Find Users</h1>
+      
+		<section id="form">  	
+		
+			<form id="findUsersForm" action="#" th:action="@{/account/list}" class="form-narrow form-horizontal" method="get">
+				<label style="text-align:none; width:auto" for="keywords" class="col-lg-2 control-label">Keywords</label>		
+				<input style="display:inline; width:auto" type="text" class="form-control" id="keywords" placeholder="Keywords" name="keywords" />
+				<button id="findButton" th:text="#{label.find}" type="submit" class="btn btn-info">Find</button>	
+			</form>
+			
+   		</section>
+	   
+	    <table class="table table-striped display">
+			
+				<tr>
+					<th th:text="#{label.login}">Login</th>
+					<th th:text="#{label.name}">Name</th>
+					<th th:text="#{label.surname}">Surname</th>
+					<th> </th>				
+				</tr>
+
+            	<tr th:each="user : ${users.getItems()}">
+            		<td th:if="${ user?.userType.toString() == 'PUBLIC'}"><a id="userClick" th:text="${user?.login}" th:href="@{/post/myFeed(user_id=${user?.user_id})}">Login</a> </td>
+            		<td th:if="${ user?.userType.toString() == 'PRIVATE'}"><a th:text="${user?.login}">Login</a> </td>
+            		<td><span th:remove="tag" th:text="${user?.firstName}">Name</span></td>
+            		<td><span th:remove="tag" th:text="${user?.lastName}">Lastname</span></td>    
+               		<td>
+               			<div th:if="${#authorization.expression('isAuthenticated()')}">
+	               			<span th:remove="tag" th:if="${user?.email}==${#authentication.getPrincipal().getUsername()}" th:text="#{label.its_you}">Its you!</span>
+	               			<div th:if="${user?.email}!=${#authentication.getPrincipal().getUsername()} and !${followService.isUserAFollowingUserB(currentUser,user)}  and ${user?.userType.toString() == 'PRIVATE'}">
+	               				<form id="followUserForm" action="#" th:action="@{/account/followUser}" class="form-narrow form-horizontal" method="post">
+	               					<input type="hidden" id="user_id" name="user_id" th:value="${user?.user_id}">
+	               					<input type="hidden" id="keywords" name="keywords" th:value="${keywords}">               					
+	               					<button id="requestButton" th:text="#{button.request}" type="submit" class="btn btn-info">Request</button>	
+	               				</form>
+	               			</div>
+	               			<div th:if="${user?.email}!=${#authentication.getPrincipal().getUsername()} and !${followService.isUserAFollowingUserB(currentUser,user)}  and ${user?.userType.toString() == 'PUBLIC'}">
+	               				<form id="followUserForm" action="#" th:action="@{/account/followUser}" class="form-narrow form-horizontal" method="post">
+	               					<input type="hidden" id="user_id" name="user_id" th:value="${user?.user_id}">
+	               					<input type="hidden" id="keywords" name="keywords" th:value="${keywords}">               					
+	               					<button id="followButton" th:text="#{button.follow}" type="submit" class="btn btn-info">Follow</button>	
+	               				</form>
+	               			</div>
+	               			<div th:if="${user?.email}!=${#authentication.getPrincipal().getUsername()} and ${followService.isUserAFollowingUserB(currentUser,user)}  and ${ user?.userType.toString() == 'PRIVATE'}">
+	               				<form id="unfollowUserForm" action="#" th:action="@{/account/unfollowUser}" class="form-narrow form-horizontal" method="post">
+	               					<input type="hidden" id="user_id" name="user_id" th:value="${user?.user_id}">
+	               					<input type="hidden" id="keywords" name="keywords" th:value="${keywords}">               					
+	               					<button id="unrequestButton" th:text="#{button.norequest}" type="submit" class="btn btn-danger">Cancel Request</button>	
+	               				</form>
+	               			</div>
+	               			<div th:if="${user?.email}!=${#authentication.getPrincipal().getUsername()} and ${followService.isUserAFollowingUserB(currentUser,user)} and ${ user?.userType.toString() == 'PUBLIC'}">
+	               				<form id="unfollowUserForm" action="#" th:action="@{/account/unfollowUser}" class="form-narrow form-horizontal" method="post">
+	               					<input type="hidden" id="user_id" name="user_id" th:value="${user?.user_id}">
+	               					<input type="hidden" id="keywords" name="keywords" th:value="${keywords}">               					
+	               					<button id="unfollowButton" th:text="#{button.unfollow}" type="submit" class="btn btn-danger">Unfollow</button>	
+	               				</form>
+	               			</div>
+						</div>
+               		</td>            		         		        		
+            	</tr>
+
+	    </table>
+	   
+		<div style="display:inline; color: #4582ec; ">
+
+			<a th:if="${startIndex&gt;0}" th:href="@{list(startIndex=${startIndex-1})}" 
+				class="btn btn-outline-primary" style="padding:10px; border-color: #4582ec;
+				 border-width: 2px; background:#ffffff" th:text="#{button.back}">Back</a> 
+			
+			<spam style="color: #000000">Page <spam th:text="${startIndex+1}"></spam></spam>
+			
+			<a th:if="${users.getExistMoreItems()==true}" th:href="@{list(startIndex=${startIndex+1})}"
+				class="btn btn-outline-primary" style="padding:10px; border-color: #4582ec;
+				 border-width: 2px; background:#ffffff" th:text="#{button.next}">Next</a> 
+		</div>
+
+   </section>
+   
+	<footer>
+		<div th:include="fragments/scripts :: general" />
+	</footer>
+
+</body>
+</html>
