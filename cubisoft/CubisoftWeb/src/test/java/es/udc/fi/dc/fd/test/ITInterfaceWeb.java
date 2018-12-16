@@ -14,6 +14,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Commit;
 
+import es.udc.fi.dc.fd.controller.picture.PictureUploaderController;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
 
 public class ITInterfaceWeb {
@@ -32,6 +33,9 @@ public class ITInterfaceWeb {
 
 	@Autowired
 	UserProfileRepository userProfileRepository;
+
+	@Autowired
+	PictureUploaderController pictureUploaderController;
 
 	private WebDriver driver;
 	private String baseUrl;
@@ -115,7 +119,7 @@ public class ITInterfaceWeb {
 
 	}
 
-	// upload photo
+	// upload photo page
 	@Test
 	@Commit
 	public void TestC() throws Exception {
@@ -142,7 +146,7 @@ public class ITInterfaceWeb {
 
 	}
 
-	// SignIn findUsers follow unfollow request cancel request
+	// SignIn/findUsers/follow/unfollow/request/cancel request
 	@Test
 	@Commit
 	public void TestD() throws Exception {
@@ -363,7 +367,7 @@ public class ITInterfaceWeb {
 
 	}
 
-	// Accept Cancel request
+	// Accept/Cancel request
 	@Test
 	@Commit
 	public void TestF() throws Exception {
@@ -426,10 +430,8 @@ public class ITInterfaceWeb {
 
 		Thread.sleep(500);
 
-		// check list of requests
-
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get(baseUrl + "followed/list");
+		driver.get(baseUrl + "followers/list");
 
 		Thread.sleep(500);
 
@@ -833,6 +835,7 @@ public class ITInterfaceWeb {
 
 	}
 
+	// Blocks unblocks
 	@Test
 	@Commit
 	public void TestK() throws Exception {
@@ -877,6 +880,7 @@ public class ITInterfaceWeb {
 
 	}
 
+	// kick follower
 	@Test
 	@Commit
 	public void TestL() throws Exception {
@@ -972,10 +976,10 @@ public class ITInterfaceWeb {
 		driver.get(baseUrl + "signin");
 
 		emailElement = driver.findElement(By.id("email"));
-		emailElement.sendKeys(TEST_USER_EMAIL);
+		emailElement.sendKeys(TEST_ADMIN_EMAIL);
 
 		passElement = driver.findElement(By.id("inputPassword"));
-		passElement.sendKeys(TEST_USER_PASSWORD);
+		passElement.sendKeys(TEST_ADMIN_PASSWORD);
 
 		driver.findElement(By.id("loginButton")).click();
 
