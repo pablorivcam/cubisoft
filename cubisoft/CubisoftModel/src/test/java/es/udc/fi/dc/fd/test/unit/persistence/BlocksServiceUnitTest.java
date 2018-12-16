@@ -3,6 +3,7 @@ package es.udc.fi.dc.fd.test.unit.persistence;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
@@ -407,4 +408,22 @@ public class BlocksServiceUnitTest {
 		assertThat(blocksService.unblockPosts(TEST_EMAIL, "2" + TEST_EMAIL),
 				is(equalTo(BlocksService.ALREADY_UNBLOCKED_USER_ERROR)));
 	}
+
+	@Test
+	public void getSetBlocksTest() {
+		Blocks blockD = new Blocks();
+		blockD.setBlocks_id(4L);
+		blockD.setUser(userA);
+		blockD.setTarget(userB);
+		blockD.setBlockType(BlockType.PROFILE);
+
+		Blocks blockE = new Blocks(userA, userB, BlockType.PROFILE);
+		blockE.setBlocks_id(blockD.getBlocks_id());
+
+		assertEquals(blockD.getBlocks_id(), blockE.getBlocks_id());
+		assertEquals(blockD.getTarget(), blockE.getTarget());
+		assertEquals(blockD.getUser(), blockE.getUser());
+		assertEquals(blockD.getBlockType(), blockE.getBlockType());
+	}
+
 }

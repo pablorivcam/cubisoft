@@ -103,4 +103,5 @@ INSERT INTO example_entities (name) VALUES
    	
    INSERT INTO Post(post_id,date,user_id,picture_id,views,number_of_likes,anonymousViews,reshare) VALUES (1,now(),1,1,0,0,0,0);
    
-   INSERT INTO Blocks(blocks_id,user,target,blockType) VALUES (1,2,12,'PROFILE')
+   INSERT INTO Blocks(blocks_id,user,target,blockType) VALUES (1,2,12,'PROFILE');
+   INSERT INTO Blocks(blocks_id,user,target,blockType) VALUES (2,2,12,'STORIES')
