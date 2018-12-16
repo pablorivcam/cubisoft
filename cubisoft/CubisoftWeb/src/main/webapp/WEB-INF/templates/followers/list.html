@@ -26,29 +26,29 @@
             			<form id="blockPostsForm" action="#" th:action="@{/followers/blockUserPosts}" class="form-narrow form-horizontal" method="post"
             			style="float:left">
 	               				<input type="hidden" id="user_id" name="user_id" th:value="${follow?.user.user_id}">              					
-	               				<button th:text="#{button.blockPosts}" type="submit" class="btn btn-danger">Posts</button>	
+	               				<button id="blockPosts" th:text="#{button.blockPosts}" type="submit" class="btn btn-danger">Posts</button>	
 	               		</form>
 	               		<form id="blockStoriesForm" action="#" th:action="@{/followers/blockUserStories}" class="form-narrow form-horizontal" method="post"
 	               		style="float:left">
 	               				<input type="hidden" id="user_id" name="user_id" th:value="${follow?.user.user_id}">              					
-	               				<button th:text="#{button.blockStories}" type="submit" class="btn btn-danger">Stories</button>	
+	               				<button id="blockStories" th:text="#{button.blockStories}" type="submit" class="btn btn-danger">Stories</button>	
 	               		</form>
 	               	</td>
 	               	<td>
 	               		<form id="unblockPostsForm" action="#" th:action="@{/followers/unblockUserPosts}" class="form-narrow form-horizontal" method="post"
 	               				style="float:left">
 	               				<input type="hidden" id="user_id" name="user_id" th:value="${follow?.user.user_id}">              					
-	               				<button th:text="#{button.unblockPosts}" type="submit" class="btn btn-danger">Posts</button>	
+	               				<button id="unblockPosts" th:text="#{button.unblockPosts}" type="submit" class="btn btn-danger">Posts</button>	
 	               		</form>
 	               			<form id="unblockStoriesForm" action="#" th:action="@{/followers/unblockUserStories}" class="form-narrow form-horizontal" method="post"
 	               				style="float:left">
 	               				<input type="hidden" id="user_id" name="user_id" th:value="${follow?.user.user_id}">              					
-	               				<button th:text="#{button.unblockStories}" type="submit" class="btn btn-danger">Stories</button>	
+	               				<button  id="unblockStories" th:text="#{button.unblockStories}" type="submit" class="btn btn-danger">Stories</button>	
 	               		</form>
 	               	</td>
 	               	<td><form id="kickFollowerForm" action="#" th:action="@{/followers/kickFollower}" class="form-narrow form-horizontal" method="post">
 	               		<input type="hidden" id="userId" name="userId" th:value="${follow?.user.user_id}">              					
-	               		<button th:text="#{button.kickFollower}" type="submit" class="btn btn-danger">Kick</button>	
+	               		<button id="kick" th:text="#{button.kickFollower}" type="submit" class="btn btn-danger">Kick</button>	
 	               	</form> </td>
             </tr>	 
 

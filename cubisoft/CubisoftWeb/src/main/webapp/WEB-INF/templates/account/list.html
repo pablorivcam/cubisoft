@@ -29,7 +29,7 @@
 				</tr>
 
             	<tr th:each="user : ${users.getItems()}">
-            		<td th:if="${ user?.userType.toString() == 'PUBLIC'}"><a th:text="${user?.login}" th:href="@{/post/myFeed(user_id=${user?.user_id})}">Login</a> </td>
+            		<td th:if="${ user?.userType.toString() == 'PUBLIC'}"><a id="userClick" th:text="${user?.login}" th:href="@{/post/myFeed(user_id=${user?.user_id})}">Login</a> </td>
             		<td th:if="${ user?.userType.toString() == 'PRIVATE'}"><a th:text="${user?.login}">Login</a> </td>
             		<td><span th:remove="tag" th:text="${user?.firstName}">Name</span></td>
             		<td><span th:remove="tag" th:text="${user?.lastName}">Lastname</span></td>    

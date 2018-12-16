@@ -149,7 +149,7 @@ public class FeedViewController {
 		List<Post> posts = new ArrayList<>();
 		UserProfile userFound = null;
 
-		if (hashtags != null & hashtags.length > 0) {
+		if (hashtags != null && hashtags.length > 0) {
 			String tags = "", hashtagsText = "";
 
 			for (int i = 0; i < hashtags.length; i++) {
@@ -208,8 +208,8 @@ public class FeedViewController {
 	private final void loadViewModel(final ModelMap model, Principal userAuthenticated, String view, Long user_id) {
 		/*
 		 * pillo los posts del usuario con id = user_id si no estoy autenticado,
-		 * userFound = user_id si estoy autenticado currentUser = yo si quiero ver el
-		 * feed global userFound = yo
+		 * userFound = user_id si estoy autenticado currentUser = yo si quiero
+		 * ver el feed global userFound = yo
 		 * 
 		 */
 		List<Post> posts = postService.loadFeed(user_id, userAuthenticated, view);

@@ -23,7 +23,7 @@
             		<td>
 	               		<form id="unfollowUserForm" action="#" th:action="@{/followed/unfollowUser}" class="form-narrow form-horizontal" method="post">
 	               				<input type="hidden" id="user_id" name="user_id" th:value="${follow?.followed_user.user_id}">              					
-	               				<button th:text="#{button.unfollow}" type="submit" class="btn btn-danger">Unfollow</button>	
+	               				<button id="unfollowButton" th:text="#{button.unfollow}" type="submit" class="btn btn-danger">Unfollow</button>	
 	               		</form>
 	               	</td>
             </tr>	 

@@ -5029,20 +5029,29 @@ Caused by: java.sql.SQLException: Access denied for user 'root'@'localhost'
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	... 71 more
+<<<<<<< Updated upstream
 [DEBUG] 2018-12-14 16:53:20,550 org.hibernate.SQL logStatement - 
+=======
+[DEBUG] 2018-12-15 15:42:31,851 org.hibernate.SQL logStatement - 
+>>>>>>> Stashed changes
     select
         count(*) as col_0_0_ 
     from
         example_entities defaultexa0_ 
     where
         defaultexa0_.id=?
+<<<<<<< Updated upstream
 [DEBUG] 2018-12-14 16:53:20,618 org.hibernate.SQL logStatement - 
+=======
+[DEBUG] 2018-12-15 15:42:31,904 org.hibernate.SQL logStatement - 
+>>>>>>> Stashed changes
     select
         count(*) as col_0_0_ 
     from
         example_entities defaultexa0_ 
     where
         defaultexa0_.id=?
+<<<<<<< Updated upstream
 [DEBUG] 2018-12-14 16:53:20,659 org.hibernate.SQL logStatement - 
     select
         defaultexa0_.id as id1_2_,
@@ -5050,12 +5059,22 @@ Caused by: java.sql.SQLException: Access denied for user 'root'@'localhost'
     from
         example_entities defaultexa0_
 [DEBUG] 2018-12-14 16:53:20,736 org.hibernate.SQL logStatement - 
+=======
+[DEBUG] 2018-12-15 15:42:31,943 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 15:42:31,997 org.hibernate.SQL logStatement - 
+>>>>>>> Stashed changes
     insert 
     into
         example_entities
         (name) 
     values
         (?)
+<<<<<<< Updated upstream
 [DEBUG] 2018-12-14 16:53:20,766 org.hibernate.SQL logStatement - 
     select
         defaultexa0_.id as id1_2_,
@@ -5063,6 +5082,774 @@ Caused by: java.sql.SQLException: Access denied for user 'root'@'localhost'
     from
         example_entities defaultexa0_
 [ERROR] 2018-12-16 03:05:23,281 org.springframework.test.context.TestContextManager prepareTestInstance - Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@31183ee2] to prepare test instance [es.udc.fi.dc.fd.test.integration.service.ITDefaultExampleEntityService@63f3366a]
+=======
+[DEBUG] 2018-12-15 15:42:32,390 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 16:06:15,857 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 16:06:15,899 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 16:06:15,923 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 16:06:15,960 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 16:06:16,026 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 16:37:55,681 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 16:37:55,718 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 16:37:55,742 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 16:37:55,789 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 16:37:55,858 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 17:34:04,963 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 17:34:05,017 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 17:34:05,042 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 17:34:05,078 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 17:34:05,170 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 17:39:17,565 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 17:39:17,645 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 17:39:17,710 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 17:39:17,753 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 17:39:18,049 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 18:32:55,757 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 18:32:55,822 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 18:32:55,862 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 18:32:55,898 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 18:32:55,939 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 18:44:50,621 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 18:44:50,672 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 18:44:50,713 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 18:44:50,757 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 18:44:50,826 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 18:49:33,024 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 18:49:33,065 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 18:49:33,095 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 18:49:33,129 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 18:49:33,185 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 18:53:44,747 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 18:53:44,791 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 18:53:44,822 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 18:53:44,864 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 18:53:44,936 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 18:57:41,885 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 18:57:41,927 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 18:57:41,957 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 18:57:41,999 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 18:57:42,061 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 19:03:26,459 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 19:03:26,500 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 19:03:26,531 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 19:03:26,579 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 19:03:26,633 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 19:09:32,391 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 19:09:32,444 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 19:09:32,480 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 19:09:32,537 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 19:09:32,622 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 19:28:30,057 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 19:28:30,283 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 19:28:30,306 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 19:28:30,374 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 19:28:30,500 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 19:43:48,134 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 19:43:48,185 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 19:43:48,217 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 19:43:48,264 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 19:43:48,461 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 19:49:53,771 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 19:49:53,819 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 19:49:53,849 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 19:49:53,888 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 19:49:53,949 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 21:24:36,805 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 21:24:36,864 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 21:24:36,902 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 21:24:36,955 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 21:24:37,010 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 21:38:44,255 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 21:38:44,324 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 21:38:44,365 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 21:38:44,399 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 21:38:44,503 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 21:50:29,630 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 21:50:29,671 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 21:50:29,695 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 21:50:29,735 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 21:50:29,819 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 22:58:10,495 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 22:58:10,552 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 22:58:10,591 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 22:58:10,654 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 22:58:10,935 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 23:03:42,135 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 23:03:42,187 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 23:03:42,219 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 23:03:42,269 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 23:03:42,371 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 23:09:07,262 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 23:09:07,331 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 23:09:07,400 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 23:09:07,444 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 23:09:07,521 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 23:15:41,969 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 23:15:42,028 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 23:15:42,118 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 23:15:42,180 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 23:15:42,247 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 23:21:36,699 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 23:21:36,756 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 23:21:36,798 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 23:21:36,846 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 23:21:36,932 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 23:38:45,648 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 23:38:45,698 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-15 23:38:45,733 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-15 23:38:45,781 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-15 23:38:45,862 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[ERROR] 2018-12-16 00:12:01,233 org.springframework.test.context.TestContextManager prepareTestInstance - Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@539ee811] to prepare test instance [es.udc.fi.dc.fd.test.integration.service.ITDefaultExampleEntityService@1aa59698]
+>>>>>>> Stashed changes
 java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:125) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:108) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
@@ -5137,9 +5924,14 @@ java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:119) [surefire-booter-2.20.1.jar:2.20.1]
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:407) [surefire-booter-2.20.1.jar:2.20.1]
 Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [context/persistence-versioning.xml]: Invocation of init method failed; nested exception is liquibase.exception.ValidationFailedException: Validation Failed:
+<<<<<<< Updated upstream
      2 change sets check sum
           classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:138c78b610dbe84dd5f042fe9fb98308 but is now: 7:223be4ad7de6b902908479227f157f26
           classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:6e15e0abda78be2943f2d072ccd4aa2f
+=======
+     1 change sets check sum
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:7252391784ddb3b3de4a9b9939ad0198
+>>>>>>> Stashed changes
 
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1706) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:579) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
@@ -5159,9 +5951,14 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	... 71 more
 Caused by: liquibase.exception.ValidationFailedException: Validation Failed:
+<<<<<<< Updated upstream
      2 change sets check sum
           classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:138c78b610dbe84dd5f042fe9fb98308 but is now: 7:223be4ad7de6b902908479227f157f26
           classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:6e15e0abda78be2943f2d072ccd4aa2f
+=======
+     1 change sets check sum
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:7252391784ddb3b3de4a9b9939ad0198
+>>>>>>> Stashed changes
 
 	at liquibase.changelog.DatabaseChangeLog.validate(DatabaseChangeLog.java:266) ~[liquibase-core-3.5.5.jar:?]
 	at liquibase.Liquibase.update(Liquibase.java:210) ~[liquibase-core-3.5.5.jar:?]
@@ -5186,7 +5983,11 @@ Caused by: liquibase.exception.ValidationFailedException: Validation Failed:
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	... 71 more
+<<<<<<< Updated upstream
 [ERROR] 2018-12-16 03:05:25,544 org.springframework.test.context.TestContextManager prepareTestInstance - Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@31183ee2] to prepare test instance [es.udc.fi.dc.fd.test.integration.service.ITDefaultExampleEntityService@fe09374]
+=======
+[ERROR] 2018-12-16 00:12:02,899 org.springframework.test.context.TestContextManager prepareTestInstance - Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@539ee811] to prepare test instance [es.udc.fi.dc.fd.test.integration.service.ITDefaultExampleEntityService@3966c679]
+>>>>>>> Stashed changes
 java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:125) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:108) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
@@ -5261,9 +6062,14 @@ java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:119) [surefire-booter-2.20.1.jar:2.20.1]
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:407) [surefire-booter-2.20.1.jar:2.20.1]
 Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [context/persistence-versioning.xml]: Invocation of init method failed; nested exception is liquibase.exception.ValidationFailedException: Validation Failed:
+<<<<<<< Updated upstream
      2 change sets check sum
           classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:138c78b610dbe84dd5f042fe9fb98308 but is now: 7:223be4ad7de6b902908479227f157f26
           classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:6e15e0abda78be2943f2d072ccd4aa2f
+=======
+     1 change sets check sum
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:7252391784ddb3b3de4a9b9939ad0198
+>>>>>>> Stashed changes
 
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1706) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:579) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
@@ -5283,9 +6089,14 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	... 71 more
 Caused by: liquibase.exception.ValidationFailedException: Validation Failed:
+<<<<<<< Updated upstream
      2 change sets check sum
           classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:138c78b610dbe84dd5f042fe9fb98308 but is now: 7:223be4ad7de6b902908479227f157f26
           classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:6e15e0abda78be2943f2d072ccd4aa2f
+=======
+     1 change sets check sum
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:7252391784ddb3b3de4a9b9939ad0198
+>>>>>>> Stashed changes
 
 	at liquibase.changelog.DatabaseChangeLog.validate(DatabaseChangeLog.java:266) ~[liquibase-core-3.5.5.jar:?]
 	at liquibase.Liquibase.update(Liquibase.java:210) ~[liquibase-core-3.5.5.jar:?]
@@ -5310,7 +6121,1204 @@ Caused by: liquibase.exception.ValidationFailedException: Validation Failed:
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	... 71 more
+<<<<<<< Updated upstream
 [ERROR] 2018-12-16 03:05:27,808 org.springframework.test.context.TestContextManager prepareTestInstance - Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@31183ee2] to prepare test instance [es.udc.fi.dc.fd.test.integration.service.ITDefaultExampleEntityService@3cc548f6]
+=======
+[ERROR] 2018-12-16 00:12:04,617 org.springframework.test.context.TestContextManager prepareTestInstance - Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@539ee811] to prepare test instance [es.udc.fi.dc.fd.test.integration.service.ITDefaultExampleEntityService@3a5b1af7]
+>>>>>>> Stashed changes
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:125) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:108) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:246) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:97) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$invokeTestInstancePostProcessors$3(ClassTestDescriptor.java:215) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.JupiterTestDescriptor.executeAndMaskThrowable(JupiterTestDescriptor.java:141) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$invokeTestInstancePostProcessors$4(ClassTestDescriptor.java:215) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175) ~[?:1.8.0_92]
+	at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1374) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471) ~[?:1.8.0_92]
+	at java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:312) ~[?:1.8.0_92]
+	at java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:743) ~[?:1.8.0_92]
+	at java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:742) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:580) ~[?:1.8.0_92]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.invokeTestInstancePostProcessors(ClassTestDescriptor.java:214) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.instantiateAndPostProcessTestInstance(ClassTestDescriptor.java:196) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstanceProvider$0(ClassTestDescriptor.java:185) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstanceProvider$1(ClassTestDescriptor.java:189) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at java.util.Optional.orElseGet(Optional.java:267) ~[?:1.8.0_92]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstanceProvider$2(ClassTestDescriptor.java:188) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:81) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:58) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.prepare(HierarchicalTestExecutor.java:89) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.execute(HierarchicalTestExecutor.java:74) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$2(HierarchicalTestExecutor.java:121) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175) ~[?:1.8.0_92]
+	at java.util.Iterator.forEachRemaining(Iterator.java:116) ~[?:1.8.0_92]
+	at java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471) ~[?:1.8.0_92]
+	at java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151) ~[?:1.8.0_92]
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:418) ~[?:1.8.0_92]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$3(HierarchicalTestExecutor.java:121) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.SingleTestExecutor.executeSafely(SingleTestExecutor.java:66) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.executeRecursively(HierarchicalTestExecutor.java:108) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.execute(HierarchicalTestExecutor.java:79) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$2(HierarchicalTestExecutor.java:121) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175) ~[?:1.8.0_92]
+	at java.util.Iterator.forEachRemaining(Iterator.java:116) ~[?:1.8.0_92]
+	at java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471) ~[?:1.8.0_92]
+	at java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151) ~[?:1.8.0_92]
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:418) ~[?:1.8.0_92]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$3(HierarchicalTestExecutor.java:121) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.SingleTestExecutor.executeSafely(SingleTestExecutor.java:66) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.executeRecursively(HierarchicalTestExecutor.java:108) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.execute(HierarchicalTestExecutor.java:79) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:55) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:43) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:170) [junit-platform-launcher-1.2.0.jar:1.2.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:154) [junit-platform-launcher-1.2.0.jar:1.2.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:90) [junit-platform-launcher-1.2.0.jar:1.2.0]
+	at org.junit.platform.runner.JUnitPlatform.run(JUnitPlatform.java:139) [junit-platform-runner-1.2.0.jar:1.2.0]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:369) [surefire-junit4-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:275) [surefire-junit4-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:239) [surefire-junit4-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:160) [surefire-junit4-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:373) [surefire-booter-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:334) [surefire-booter-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:119) [surefire-booter-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:407) [surefire-booter-2.20.1.jar:2.20.1]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [context/persistence-versioning.xml]: Invocation of init method failed; nested exception is liquibase.exception.ValidationFailedException: Validation Failed:
+<<<<<<< Updated upstream
+     2 change sets check sum
+          classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:138c78b610dbe84dd5f042fe9fb98308 but is now: 7:223be4ad7de6b902908479227f157f26
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:6e15e0abda78be2943f2d072ccd4aa2f
+=======
+     1 change sets check sum
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:7252391784ddb3b3de4a9b9939ad0198
+>>>>>>> Stashed changes
+
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1706) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:579) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:501) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:760) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:869) ~[spring-context-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550) ~[spring-context-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.web.AbstractGenericWebContextLoader.loadContext(AbstractGenericWebContextLoader.java:129) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.web.AbstractGenericWebContextLoader.loadContext(AbstractGenericWebContextLoader.java:61) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:107) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:243) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	... 71 more
+Caused by: liquibase.exception.ValidationFailedException: Validation Failed:
+<<<<<<< Updated upstream
+     2 change sets check sum
+          classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:138c78b610dbe84dd5f042fe9fb98308 but is now: 7:223be4ad7de6b902908479227f157f26
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:6e15e0abda78be2943f2d072ccd4aa2f
+=======
+     1 change sets check sum
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:7252391784ddb3b3de4a9b9939ad0198
+>>>>>>> Stashed changes
+
+	at liquibase.changelog.DatabaseChangeLog.validate(DatabaseChangeLog.java:266) ~[liquibase-core-3.5.5.jar:?]
+	at liquibase.Liquibase.update(Liquibase.java:210) ~[liquibase-core-3.5.5.jar:?]
+	at liquibase.Liquibase.update(Liquibase.java:192) ~[liquibase-core-3.5.5.jar:?]
+	at liquibase.integration.spring.SpringLiquibase.performUpdate(SpringLiquibase.java:431) ~[liquibase-core-3.5.5.jar:?]
+	at liquibase.integration.spring.SpringLiquibase.afterPropertiesSet(SpringLiquibase.java:388) ~[liquibase-core-3.5.5.jar:?]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1765) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1702) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:579) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:501) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:760) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:869) ~[spring-context-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550) ~[spring-context-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.web.AbstractGenericWebContextLoader.loadContext(AbstractGenericWebContextLoader.java:129) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.web.AbstractGenericWebContextLoader.loadContext(AbstractGenericWebContextLoader.java:61) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:107) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:243) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	... 71 more
+<<<<<<< Updated upstream
+=======
+[DEBUG] 2018-12-16 00:14:23,713 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 00:14:23,773 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 00:14:23,802 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 00:14:23,840 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 00:14:24,091 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 00:30:15,299 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 00:30:15,349 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 00:30:15,388 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 00:30:15,435 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 00:30:15,477 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 00:41:41,598 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 00:41:41,651 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 00:41:41,679 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 00:41:41,725 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 00:41:41,788 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 00:46:46,385 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 00:46:46,443 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 00:46:46,474 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 00:46:46,514 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 00:46:46,622 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 00:54:03,333 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 00:54:03,384 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 00:54:03,415 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 00:54:03,451 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 00:54:03,520 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 00:59:12,460 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 00:59:12,498 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 00:59:12,522 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 00:59:12,562 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 00:59:12,613 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:03:37,291 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:03:37,402 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:03:37,431 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:03:37,466 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 13:03:37,578 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:08:55,602 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:08:55,688 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:08:55,715 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:08:55,762 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 13:08:55,840 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:14:22,740 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:14:22,778 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:14:22,810 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:14:22,853 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 13:14:22,927 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:19:05,598 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:19:05,639 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:19:05,669 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:19:05,703 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 13:19:05,826 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:38:08,269 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:38:08,308 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:38:08,333 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:38:08,365 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 13:38:08,525 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:43:01,510 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:43:01,565 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:43:01,588 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:43:01,635 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 13:43:01,730 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:47:39,908 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:47:39,951 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 13:47:39,978 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 13:47:40,023 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 13:47:40,093 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 15:28:54,418 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 15:28:54,451 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 15:28:54,474 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 15:28:54,505 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 15:28:54,624 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 15:48:17,487 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 15:48:17,524 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 15:48:17,548 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 15:48:17,583 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 15:48:17,644 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:04:02,498 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:04:02,539 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:04:02,579 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:04:02,617 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 16:04:02,711 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:08:49,573 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:08:49,623 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:08:49,657 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:08:49,695 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 16:08:49,764 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:19:59,042 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:19:59,077 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:19:59,099 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:19:59,132 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 16:19:59,203 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:30:06,699 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:30:06,737 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:30:06,768 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:30:06,803 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 16:30:06,868 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:34:18,755 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:34:18,797 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:34:18,820 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:34:18,855 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 16:34:18,902 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:40:32,220 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:40:32,293 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:40:32,326 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:40:32,365 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 16:40:32,444 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:45:14,410 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:45:14,448 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 16:45:14,471 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 16:45:14,506 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 16:45:14,626 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 17:00:57,454 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 17:00:57,500 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 17:00:57,527 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 17:00:57,568 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 17:00:57,653 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 17:13:49,603 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 17:13:49,645 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 17:13:49,675 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 17:13:49,705 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 17:13:49,764 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 17:27:20,842 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 17:27:20,887 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 17:27:20,919 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 17:27:20,961 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 17:27:21,027 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 17:37:30,817 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 17:37:30,909 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 17:37:30,944 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 17:37:30,990 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 17:37:31,063 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 17:48:44,497 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 17:48:44,562 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 17:48:44,614 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 17:48:44,656 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 17:48:44,737 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 17:57:14,976 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 17:57:15,035 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 17:57:15,064 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 17:57:15,102 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 17:57:15,190 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 18:01:48,448 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:01:48,496 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:01:48,527 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 18:01:48,568 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 18:01:48,690 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 18:06:41,113 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:06:41,156 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:06:41,184 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 18:06:41,220 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 18:06:41,319 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 18:13:34,750 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:13:34,793 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:13:34,820 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 18:13:34,865 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 18:13:34,926 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 18:17:43,858 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:17:43,900 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:17:43,931 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 18:17:43,963 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 18:17:44,037 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_1_,
+        defaultexa0_.name as name2_1_ 
+    from
+        example_entities defaultexa0_
+>>>>>>> Stashed changes
+[ERROR] 2018-12-16 18:33:40,034 org.springframework.test.context.TestContextManager prepareTestInstance - Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@ecf028c] to prepare test instance [es.udc.fi.dc.fd.test.integration.service.ITDefaultExampleEntityService@7b64bbad]
 java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:125) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:108) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
@@ -5386,8 +7394,8 @@ java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:407) [surefire-booter-2.20.1.jar:2.20.1]
 Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [context/persistence-versioning.xml]: Invocation of init method failed; nested exception is liquibase.exception.ValidationFailedException: Validation Failed:
      2 change sets check sum
-          classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:138c78b610dbe84dd5f042fe9fb98308 but is now: 7:223be4ad7de6b902908479227f157f26
-          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:6e15e0abda78be2943f2d072ccd4aa2f
+          classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:3668fe34c4c4e5943710ae699bfc884d but is now: 7:223be4ad7de6b902908479227f157f26
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:7252391784ddb3b3de4a9b9939ad0198 but is now: 7:33568611aff67afd0e6dd41140eb896d
 
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1706) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:579) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
@@ -5408,8 +7416,8 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 	... 71 more
 Caused by: liquibase.exception.ValidationFailedException: Validation Failed:
      2 change sets check sum
-          classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:138c78b610dbe84dd5f042fe9fb98308 but is now: 7:223be4ad7de6b902908479227f157f26
-          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:dc094f55903fcb7ca4ef6381187287f2 but is now: 7:6e15e0abda78be2943f2d072ccd4aa2f
+          classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:3668fe34c4c4e5943710ae699bfc884d but is now: 7:223be4ad7de6b902908479227f157f26
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:7252391784ddb3b3de4a9b9939ad0198 but is now: 7:33568611aff67afd0e6dd41140eb896d
 
 	at liquibase.changelog.DatabaseChangeLog.validate(DatabaseChangeLog.java:266) ~[liquibase-core-3.5.5.jar:?]
 	at liquibase.Liquibase.update(Liquibase.java:210) ~[liquibase-core-3.5.5.jar:?]
@@ -5434,3 +7442,350 @@ Caused by: liquibase.exception.ValidationFailedException: Validation Failed:
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	... 71 more
+[ERROR] 2018-12-16 18:33:41,622 org.springframework.test.context.TestContextManager prepareTestInstance - Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@ecf028c] to prepare test instance [es.udc.fi.dc.fd.test.integration.service.ITDefaultExampleEntityService@208185c0]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:125) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:108) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:246) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:97) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$invokeTestInstancePostProcessors$3(ClassTestDescriptor.java:215) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.JupiterTestDescriptor.executeAndMaskThrowable(JupiterTestDescriptor.java:141) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$invokeTestInstancePostProcessors$4(ClassTestDescriptor.java:215) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175) ~[?:1.8.0_92]
+	at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1374) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471) ~[?:1.8.0_92]
+	at java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:312) ~[?:1.8.0_92]
+	at java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:743) ~[?:1.8.0_92]
+	at java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:742) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:580) ~[?:1.8.0_92]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.invokeTestInstancePostProcessors(ClassTestDescriptor.java:214) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.instantiateAndPostProcessTestInstance(ClassTestDescriptor.java:196) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstanceProvider$0(ClassTestDescriptor.java:185) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstanceProvider$1(ClassTestDescriptor.java:189) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at java.util.Optional.orElseGet(Optional.java:267) ~[?:1.8.0_92]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstanceProvider$2(ClassTestDescriptor.java:188) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:81) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:58) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.prepare(HierarchicalTestExecutor.java:89) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.execute(HierarchicalTestExecutor.java:74) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$2(HierarchicalTestExecutor.java:121) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175) ~[?:1.8.0_92]
+	at java.util.Iterator.forEachRemaining(Iterator.java:116) ~[?:1.8.0_92]
+	at java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471) ~[?:1.8.0_92]
+	at java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151) ~[?:1.8.0_92]
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:418) ~[?:1.8.0_92]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$3(HierarchicalTestExecutor.java:121) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.SingleTestExecutor.executeSafely(SingleTestExecutor.java:66) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.executeRecursively(HierarchicalTestExecutor.java:108) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.execute(HierarchicalTestExecutor.java:79) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$2(HierarchicalTestExecutor.java:121) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175) ~[?:1.8.0_92]
+	at java.util.Iterator.forEachRemaining(Iterator.java:116) ~[?:1.8.0_92]
+	at java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471) ~[?:1.8.0_92]
+	at java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151) ~[?:1.8.0_92]
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:418) ~[?:1.8.0_92]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$3(HierarchicalTestExecutor.java:121) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.SingleTestExecutor.executeSafely(SingleTestExecutor.java:66) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.executeRecursively(HierarchicalTestExecutor.java:108) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.execute(HierarchicalTestExecutor.java:79) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:55) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:43) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:170) [junit-platform-launcher-1.2.0.jar:1.2.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:154) [junit-platform-launcher-1.2.0.jar:1.2.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:90) [junit-platform-launcher-1.2.0.jar:1.2.0]
+	at org.junit.platform.runner.JUnitPlatform.run(JUnitPlatform.java:139) [junit-platform-runner-1.2.0.jar:1.2.0]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:369) [surefire-junit4-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:275) [surefire-junit4-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:239) [surefire-junit4-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:160) [surefire-junit4-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:373) [surefire-booter-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:334) [surefire-booter-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:119) [surefire-booter-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:407) [surefire-booter-2.20.1.jar:2.20.1]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [context/persistence-versioning.xml]: Invocation of init method failed; nested exception is liquibase.exception.ValidationFailedException: Validation Failed:
+     2 change sets check sum
+          classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:3668fe34c4c4e5943710ae699bfc884d but is now: 7:223be4ad7de6b902908479227f157f26
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:7252391784ddb3b3de4a9b9939ad0198 but is now: 7:33568611aff67afd0e6dd41140eb896d
+
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1706) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:579) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:501) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:760) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:869) ~[spring-context-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550) ~[spring-context-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.web.AbstractGenericWebContextLoader.loadContext(AbstractGenericWebContextLoader.java:129) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.web.AbstractGenericWebContextLoader.loadContext(AbstractGenericWebContextLoader.java:61) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:107) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:243) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	... 71 more
+Caused by: liquibase.exception.ValidationFailedException: Validation Failed:
+     2 change sets check sum
+          classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:3668fe34c4c4e5943710ae699bfc884d but is now: 7:223be4ad7de6b902908479227f157f26
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:7252391784ddb3b3de4a9b9939ad0198 but is now: 7:33568611aff67afd0e6dd41140eb896d
+
+	at liquibase.changelog.DatabaseChangeLog.validate(DatabaseChangeLog.java:266) ~[liquibase-core-3.5.5.jar:?]
+	at liquibase.Liquibase.update(Liquibase.java:210) ~[liquibase-core-3.5.5.jar:?]
+	at liquibase.Liquibase.update(Liquibase.java:192) ~[liquibase-core-3.5.5.jar:?]
+	at liquibase.integration.spring.SpringLiquibase.performUpdate(SpringLiquibase.java:431) ~[liquibase-core-3.5.5.jar:?]
+	at liquibase.integration.spring.SpringLiquibase.afterPropertiesSet(SpringLiquibase.java:388) ~[liquibase-core-3.5.5.jar:?]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1765) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1702) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:579) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:501) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:760) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:869) ~[spring-context-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550) ~[spring-context-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.web.AbstractGenericWebContextLoader.loadContext(AbstractGenericWebContextLoader.java:129) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.web.AbstractGenericWebContextLoader.loadContext(AbstractGenericWebContextLoader.java:61) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:107) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:243) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	... 71 more
+[ERROR] 2018-12-16 18:33:43,324 org.springframework.test.context.TestContextManager prepareTestInstance - Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@ecf028c] to prepare test instance [es.udc.fi.dc.fd.test.integration.service.ITDefaultExampleEntityService@193c3b1c]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:125) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:108) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:246) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:97) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$invokeTestInstancePostProcessors$3(ClassTestDescriptor.java:215) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.JupiterTestDescriptor.executeAndMaskThrowable(JupiterTestDescriptor.java:141) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$invokeTestInstancePostProcessors$4(ClassTestDescriptor.java:215) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175) ~[?:1.8.0_92]
+	at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1374) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471) ~[?:1.8.0_92]
+	at java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:312) ~[?:1.8.0_92]
+	at java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:743) ~[?:1.8.0_92]
+	at java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:742) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:580) ~[?:1.8.0_92]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.invokeTestInstancePostProcessors(ClassTestDescriptor.java:214) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.instantiateAndPostProcessTestInstance(ClassTestDescriptor.java:196) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstanceProvider$0(ClassTestDescriptor.java:185) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstanceProvider$1(ClassTestDescriptor.java:189) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at java.util.Optional.orElseGet(Optional.java:267) ~[?:1.8.0_92]
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.lambda$testInstanceProvider$2(ClassTestDescriptor.java:188) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:81) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:58) ~[junit-jupiter-engine-5.2.0.jar:5.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.prepare(HierarchicalTestExecutor.java:89) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.execute(HierarchicalTestExecutor.java:74) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$2(HierarchicalTestExecutor.java:121) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175) ~[?:1.8.0_92]
+	at java.util.Iterator.forEachRemaining(Iterator.java:116) ~[?:1.8.0_92]
+	at java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471) ~[?:1.8.0_92]
+	at java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151) ~[?:1.8.0_92]
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:418) ~[?:1.8.0_92]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$3(HierarchicalTestExecutor.java:121) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.SingleTestExecutor.executeSafely(SingleTestExecutor.java:66) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.executeRecursively(HierarchicalTestExecutor.java:108) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.execute(HierarchicalTestExecutor.java:79) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$2(HierarchicalTestExecutor.java:121) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175) ~[?:1.8.0_92]
+	at java.util.Iterator.forEachRemaining(Iterator.java:116) ~[?:1.8.0_92]
+	at java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471) ~[?:1.8.0_92]
+	at java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151) ~[?:1.8.0_92]
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174) ~[?:1.8.0_92]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_92]
+	at java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:418) ~[?:1.8.0_92]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$3(HierarchicalTestExecutor.java:121) ~[junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.SingleTestExecutor.executeSafely(SingleTestExecutor.java:66) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.executeRecursively(HierarchicalTestExecutor.java:108) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.execute(HierarchicalTestExecutor.java:79) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:55) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:43) [junit-platform-engine-1.2.0.jar:1.2.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:170) [junit-platform-launcher-1.2.0.jar:1.2.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:154) [junit-platform-launcher-1.2.0.jar:1.2.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:90) [junit-platform-launcher-1.2.0.jar:1.2.0]
+	at org.junit.platform.runner.JUnitPlatform.run(JUnitPlatform.java:139) [junit-platform-runner-1.2.0.jar:1.2.0]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:369) [surefire-junit4-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:275) [surefire-junit4-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:239) [surefire-junit4-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:160) [surefire-junit4-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:373) [surefire-booter-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:334) [surefire-booter-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:119) [surefire-booter-2.20.1.jar:2.20.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:407) [surefire-booter-2.20.1.jar:2.20.1]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [context/persistence-versioning.xml]: Invocation of init method failed; nested exception is liquibase.exception.ValidationFailedException: Validation Failed:
+     2 change sets check sum
+          classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:3668fe34c4c4e5943710ae699bfc884d but is now: 7:223be4ad7de6b902908479227f157f26
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:7252391784ddb3b3de4a9b9939ad0198 but is now: 7:33568611aff67afd0e6dd41140eb896d
+
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1706) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:579) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:501) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:760) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:869) ~[spring-context-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550) ~[spring-context-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.web.AbstractGenericWebContextLoader.loadContext(AbstractGenericWebContextLoader.java:129) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.web.AbstractGenericWebContextLoader.loadContext(AbstractGenericWebContextLoader.java:61) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:107) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:243) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	... 71 more
+Caused by: liquibase.exception.ValidationFailedException: Validation Failed:
+     2 change sets check sum
+          classpath:liquibase/changelog.xml::cubisoft_tables::PabloRivas was: 7:3668fe34c4c4e5943710ae699bfc884d but is now: 7:223be4ad7de6b902908479227f157f26
+          classpath:liquibase/changelog.xml::initial_data::Bernardo was: 7:7252391784ddb3b3de4a9b9939ad0198 but is now: 7:33568611aff67afd0e6dd41140eb896d
+
+	at liquibase.changelog.DatabaseChangeLog.validate(DatabaseChangeLog.java:266) ~[liquibase-core-3.5.5.jar:?]
+	at liquibase.Liquibase.update(Liquibase.java:210) ~[liquibase-core-3.5.5.jar:?]
+	at liquibase.Liquibase.update(Liquibase.java:192) ~[liquibase-core-3.5.5.jar:?]
+	at liquibase.integration.spring.SpringLiquibase.performUpdate(SpringLiquibase.java:431) ~[liquibase-core-3.5.5.jar:?]
+	at liquibase.integration.spring.SpringLiquibase.afterPropertiesSet(SpringLiquibase.java:388) ~[liquibase-core-3.5.5.jar:?]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1765) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1702) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:579) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:501) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:760) ~[spring-beans-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:869) ~[spring-context-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550) ~[spring-context-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.web.AbstractGenericWebContextLoader.loadContext(AbstractGenericWebContextLoader.java:129) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.web.AbstractGenericWebContextLoader.loadContext(AbstractGenericWebContextLoader.java:61) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:107) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:243) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
+	... 71 more
+[DEBUG] 2018-12-16 18:35:39,730 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:35:39,780 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:35:39,811 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 18:35:39,859 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 18:35:39,929 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 18:39:53,501 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:39:53,561 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:39:53,598 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 18:39:53,640 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 18:39:53,711 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 18:44:30,199 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:44:30,245 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 18:44:30,838 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 18:44:30,870 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 18:44:30,932 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_

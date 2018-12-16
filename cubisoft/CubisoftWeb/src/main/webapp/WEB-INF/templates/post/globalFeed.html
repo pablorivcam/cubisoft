@@ -36,8 +36,8 @@
 			<form method="get" action="../post/globalFeed?hashtags=reto">
 			
 				<input style="width: 300px; display: inline" type="text"
-					class="form-control" id="hashtags" placeholder="Hashtag" name="hashtags" />
-				<button class="btn btn-info" role="button" type="submit">Find</button>
+					class="form-control" id="hashtagText" placeholder="Hashtag" name="hashtags" />
+				<button id="hashtagButton" class="btn btn-info" role="button" type="submit">Find</button>
 			
 			</form>
 		
@@ -73,7 +73,7 @@
 										<input type="hidden" id="view" name="view"
 											value="post/globalFeed"> <input type="hidden"
 											id="like-postId" name="postId" th:value="${post?.post_id}">
-										<button style="color: #777777"
+										<button style="color: #777777" id="like"
 											th:text="${post?.number_of_likes}" type="submit"
 											class="btn btn-link fa fa-thumbs-up">Like</button>
 									</form>
@@ -87,7 +87,7 @@
 										<input type="hidden" id="view" name="view"
 											value="post/globalFeed"> <input type="hidden"
 											id="unlike-postId" name="postId" th:value="${post?.post_id}">
-										<button style="color: #5bc0de"
+										<button style="color: #5bc0de" id="unlike"
 											th:text="${post?.number_of_likes}" type="submit"
 											class="btn btn-link fa fa-thumbs-up">Unlike</button>
 									</form>
@@ -122,7 +122,7 @@
 								<!-- Botón para compartir una imagen -->
 								<a href="#resharePictureModal"
 									th:attr="data-postid=''+${post?.post_id}+''"
-									data-toggle="modal"
+									data-toggle="modal" id="reshare"
 									class="resharePictureModalButton btn btn-warning" role="button">
 									<span th:text="#{button.reshare}">Reshare</span> <span
 									class="glyphicon glyphicon-share-alt"></span>
@@ -155,7 +155,7 @@
 
 									<!-- Botón de responder comentario -->
 									<div class="dropdown" style="display: inline">
-										<a class="dropdown-toggle" data-toggle="dropdown" href="#"
+										<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="replyComment"
 											th:text="#{button.reply}">Reply</a>
 										<form class="dropdown-menu" method="post"
 											th:action="@{/post/replyComment}">
@@ -163,9 +163,9 @@
 												th:value="${comment?.comment_id}" /> <input type="hidden"
 												id="view" name="view" value="post/globalFeed"> <input
 												style="width: 300px; display: inline" type="text"
-												class="form-control" id="text" placeholder="Text"
+												class="form-control" id="replyText" placeholder="Text"
 												name="text" />
-											<button type="submit" class="btn btn-info" role="button">
+											<button id="replyCommentOk" type="submit" class="btn btn-info" role="button">
 												<span th:text="#{button.reply}">Reply</span> <span
 													class="glyphicon glyphicon-comment"></span>
 											</button>
@@ -177,13 +177,13 @@
 									<div th:if="${currentUser==comment?.user}">
 										<a href="#modifyCommentModal"
 											th:attr="data-modifycommentid=''+${comment?.comment_id}+'',data-newcontent=''+${comment?.text}+''"
-											th:text="#{button.modify}" data-toggle="modal"
+											th:text="#{button.modify}" data-toggle="modal" id="modifyComment"
 											class="modifyCommentModalButton btn btn-info" role="button">Modify</a>
 
 
 										<a href="#deleteCommentModal"
 											th:attr="data-deletecommentid=''+${comment?.comment_id}+''"
-											th:text="#{button.delete}" data-toggle="modal"
+											th:text="#{button.delete}" data-toggle="modal" id="deleteComment"
 											class="deleteCommentModalButton btn btn-danger" role="button">Delete</a>
 
 										<span style="color: #777777"
@@ -227,11 +227,11 @@
 								<!-- Formulario para añadir comentarios -->
 								<form method="post" th:action="@{/post/addComment}">
 									<input style="width: 300px; display: inline" type="text"
-										class="form-control" id="text" placeholder="Text" name="text" />
+										class="form-control" id="commentText" placeholder="Text" name="text" />
 									<input type="hidden" id="view" name="view"
 										value="post/globalFeed"> <input type="hidden"
 										id="postId" name="postId" th:value="${post?.post_id}">
-									<button type="submit" class="btn btn-info" role="button">
+									<button id="AddComment" type="submit" class="btn btn-info" role="button">
 										<span th:text="#{label.comment}">Comment</span> <span
 											class="glyphicon glyphicon-comment"></span>
 									</button>
@@ -270,7 +270,7 @@
 						<input type="hidden" id="view" name="view" value="post/globalFeed">
 						<button th:text="#{button.cancel}" type="button"
 							class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button type="submit" class="btn btn-warning">
+						<button id="reshareOk" type="submit" class="btn btn-warning">
 							<span th:text="#{button.reshare}">Reshare</span> <span
 								class="glyphicon glyphicon-share-alt"></span>
 						</button>
@@ -396,7 +396,7 @@
 							id="newContent" name="newContent" placeholder="new Content" />
 						<button th:text="#{button.cancel}" type="button"
 							class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button th:text="#{button.submit}" type="submit"
+						<button th:text="#{button.submit}" type="submit" id="modifyCommentOk"
 							class="btn btn-info">Submit</button>
 					</form>
 
@@ -431,7 +431,7 @@
 							value="post/globalFeed">
 						<button th:text="#{button.cancel}" type="button"
 							class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button th:text="#{button.delete}" type="submit"
+						<button th:text="#{button.delete}" type="submit" id="deleteCommentOk"
 							class="btn btn-danger">Delete</button>
 					</form>
 				</div>

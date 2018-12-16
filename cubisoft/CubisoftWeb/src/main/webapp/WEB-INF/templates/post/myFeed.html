@@ -38,14 +38,14 @@
 			</div>
 			
 			<div th:if="${(userFound == null)}">
-				<a th:href="@{/story/myFeed(user_id=${currentUser?.user_id})}" th:text="#{label.stories}" 
+				<a id="story" th:href="@{/story/myFeed(user_id=${currentUser?.user_id})}" th:text="#{label.stories}" 
 				class="btn btn btn-info" role="button">Stories</a>
 			</div>
 			
 			<div th:if="${#lists.isEmpty(posts)}"
 				style="padding: 10px; background: #000000AA; text-align: center">
 				<h2 th:text="#{message.noposts}" style="color: white">No posts</h2>
-				<a th:if="${userFound == null}" href="#" th:text="#{label.upload}"
+				<a th:if="${userFound == null}" href="#" th:text="#{label.upload}" id="upload"
 					th:href="@{/picture/upload}" class="btn btn-info" role="button"
 					style="margin: 10px">Go to feed</a>
 			</div>
@@ -78,7 +78,7 @@
 											<input type="hidden" id="like-postId" name="postId"
 												th:value="${post?.post_id}"> <input type="hidden"
 												id="view" name="view" value="post/myFeed">
-											<button style="color: #777777"
+											<button id="like" style="color: #777777"
 												th:text="${post?.number_of_likes}" type="submit"
 												class="btn btn-link fa fa-thumbs-up">Like</button>
 										</form>
@@ -93,7 +93,7 @@
 												th:value="${post?.post_id}"> <input type="hidden"
 												id="view" name="view" value="post/myFeed">
 
-											<button style="color: #5bc0de"
+											<button id="unlike" style="color: #5bc0de"
 												th:text="${post?.number_of_likes}" type="submit"
 												class="btn btn-link fa fa-thumbs-up">Unlike</button>
 										</form>
@@ -103,7 +103,7 @@
 									<!-- Botón de ver views -->
 									<a href="#showViewModal"
 										th:attr="data-viewpostid=''+${post?.post_id}+'',data-anonymousviews=''+${post?.anonymousViews}+''"
-										data-toggle="modal"
+										data-toggle="modal" id="showView"
 										class="showViewModalButton btn btn-secondary" role="button">
 										<span class="glyphicon glyphicon-eye-open"></span> <span
 										th:text="#{button.views}">Views</span>
@@ -114,14 +114,14 @@
 										style="display: inline">
 										<a href="#modifyPictureModal"
 											th:attr="data-modifyid=''+${post?.picture.picture_id}+'',data-description=''+${post?.picture.description}+''"
-											th:text="#{button.modify}" data-toggle="modal"
+											id="modify" th:text="#{button.modify}" data-toggle="modal"
 											class="modifyPictureModalButton btn btn-info" role="button">Modify</a>
 									</div>
 
 									<!-- Botón de eliminar post -->
 									<a href="#deletePostModal"
 										th:attr="data-postid=''+${post?.post_id}+''"
-										th:text="#{button.delete}" data-toggle="modal"
+										th:text="#{button.delete}" data-toggle="modal" id= "delete"
 										class="deletePostModalButton btn btn-danger" role="button">Delete</a>
 
 								</div>
@@ -145,7 +145,7 @@
 
 									<!-- Botón de responder comentario -->
 									<div class="dropdown" style="display: inline">
-										<a class="dropdown-toggle" data-toggle="dropdown" href="#"
+										<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="replyComment"
 											th:text="#{button.reply}">Reply</a>
 										<form class="dropdown-menu" method="post"
 											th:action="@{/post/replyComment}">
@@ -153,9 +153,9 @@
 												th:value="${comment?.comment_id}" /> <input type="hidden"
 												id="view" name="view" value="post/globalFeed"> <input
 												style="width: 300px; display: inline" type="text"
-												class="form-control" id="text" placeholder="Text"
+												class="form-control" id="replyText" placeholder="Text"
 												name="text" />
-											<button type="submit" class="btn btn-info" role="button">
+											<button type="submit" id="replyCommentOk" class="btn btn-info" role="button">
 												<span th:text="#{button.reply}">Reply</span> <span
 													class="glyphicon glyphicon-comment"></span>
 											</button>
@@ -166,12 +166,12 @@
 									<!-- Modify and delete  -->
 									<a href="#modifyCommentModal"
 										th:attr="data-modifycommentid=''+${comment?.comment_id}+'',data-newcontent=''+${comment?.text}+''"
-										th:text="#{button.modify}" data-toggle="modal"
+										th:text="#{button.modify}" data-toggle="modal" id="modifyComment"
 										class="modifyCommentModalButton btn btn-info" role="button">Modify</a>
 
 									<a href="#deleteCommentModal"
 										th:attr="data-deletecommentid=''+${comment?.comment_id}+''"
-										th:text="#{button.delete}" data-toggle="modal"
+										th:text="#{button.delete}" data-toggle="modal" id="deleteComment"
 										class="deleteCommentModalButton btn btn-danger" role="button">Delete</a>
 									<span style="color: #777777"
 										th:text="${comment?.date.getTime()}"></span>
@@ -187,7 +187,7 @@
 										</p>
 										<a href="#modifyCommentModal"
 											th:attr="data-modifycommentid=''+${child_comment?.comment_id}+'',data-newcontent=''+${child_comment?.text}+''"
-											th:text="#{button.modify}" data-toggle="modal"
+											th:text="#{button.modify}" data-toggle="modal" 
 											class="modifyCommentModalButton btn btn-info" role="button">Modify</a>
 
 										<a href="#deleteCommentModal"
@@ -211,11 +211,11 @@
 								<!-- Formulario para añadir comentarios -->
 								<form method="post" th:action="@{/post/addComment}">
 									<input style="width: 300px; display: inline" type="text"
-										class="form-control" id="text" placeholder="Text" name="text" />
+										class="form-control" id="commentText" placeholder="Text" name="text" />
 									<input type="hidden" id="view" name="view" value="post/myFeed">
 									<input type="hidden" id="postId" name="postId"
 										th:value="${post?.post_id}">
-									<button type="submit" class="btn btn-info" role="button">
+									<button id="newComment" type="submit" class="btn btn-info" role="button">
 										<span th:text="#{label.comment}">Comment</span> <span
 											class="glyphicon glyphicon-comment"></span>
 									</button>
@@ -255,7 +255,7 @@
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button th:text="#{button.ok}" type="button"
+					<button th:text="#{button.ok}" type="button" id="showViewOk"
 						class="btn btn-secondary" data-dismiss="modal">Ok</button>
 				</div>
 			</div>
@@ -287,7 +287,7 @@
 						<input type="hidden" id="view" name="view" value="post/myFeed">
 						<button th:text="#{button.cancel}" type="button"
 							class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button th:text="#{button.delete}" type="submit"
+						<button th:text="#{button.delete}" type="submit" id= "deleteOk"
 							class="btn btn-danger">Delete</button>
 					</form>
 				</div>
@@ -317,9 +317,9 @@
 						<input type="hidden" id="modifyId" name="modifyId" value="-1">
 						<input type="text" class="form-control" id="description"
 							name="description" placeholder="Picture Description" />
-						<button th:text="#{button.cancel}" type="button"
+						<button th:text="#{button.cancel}" type="button" 
 							class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button th:text="#{button.submit}" type="submit"
+						<button th:text="#{button.submit}" type="submit" id="modifyOk"
 							class="btn btn-info">Submit</button>
 					</form>
 
@@ -349,10 +349,10 @@
 						<input type="hidden" id="view" name="view" value="post/myFeed">
 						<input type="hidden" id="modifyCommentId" name="modifyCommentId"
 							value="-1"> <input type="text" class="form-control"
-							id="newContent" name="newContent" placeholder="new Content" />
+							id="newContentComment" name="newContent" placeholder="new Content" />
 						<button th:text="#{button.cancel}" type="button"
 							class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button th:text="#{button.submit}" type="submit"
+						<button th:text="#{button.submit}" type="submit" id="modifyCommentOk"
 							class="btn btn-info">Submit</button>
 					</form>
 
@@ -386,7 +386,7 @@
 							value="post/myFeed">
 						<button th:text="#{button.cancel}" type="button"
 							class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button th:text="#{button.delete}" type="submit"
+						<button th:text="#{button.delete}" type="submit" id="deleteCommentOk"
 							class="btn btn-danger">Delete</button>
 					</form>
 				</div>

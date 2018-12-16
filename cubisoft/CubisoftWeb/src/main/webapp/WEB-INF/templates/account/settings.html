@@ -22,7 +22,7 @@
 				class="form-narrow form-horizontal" method="post">
 				<input type="hidden" id="setToPrivate" name="userId"
 					th:value="${currentUser.getUser_id()}">
-				<button style="color: #FFFFFF;"
+				<button style="color: #FFFFFF;" id="private"
 					th:text="#{button.setPrivate}" type="submit"
 					class="btn btn-info">Set Private</button>
 			</form>
@@ -34,7 +34,7 @@
 				class="form-narrow form-horizontal" method="post">
 				<input type="hidden" id="setToPublic" name="userId"
 					th:value="${currentUser.getUser_id()}">
-				<button style="color: #FFFFFF;"
+				<button style="color: #FFFFFF;" id="public"
 					th:text="#{button.setPublic}" type="submit"
 					class="btn btn-info">Set Public</button>
 			</form>
