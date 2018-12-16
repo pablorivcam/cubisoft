@@ -59,38 +59,6 @@ public class BlocksService {
 	}
 
 	/**
-	 * Method that returns true if there is a posts block in place.
-	 *
-	 * @param user
-	 *            the user
-	 * @param loggedUser
-	 *            the logged user
-	 * @param type
-	 *            the type of block (either stories or profile)
-	 * 
-	 * @return true, if successful
-	 */
-	public boolean existPostsBlock(UserProfile user, UserProfile loggedUser) {
-		return blocksRepository.checkBlock(user, loggedUser, BlockType.PROFILE);
-	}
-
-	/**
-	 * Method that returns true if there is a story block in place.
-	 *
-	 * @param user
-	 *            the user
-	 * @param loggedUser
-	 *            the logged user
-	 * @param type
-	 *            the type of block (either stories or profile)
-	 * 
-	 * @return true, if successful
-	 */
-	public boolean existStoryBlock(UserProfile user, UserProfile loggedUser) {
-		return blocksRepository.checkBlock(user, loggedUser, BlockType.STORIES);
-	}
-
-	/**
 	 * Method that allows an user to block some existing user.
 	 *
 	 * @param user
@@ -202,6 +170,7 @@ public class BlocksService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 * @throws AlreadyBlockedException
+	 *             the Already blocked exception
 	 */
 	@Transactional(rollbackFor = InstanceNotFoundException.class)
 	public String blockStories(String email, String blocked_email)
@@ -241,6 +210,7 @@ public class BlocksService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 * @throws NotBlockedYetException
+	 *             the not blocked yet exception
 	 */
 	@Transactional(noRollbackFor = InstanceNotFoundException.class)
 	public String unblockStories(String email, String blocked_email)
@@ -277,6 +247,7 @@ public class BlocksService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 * @throws AlreadyBlockedException
+	 *             the already blocked exception
 	 */
 	@Transactional(rollbackFor = InstanceNotFoundException.class)
 	public String blockPosts(String email, String blocked_email)
@@ -316,6 +287,7 @@ public class BlocksService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 * @throws NotBlockedYetException
+	 *             the not blocked yet exception
 	 */
 	@Transactional(noRollbackFor = InstanceNotFoundException.class)
 	public String unblockPosts(String email, String blocked_email)
