@@ -43,7 +43,7 @@ public class ITInterfaceWeb {
 		driver = new FirefoxDriver();
 
 		driver.manage().window().maximize();
-		baseUrl = "http://localhost:17070/CubisoftWeb/";
+		baseUrl = "http://localhost:17070/cubisoft/";
 
 	}
 
@@ -115,46 +115,37 @@ public class ITInterfaceWeb {
 
 	}
 
-	/*
-	 * @Test
-	 * 
-	 * @Commit public void UploadPhotoTest() throws Exception {
-	 * 
-	 * driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-	 * driver.get(baseUrl + "signin");
-	 * 
-	 * Thread.sleep(500);
-	 * 
-	 * WebElement emailElement = driver.findElement(By.id("email"));
-	 * emailElement.sendKeys(TEST_USER_EMAIL);
-	 * 
-	 * WebElement passElement = driver.findElement(By.id("inputPassword"));
-	 * passElement.sendKeys(TEST_USER_PASSWORD);
-	 * 
-	 * driver.findElement(By.id("loginButton")).click();
-	 * 
-	 * driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-	 * driver.get(baseUrl + "picture/upload");
-	 * 
-	 * Thread.sleep(500);
-	 * 
-	 * WebElement photoElement = driver.findElement(By.id("pictureFile"));
-	 * photoElement.sendKeys("C:\\software\\Koala.jpg");
-	 * 
-	 * WebElement titleElement = driver.findElement(By.id("description"));
-	 * titleElement.sendKeys("description");
-	 * 
-	 * driver.findElement(By.id("upload")).click();
-	 * 
-	 * assertTrue(driver.findElement(By.id("like")).isDisplayed());
-	 * 
-	 * }
-	 */
+	// upload photo
+	@Test
+	@Commit
+	public void TestC() throws Exception {
+
+		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		driver.get(baseUrl + "signin");
+
+		Thread.sleep(500);
+
+		WebElement emailElement = driver.findElement(By.id("email"));
+		emailElement.sendKeys(TEST_USER_EMAIL);
+
+		WebElement passElement = driver.findElement(By.id("inputPassword"));
+		passElement.sendKeys(TEST_USER_PASSWORD);
+
+		driver.findElement(By.id("loginButton")).click();
+
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.get(baseUrl + "picture/upload");
+
+		Thread.sleep(500);
+
+		assertTrue(driver.findElement(By.id("upload")).isDisplayed());
+
+	}
 
 	// SignIn findUsers follow unfollow request cancel request
 	@Test
 	@Commit
-	public void TestC() throws Exception {
+	public void TestD() throws Exception {
 
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		driver.get(baseUrl + "signin");
@@ -246,7 +237,7 @@ public class ITInterfaceWeb {
 	// Request accepted when private profile change to public profile
 	@Test
 	@Commit
-	public void TestD() throws Exception {
+	public void TestE() throws Exception {
 
 		// Sign In
 
@@ -375,7 +366,7 @@ public class ITInterfaceWeb {
 	// Accept Cancel request
 	@Test
 	@Commit
-	public void TestE() throws Exception {
+	public void TestF() throws Exception {
 
 		// Sign In
 
@@ -596,7 +587,7 @@ public class ITInterfaceWeb {
 
 	@Test
 	@Commit
-	public void TestF() throws Exception {
+	public void TestG() throws Exception {
 
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		driver.get(baseUrl + "signin");
@@ -663,6 +654,18 @@ public class ITInterfaceWeb {
 
 		Thread.sleep(1000);
 
+		driver.findElement(By.id("replyComment")).click();
+
+		commentElement = driver.findElement(By.id("replyText"));
+		commentElement.clear();
+		commentElement.sendKeys("respuesta");
+
+		Thread.sleep(1000);
+
+		driver.findElement(By.id("replyCommentOk")).click();
+
+		Thread.sleep(1000);
+
 		driver.findElement(By.id("reshare")).click();
 
 		driver.findElement(By.id("reshareOk")).click();
@@ -687,7 +690,7 @@ public class ITInterfaceWeb {
 	// story
 	@Test
 	@Commit
-	public void TestG() throws Exception {
+	public void TestH() throws Exception {
 
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		driver.get(baseUrl + "signin");
@@ -713,10 +716,36 @@ public class ITInterfaceWeb {
 
 	}
 
+	// myFeedPublicTest
+
+	@Test
+	@Commit
+	public void TestI() throws Exception {
+
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.get(baseUrl + "account/list");
+
+		Thread.sleep(500);
+
+		WebElement findElement = driver.findElement(By.id("keywords"));
+		findElement.sendKeys("admin");
+
+		driver.findElement(By.id("findButton")).click();
+
+		Thread.sleep(500);
+
+		driver.findElement(By.id("userClick")).click();
+
+		Thread.sleep(500);
+
+		assertTrue(driver.findElement(By.id("newComment")).isDisplayed());
+
+	}
+
 	// MyFeed Test with delete
 	@Test
 	@Commit
-	public void TestH() throws Exception {
+	public void TestJ() throws Exception {
 
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		driver.get(baseUrl + "signin");
@@ -806,7 +835,7 @@ public class ITInterfaceWeb {
 
 	@Test
 	@Commit
-	public void TestI() throws Exception {
+	public void TestK() throws Exception {
 
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		driver.get(baseUrl + "signin");
@@ -841,6 +870,95 @@ public class ITInterfaceWeb {
 		driver.findElement(By.id("unblockStories")).click();
 
 		Thread.sleep(500);
+
+		driver.findElement(By.id("logOut")).click();
+
+		Thread.sleep(500);
+
+	}
+
+	@Test
+	@Commit
+	public void TestL() throws Exception {
+
+		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		driver.get(baseUrl + "signin");
+
+		Thread.sleep(500);
+
+		WebElement emailElement = driver.findElement(By.id("email"));
+		emailElement.sendKeys(TEST_ADMIN_EMAIL);
+
+		WebElement passElement = driver.findElement(By.id("inputPassword"));
+		passElement.sendKeys(TEST_ADMIN_PASSWORD);
+
+		driver.findElement(By.id("loginButton")).click();
+
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.get(baseUrl + "followers/list");
+
+		Thread.sleep(500);
+
+		// Find private profile and send request
+
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.get(baseUrl + "account/list");
+
+		WebElement findElement = driver.findElement(By.id("keywords"));
+		findElement.sendKeys("private");
+
+		driver.findElement(By.id("findButton")).click();
+
+		driver.findElement(By.id("requestButton")).click();
+
+		Thread.sleep(500);
+
+		assertTrue(driver.findElement(By.id("unrequestButton")).isDisplayed());
+
+		Thread.sleep(500);
+
+		// logout
+
+		driver.findElement(By.id("logOut")).click();
+
+		Thread.sleep(500);
+
+		// Sign in private profile
+
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.get(baseUrl + "signin");
+
+		emailElement = driver.findElement(By.id("email"));
+		emailElement.clear();
+		emailElement.sendKeys(TEST_PRIVATE_EMAIL);
+
+		passElement = driver.findElement(By.id("inputPassword"));
+		passElement.clear();
+		passElement.sendKeys(TEST_PRIVATE_PASSWORD);
+
+		driver.findElement(By.id("loginButton")).click();
+
+		Thread.sleep(500);
+
+		// check list of requests
+
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.get(baseUrl + "request/list");
+
+		Thread.sleep(500);
+
+		assertTrue(driver.findElement(By.id("requestOk")).isDisplayed());
+
+		Thread.sleep(500);
+
+		driver.findElement(By.id("requestOk")).click();
+
+		Thread.sleep(500);
+
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.get(baseUrl + "followers/list");
+
+		Thread.sleep(2000);
 
 		driver.findElement(By.id("kick")).click();
 

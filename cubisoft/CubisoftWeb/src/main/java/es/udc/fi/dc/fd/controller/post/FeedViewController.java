@@ -163,7 +163,7 @@ public class FeedViewController {
 			model.put("hashtagsText", hashtagsText);
 
 			String url = "http://{enpointUrl}?hashtags={hashtags}&user={user}";
-			URI expanded = new UriTemplate(url).expand("localhost:8080/CubisoftWeb/rest/post", tags,
+			URI expanded = new UriTemplate(url).expand("localhost:8080/cubisoft/rest/post", tags,
 					userAuthenticated.getName()); // this is what
 
 			try {

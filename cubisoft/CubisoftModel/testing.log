@@ -7789,6 +7789,7 @@ Caused by: liquibase.exception.ValidationFailedException: Validation Failed:
         defaultexa0_.name as name2_2_ 
     from
         example_entities defaultexa0_
+<<<<<<< Updated upstream
 [ERROR] 2018-12-16 18:56:40,557 org.springframework.test.context.TestContextManager prepareTestInstance - Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@14f7e21a] to prepare test instance [es.udc.fi.dc.fd.test.integration.service.ITDefaultExampleEntityService@2bd9722]
 java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:125) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
@@ -9151,3 +9152,467 @@ Caused by: liquibase.exception.ValidationFailedException: Validation Failed:
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.0.6.RELEASE.jar:5.0.6.RELEASE]
 	... 71 more
+=======
+[DEBUG] 2018-12-16 19:03:37,958 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 19:03:37,997 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 19:03:38,030 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 19:03:38,064 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 19:03:38,144 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 19:10:11,238 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 19:10:11,289 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 19:10:11,319 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 19:10:11,352 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 19:10:11,413 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 19:21:10,048 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 19:21:10,134 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 19:21:10,175 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 19:21:10,226 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 19:21:10,287 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 19:29:59,318 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 19:29:59,361 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 19:29:59,385 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 19:29:59,418 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 19:29:59,481 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 19:33:44,217 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 19:33:44,263 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 19:33:44,294 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 19:33:44,339 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 19:33:44,396 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 19:52:27,931 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 19:52:28,003 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 19:52:28,038 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 19:52:28,090 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 19:52:28,173 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:00:40,352 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:00:40,405 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:00:40,438 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:00:40,472 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 20:00:40,531 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:06:09,555 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:06:09,596 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:06:09,620 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:06:09,652 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 20:06:09,751 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:15:07,570 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:15:07,624 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:15:07,652 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:15:07,690 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 20:15:07,810 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:18:37,762 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:18:37,807 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:18:37,831 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:18:37,866 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 20:18:37,925 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:22:28,969 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:22:29,012 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:22:29,037 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:22:29,084 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 20:22:29,149 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+>>>>>>> Stashed changes
+[DEBUG] 2018-12-16 20:33:12,512 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:33:12,574 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:33:12,617 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:33:12,662 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 20:33:12,738 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:43:39,217 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:43:39,253 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:43:39,285 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:43:39,324 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 20:43:39,411 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:52:28,114 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:52:28,164 org.hibernate.SQL logStatement - 
+    select
+        count(*) as col_0_0_ 
+    from
+        example_entities defaultexa0_ 
+    where
+        defaultexa0_.id=?
+[DEBUG] 2018-12-16 20:52:28,201 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
+[DEBUG] 2018-12-16 20:52:28,245 org.hibernate.SQL logStatement - 
+    insert 
+    into
+        example_entities
+        (name) 
+    values
+        (?)
+[DEBUG] 2018-12-16 20:52:28,318 org.hibernate.SQL logStatement - 
+    select
+        defaultexa0_.id as id1_2_,
+        defaultexa0_.name as name2_2_ 
+    from
+        example_entities defaultexa0_
