@@ -36,13 +36,12 @@
 	               	</td>
 	               	<td>
 	               		<form id="unblockPostsForm" action="#" th:action="@{/followers/unblockUserPosts}" class="form-narrow form-horizontal" method="post"
-	               		style="float:left">
+	               				style="float:left">
 	               				<input type="hidden" id="user_id" name="user_id" th:value="${follow?.user.user_id}">              					
 	               				<button th:text="#{button.unblockPosts}" type="submit" class="btn btn-danger">Posts</button>	
 	               		</form>
-	               		
-	               		<form id="unblockStoriesForm" action="#" th:action="@{/followers/unblockUserStories}" class="form-narrow form-horizontal" method="post"
-	               		style="float:left">
+	               			<form id="unblockStoriesForm" action="#" th:action="@{/followers/unblockUserStories}" class="form-narrow form-horizontal" method="post"
+	               				style="float:left">
 	               				<input type="hidden" id="user_id" name="user_id" th:value="${follow?.user.user_id}">              					
 	               				<button th:text="#{button.unblockStories}" type="submit" class="btn btn-danger">Stories</button>	
 	               		</form>

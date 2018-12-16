@@ -2,6 +2,7 @@ package es.udc.fi.dc.fd.service;
 
 import java.io.File;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,9 +16,11 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.fi.dc.fd.model.persistence.Blocks.BlockType;
 import es.udc.fi.dc.fd.model.persistence.Picture;
 import es.udc.fi.dc.fd.model.persistence.Story;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
+import es.udc.fi.dc.fd.repository.BlocksRepository;
 import es.udc.fi.dc.fd.repository.PictureRepository;
 import es.udc.fi.dc.fd.repository.StoryRepository;
 import es.udc.fi.dc.fd.repository.UserProfileRepository;
@@ -39,6 +42,9 @@ public class StoryService {
 
 	@Autowired
 	private UserProfileRepository userProfileRepository;
+
+	@Autowired
+	private BlocksRepository blocksRepository;
 
 	private final static Logger logger = Logger.getLogger(StoryService.class.getName());
 
@@ -63,18 +69,32 @@ public class StoryService {
 	 * 
 	 * @param user
 	 *            the user
+	 * @param loggedUser
+	 *            the currently loggedUser
 	 * @return the list of storys belonging to the user
 	 * @throws InstanceNotFoundException
 	 *             If the user does not exists
 	 */
-	public List<Story> findUserStories(UserProfile user) throws InstanceNotFoundException {
+	public List<Story> findUserStories(UserProfile user, UserProfile loggedUser) throws InstanceNotFoundException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
 		}
 		if (!userProfileRepository.exists(user.getEmail())) {
 			throw new InstanceNotFoundException("The user with the mail" + user.getEmail() + " doesnt exists.");
 		}
-		return storyRepository.findUserStories(user);
+		if (loggedUser == null || !userProfileRepository.exists(loggedUser.getEmail())) {
+			storyRepository.findUserStories(user);
+		}
+		// Filter stories in case the user is blocked by the story owner
+		List<Story> blockedStories = storyRepository.findUserStories(user);
+		List<Story> notBlockedStories = new ArrayList<Story>();
+		for (Story story : blockedStories) {
+			if (!blocksRepository.checkBlock(story.getUser(), loggedUser, BlockType.STORIES)) {
+				notBlockedStories.add(story);
+			}
+		}
+		return notBlockedStories;
+
 	}
 
 	/**
@@ -166,7 +186,7 @@ public class StoryService {
 			}
 			UserProfile userFound = userProfileRepository.findById(feedUserId).get();
 			deleteOldStories(userFound, sessionPath);
-			result = findUserStories(userFound);
+			result = findUserStories(userFound, feedUser);
 
 		} catch (InstanceNotFoundException e) {
 			logger.log(Level.INFO, e.getMessage(), e);
@@ -188,7 +208,7 @@ public class StoryService {
 	 * 
 	 */
 	public void deleteOldStories(UserProfile user, String sessionPath) throws InstanceNotFoundException {
-		List<Story> list = findUserStories(user);
+		List<Story> list = findUserStories(user, null);
 		Calendar currentTime = Calendar.getInstance();
 		currentTime.set(Calendar.MILLISECOND, 0);
 		for (Story story : list) {

@@ -154,7 +154,7 @@ public class PostServiceUnitTest {
 		Mockito.when(postRepository.findUserPosts(userB)).thenReturn(postsB);
 
 		try {
-			assertThat(postService.findUserPosts(userB), is(equalTo(postsB)));
+			assertThat(postService.findUserPosts(userB, null), is(equalTo(postsB)));
 		} catch (InstanceNotFoundException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
@@ -164,7 +164,7 @@ public class PostServiceUnitTest {
 
 	@Test(expected = NullPointerException.class)
 	public void findNullUserPostsTest() throws InstanceNotFoundException {
-		postService.findUserPosts(null);
+		postService.findUserPosts(null, null);
 	}
 
 	@Test(expected = InstanceNotFoundException.class)
@@ -173,7 +173,7 @@ public class PostServiceUnitTest {
 		user.setEmail("");
 		Mockito.when(userProfileRepository.exists(user.getEmail())).thenReturn(false);
 
-		postService.findUserPosts(user);
+		postService.findUserPosts(user, null);
 	}
 
 	@Test

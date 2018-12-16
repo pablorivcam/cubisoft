@@ -59,6 +59,38 @@ public class BlocksService {
 	}
 
 	/**
+	 * Method that returns true if there is a posts block in place.
+	 *
+	 * @param user
+	 *            the user
+	 * @param loggedUser
+	 *            the logged user
+	 * @param type
+	 *            the type of block (either stories or profile)
+	 * 
+	 * @return true, if successful
+	 */
+	public boolean existPostsBlock(UserProfile user, UserProfile loggedUser) {
+		return blocksRepository.checkBlock(user, loggedUser, BlockType.PROFILE);
+	}
+
+	/**
+	 * Method that returns true if there is a story block in place.
+	 *
+	 * @param user
+	 *            the user
+	 * @param loggedUser
+	 *            the logged user
+	 * @param type
+	 *            the type of block (either stories or profile)
+	 * 
+	 * @return true, if successful
+	 */
+	public boolean existStoryBlock(UserProfile user, UserProfile loggedUser) {
+		return blocksRepository.checkBlock(user, loggedUser, BlockType.STORIES);
+	}
+
+	/**
 	 * Method that allows an user to block some existing user.
 	 *
 	 * @param user

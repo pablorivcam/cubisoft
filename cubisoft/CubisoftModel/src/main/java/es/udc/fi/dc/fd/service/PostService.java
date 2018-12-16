@@ -108,22 +108,27 @@ public class PostService {
 	 * 
 	 * @param user
 	 *            the user
+	 * @param loggedUser
+	 *            the logged user
 	 * @return the list of posts belonging to the user
 	 * @throws InstanceNotFoundException
 	 *             If the user does not exists
 	 */
-	public List<Post> findUserPosts(UserProfile user) throws InstanceNotFoundException {
+	public List<Post> findUserPosts(UserProfile user, UserProfile loggedUser) throws InstanceNotFoundException {
 		if (user == null) {
 			throw new NullPointerException("The user param cannot be null.");
 		}
 		if (!userProfileRepository.exists(user.getEmail())) {
 			throw new InstanceNotFoundException("The user with the mail" + user.getEmail() + " doesnt exists.");
 		}
+		if (loggedUser == null || !userProfileRepository.exists(user.getEmail())) {
+			return postRepository.findUserPosts(user);
+		}
 		// Filter the posts in case the user is blocked by the post owner
 		List<Post> blockedPosts = postRepository.findUserPosts(user);
 		List<Post> notBlockedPosts = new ArrayList<Post>();
 		for (Post post : blockedPosts) {
-			if (!blocksRepository.checkBlock(post.getUser(), user, BlockType.PROFILE)) {
+			if (!blocksRepository.checkBlock(post.getUser(), loggedUser, BlockType.PROFILE)) {
 				notBlockedPosts.add(post);
 			}
 		}
@@ -267,7 +272,7 @@ public class PostService {
 					feedUserId = feedUser.getUser_id();
 				}
 				UserProfile userFound = userProfileRepository.findById(feedUserId).get();
-				result = findUserPosts(userFound);
+				result = findUserPosts(userFound, feedUser);
 			}
 
 			if (feedUser != null) {
