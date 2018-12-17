@@ -206,7 +206,7 @@ public class LikesService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Transactional(rollbackFor = InstanceNotFoundException.class)
+	@Transactional(rollbackFor = Exception.class)
 	public String likePost(Long postId, String authorEmail) throws InstanceNotFoundException {
 
 		if (!userProfileRepository.exists(authorEmail)) {

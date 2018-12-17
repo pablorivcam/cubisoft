@@ -154,10 +154,10 @@ public class FeedViewController {
 
 			for (int i = 0; i < hashtags.length; i++) {
 				if (i != 0) {
-					tags += ",";
+					tags = tags.concat(",");
 				}
-				tags += hashtags[i];
-				hashtagsText += "#" + hashtags[i] + " ";
+				tags = tags.concat(hashtags[i]);
+				hashtagsText = hashtagsText.concat("#" + hashtags[i] + " ");
 			}
 
 			model.put("hashtagsText", hashtagsText);
@@ -169,7 +169,7 @@ public class FeedViewController {
 			try {
 				url = URLDecoder.decode(expanded.toString(), "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+				logger.log(Level.INFO, e.getMessage(), e);
 			}
 
 			RestTemplate restTemplate = new RestTemplate();
@@ -208,8 +208,8 @@ public class FeedViewController {
 	private final void loadViewModel(final ModelMap model, Principal userAuthenticated, String view, Long user_id) {
 		/*
 		 * pillo los posts del usuario con id = user_id si no estoy autenticado,
-		 * userFound = user_id si estoy autenticado currentUser = yo si quiero
-		 * ver el feed global userFound = yo
+		 * userFound = user_id si estoy autenticado currentUser = yo si quiero ver el
+		 * feed global userFound = yo
 		 * 
 		 */
 		List<Post> posts = postService.loadFeed(user_id, userAuthenticated, view);
@@ -219,12 +219,12 @@ public class FeedViewController {
 		if (userAuthenticated != null) {
 			UserProfile user = userProfileService.findUserByEmail(userAuthenticated.getName());
 			model.put("currentUser", user);
-			if (view.equals(PostViewConstants.VIEW_GLOBAL_FEED)) {
+			if (PostViewConstants.VIEW_GLOBAL_FEED.equals(view)) {
 				userFound = user;
 			} else if (user_id != null) {
 				userFound = userProfileService.findById(user_id);
 			}
-		} else if (!view.equals(PostViewConstants.VIEW_GLOBAL_FEED)) {
+		} else if (!PostViewConstants.VIEW_GLOBAL_FEED.equals(view)) {
 			userFound = userProfileService.findById(user_id);
 		}
 		model.put("userFound", userFound);
@@ -265,7 +265,7 @@ public class FeedViewController {
 		try {
 			pictureService.modifyPictureDescription(modifyId, description);
 		} catch (InstanceNotFoundException e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, e.getMessage(), e);
 		}
 
 		error_message = SUCESS_EDITED_PICTURE;
@@ -312,7 +312,7 @@ public class FeedViewController {
 			// Eliminamos la imagen de la BD
 			error_message = postService.deletePost(session.getServletContext().getRealPath("/"), post);
 
-			if (!error_message.equals("")) {
+			if (!"".equals(error_message)) {
 				error_message = SUCESS_DELETED_POST;
 				sucess = Boolean.TRUE;
 			}
@@ -352,10 +352,10 @@ public class FeedViewController {
 		try {
 			error_message = likesService.likePost(postId, userAuthenticated.getName());
 		} catch (InstanceNotFoundException e1) {
-			e1.printStackTrace();
+			logger.log(Level.INFO, e1.getMessage(), e1);
 		}
 
-		Boolean sucess = error_message.equals(SUCESS_LIKED_POST);
+		Boolean sucess = SUCESS_LIKED_POST.equals(error_message);
 
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
@@ -387,11 +387,11 @@ public class FeedViewController {
 		try {
 			error_message = likesService.unlikePost(postId, userAuthenticated.getName());
 		} catch (InstanceNotFoundException e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, e.getMessage(), e);
 		} catch (NotLikedYetException e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, e.getMessage(), e);
 		}
-		Boolean sucess = error_message.equals(SUCESS_UNLIKED_POST);
+		Boolean sucess = SUCESS_UNLIKED_POST.equals(error_message);
 
 		model.put("error_message", error_message);
 		model.put("sucess", sucess);
@@ -467,7 +467,7 @@ public class FeedViewController {
 		try {
 			commentService.addComment(text, postId, userAuthenticated.getName());
 		} catch (InstanceNotFoundException e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, e.getMessage(), e);
 		}
 
 		loadViewModel(model, userAuthenticated, view, null);
@@ -497,7 +497,7 @@ public class FeedViewController {
 		try {
 			commentService.replyComment(commentId, text, userAuthenticated.getName(), Calendar.getInstance());
 		} catch (InstanceNotFoundException e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, e.getMessage(), e);
 		}
 
 		loadViewModel(model, userAuthenticated, view, null);
@@ -535,8 +535,7 @@ public class FeedViewController {
 		try {
 			c = commentService.modifyComment(modifyCommentId, newContent);
 		} catch (InstanceNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.INFO, e.getMessage(), e);
 		}
 
 		// Modifies the comment in DB

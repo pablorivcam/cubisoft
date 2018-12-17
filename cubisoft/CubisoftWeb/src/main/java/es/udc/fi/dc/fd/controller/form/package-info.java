@@ -26,4 +26,4 @@
  * controllers.
  */
 
-package es.udc.fi.dc.fd.model.form;
+package es.udc.fi.dc.fd.controller.form;

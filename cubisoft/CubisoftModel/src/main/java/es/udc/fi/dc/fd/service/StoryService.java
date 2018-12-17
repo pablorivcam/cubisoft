@@ -207,6 +207,7 @@ public class StoryService {
 	 *             the instance not found exception*
 	 * 
 	 */
+	@Transactional
 	public void deleteOldStories(UserProfile user, String sessionPath) throws InstanceNotFoundException {
 		List<Story> list = findUserStories(user, null);
 		Calendar currentTime = Calendar.getInstance();

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import es.udc.fi.dc.fd.model.form.SignUpForm;
+import es.udc.fi.dc.fd.controller.form.SignUpForm;
 import es.udc.fi.dc.fd.model.persistence.UserProfile;
 import es.udc.fi.dc.fd.model.persistence.UserProfile.UserType;
 import es.udc.fi.dc.fd.service.UserProfileService;

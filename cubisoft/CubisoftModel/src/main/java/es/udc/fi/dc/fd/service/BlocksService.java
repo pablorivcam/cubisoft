@@ -172,7 +172,7 @@ public class BlocksService {
 	 * @throws AlreadyBlockedException
 	 *             the Already blocked exception
 	 */
-	@Transactional(rollbackFor = InstanceNotFoundException.class)
+	@Transactional(rollbackFor = Exception.class)
 	public String blockStories(String email, String blocked_email)
 			throws InstanceNotFoundException, AlreadyBlockedException {
 
@@ -212,7 +212,7 @@ public class BlocksService {
 	 * @throws NotBlockedYetException
 	 *             the not blocked yet exception
 	 */
-	@Transactional(noRollbackFor = InstanceNotFoundException.class)
+	@Transactional(noRollbackFor = Exception.class)
 	public String unblockStories(String email, String blocked_email)
 			throws InstanceNotFoundException, NotBlockedYetException {
 		if (!userProfileRepository.exists(email)) {
@@ -249,7 +249,7 @@ public class BlocksService {
 	 * @throws AlreadyBlockedException
 	 *             the already blocked exception
 	 */
-	@Transactional(rollbackFor = InstanceNotFoundException.class)
+	@Transactional(rollbackFor = Exception.class)
 	public String blockPosts(String email, String blocked_email)
 			throws InstanceNotFoundException, AlreadyBlockedException {
 
@@ -289,7 +289,7 @@ public class BlocksService {
 	 * @throws NotBlockedYetException
 	 *             the not blocked yet exception
 	 */
-	@Transactional(noRollbackFor = InstanceNotFoundException.class)
+	@Transactional(noRollbackFor = Exception.class)
 	public String unblockPosts(String email, String blocked_email)
 			throws InstanceNotFoundException, NotBlockedYetException {
 		if (!userProfileRepository.exists(email)) {

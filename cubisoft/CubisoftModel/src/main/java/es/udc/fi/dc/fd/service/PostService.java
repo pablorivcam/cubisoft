@@ -242,18 +242,19 @@ public class PostService {
 
 	/**
 	 * Load feed. Returns the global/single feed of an user and adds a anonymous
-	 * vbiew to all the posts if the param userAuthenticated is false or creates
-	 * the view in another case.
+	 * vbiew to all the posts if the param userAuthenticated is false or creates the
+	 * view in another case.
 	 *
 	 * @param feedUserId
 	 *            The owner of the feed that we want to return.
 	 * @param userAuthenticated
 	 *            the user authenticated
 	 * @param view
-	 *            the view. This method will return the global feed if this
-	 *            param is post/globalFeed or the single feed in another case.
+	 *            the view. This method will return the global feed if this param is
+	 *            post/globalFeed or the single feed in another case.
 	 * @return the post feed.
 	 */
+	@Transactional
 	public List<Post> loadFeed(Long feedUserId, Principal userAuthenticated, String view) {
 		List<Post> result = null;
 		UserProfile feedUser = null;
@@ -338,7 +339,7 @@ public class PostService {
 			}
 		}
 
-		if (tags.size() == 0) {
+		if (tags.isEmpty()) {
 			return new ArrayList<Post>();
 		}
 		// Filter the posts in case the user is blocked by the post owner

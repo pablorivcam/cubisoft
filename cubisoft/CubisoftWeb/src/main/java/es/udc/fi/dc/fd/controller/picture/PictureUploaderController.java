@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.udc.fi.dc.fd.controller.form.MultipartFileValidator;
 import es.udc.fi.dc.fd.controller.post.PostViewConstants;
-import es.udc.fi.dc.fd.model.form.MultipartFileValidator;
 import es.udc.fi.dc.fd.model.form.UploadPictureForm;
 import es.udc.fi.dc.fd.service.PictureService;
 

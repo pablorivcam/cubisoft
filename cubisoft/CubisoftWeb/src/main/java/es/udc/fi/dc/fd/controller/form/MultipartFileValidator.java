@@ -1,4 +1,4 @@
-package es.udc.fi.dc.fd.model.form;
+package es.udc.fi.dc.fd.controller.form;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

@@ -87,8 +87,7 @@ public class UploadPictureForm implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((pictureFile == null) ? 0 : pictureFile.hashCode());
-		return result;
+		return prime * result + ((pictureFile == null) ? 0 : pictureFile.hashCode());
 	}
 
 	@Override
